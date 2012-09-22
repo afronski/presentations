@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RIA performance</title>
+    <meta charset='utf-8'>
+    <script src='../slides.js'></script>
+  </head>
+  
+  <style>
+  </style>
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-default'>
+
+        <article>
+            <h1 style='font-size: 200%; margin-top: 100px;'>
+                Podstawy profilowania<br/>
+                i analiza wydajności<br/>aplikacji webowych
+            </h1>
+            <h2 style='font-size: 80%'>
+                experts.performance@future-processing.com
+            </h2>
+            <p style='font-size: 60%; margin-top: 50px;'>               
+                wgawronski@future-processing.com
+                <br>
+                maj 2012
+            </p>
+        </article>
+
+        <article>
+            <h3>High Performance JavaScript</h3>
+            <img src='http://covers.oreilly.com/images/9780596802806/lrg.jpg' alt='HPJS Zakas Cover' style='zoom: 0.6; padding-top: 35px; padding-left: 340px'/>
+            <div class='author'>
+                Nicholas C. Zakas
+            </div>
+        </article>
+
+        <article>
+            <h1 style="font-size: 500%;">Agenda</h1>
+        </article>
+
+        <article>
+            <h1>Teoria</h1>
+            <h3>Jak działa przeglądarka?</h3>
+        </article>
+
+        <article>
+            <h3>Narzędzia</h3>
+            <ul>
+                <ul>
+                    <li>Google - Speed Tracer, Developer Tools</li>
+                    <li>Mozilla - Tilt, Firebug, Developer Tools</li>
+                    <li>IE Developer Toolbar - Profiler, Fiddler2</li>
+                    <li>Opera - Dragonfly (CSS profiler)</li>                    
+                    <li>ySlow</li>
+                    <li>DynaTrace AJAX</li>
+                    <li>jsPerf, BrowserScope</li>
+                    <li>Bookmarklets</li>
+                </ul>
+            </ul>
+        </article>
+
+        <article>
+            <h1>Rozwiązania</h1>           
+        </article>
+
+        <article>        
+            <h2>Potencjalne miejsca do optymalizacji</h2>
+            <ol class="build" style="font-size: 2em; padding-left: 100px;">
+                <li>Renderowanie</li>
+                <li>JavaScript</li>
+                <li>Sieć</li>                
+            </ul>
+        </article>
+
+        <article>    
+            <h1 style="font-size: 500%;">Quiz</h1>
+        </article>
+
+        <article>    
+            <h1 style="font-size: 200%;">Jak działa poniższy kod?</h1>
+            <pre>           $.ready(function() { 
+                      /* Czyżby strona się załadowała ;) ? */
+                  });</pre>
+        </article>
+
+
+        <article>
+            <h1 style="font-size: 200%;">Dlaczego ten kod jest zły?</h1>
+            <pre>        $("#szukanyElement").attr("background-color", "red");
+        $("#szukanyElement").attr("color", "green");
+        $("#szukanyElement").attr("z-index", "9999");</pre>
+        </article>
+
+        <article>
+            <h2>... to wszystko prowadzi Nas do pytania</h2>
+            <div class="build"><h1 style='font-size:240%'>Jak działa przeglądarka?</h1></div>
+        </article>
+
+        <article>
+            <h2>Fazy ładowania strony</h2>
+            <div style="font-size: 200%;" class="build">
+                <div style="margin-top: 35px; margin-bottom: 75px;">Rozpoczynamy parsowanie</div>
+                <div style="margin-bottom: 35px;">&rarr; Pobieramy zasoby <a alt='List of elements which can fetch resources' target='_blank' style='font-size: 40%' href='http://gent.ilcore.com/2011/05/list-of-ways-html-can-download-resource.html'>(click)</a></div>
+                <div style="margin-bottom: 55px;">&rarr; Uruchamiamy skrypty</div>
+                <div style="font-size: 70%; color: red;" class="build">&rarr; DOMContentLoaded <span style="color: blue;">&rarr; window.onload</span></div>
+            </div>
+        </article>
+
+        <article>
+            <pre>                   function pageLoad() {}</pre>
+
+            <q style='font-size:100%'>
+                Raised after all scripts have been loaded and all objects in the application that are created by using $create are initialized.
+            </q>
+            <div class="author">
+                MSDN
+            </div>
+        </article>
+
+        <article>
+            <h2>Ogólny przepływ sterowania</h2>
+            <img src="images/basicflow.png" class="centered" alt="Basic flow" style="margin-top: 25%;"/>
+        </article>
+
+        <article>
+            <h2 style="margin-left: 300px;">WebKit</h2>
+            <img src="images/webkitflow.png" class="centered" alt="WebKit flow" style="margin-top: 10%;"/>
+        </article>
+
+        <article>
+            <h2 style="margin-left: 300px;">Gecko</h2>
+            <img src="images/geckoflow.jpg" class="centered" alt="Gecko flow" style="margin-top: 10%;"/>
+        </article>
+
+        <article>
+            <pre>display
+position
+float /* from/to 'none' */
+transform /* from/to 'none' */
+column-*
+counter-*
+quotes      </pre>
+            <h2>Tree reload</h2>
+        </article>
+
+        <article>
+            <pre>width
+height
+font-*
+margin-*
+padding-*
+border-*-width
+letter-spacing
+word-spacing
+line-height </pre>
+            <h2>Reflow / Layout</h2>
+        </article>   
+
+        <article>
+            <pre>color
+background-*
+border-*-color
+z-index     </pre>
+            <h2>Repaint</h2>
+        </article>        
+
+        <article>
+            <ul class="build" style="margin-top: 25%; font-size: 120%">
+                <li><a href="http://code.google.com/p/chromium/source/search?q=pumpTokenizer&origq=pumpTokenizer&btnG=Search+Trunk" target="_blank">pumpTokenizer</a></li>
+                <li><a href="http://code.google.com/p/chromium/source/search?q=canTakeNextToken&origq=canTakeNextToken&btnG=Search+Trunk" target="_blank">canTakeNextToken</a></li>
+                <li><a href="http://code.google.com/p/chromium/source/search?q=updateLayoutIgnorePendingStylesheets&origq=updateLayoutIgnorePendingStylesheets&btnG=Search+Trunk" target="_blank">updateLayoutIgnorePendingStylesheets</a></li>
+                <li><a href="http://code.google.com/searchframe#OAMlx_jo-ck/src/third_party/WebKit/Source/WebCore/html/parser/HTMLScriptRunner.cpp&exact_package=chromium&q=prepareScript&ct=rc&cd=5&sq=&l=296" target="_blank">Skrypty</a></li>
+            </ul>
+            <h2>Ale My szukamy głębiej...</h2>
+        </article>     
+
+        <article>        
+            <h1 style='font-size:240%'>Narzędzia</h1>
+        </article>
+
+        <article>
+            <h2>Chrome Developer Tools &amp; SpeedTracer</h2>
+            <h1 style='font-size:240%'>Google</h1>
+        </article>
+
+        <article>
+            <pre>mouse:      "mousedown", "mouseup", "click", "dblclick", 
+            "mousemove", "mouseover", "mouseout", "mousewheel" 
+key:        "keydown", "keyup", "keypress", "textInput"
+touch:      "touchstart", "touchmove", "touchend", "touchcancel"
+control:    "resize", "scroll", "zoom", "focus", "blur", 
+            "select", "change", "submit", "reset"
+(empty):    all of the above + "load", "unload", "abort", 
+            "error", "select", "change", "submit", "reset", 
+            "focus", "blur", "resize", "scroll", "search", 
+            "devicemotion", "deviceorientation"</pre>
+            <h2>monitorEvents</h2>
+        </article>
+
+        <article>
+            <h2>Tilt, Firebug, Firefox Developer Tools...</h2>
+            <h1 style='font-size:240%'>Mozilla</h1>
+        </article>
+
+        <article>
+            <h2>Fiddler &amp; IE Developer Toolbar</h2>
+            <h1 style='font-size:240%'>Microsoft</h1>
+        </article>        
+
+        <article>
+            <h2>CSS profiler</h2>
+            <h1 style='font-size:240%'>Opera Dragonfly</h1>
+        </article>
+
+        <article>
+            <h2>ySlow</h2>
+            <h1 style='font-size:240%'>Yahoo</h1>
+        </article>
+
+        <article>
+            <h1 style='font-size:240%'>DynaTrace AJAX</h1>
+        </article>
+
+        <article>
+            <h2><a href="http://jsperf.com/" target="_blank">jsPerf</a>, <a href="http://www.browserscope.org/" target="_blank">BrowserScope</a></h2>
+            <h1 style='font-size:240%'>Dodatki i <i>bookmarklets</i></h1>            
+        </article>
+
+        <article>
+            <div class="build">
+                <pre>
+function getPerfStats() {
+  var timing = window.performance.timing;
+  return {
+        dns: timing.domainLookupEnd - timing.domainLookupStart,
+        connect: timing.connectEnd - timing.connectStart,
+        ttfb: timing.responseStart - timing.connectEnd,
+        basePage: timing.responseEnd - timing.responseStart,
+        frontEnd: timing.loadEventStart - timing.responseEnd
+  };
+}               </pre>
+                <span><img src="http://i.pinger.pl/pgr80/2e90d2b7000363384efdc2ec/Mom-Please.jpg" width="128" height="64" /><a target="_blank" href="http://caniuse.com/#search=Navi">... can I use it?</a>
+            </div>
+            <h2>Navigation Timing API</h2>
+        </article>
+
+        <article>        
+            <h1 style='font-size:240%'>Optymalizacja</h1>
+        </article>
+
+        <article>
+            <ul class="build">
+                <li><a href="https://developers.google.com/speed/docs/best-practices/rules_intro?hl=pl-PL" target="_blank">Google</a></li>
+                <li><a href="http://developer.yahoo.com/performance/rules.html" target="_blank">Yahoo!</a></li>
+                <li><a href="http://stevesouders.com/hpws/rules.php" target="_blank">Steve Souders</a></li>
+            </ul>
+
+            <h2>Wytyczne największych i najlepszych</h2>
+        </article>
+
+        <article>
+            <ul class="build">
+                <li><i>Cache</i></li>
+                <li><i>ETag</i></li>
+                <li><i>Minifikacja</i> i kompresja zasobów</li>
+                <li>Minimalizacja ilości żądań:
+                    <ul class="build">
+                        <li>Scalanie skryptów i arkuszy stylów</li>
+                        <li>Scalanie wielu obrazków w mapy</li>
+                    </ul>
+                </li>
+                <li><i>Sharding</i> <span><a href="http://www.phpied.com/simple-sharding-logic/" target="_blank">(src)</a> <a href="http://www.browserscope.org/?category=network&v=top-d" target="_blank">(support)</a></span></li>
+            </ul>
+            <h2>Nagłówki HTTP oraz liczba żądań
+        </article>
+
+        <article>
+            <ul class="build">
+                <li><i>Reakcja łańcuchowa</i></li>
+                <li>Ta operacja idzie od góry drzewa do elementów, które zostaną zaktualizowane.</li>
+                <li>Niektóre operacje wykonują ponowne ułożenie wszystkich elementów podrzędnych.</li>
+                <li>Czyli sam koszt tej operacji zależy od otoczenia elementu, który zmieniamy.</li>
+                <li>Warto eksperymentować z otoczeniem i wymuszaniem tego zdarzenia przed operacjami.</li>
+            </ul>
+            <h2>Reflow / Layout</h2>
+        </article>        
+
+        <article>
+            <ul class="build">
+                <li><i>Repaint</i> dotyczy zawsze jakiegoś fragmentu ekranu.
+                    <ul class="build">
+                        <li>Zawężanie obszarów animowanych.</li>
+                        <li>Grupowanie zmian na jednym elemencie.</li>
+                        <li><i>Detach</i> elementu, operowanie i dołączenie go ponownie.</li>
+                    </ul>
+                </li>
+                <li>Ciężki do zmierzenia - to przeglądarka kontroluje częstotliwość odświeżania <span><a href="http://www.nczonline.net/blog/2011/05/03/better-javascript-animations-with-requestanimationframe/" target="_blank">(requestAnimationFrame)</a></span></li>
+                <li>Bardzo często problemy z wydajnością <i>repaint</i> są specyficzne dla przeglądarek i systemów operacyjnych.</li>
+            </ul>
+
+            <h2>Repaint</h2>
+        </article>
+
+        <article>
+            <div class="build">
+                <a href="https://developer.mozilla.org/en/DOM/window.getComputedStyle" target="_blank">getComputedStyle</a>            
+                <pre style="margin-top: 120px">// Repaint
+getComputedStyle(element, "").color
+
+// Reflow / Layout
+getComputedStyle(element, "").width
+element.offsetTop</pre>
+            </div>
+            <h2>Wymuszanie zdarzeń</h2>
+        </article>
+
+        <article>
+            <div class="build">
+                <div style="margin-top: -100px">
+                    <q style="font-size: 80%;">Wpływa pozytywnie na zmniejszenie liczby repaintów, ale może spowodować dodatkowe zdarzenia typu <i>layout</i> przy pokazywaniu/dodawaniu do drzewa.</q>
+                    <div style="font-size: 100%;" class="author">
+                        display:none
+                    </div>
+                </div>
+                <p style="margin-top: 50px"><b><i>Co ciekawe:</i></b> visibility:hidden w ogóle nie wpływa pozytywnie na liczbę repaintów.</p>
+            </div>
+            <h2>detach</h2>
+        </article>
+
+        <article>
+            <a href="http://jsperf.com/appendchild-vs-documentfragment-vs-innerhtml" target="_blank">appendChild vs documentFragment vs inner*</a><br/>
+            <a href="http://ejohn.org/blog/dom-documentfragments/" target="_blank">John Resig on documentFragment</a><br/>
+            <img style="margin-top: 50px; border: 1px solid gray;" src="http://nowsourcing.com/blog/wp-content/uploads/2009/10/bush_doing_it_wrong.jpg" alt="You do it wrong"/>
+            <h2><i>documentFragment</i></h2>
+        </article>
+
+        <article>
+            <ul class="build">
+                <li>Środowisko przeglądarki = jeden wątek</li>
+                <li>UI vs. JavaScript &rarr; <i>context switching</i></li>
+                <li><a href="http://caniuse.com/#search=web workers" target="_blank">Web Workers</a> <span class="build"><span>Wady?</span> <span>... brak wsparcia dla IE</span></span></li>
+                <li>Mit <code>setTimeout(..., 0);</code> <a href="http://ejohn.org/files/timers-0.png" target="_blank">*</a> <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#timers" target="_blank">**</a> <a href="http://code.google.com/p/chromium/issues/detail?id=792#c10" target="_blank">***</a></li>
+            </ul>
+            <h2>Responsywność</h2>
+        </article>
+
+        <article>
+            <div class="build">
+                <a href="http://peter.sh/experiments/asynchronous-and-deferred-javascript-execution-explained/" target="_blank">Magic explained ;)</a>
+                <i> ... a wsparcie?</i>
+                <div style="margin-top: 100px">IE9 nie wspiera async</div>
+                <div>Opera nie wspiera async i <i>defer-execution</i></div>
+                <div style="font-size: 50%; margin-bottom: 50px;"><a href="http://peter.sh/experiments/asynchronous-and-deferred-javascript-execution/" target="_blank">(test case)</a></div>
+                <div>Najlepiej ładować skrypty dopiero na żądanie.</div>
+                <div>Frameworks: yepnope, labjs, require.js, ...</div>
+            </div>
+            <h2>Async, defer, load on demand ...</h2>
+        </article>
+
+        <article>    
+            <div class="build">
+                <p style="margin-bottom: 20px">Należy unikać tworzenia tablic, obiektów, funkcji.</p> 
+                <p style="margin-bottom: 20px">Należy również unikać korzystania z <i>getterów</i> i <i>setterów</i>.</p>
+                <pre>setInterval((function (self) { 
+    return function () {
+        self.tick(); 
+    }; 
+})(this), 16);</pre>
+                <a href="http://gent.ilcore.com/2011/08/finding-memory-leaks.html" target="_blank">Finding memory leaks</a>
+            </div>
+
+            <h2>Pamięć</h2>
+        </article>
+
+        <article>
+            <div class="build">
+                <h1><i>Czy to ma znaczenie?</i></h1>
+                <p style="margin-bottom: 20px">Tak, dowód:</p>
+                <a href="http://zoompf.com/blog/2012/04/performance-aspects-of-googles-html-css-style-guide" target="_blank">Performance Aspects of Google HTML &amp; CSS style guide</a>
+            </div>
+
+            <h2>Wpływ Coding Standards na wydajność</h2>
+        </article>
+
+        <article>
+            <a href="http://floitsch.blogspot.de/2012/03/optimizing-for-v8-introduction.html" target="_blank">Optimizing for V8</a>
+            <h2>Optymalizacja JavaScript pod<br/>Google Chrome</h2>
+        </article>
+
+        <article>
+            <div class="build">
+                <p style="margin-bottom: 20px">Generujesz raporty/wykresy <br/>lub potrzebujesz wsparcia dla drukowania?</p>
+                <p style="margin-bottom: 20px">Usuń (jeśli istnieje) lub ładuj tylko na żądanie arkusz stylów z atrybutem <i>media</i> o wartości <i>print</i>.</p>
+                <p style="margin-bottom: 20px">Jest on zawsze ściągany synchronicznie i blokuje całą stronę.</p>
+
+                <a target="_blank" href="http://www.phpied.com/5-years-later-print-css-still-sucks/">Print CSS still sucks (Stefanov)</a>
+            </div>
+
+            <h2>&lt;link media="print"/&gt;</h2>
+        </article>
+
+        <article>
+            <pre>var img = new Image();
+var data = 'name="Wojtek"';
+
+img.onload = function() {
+  console.log('Dane wysłane poprawnie');
+}
+
+img.src = 'URL DO AKTYWNEGO ZASOBU' + '?' + data;</pre>
+            <a href="http://javascriptturnsmeon.com/image-beacons" target="_blink">Image Beacons explained</a>
+            <h2>Image Beacons</h2>
+        </article>
+
+        <article>
+            <ul class="build">
+                <li><i>Jak się nie wie co się robi,<br/>to się dzieją takie rzeczy,<br/>że się nie wie co się dzieje ;)</i></li>
+                <li><i>Use the source, Luke</i></li>
+                <li>Rozwijane wersje przeglądarek mają wiele cennych perełek.</li>
+                <li>Czyste środowisko testowe to bardzo ważna rzecz<br/>(incognito, private).</li>
+            </ul>
+            <h2>Uwagi końcowe</h2>
+        </article>
+
+        <article>
+            <h1 style="font-size: 500%;">Pytania ?</h1>
+        </article>       
+
+        <article>    
+            <h1 style="font-size: 280%;">Dziękuję za uwagę!</h1>
+        </article>
+
+        <article>
+            <h3>Zasoby dla <i>ciekawskich</i>:</h3>
+            <ul>
+                <li><a href="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/">How browsers work?</a></li>
+                <li><a href="http://vimeo.com/32364192">Life of a &lt;button&gt;</a></li>  
+                <li><a href="http://code.google.com/p/chromium/source/search">Chromium Code Search</a></li>
+                <li><a href="http://www.scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript">GC in JavaScript</a></li>
+                <li><a href="https://docs.google.com/present/view?id=dq52zrp_20fzfvqkhr">JavaScript Performance Myth Busters</a></li>
+            </ul>
+        </article>
+    </section>
+  </body>
+</html>

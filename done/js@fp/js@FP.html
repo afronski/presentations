@@ -1,0 +1,2833 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+
+    <title>js@FP (14.06.2011)</title>
+
+    <link href="css/droid_mono.css" rel="stylesheet" type="text/css" />
+    <link href="css/prettify.css" rel="stylesheet" id="prettify-link" disabled />
+    <link href="css/moon.css" class="theme" rel="stylesheet" />
+    <link href="css/sand.css" class="theme" rel="stylesheet" />
+    <link href="css/sea_wave.css" class="theme" rel="stylesheet" />
+    <link href="css/default.css" class="theme" rel="stylesheet" media="screen" />
+    <style>
+        .contentSlide {
+            font-size: normal;
+        }
+        .contentSlide .middle h2 {
+            font-size: 45px !important;
+            font-weight: bold;
+            margin-bottom: 10px !important;
+        }
+        .contentSlide .middle pre {
+            line-height: 25px !important;
+            margin: 0px 30px;
+        }
+        .contentSlide .middle p {
+            font-size: 25px !important;
+            line-height: 30px !important;
+            font-family: "Segoe UI";
+            font-weight: normal;
+        }
+        .contentSlide .middle ul {
+            font-size: 35px;
+            line-height: 35px !important;
+            text-align: left;
+            list-style: circle inside;
+        }
+        .contentSlide .middle img {
+            border: 2px dotted black;
+        }
+        .contentSlide .middle  ul li {
+            font-size: 35px;
+            line-height: 35px !important;
+            text-align: left;
+            list-style: circle inside;
+        }            
+        .contentSlide .middle .listOfPre {
+            margin-top: 40px;
+        }
+        .contentSlide .middle .listOfPre pre {
+            font-size: 25px !important;
+            line-height: 25px !important;
+            margin: 0px 30px;            
+            border: 0px;
+            border-radius: 0px;
+        }                
+    </style>
+  </head>
+  <body>
+    <div class="presentation">
+        <div id="presentation-counter">Loading...</div>
+
+        <div class="slides">
+            <div class="slide" id="main-slide">
+                <style>
+                    #landing-slide p {
+                      font-size: 35px;
+                    }
+                    p#disclaimer-message {
+                      font-size: 20px;
+                    }
+                    p.right {
+                        text-align: right;
+                        font-size: 24px !important;
+                        margin-right: 20px;
+                        line-height: 0px !important;
+                    }                 
+                    p.title {
+                        font-variant: small-caps;
+                        font-size: 50px !important;
+                        line-height: 0px !important;                        
+                    }
+                    p.subtitle {
+                        font-size: 20px !important;
+                        margin-bottom: 80px;
+                    }
+                    img.logo {
+                        height: 24px;
+                        width: 48px;
+                        border: 0;
+                        vertical-align: middle;
+                    }
+                    div.bottom {
+                        clear: both;
+                        margin-top: 100px;
+                        color: gray;
+                    }
+                </style>
+                <section class="middle">
+                    <p class="title">js@FP</p>
+                    <p class='subtitle'>Szkolenie z JavaScript'u zorganizowane w ramach grupy eksperckiej RIA (14.06.2011)</p>
+                    <p class="right">wgawronski@future-processing.com<p>
+                    <p class="right">( <span style="font-family: 'segoe ui';">fpdev<sup>2</sup></span> team )</p>
+                    <div class="bottom">Future-Processing &copy; Wojciech Gawroński - 2011 (version: 0.9a)</div>
+                </section>
+                <aside class="note">
+                    <section>
+                        - Przedstawić się<br/>
+                        - Dwa słowa o teamie i kto Ciebie poprosił<br/>                    
+                        - Powiedz o Adamie i Michale i przyszłych ew. szkoleniach<br/>
+                    </section>
+                </aside> 
+            </div>
+            
+            <div class="slide" id="title-old-js-slide">
+                <style>
+                    #title-old-js-slide h1, #title-old-js-slide h2 {
+                      color: black;
+                    }
+                    #title-old-js-slide h1 {
+                      letter-spacing: -2px;
+                      font-size: 96px;
+                    }
+                    #title-old-js-slide h2 {
+                      margin-top: -5px;
+                      font-size: 40px;
+                      letter-spacing: -1px;
+                    }
+                </style>
+                <section class="middle">
+                    <hgroup>
+                        <h1>
+                            JavaScript dawniej*
+                        </h1>
+                        <h2>
+                            Interpretowany<br/> Powolny<br/>Zabawka do "ozdabiania" stron internetowych
+                        </h2>
+                    </hgroup>
+                </section>
+                <aside class="note">
+                    <section>
+                      - To tylko slajdy porównawcze - chcę pokazać, że jedyne co się zmieniło<br/>
+                        to podejście ludzi odpowiedzialnych za przeglądarki i ich wydajność,<br/>
+                        Tak naprawdę obecnie i dawniej to ten sam język napisany w 10 dni przez<br/>
+                        Brendana Eicha (jeszcze jak nosił nazwę "Mocha"). Miał być Javą stąd<br/>
+                        JavaScript a nie przez podobieństwo składniowe (dużo więcej wspólnych <br/>
+                        elementów ma z PHP - CASIS).
+                    </section>
+                </aside> 
+            </div>
+
+            <div class="slide" id="title-new-js-slide">
+                <style>
+                    #title-new-js-slide h1, #title-new-js-slide h2 {
+                      color: black;
+                    }
+                    #title-new-js-slide h1 {
+                      letter-spacing: -2px;
+                      font-size: 96px;
+                    }
+                    #title-new-js-slide h2 {
+                      margin-top: -5px;
+                      font-size: 40px;
+                      letter-spacing: -1px;
+                    }
+                </style>
+                <section class="middle">
+                    <hgroup>
+                        <h1>
+                            JavaScript obecnie*
+                        </h1>
+                        <h2>
+                            JIT po stronie klienta<br/> Server side<br/> RIA, Desktop - XUL, <i>MetroUI ?</i>
+                        </h2>
+                    </hgroup>
+                </section>            
+                <aside class="note">
+                    <section>
+                    - To tylko slajdy porównawcze - V8 i JaegerMonkey to wielkie kroki milowe<br/>
+                    jeśli chodzi o szybkość i silniki JS - tak naprawdę pierwszy JIT pojawił się<br/>
+                    w Operze (Carakan). Node.JS, Rhino, Ringo.JS to wszystko rozwijające się<br/>
+                    i ambitne projekty, dodatkowo w trójcy HTML5 + CSS3, JS idealnie uzupełnia warstwę<br/>
+                    językową, która tak naprawdę gdy osiągnie dojrzałość będzie kompletnym środowiskiem do<br/>
+                    tworzenia bogatych aplikacji webowych i może desktopowych
+                    </section>
+                </aside>                     
+            </div>
+
+            <div class="slide" id="table-of-contents">
+                <style>
+                    #toc-list > li {
+                      font-size: 26px;
+                      line-height: 33px;
+                      opacity: 0.85;
+                    }
+                    #toc-list > li:hover {
+                      opacity: 1;
+                    }
+                    #toc-list a {
+                      border-bottom: 0;
+                    }
+                    #toc-list a:hover {
+                      border-bottom: 2px solid #3f3f3f;
+                    }
+                    #toc-list img {
+                      vertical-align: middle;
+                      margin-left: 15px;
+                    }
+                    #table-of-contents h1 {
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <header><h1>Agenda:</h1></header>            
+                <section>
+                    <ul id="toc-list">
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>                         
+                    - Powiedzieć o tym, że pytania będą po każdym większym temacie, aby sobie notowali a ja postaram sobie odpowiedzieć na uwagi jeśli będę potrafił.
+                    </section>
+                </aside>                    
+            </div>
+
+            <div class="slide transitionSlide" id="introduction">
+                <style>
+                    #introduction h2 {
+                        font-size: 75px !important;
+                    }  
+                </style>                
+                <section class="middle">
+                    <h2>Szybkie wprowadzenie</h2>
+                    <p>...</p>
+                </section>
+            </div>
+
+            <div class="slide" id="quick-intro-1">
+                <style>
+                    p.message {
+                        padding-top: 0px;
+                    }
+                    img.images {
+                        margin-top: 50px;
+                        border: 2px dotted black;
+                    }
+                    #quick-intro-1 h1 {
+                        font-size: 65px !important;
+                        line-height: 65px !important;
+                    }
+                </style>
+                <section class="middle">
+                    <h1>ECMAScript === JavaScript</h1>
+                    <img class="images" src="src/OOPandJS.png" alt="JavaScript definition"/>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    - JavaScript (lub ECMAScript) jest językiem zorientowanym obiektowo ale jego implementacja jest zupełnie inna, bo oparta<br/>
+                    na prototypach - w związku z czym, myślenie w kategoriach czysto obiektowych zgodnych na przykład z C++/C#/Javą jest możliwe<br/>
+                    jednak nie wykorzystuje całej możliwości i potencjału który jest w prototypowym dziedziczeniu (fragment artykułu D. Soshnikova, <br/>
+                    członka komitetu ECMA standaryzującego JS).<br/>
+                    - ActionScript to ECMAScript także.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide" id="quick-intro-timeline">
+                <style>
+                    p.message {
+                        padding-top: 0px;
+                    }
+                    img.images {
+                        border: 2px dotted black;
+                    }
+                    #quick-intro-timeline h1 {
+                        font-size: 65px !important;
+                        letter-spacing: -2px;
+                        line-height: 15px !important;                                                
+                        font-weight: bold;
+                    }
+                    #quick-intro-timeline h3 {
+                        font-size: 50px !important;
+                        letter-spacing: -2px;                        
+                        line-height: 45px !important;   
+                        font-weight: normal;
+                    }               
+                    #quick-intro-timeline h4 {
+                        font-size: 35px !important;
+                        letter-spacing: -2px;                        
+                        line-height: 35px !important;                        
+                        font-weight: normal;                        
+                        font-style:italic;
+                    }                   
+                </style>
+                <section class="middle formula" data-build>
+                    <h1>ECMAScript 3<br/>( z rozszerzeniami )</h1>
+                    <h3>...</h2>
+                    <h3>ECMAScript 5</h3>
+                    <h3>...</h3>
+                    <h4>ECMAScript 6<br/>( ES.next, 'Harmony' )</h4>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    - Obecnie najbardziej rozpowszechnioną wersją standardu ECMA jest wersja 3 (wspierana z rozszerzeniami przez 90% rynku przeglądarek). <br/>
+                    Powoli jednak odchodzi do lamusa zastępowana sukcesywnie przez ES5 - wersja dużo bardziej dopracowana, ścisła, eliminująca wiele "bad parts" z języka (zmienne globalne,<br/>
+                    konstrukcje with). Obecnie jedynym problemem w korzystaniu z ES5 jest niedokładnie zaimplementowana specyfikacja w IE9 i poprzednich (w przypadku starszych przeglądarek to w ogóle)<br/>
+                    - spory udział rynku wymusza stosowanie dalej starej wersji. Najlepiej i najdawniejszą wersją przeglądarki która wspiera ES5 jest Firefox 3.5 (ma wiele elementów z tzw. <br/>
+                    specyfikacji 1.8 która jest równoważna z ES4) - wiele elementów z ES4 nie weszło do ES5, sama wersja została porzucona, jednak już wtedy Fx był przeglądarką <br/>
+                    która wspiera najlepiej ES5. Na końcu podam link do "ES5 compatibility table" dla wszystkich przeglądarek (Zaytsev).<br/>
+                    - Do końca roku pojawi się draft dokumentu dla Harmony - to zupełnie nowa jakość, ponieważ komitet zajął się eliminacją tzw. syntactic noises (np. wprowadzenie składni lambd<br/>
+                    która jest sugar syntax dla obecnych funkcji anonimowych) oraz implementacja zupełnie nowych wlaściwości (zasięg blokowy, silne typowanie, generatory, proxies). To jest jednak<br/>
+                    bardzo daleka przyszłość ponieważ, nie wiadomym jest kiedy przeglądarki na czele z IE będą wspierać ten standard - nadal jednak w rozwiązaniach stricte serwerowych będziemy mieli<br/>
+                    z tego języka pociechę.
+                    </section>
+                </aside>
+            </div>            
+
+            <div class="slide" id="quick-intro-usecases">
+                <style>
+                    p.message {
+                        padding-top: 0px;
+                    }
+                    #quick-intro-usecases h2 {
+                        font-size: 55px !important;
+                    }
+                    #quick-intro-usecases ul {
+                        font-size: 35px;
+                        line-height: 35px !important;
+                        text-align: left;
+                        list-style: circle inside;
+                    }
+                    #quick-intro-usecases ul li {
+                        font-size: 35px;
+                        line-height: 35px !important;
+                        text-align: left;
+                        list-style: circle inside;
+                    }                    
+                </style>
+                <section class="middle">
+                    <h2>Zastosowania:</h2>
+                    <ul class="middle formula" data-build>
+                        <li>Client side scripting - <b>RIA</b></li>
+                        <li>Server side scripting - node.js, Rhino</li>
+                        <li>Mobile applications - <b>PhoneGap</b>, <b>WebWorks</b></li>
+                        <li>Desktop applications - XUL, <i>Metro UI ?</i></li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>                
+                    Jak widać właściwie w każdym elemencie można zauważyć istnienie JS - XUL to Firefox, Thunderbird czy Komodo Firewall. Metro UI to przyszłościowe<br/>
+                    GUI M$ w Windows8 - padło stwierdzenie, że będzie się dalo pisać aplikacje natywne na tą platformę - czy tak będzie, zobaczymy M$ raczej rzadko się <br/>
+                    wywiązuje z obietnic.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide transitionSlide" id="built-in-types">
+                <style>
+                    #built-in-types h2 {
+                        font-size: 85px !important;
+                    }  
+                </style>
+                <section class="middle">
+                    <h2>Podstawy</h2>
+                    <p>...</p>
+                </section>
+            </div>
+
+            <div class="slide contentSlide" id="types">
+                <style>                        
+                </style>
+                <section class="middle">
+                    <h2>Object, Array, Function<br/>Number, String, RegExp, Boolean</h2>
+                    <p> Obiekty tych typów można utworzyć dwojako:<br/><br/><i>Wykorzystując konstruktor</i><br/> <b>Poprzez literał specyficzny dla obiektu</b></p>
+                </section>
+                <aside class="note">
+                    <section>
+                        Jak widać na slajdzie obiekty wbudowanych typów możemy utworzyć dwojako, powinniśmy skupić się jednak na drugim sposobie - literały powinny być preferowanym<br/>
+                        sposobem tworzenia obiektów, głównie dlatego, że są krótsze i nie mylące - ani nie zawierają w sobie pułapek tak jak konstruktor typu Function (eval). Opakowania<br/>
+                        dodają tylko metodę valueOf która tak naprawdę nie jest potrzebna do wszystkiego. Są tak naprawdę trzy wyjątki od tej reguły (Object, RegExp, Date). <br/>
+                        Dodatkowo tracimy informację dla typeof w przypadku konstruktorów - typeof takiego obiektu zwróci nam "object".
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="object-constructor-usage">
+                <style>
+                </style>
+                <section class="middle">
+                <h2>Haczyk w konstruktorze typu 'Object'</h2>
+                <pre>(new Object(false)).constructor === Boolean; // true
+(new Object(3.14)).constructor === Number; // true</pre>
+                <p>Powyższy konstruktor jest najprostszą i wbudowaną w język '<i>fabryką</i>'<br/>Wzorzec Factory ;)</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    Od razu ciekawostka i haczyk - stosowanie konstruktorów jest wskazane w kilku przypadkach - jeden z nich następuje wtedy<br/>
+                    gdy dynamicznie tworzymy obiekty i chcemy zachować ich pochodzenie (czyli konsntruktor).<br/>
+                    Po stworzeniu obiektu za pomocą konstruktora Object otrzymamy informację w polu constructor o dokładnym typie (a raczej o źródle funkcji konstruującej).
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="falsy-values">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>0 "" [] null undefined NaN false</h2>
+                    <p><i>Falsy values</i> to zbiór wartości dających fałsz</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    Kolejnym potencjalnym elementem sprawiającym problem w JavaScripcie są opertory równości - aby dokładnie poznać problemy jakie w nich występują musimy <br/>
+                    przypomnieć czym są falsy values - to zbiór wartości które wyrażeniach boolowskich dają fałsz.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="falsy-values-samples">
+                <style>
+                </style>
+                <section class="middle">                
+                    <pre>  "0" == 0                 // true - następuje rzutowanie ze stringa do int.
+  NaN == 0                 // false - NaN nie jest równe niczemu
+  NaN == NaN               // false - ... nawet samemu sobie.
+  "\t\r\n " == 0           // true - string złożony ze znaków białych 
+                           //        jest uznawany za pusty
+  0 == {}                  // false - konwersja object do number zwraca NaN
+  [] == 0                  // true - falsy values
+  undefined == null        // true - falsy values
+  null == 0                // false - nic nie może być równe null poza undefined
+  false == new String("")  // true - ponieważ po prawej stronie mamy obiekt 
+                           //        to rzutujemy jego wartość do boolean
+  undefined == ""          // false - nic nie może być równe undefined poza null
+  [] == ![]                // true - ciekawy przypadek ;)
+                           //        po prawej mamy tablica rzutowaną z negacją
+                           //        po lewej falsy value
+                           //        wyniki to <b>true</b> dlatego, że istniejący 
+                           //        obiekt zanegowany zwróci false</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    Slajd pokazujący potencjalne niebezpieczeństwa wynikające z wartości fałszywych i konsekwencje używania<br/>
+                    nieścisłego operatora porównania. Najgorszy jest brak przemienności - reguły konwersji w przypadku (nazwanego złym operatorem, "evil operator" przez Crockforda)<br/>
+                    podwójnych operatorów są skomplikowane i ciężkie do zapamiętania - jesli jeden z to number to rzutowanie do number, rzutowanie do stringa jeśli jeden jest stringiem.<br/>
+                    Powiedzieć o isFinite i isNaN (Infinity zachowuje się podobnie jak NaN, z wyjątkiem tego że jest równe samej sobie).
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="equality-operators">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>=== vs. ==</h2>
+                    <p>Poprzedni slajd pokazał dobitnie zawiłości korzystania z operatorów ==/!=<br/>Zalecane jest używanie operatorów potrójnych (<i>ang. strict operators</i>),<br/> 
+                    które najpierw sprawdzają typ a dopiero potem wartość.</p>
+                    <pre>  null == undefined        // Jedyny sensowny sposób użycia operatorów podwójnych.</pre>
+                    <p>Jednak i to może być niebezpieczne w przypadku<br/>gdy zamiast wspominanych wartości pojawi się tam <i>falsy value</i>.</p>
+                    <img src="src/Non-strict inequality operator.png" alt="Inequality operator" /><br/>                    
+                </section>
+                <aside class="note">
+                    <section>
+                    Najlepszym sposobem porównywania jest skorzystanie ze ścisłej wersji operatorów porównań - zachowują się one przecież tak jak w innych językach dynamicznych, sprawdzają<br/>
+                    typ a następnie dokonują porównania. Poleganie na regułach automatycznej konwersji może być zawodne, ze względu na złożoność mechanizmu. Mimo, że brzmi to jak ekstremizm<br/>
+                    u nas w CR wyraźnie nakłania się do korzystania z wersji bezpieczniejszych. Nie bez znaczenia jest też to, że są one jednoznaczne i czytelne.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="conversions">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Konwersje:</h2>                
+                    <pre>  a.toString();                       // Rzutowanie każdego obiektu do stringa.
+                                      // Uwaga: można nadpisać tą metodę.
+  2.toString();                       // SYNTAX ERROR :(
+  2..toString();                      // Poprawna forma powyższego.
+  a + "";                             // Również rzutowanie dowolnego obiektu 
+                                      // do łańcucha znaków.
+  +"10" === parseInt("10", 10);       // Dwa sposoby na rzutowanie 
+                                      // do wartości numerycznej.
+  ~~"3.14" === Math.floor(+"3.14");   // Rzutowanie na int, wraz z obcinaniem.
+  (new Date).getTime() == +new Date;  // Rzutowanie Date na Number
+  !!{};                               // Konwersja na wartość Boolean.
+  ~(-1) === 0;                        // <b>true</b> - dla typu Number: -(n+1)</pre><br/>
+                    <img src="src/StringLessGreaterOperators.png" alt="Less or grater operators for strings" />                                    
+                </section>
+                <aside class="note">
+                    <section>
+                    - obcinanie działa też dla Number.<br/>
+                    - !! działa dla wszystkich obiektów i powinno być używane jako "mocne" sprawdzenie istnienia obiektu (np. dla Stringa oznacza to, że string na pewno nie będzie<br/>
+                    undefined, null i zbudowany z białych znaków).<br/>
+                    - lepiej korzystać z '+ ""' niż z toString - istnieje niebezpieczeństwo nadpisania tej metody chyba, że skorzystamy my z tego celowo ;)
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="typeof">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>typeof</h2>
+                    <div class="formula listOfPre" data-build>                        
+                        <pre>  typeof function() {}      // 'function' </pre>
+                        <pre>  typeof {}                 // 'object' </pre>
+                        <pre>  typeof 1                  // 'number' </pre>
+                        <pre>  typeof ""                 // 'string' </pre>
+                        <pre>  typeof true               // 'boolean' </pre>
+                        <pre>  typeof null               // 'object' - WTF?!</pre>
+                        <pre>  typeof new String("")     // 'object' - WTF?!</pre>
+                        <pre>  typeof []                 // 'object' - WTF?! </pre>
+                        <pre>  typeof /a/gi              // 'function' - WTF?!</pre>                        
+                        <pre>  typeof UndefinedVar       // 'undefined' </pre>
+                        <pre>  // A teraz bonus specjalnie od IE ;) </pre>
+                        <pre>  typeof new ActiveXObject  // 'unknown' </pre>
+                    </div>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Nie ma znaczenia czy otoczymy nawiasami wyrażenie czy nie - my korzystamy z nawiasów w celu polepszenia czytelności ;) <br/>
+                    - typeof zawsze zwraca string, z samymi małymi literami<br/>
+                    - Ten ostatni przykład bierze się z różnego traktowania pod IE tzw. host objects and native objects - wszystkie elementy które nie są<br/>
+                    natywnymi elementami języka są uważane za host objects (obiekty ActiveX, ale też elementy DOM itp.) i zwracają właśnie takie coś.<br/>
+                    - Co ciekawe: typeof z regexp może też zwrócić 'object' - to by było lepsze bo by było spójne z zachowaniem tablicy która zawsze da 'object' - całość zależy<br/>
+                    od implementacji.
+                    </section>
+                </aside>
+            </div>     
+
+            <div class="slide contentSlide" id="instanceof">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>instanceof</h2>
+                    <p>Operator służacy do określenia przynależności obiektu<br/>Odbywa się to poprzez sprawdzenie własności <i>constructor</i> w obiekcie</p>
+                    <div class="formula listOfPre" data-build>
+                        <pre>  var a = new Object(1); </pre>
+                        <pre>  a instanceof Number;      // true</pre>
+                        <pre>  a instanceof Object;      // true</pre>                        
+                        <pre>  var b = "trolololo"; </pre>
+                        <pre>  b instanceof String;      // false</pre>                        
+                        <pre>  b instanceof Object;      // false</pre>                           
+                        <pre>  var c = new Boolean(false); </pre>
+                        <pre>  c instanceof Boolean;     // true</pre>                                                
+                        <pre>  c instanceof Object;      // true</pre>                                                                        
+                    </div>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Operator badający przynależność obiektu, sprawdza pole constructor w stworzonym obiekcie - widać wyraźnie, że każdy wrapper jest nakładka na typ i na klasyczny<br/>
+                    Object, a każdy obiekt utworzony literałem nie ma tego pola wypełnionego - może wyglądać jak niespójność, jednak ten problem jest sztuczny, ten operator nie służy <br/>
+                    do badania pochodzenia obiektów wbudowanych - powiemy o nim więcej przy OOP i funkcjach.
+                    </section>
+                </aside>
+            </div>     
+
+            <div class="slide contentSlide" id="delete">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>delete</h2>
+                    <p>Operator służący do usuwania zmiennych, metod i pól<br/>Usunięty element ma wartość '<i>undefined</i>'</p>
+                    <div class="formula listOfPre" data-build>
+                        <pre>  var x = 0; </pre>
+                        <pre>  typeof x;    // number </pre>
+                        <pre>  delete x; </pre>
+                        <pre>  typeof x;    // undefined </pre>                        
+                    </div>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Usuwanie często daje ciekawe rezultaty np. usuwając przez delete element z tablicy nie usuwamy go tylko na jego miejsce jest wpisywana 'wartość' undefined.<br/>
+                    - Lepiej używać splice(idx, num) do usuwania ze stringa/tablicy.
+                    - Ten operator wygląda na nieużyteczny, jednak mając go do dyspozycji można stworzyć masę ciekawych patternów - o części z nich powiemy później.
+                    </section>
+                </aside>
+            </div>     
+
+            <div class="slide contentSlide" id="guard-default">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2><i>default</i> operator</h2>                    
+                    <p>Nietypowe wykorzystanie operatora alternatywy logicznej:<p>                                        
+                    <div class="formula listOfPre" data-build>
+                        <pre>  var x = parameter || 1024;</pre>
+                    </div>
+                    <h2><i>guarded expression</i></h2>                                        
+                    <p>Równie nietypowe wykorzystanie operatora koniunkcji logicznej:</p>                        
+                    <div class="formula listOfPre" data-build>                    
+                        <pre>  !!parent &amp;&amp; parent.importantMethod();</pre>
+                    </div>                    
+                </section>
+                <aside class="note">
+                    <section>
+                    - W obu przypadkach wykorzystane jest leniwe rozwijanie wyrażeń logicznych.<br/>
+                    - W pierwszym przypadku, jeśli wartość parametru jest fałszywa zostanie przypisana wartość niefałszywa po prawej, bądź ostatnia znaleziona - może być fałszywa, częstym blędem<br/>
+                    jest kolejność - dają na początku 0 i potem się dziwią że undefined przeszło.<br/>
+                    - W drugim przypadku dzięki leniwemu obliczaniu wyrażeń druga część się nie wykona gdy pierwsza jest fałszywa (mocny operator konwersji do bool), bardzo często można dodać<br/>
+                    tam przecinek i wydlużyć listę wykonywanych operacji - przecinek ma identyczne zachowanie jak w C, wymusza obliczenie wyrażenia przed i przejście do następnego zwracając ostatnie.
+                    </section>
+                </aside>
+            </div>     
+
+            <div class="slide contentSlide" id="special-fields">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>__proto__</h2>
+                    <p>Jest to <i>łata</i> na braki w specyfikacji ES3<br/>
+                    <b>__proto__</b> (<span style="text-decoration: line-through;">IE</span>) zwraca prototyp danego obiektu</p>
+                    <p>Odpowiednikiem tego pola w ECMAScript 5 jest<br/>metoda <b>Object.getPrototypeOf</b></p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Dotyczy wszystkich przeglądarek oprócz IE 6/7/8, w IE9 jest getPrototypeOf.<br/>
+                    - Innym takim polem jest __count__ dostępne w starych firefoxach - zwraca ilość elementów w obiekcie.<br/>
+                    </section>
+                </aside>
+            </div>     
+
+            <div class="slide contentSlide" id="loops">
+                <style>
+                </style>
+                <section class="middle">
+                <h2>for, while, do .. while, for (var i in ...)</h2>
+                <p>W JavaScripcie mamy do dyspozycji standardowe pętle<br/>Są one składniowo identyczne np. z językiem <i>C</i><br/>Istnieje jednak kilka różnic o których warto wiedzieć:</p>
+                <div class="formula listOfPre" data-build>  
+                    <pre>  for(var i = 0, l = array.length; i < l; i += 1) { 
+  // Warto zapamiętywać długość tablic 
+  //   przy iteracji w zmiennej </pre>
+                    <pre>
+
+  for(var i in myObject) {
+      if (myObject.<b>hasOwnProperty</b>(i)) {
+          // Dopiero wtedy iterujemy 
+          // po rzeczywistych polach obiektu
+      }
+  }</pre>
+                </div>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Cacheowanie długości tablicy to bardzo ważna sprawa - może przyspieszyć iteracje nawet 4x (np. na starych firefoxach) - to kolejna zaszłość, wynikająca <br/>
+                    z drzewa DOM - tablice zwracane przez zapytania selektorów to HTMLCollection's i ich długość może się zmieniać w trakcie iteracji, naturalnym jest, że będzie pobierana<br/>
+                    wielokrotnie<br/>
+                    - W drugim przypadku bez sprawdzenia hasOwnProperty przelecimy także właściwości prototypów typu naszego obiektu - a nie do końca o to nam w tej konstrukcji chodzi.<br/>
+                    Innym rozwiązaniem tego przypadku jest skorzystanie z $.each.
+                    </section>
+                </aside>
+            </div>     
+
+            <div class="slide contentSlide" id="regexp">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>RegExp</h2>
+                    <p>Jest to kolejny uzasadniony przypadek użycia '<i>wrappera</i>'.<br/>W przypadku obiektu można podać wyrażenie regularne<br/> w postaci łańcucha znakowego:</p>
+                    <pre>  var regex = new RegExp("[abc]", "gi");       // Należy uważać na cudzysłowy.
+  var literalRegex = /[abc]/gi</pre>
+                    <p>W jednym i drugim przypadku można łatwo podać flagi dopasowań ( <i>gmi</i> )</p>                    
+                </section>
+                <aside class="note">
+                    <section>
+                    - Krótki slajd opisujący użycie wrappera do Regexów.
+                    </section>
+                </aside>
+            </div>                 
+
+            <div class="slide contentSlide" id="arrays">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Array</h2>
+                    <p>Same tablice też mają kilka <i>ciekawych</i> nieścisłości:</p>
+                    <div class="formula listOfPre" data-build>                    
+                        <pre>  new Array(3.14); // RangeError</pre>
+                        <pre>  
+  // Jak wykryć tablicę w ES3?
+  Object.prototype
+        .toString.call([]) === "[object Array]"</pre>
+                        <pre>   
+  // W języku występuje jeden obiekt
+  // pseudotablicowy - <i>arguments</i>.
+  // Jest to tablica argumentów funkcji.
+  // Posiada <i>length</i> ale nie jest tablicą.
+  var args = Array.prototype.slice.call(arguments);
+  args = [].slice.call(arguments);
+                    </div> 
+                </section>
+                <aside class="note">
+                    <section>
+                    - W pierwszym przypadku error występuje bo pierwszym parametrem jest rozmiar, drugim domyślna wartość.<br/>
+                    - W drugim przykładzie - ES5 ma własną metodę isArray - ten sposób jest zaproponowany przez Crockforda<br/>
+                    - Ostatni przykład to dwa identyczne sposoby na konwersję pseudotablicy arguments na tablicę, wszystko stanie się jasne po<br/>
+                    tym jak przybliżymy funkcje, na pocieszenie dodam, że w ES5 nie ma takiej potrzeby - arguments jest tablicą.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="json">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>JSON</h2>
+                    <p>Jest to kompletny podzbiór języka służący do opisu danych <br/>(<i>ang. JavaScript Object Notation</i>)<br/></p>
+                    <p>Zawiera on tylko elementy służące do opisu danych - tablice, obiekty, liczby,<br/> wartości boolowskie oraz literały znakowe (<b>tylko podwójne cudzysłowy</b>)</p>
+                    <pre>               { "a" : 1, "b" : true, "c" : [true, null, false] }</pre>
+                    <p>W specyfikacji ES5 mamy do dyspozycji moduł <i>JSON</i><br/>
+                    Jeśli musimy zapewnić support dla starszych przeglądarek<br/> korzystajmy z bibliotek: MS AJAX, json2.js, YUI, jQuery</p>
+                    <p><span style='color: red; font-weight: bold;'>Nigdy</span> nie korzystajmy z funkcji <i>eval</i>.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Eval jest niebezpieczny z kilku powodów: po pierwsze jeśli nie mamy zaufania co do zawartości która przyszła, możemy nieświadomie wykonać atak XSS.<br/>
+                    Po drugie dodaje on zmienne do globalnej przestrzeni, czyli tworzy zmienne globalne. Po trzecie jest niewydajny i niefektywny.<br/>
+                    - Crockford nazwał JSON najlepszym podzbiorem JavaScriptu (uzupełnił go jeszcze o domknięcia, funkcje i parę innych drobiazgów).
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="errors">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>TypeError, Error, SyntaxError</h2>
+                    <div class="formula listOfPre" data-build>
+                        <pre>  (new Error()).name</pre>                    
+                        <pre>  (new Error()).message</pre>                                            
+                        <pre>  
+  try {
+      dangerousOperation();
+  } catch(e) {
+      if (e.name === "TypeError") // ...
+  }
+  </pre>                    
+                        <pre>  throw { /* ... */ };</pre>
+                        <pre>  throw Error();</pre>                        
+                        <pre style="text-decoration:line-through;">  throw new Error();</pre>                                                
+                    </div>                    
+                </section>
+                <aside class="note">
+                    <section>
+                    - Każdy z wbudowanych wyjątków posiada predefiniowane pola name i message, jest jeden catch i w nim IFem rozpoznajemy typ wyjątku.</br>
+                    - Należy jak najbardziej unikać mechanizmu wyjątków ze względu na wydajność.<br/>
+                    - Ostatni sposób jest nieprawidłowy bo tworzymy Error poprzez wrapper zamiast prosty obiekt.
+                    </section>
+                </aside>
+            </div>
+            
+            <div class="slide" id="questions-1">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Pytania ?</h1> 
+                    <p class="message">...</p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>             
+    
+            <div class="slide transitionSlide" id="functions">
+                <style>
+                    #functions h2 {
+                        font-size: 85px !important;
+                    }  
+                    #functions p {
+                        margin-top: 15px;
+                    }
+                </style>                
+                <section class="middle">
+                    <h2>Funkcje</h2>
+                    <p>'only sky is a limit'</p>
+                </section>
+            </div>            
+
+            <div class="slide contentSlide" id="functions-basics">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Functions are objects</h2>
+                    <p>Funkcje w JavaScripcie to obiekty - mogą mieć pola, metody.<br/>Sztandardowym przykładem są pola istniejące w każdej funkcji:<br/><i>name</i>, <i>length</i>, <i>arguments</i></p>
+                    <p>Kolejna zaskakująca rzecz to zasięg:<br/> JavaScript <span style='color: red; font-weight: bold;'>nie posiada zasięgu blokowego</span>.<br/>Obowiązuje zasięg całej funkcji.</p>
+                    <pre>  var i = 100;
+  // ...                    
+  for(var i = 0; i < 10; i += 1) { /* ... */ }</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Dopiero w ES5 pojawia się wzmianka o zasięgu blokowym (słówko kluczowe let).<br/>
+                    - W przykładzie zdefiniowaliśmy zmienną ponownie, a właściwie powinienem powiedzieć "wywindowaliśmy ją do góry". Podobna sytuacja ma miejsce w switchach.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="Hoisting">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Hoisting (<i>pl. windowanie, podnoszenie</i>)</h2>
+                    <img src="src/HoistingDemo.png" alt="Hoisting demo" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Zaprezentować na przykładzie działanie wynoszenia i nadpisywanie kontekstu wywołania w zależności od nazw funkcji - ani raz nie zostala wywołana funkcja globalna, why?
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="function-literals">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Function Literals</h2>
+                    <div class="formula listOfPre" data-build>
+                        <pre>  var foo = function foo() { /* ... */ };</pre>
+                        <pre>  var foo = function() { /* ... */ };</pre>                        
+                        <pre>  function foo() { /* ... */ }         // Brak średnika!</pre>
+                        <img style="margin-top: 40px;" src="src/NamedFunctionExpression.png" alt="Named function expresssion" />
+                    </div>
+                </section>
+                <aside class="note">
+                    <section>
+                    - 1. Named function expression
+                    - 2. Anonymous function expression
+                    - 3. Function declaration (celowo brakuje średnika)
+                    - Zwrócić uwagę na brak wartości w polu name. Każdy z literałów jest potrzebny i pożyteczny.<br/>
+                    - Niestety: named function expressions są spieprzone pod IE (a jakże!) - ciekną do przestrzeni globalnej :(
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="closures-1">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Closure and <i>this</i></h2>
+                    <p><b>Domknięciem (ang. closure)</b> nazywamy kontekst wywołania funkcji, <br/>jest on przechwytywany przy wykonaniu funkcji.<br/>
+                    Dzięki temu tworzy się łańcuch odwołań (<i>ang. lookup</i>)<br/>
+                    przez co funkcja ma dostęp do wszystkich wyższych kontekstów.</p>
+                    <pre>  (function() {
+      var a = 1, b = "trolololo";
+      (function() { 
+          console.log(a);
+          console.log(b);
+      }());
+  }());</pre>
+                    <p>Wydajność: <a href="http://jsperf.com/scopelookup">Lookup cost</a></p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Analiza jak działają domknięcia i prezentacja na przykładzie, jak najdokładniej wyjaśnić kontekstowość.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="closures-2">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Closure and <i>this</i></h2>
+                    <p>Wraz z kontekstem wywołania zmienia się obiekt <b>this</b> <br/>na powiązany z aktywną funkcją.<p/>
+                    <p>Jeśli nasza funkcja potrzebuje dostęp do obiektu <i>this</i> z wyższego kontekstu,<br/> 
+                    musimy jej dostarczyć ten obiekt w postaci zmiennej dostępnej poprzez domknięcie:</p>
+                    <pre>  (function() {            
+      var self = this;
+      this.name = "Ha!";
+      (function() { 
+          console.log(self.name);
+      }());
+  }());</pre>                    
+                </section>
+                <aside class="note">
+                    <section>
+                    - Skupić się na idiomie 'self', przekazywaniu this dalej.
+                    </section>
+                </aside>
+            </div>                
+
+            <div class="slide contentSlide" id="immediate">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Immediate Functions</h2>
+                    <div class="formula listOfPre" data-build>
+                        <pre>  (function(a, b) { /* Treść funkcji */}(1,2)) </pre>
+                        <pre>  (function(a, b) { /* Treść funkcji */})(1,2) </pre>                        
+                    </div>
+                    <p><b>Zastosowanie:</b> stworzenie nowego lokalnego zasięgu, niedostępnego znikąd,<br/>
+                    <i>module pattern</i>, zadania jednorazowe, leniwa inicjalizacja.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Powiedzieć o tym, że pierwszy sposób jest poprawny z jsLint ale oba są poprawne (pierwszy jest rzekomo bardziej czytelny.<br/>
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="self-defining-idiom">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Self Defining Functions</h2>
+                    <img src="src/SelfDefiningFunctions.png" alt="Self defining functions" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Bardzo pożyteczny pattern - jednorazowa, leniwa inicjalizacja, wzorzec singleton.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="init-time-branching">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Init Time Branching</h2>
+                    <p>Jest to rodzaj wzorca <i>optymalizującego</i>.<br/>Metody i ścieżki w kodzie są wybierane w trakcie inicjalizacji<br/>
+                    co przyśpiesza ich wykonanie usuwając zbędne rozgałęzienia<p/>
+                    <pre>  if (window.addEventListener) {
+    var myEvent = function (el, type, fn) {
+                      el.addEventListener(type, fn, false);
+                  };
+    } else if (window.attachEvent) {
+               var myEvent = function (el, type, fn) {
+                                 el.attachEvent("on" + type, fn);
+                             };
+    }</pre>
+                    <p>Możliwe do zrealizowania gdy znamy strategię już w czasie inicjalizacji.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Ciekawe inne podejście do wzorca Strategia, już w czasie inicjalizacji (coś w stylu kompilacji).
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="configuration-objects">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Configuration Objects</h2>
+                    <p>Sposób przekazywania parametrów do funkcji.<p/>
+                    <pre>             myDomElement.setStyle({ "color": "red", "border-size": 0 });</pre>
+                    <p>Zamiast przekazywania kilkunastu parametrów do funkcji<br/>
+                    w odpowiedniej kolejności, może warto stworzyć obiekt <i>JSON</i><br/>
+                    i przypisać mu tylko niezbędne właściwości<br/> a następnie przesłać go do funkcji.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Musimy w tym przypadku zapamiętać nazwę właściwości, co jest łatwiejsze niż zapamiętanie kolejności, zwłaszcza, że intellisense kuleje wszędzie.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="important-functions">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>apply, call, bind, curry, memoization</h2>
+                    <p>...<i>curry</i> to nie przyprawa (Haskell Curry)</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Przedstawienie po krótce zachowań poszczególnych funkcji.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="important-functions-apply">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>apply</h2>
+                    <pre>                        method.apply(this, argumentsArray);</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Lepsza, bardziej generyczna metoda od call - tak właściwie call jest jej opakowaniem - róznica polega tylko na sposobie przekazywania argumentów.
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide contentSlide" id="important-functions-call">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>call</h2>
+                    <pre>              method.call(this, argumentsArray[0], argumentsArray[1]);</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Podajemy do niej kolejne argumenty a nie tablicę.
+                    </section>
+                </aside>
+            </div>                
+
+            <div class="slide contentSlide" id="important-functions-bind">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>bind</h2>
+                    <p>Metoda dostępna w ES5 (jest w Function.prototype).<br/>W ES3 implementacja wygląda tak:</p>
+                    <pre>  Function.prototype.bind = function( obj ) {
+          if (typeof this !== 'function') { 
+              throw new TypeError('"This" is not callable.');
+          }
+          var slice = [].slice,
+              args = slice.call(arguments, 1), 
+              self = this, 
+              nop = function () {}, 
+              bound = function () {
+                        return self.apply( this instanceof nop ? 
+                                           this : 
+                                           (obj || {}), 
+                                           args.concat(slice.call(arguments)));
+                      };
+          bound.prototype = this.prototype;
+          return bound;
+      };</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Bind służy do przywiązania za pomocą nowej funkcji podanego this i aktualnej funkcji (fabrykowanie funkcji z gotowym kontekstem wykonania).
+                    </section>
+                </aside>
+            </div>           
+
+            <div class="slide contentSlide" id="important-functions-curry">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>curry</h2>
+                    <p>Metoda przygotowująca częściowo funkcję - podajemy do niej część <br/>parametrów, a przy wywołaniu uzupełniamy tylko brakujace argumenty:</p>
+                    <pre>  Function.prototype.curry = function (fn) {
+      var slice = Array.prototype.slice,
+          args = slice.apply(arguments, [1]);
+
+      return function () {
+          return fn.apply(null, args.concat(slice.apply(arguments)));
+      };
+};</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Przygotowanie funkcji ze spreparowanymi argumentami tak, że My tylko musimy podać różnicę brakujących argumentów.
+                    </section>
+                </aside>
+            </div>      
+
+            <div class="slide contentSlide" id="important-functions-memoization">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>memoization</h2>
+                    <p>Wzorzec umożliwiający spamiętywanie wyników tymczasowych w domknięciu.<br/>W przypadku funkcji rekurencyjnych może znacznie<br/> przyspieszyć wykonywanie funkcji.</p>
+                    <pre>  var memoizer = function(memo, fundamental) {
+      var shell = function(n) { 
+                      var result = memo[n];
+                      if (typeof(result) !== 'number') {
+                          result = fundamental(shell, n);
+                          memo[n] = result
+                      }
+                      return result;
+                  };
+  };</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Zapamiętuje tymczasowe wartości w domknięciu (można na początku podać mu już wartości startowe).
+                    </section>
+                </aside>
+            </div>                  
+
+            <div class="slide contentSlide" id="lisp-comparison">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Ciekawostka*</h2>
+                    <img src="src/Lambdas.png" alt="Lambas" />
+                    <p>W JavaScripcie jest (i będzie nadal możliwe)<br/>pisanie w paradygmacie funkcyjnym:</p>
+                    <ul class="formula" data-build>
+                        <li>Lambdy</li>
+                        <li>Monady - <a href="http://igstan.ro/posts/2011-05-02-understanding-monads-with-javascript.html">implementacja</a></li>
+                        <li>Proxies (<i>ES.next</i>)</li>                        
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>
+                    - JS dostarcza spore możliwości i będzie dostarczał jeszcze większe - możliwości pisania w paradygmacie czysto funkcyjnym to duzy atut.
+                    - W programowaniu funkcyjnym, monada jest rodzajem konstruktora abstrakcyjnego typu danych, używanego do wyrażania zmieniających <br/>
+                    się stanów obliczeń (operacji) zamiast znanych z modelu dziedzinowego zmieniających się stanów danych.<br/>
+                    Monady pozwalają programiście sprzęgać ze sobą kolejno wykonywane działania i budować potoki danych, w których każda akcja jest<br/>
+                    materializacją wzorca dekoratora z dodatkowymi regułami przetwarzającymi.                    
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide" id="questions-2">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Pytania ?</h1> 
+                    <p class="message">...</p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide transitionSlide" id="objects">
+                <style>
+                    #objects h2 {
+                        font-size: 85px !important;
+                    }  
+                </style>                
+                <section class="middle">
+                    <h2>Obiekty</h2>
+                    <p>...</p>
+                </section>
+            </div>            
+
+            <div class="slide contentSlide" id="prototypes">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Prototypes</h2>
+                    <img src="src/WhatIsPrototype.png" alt="What is prototype?"/>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Czyli po polsku to szablon dla tworzonego obiektu, dodatkowo łańcuchowość zapewnia to, że każdy obiekt gdzieś będzie miał swój prototyp - na samym końcu pewnie Object.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="prototypes-quirks">
+                <style>
+                </style>
+                <section class="middle">
+                    <p><b><i>Pustość</i> obiektów w kontekście prototypów</b>.<br/>
+                    Należy <b>zawsze</b> pamiętać o prototypach przy przeglądaniu obiektów.</p> 
+                    <p>Dlaczego rozszerzanie prototypów <b>obiektów podstawowych</b> jest niebezpieczne?</p>
+                    <p>Ponieważ niesie ze sobą ryzyko <i>zaśmiecenia</i> obiektu lub <i>nadpisania</i><br/> metody standardowej bądź napisanej przez kogoś innego.<br/>
+                    Dodatkowo to podejście utrudnia przeglądanie obiektów.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Slajd samoopisujący się ;)
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="constuctors">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Constructors</h2>
+                    <p><i>Konstruktory</i> to funkcje tworzące obiekty, oznaczamy je wielką literą<br/>
+                    (nie ma rozróżnienia syntaktycznego między konstruktorem a funkcją,<br/>stąd potrzeba umownego zapisu).</p>            	 
+                </section>
+                <aside class="note">
+                    <section>                    
+                    - W takich funkcjach specjalnego znaczenia nabierają prototypy - niosą ze sobą informację dla obiektów pochodnych o ich implementacji.<br/>
+                    - jslint / jshint pilnuje tych liter.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="constructor-patterns">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Enforcing New</h2>
+                    <pre>  function Child() {
+      var that = {};
+      that.name = "Omen";
+      return that;
+  }</pre>
+                    <h2>Self invoking constructor</h2>
+                    <pre>  function Child() {
+      if (!(this instanceof Child)) {
+          return new Child();
+      }
+  }</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - W pierwszym przypadku nieważne czy pominiemy new czy nie obiekt zostanie zwrócony poprawnie.<br/>
+                    - W drugim mamy do czynienia z wywołaniem zaleznym od instancji która nas stworzyła - jeśli nie użyto konstruktora child to należy po poprawić.<br/>
+                    - Należy unikać arguments.callee - jest wyrzucone z ES5.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="namespaces">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Namespaces</h2>
+                    <pre>  var namespace = function(obj) {
+      var args = Array.prototype.slice.call(arguments, 1), 
+          parts = [], original = obj,
+          a, i;
+      for(a in args) {
+          if (args.hasOwnProperty(a)) {
+               parts = args[a].split('.');
+               obj = original;
+               for(i in parts) {
+                   if (parts.hasOwnProperty(i)) {
+                       if (!obj[parts[i]]) {
+                           obj[parts[i]] = {};
+                       }
+                       obj = obj[parts[i]];
+                   }
+               }
+          }
+      }
+  };</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Metoda przyjmuje obiekt do którego dodamy namespaces oraz kolejne stringi które będą parsowane a potem dodawane do obiektu.
+                    </section>
+                </aside>
+            </div>                
+
+            <div class="slide contentSlide" id="private-members">
+                <style>
+                </style>
+                <section class="middle">
+                <h2>Private</h2>
+                <p>Jak uzyskać metody i pola prywatne?</p>
+                <pre>  var privateMembersInside = (function() {
+      var alias1 = MYAPP.dom.events,  
+          alias2 = MYAPP.dom,
+          <b>privField = 1</b>;
+      <b>function privMethod() {}</b>
+
+      return {
+        publicMethod : function() { return privField; },  // Priviledged Method
+        publicField : 12
+      };
+  }());</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    o Musimy stworzyć nowy scope (funkcja, lub immediate function call) który ustawia publiczne parametry z kontekstem this.
+	            	  a prywatne jako zmienne lokalne, dzięki temu nie zmienne lokalne nie wyciekną na zewnątrz. Istnieje nazewnictwo nadane przez Crockforda
+            		  dot. publicznych funkcji które mają dostęp do prywatnych że są uprzywilejowane (ang. priviledged).
+            		o ALE: czasem w Fx można było poprzez eval() dostać się do prywatnego kontekstu, analogicznie do property w Rhino __parent__, dodatkowo
+            		  jeśli metoda uprzywilejowana zwraca tablicę lub obiekt to operujemy poprzez referencje, na prywatnym obiekcie.
+                
+                    + Declaring dependencies (deklaracja "aliasów" do przestrzeni nazw, obiektów na początku funkcji):<br/>
+                        + Jawne określenie zależności na górze funkcji<br/>
+                        + Dokładne określenie czego potrzebuje dana funkcja do działania<br/>
+                        + Zmniejszenie tzw. lookup cost, praca na zmiennych lokalnych "zacheowanych" w naszym lokalnym zasięgu jest mniej kosztowna<br/>
+                        + Ułatwiamy pracę narzędziom które zmniejszają rozmiar skryptów (bo mogą one w ramach funkcji zmienić nazwę zmiennej lokalnej bez obaw).                    
+                    </section>
+                </aside>
+            </div>      
+
+            <div class="slide contentSlide" id="module-pattern">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Module pattern</h2>
+                <pre>  var privateMembersInside = (function(<b>global</b>) {
+      var alias1 = MYAPP.dom.events,  
+          alias2 = MYAPP.dom,
+          privField = 1;
+      function privMethod() {}
+
+      <b>return {
+        publicMethod : function() { return privField; },
+        publicField : 12
+      };</b>
+  }(<b>this</b>));</pre>
+                </section>
+                <aside class="note">
+                <section>
+                    + Module pattern (funkcja immediate call, zwracająca literał obiektowy operujący na domknięciu modułu - wystawiamy przez literał
+                	właściwe "API", interfejs naszego obiektu):
+            		o Revealing public API - zwrócenie obiektu z dostępnymi metodami, polami.
+            		o Moduły mogą tworzyć w swoim wnętrzu konstruktory - i je zwracać, do nowego obiektu.
+            		o Modułom powinno się wstrzykiwać referencje do globalnych obiektów. Pozwala to na większą elastyczność i lepsze dopasowanie.	                
+                    - Rożnica między "module pattern" a prototypami jest subtelna i wynika z możliwości (lub jej braku podmiany implementacji) - w przypadku<br/>
+                    prototypów można czasem nawet przez przypadek nadpisać implementację, w przypadku modułu gdy dwie funkcje korzystają z jednej wspólnej<br/>
+            		nadpisując poprzez wystawione API implementacje jednej z funkcji, druga operuje na oryginalnej prywatnej funkcji.
+                    </section>
+                </aside>
+            </div>      
+
+            <div class="slide contentSlide" id="sandbox-pattern">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Sandbox pattern</h2>
+                    <p>Implementacja konstruktora globalnego (z <i>zapewnieniem new</i>),<br/>
+                    który wywołuje callback dostarczony w argumencie<br/>
+                    (jest to przestrzeń do której będzie mógł się dodać).</p>
+                    <p>Sam <i>Sandobox</i> trzyma wszystkie moduły i odniesienia do nich,<br/>
+                    i na podstawie wybranego po nazwie modułu będzie mogł go dostarczyć <br/>
+                    do naszej implementacji - pattern służy zmniejszeniu kolizji nazw<br/> i zwiększeniu <i>enkapsulacji</i> modułów.</p>
+                </section>
+                <aside class="note">
+                    <section>
+
+                    </section>
+                </aside>
+            </div>      
+
+            <div class="slide contentSlide" id="static">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Static members</h2>
+                    <p>Statyczne metody publiczne definiujemy bez prototypu.<br/>Są dostępne zawsze po kropce z nazwą modułu.<p/>
+                    <p>W przypadku prywatnych - musimy znów odgrodzić się nową funkcją,<br/><i>lokalnym zasięgiem</i> i tam zadeklarować zmienną<br/> 
+                    a następnie dodać do prototypu (lub nie) wszystkie inne elementy.</p>
+                </section>
+                <aside class="note">
+                    <section>        
+                    - Samoopisujący się slajd ;)
+                    </section>
+                </aside>
+            </div>                  
+
+            <div class="slide contentSlide" id="const">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Constants</h2>
+                    <p>Słowo kluczowe <b>const</b> istnieje ale nie jest wspierane przez <i>IE</i> i <i>Operę</i>.<p/>
+                    <p>Aby zasymulować stałe dla obiektów, najlepiej:<br/>albo przyjąć odpowiednią konwencję nazewniczą (np. ALLCAPS)<br/>
+                    albo symulować dostęp przez proste <i>gettery</i> i <i>settery</i><br/>(w ES5 jest słówko <b>const</b>, są też gettery i settery wbudowane w język).</p>                
+                </section>
+                <aside class="note">
+                    <section>
+                    - Slajd samoopisujący się ;)
+                    </section>
+                </aside>
+            </div>                
+
+            <div class="slide contentSlide" id="chaining">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Chaining</h2>
+                    <pre>         $("p.neat").find("div#ohmy").children(".om-nom-nom").fadeOut();</pre>
+                    <p>Chyba każdy kto korzystał z <i>jQuery</i> jest zaznajomiony z tym patternem.<br/>
+                    Jego implementacja jest bardzo prosta - z każdej funkcji zwracany jest główny<br/>(ale zmodyfikowany) obiekt</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Chaining - zwracanie this, lub innych obiektów w celu wywołania kolejnych funkcji:
+            		+ Wygląd i czytelność
+            		- debugowanie tego to koszmar (train wreck antipattern)                    
+                    </section>
+                </aside>
+            </div>                
+
+            <div class="slide contentSlide" id="code-reuse-pattenrs">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Code Reuse Patterns</h2>
+                    <p>Tradycyjne podejście do hierarchii klas zawodzi w tym przypadku.</p>
+                    <p>Wynika to ze specyfiki języka - w JavaScripcie <br/>implementacja modelu dziedziczenia jest oparta na łańuchach prototypów.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Podejście klasyczne: klasa to "wzór" (ang. blueprint) dla każdej instancji danego typu.<br/>
+                    W JavaScripcie gdzie obiekty to tak naprawdę kolekcje zawierające pary (key-value) dosyć dynamiczne i elastyczne<br/>
+                    statyczny model dziedziczenia jest nałożonym ograniczeniem - można zrobić dużo więcej, dużo łatwiej - nie tracąc <br/>
+                    stabilności i jakości.<br/>
+                    - Nie "Class" a "constructor/construction function" - nie ma pojęcia klasy w JS, te określenia mimo, że dłuższe dokładniej<br/>
+            		odzwierciedlają naturę tego problemu.
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="default-pattern">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Default Pattern</h2>
+                    <pre>                   function inherit(C, P) { C.prototype = new P() }; </pre>
+                    <p>Uwaga: <i>prototype</i> musi byś zawsze konkretnym obiektem, więc new jest tu niezbędne.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Korzystamy z łańcucha prototypów - naturalność, kosztem niefortunnych zachowań np. dziecko nadpisuje zachowanie klasy bazowej.<br/>
+                    - Nie da się wymusić przy domyślnym dziedziczeniu aby przekazywać parametry do konstruktora - należało by dziedziczyć</br>
+        			  z każdą instancją co jest nieefektywne.                    
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide contentSlide" id="rent-a-contructor">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Rent-a-Constructor</h2>
+        			<pre>                 function Child(name) { Parent.apply(this, arguments); } </pre>
+                    <p> Poprawia błąd poprzedniego wzorca i aplikuje parametry<br/> wybrane z konstruktora bazowego dziedziczenia<br/> do konstruktora pochodnego.</p>                
+                </section>
+                <aside class="note">
+                    <section>
+        			+ Nie dziedziczy bezpośrednio z łańcucha prototypów, przez co dziecko przez przypadek nie nadpisze implementacji rodzica.
+        			+ Łatwo zaimplementować w tym przypadku wielodziedziczenie.
+        			- Skoro nie korzysta z prototypu, to znaczy, że każda reużywalna metoda jest zwielokrotniona (skopiowana) dla każdej instancji.                    
+                    </section>
+                </aside>
+            </div>        
+
+            <div class="slide contentSlide" id="rent-and-set-proto">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Rent and set prototype</h2>
+			        <pre>                 function Child(name) { Parent.apply(this, arguments); }
+                            Child.prototype = new Parent();</pre>
+                    <p>Kombinacja dwóch poprzednich sposobów dziedziczenia - pożyczamy konstruktor oraz przypisujemy prototyp.</p>                
+                </section>
+                <aside class="note">
+                    <section>
+                    + Łączy zalety poprzednich i do tego łańcuch prototypów zachowuje się poprawnie.
+                    </section>
+                </aside>
+            </div>        
+
+            <div class="slide contentSlide" id="share-proto">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Share prototype</h2>
+        			<pre>                 function inherit(C, P) { C.prototype = P.prototype; } </pre>
+                    <p>Współdzielimy prototyp między poszczególnymi funkcjami konstruktora.</p>                
+                </section>
+                <aside class="note">
+                    <section>
+        			+ szybki lookup bazujący tylko na prototypach
+            		+ nie ma żadnej konieczności wywoływania konstruktorów bazowych
+        			- nadal pochodne obiekty mogą zmienić prototyp modyfikując obiekty bazowe.	                    
+                    </section>
+                </aside>
+            </div>        
+
+            <div class="slide contentSlide" id="temp-constuctor">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Temporary constructor</h2>
+        			<pre>  function inherit(C, P) { 
+      var F = function() {};        // To można stworzyć raz - optymalizacja.
+      F.prototype = P.prototype;
+      C.prototype = new F();
+      C.uber = P.prototype;         // Nadklasa - sztuczna 
+                                    // ciągłość w łańcuchu prototypów.
+      C.prototype.constructor = C;  // Resetowanie konstruktora
+                                    // aby określić właściwie pochodzenie.
+  }</pre>
+                <p>Przerywa połączenia obiektów bazowych z pochodnymi za pomocą tymczasowego konstruktora - "proxy".</p>
+                </section>
+                <aside class="note">
+                    <section>
+        			+ Korzysta w sposób naturalny z prototypów.
+		        	+ Przypadkowa zmiana prototypu przez obiekt pochodny nie wchodzi w grę.
+        			- Łamie łańcuch prototypów poprzez "uber"                    
+                    </section>
+                </aside>
+            </div>                    
+
+            <div class="slide contentSlide" id="klass">
+                <style>
+                </style>
+                <section class="middle">
+                <h2>Klass</h2>
+                <p>Jest to <i>syntax sugar</i> dla emulacji klas - wykorzystuje pattern <i>proxy constructor</i> oraz kilka umownych nazw (__construct).
+                Buduje właściwą klasę pochodną zwracając rozszerzony obiekt po zaaplikowaniu zmian związanych z wzorcem konstrukcyjnym.</p> 
+                <p>Generalnie rozwiązanie niepolecane ze względu na sztuczność w tym języku,<br/> 
+                potencjalne błędy wynikające własnej implementacji.<br/>Jedyną zaletą jest naturalność dla innych programistów <br/>zaznajomionych z ideą OOP.</p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>  
+
+            <div class="slide contentSlide" id="prototypal-inheritance">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Prototypal Inheritance</h2>
+    	    			<pre>  function object(parent) {
+      function F() {}
+      F.prototype = parent;
+      return new F();
+  }</pre>
+                <p>Naturalne, w pełni korzystające z prototypów wyjście<br/>do tego szybkie, korzystające tylko z elementów języka.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    + Ma swój rozszerzony odpowiednik w ES5 - Object.create.
+                    + ES5.Create - drugi argument na specyfikatory properties: gettery, settery, opis czy pole może być iterowalne, zapisywalne etc.                    
+                    </section>
+                </aside>
+            </div>  
+
+            <div class="slide contentSlide" id="extend">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Extend (aka. Shallow Copy)</h2>
+        			<pre>                   function extend(parent, child) { ... } </pre>
+                    <p>Kopiowanie właściwości do dziecka - płytka kopia,<br/>referencje są przepisywane do obiektu dziecka.</p>                
+                </section>
+                <aside class="note">
+                    <section>
+        			+ Dokładne kopiowanie wg szablonów, dodatkowo w wersji "deep" są to lustrzane kopie.
+		        	- W wersji płytkiej nadziejemy się na referencje.
+        			- Łamie hierarchię z rodzicami.                    
+                    </section>
+                </aside>
+            </div>        
+
+            <div class="slide contentSlide" id="mixin">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Mix-in (ang. mixed in)</h2>
+        			<pre>    function mix() { /* Scalamy obiekty przesłane w argumentach do funkcji */ } </pre>
+                    <p>Idea zaczerpnięta z języka <i>Ruby</i>, korzystamy z wielu obiektów<br/> dostarczonych jako parametry i składamy z nich jeden obiekt.</p>                
+                </section>
+                <aside class="note">
+                    <section>
+        		 	+ Prostota implementacji
+		            + "Wielodziedziczenie"
+        			- Łamie hierarchię z rodzicami.                    
+                    </section>
+                </aside>
+            </div>   
+
+            <div class="slide contentSlide" id="borrow">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Borrow</h2>
+                    <p>Pożyczanie metod z jednego obiektu do drugiego - wykorzystanie w tym celu metod <i>apply</i>, <i>call</i>, <i>bind</i>, <i>curry</i>.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Pożyczanie pojedynczych metod za podanych sposobów, prosty i efektywny pattern, wadą jest to, że obiekt który pożycza musi mieć podobny uklad pól itp. aby mozna było do niego
+                    zaaplikować pozyczone metody (niebezpieczenstwo łamania DRY).
+                    </section>
+                </aside>
+            </div>               
+
+            <div class="slide" id="questions-3">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Pytania ?</h1> 
+                    <p class="message">...</p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide transitionSlide" id="bad-parts">
+                <style>
+                    #bad-parts h2 {
+                        font-size: 85px !important;
+                    }  
+                    #bad-parts p {
+                        margin-top: 25px;
+                    }                    
+                </style>                
+                <section class="middle">
+                    <h2>Bad parts</h2>
+                    <p>...czyli pola minowe</p>
+                </section>
+            </div>                
+
+            <div class="slide contentSlide" id="bad-parts-desc">
+                <style>
+                </style>
+                <section class="middle">
+                    <ul class="formula" data-build>
+                        <li>Zmienne globalne</li>
+                        <li>Klauzula <i>with</i></li>
+                        <li>Zasięg funkcyjny</li>
+                        <li>Niejawne dodawanie średników</li>
+                        <li>Literały ósemkowe i parseInt</li>
+                        <li>Operatory bitowe</li>
+                        <li>Zachowanie <i>Array</i> (<i>typeof</i>), <i>NaN</i></li>
+                        <li>hasOwnProperty</li>
+                        <li>Operatory ==/!=</li>
+                        <li>eval</li>
+                        <li>Nieużywane słowa kluczowe</li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    - Z zasięgu wynika hositing.<br/>
+                    - 'with' jest niejednoznaczny.<br/>
+                    - parseInt domyślnie korzysta z podstawy ... 8kowej :(<br/>
+                    - Operatory bitowe przez to, że Number jest zmiennoprzecinkowe są koszmarnie wolne.<br/>
+                    - hasOwnProperty - to nie operator tylko metoda, więc można ją nadpisać i skończy się to źle dla zabezpieczonych pętli for(...in).<br/>
+                    - eval sam w sobie jest zły, ze względu na evaluację kodu na poziomie globalnym, ale nie tylko eval jest groźny<br/>
+                    również setTimeout/setInterval i new Function korzystają z identycznej ewaluacji.<br/>
+                    - W języku jest naprawdę spora lista nieużywanych słów kluczowych, które po prostu przeszkadzają.
+                    </section>
+                </aside>
+            </div>                
+
+            <div class="slide contentSlide" id="automatic-semicolon-insertion">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Automatic semicolon insertion</h2>
+                    <img src="src/AutomaticSemicolonInsertion.png" alt="Automatic semicolon insertion"/>
+                    <img src="src/Invoking function - ilustration.png" alt="Invoking function - ilustration"/>                    
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>    
+
+            <div class="slide contentSlide" id="automatic-semicolon-insertion-fpdev2">
+                <style>
+                </style>
+                <section class="middle">
+                    <img src="src/Invoking functions.png" alt="Invoking function - fpdev2 case study"/>                    
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide contentSlide" id="automatic-semicolon-insertion-fpdev2-solution">
+                <style>
+                </style>
+                <section class="middle">
+                    <img src="src/Invoking functions 2.png" alt="Invoking function - fpdev2 solution"/>                    
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>                
+
+            <div class="slide transitionSlide" id="good-parts">
+                <style>
+                    #good-parts h2 {
+                        font-size: 85px !important;
+                    }  
+                    #good-parts p {
+                        margin-top: 25px;
+                    }                     
+                </style>                
+                <section class="middle">
+                    <h2>Good parts</h2>
+                    <p>...czyli mocne strony JavaScriptu</p>
+                </section>
+            </div>        
+
+            <div class="slide contentSlide" id="good-parts-desc">
+                <style>
+                </style>
+                <section class="middle">
+                    <ul class="formula" data-build>                
+                        <li>Funkcje jako obiekty generyczne</li>
+                        <li>Dynamiczne obiekty</li>
+                        <li>Dziedziczenie prototypowe</li>
+                        <li>Literały obiektowe i tablicowe (JSON)</li>
+                        <li>Duża elastyczność w sposóbie programowania</li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>
+                    
+                    </section>
+                </aside>
+            </div>                
+
+            <div class="slide" id="questions-4">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Pytania ?</h1> 
+                    <p class="message">...</p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide transitionSlide" id="env">
+                <style>
+                    #env h2 {
+                        font-size: 85px !important;
+                    }  
+                    #env p {
+                        margin-top: 10px;
+                    }                     
+                </style>                
+                <section class="middle">
+                    <h2>Otoczenie</h2>
+                    <p>DOM oraz JIT</p>
+                </section>
+            </div> 
+
+            <div class="slide contentSlide" id="dom-1">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Javascript !== DOM</h2>
+                    <ul class="formula" data-build>                 
+                        <li><i>DOM</i> - Document Object Model</li>
+                        <li><i>BOM</i> - Browser Object Model</li>
+                        <li><i>window</i> is a browser global object</li>
+                        <li><i>document.createDocumentFragment</i></li>
+                        <li><i>XSLTProcessor</i>, <i>XMLDocument</i></li>
+                        <li><i>querySelectorAll</i></li>
+                        <li><i>Don't call us, we'll call you!</i> Events ;)</li>
+                        <li>Delegacja zdarzeń (e.target)</li>
+                        <li><i>DOMContentLoaded</i></li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Trochę w stylu rzucania haseł - cięzko wszystkie arkana wyłożyć w tak krótkiej prezentacji, skup się tu raczej na pokazywaniu<br/>
+                    dobrych wzorców, informowaniu o czymś o czym można nie wiedzieć.<br/>
+                    - Delegacja zdarzeń i e.target (vel. e.srcElement) - propagowanie zdarzeń w dół (event na główny div, reszta korzysta z <br/>
+                    wspólnej implementacji, w której tylko należy zmienić kolor, styl elementu ale operacje są wykonywane niezależnie, zgodnie z wzorcem).<br/>
+                    - DOM a BOM - The Browser Object Model is a larger representation of everything provided by the browser including the current document, <br/>
+                    location, history, frames, and any other functionality the browser may expose to JavaScript. The Browser Object Model is not standardized <br/>
+                    and can change based on different browsers. The Document Object Model is standardized and is specific to current HTML document. It is exposed <br/>
+                    by the Browser Object Model (i.e., DOM is a subset of BOM).
+                    </section>
+                </aside>
+            </div> 
+
+            <div class="slide contentSlide" id="dom-2">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2><i>John Resig: "The DOM is a MESS"</i></h2>
+                    <ul class="formula" data-build>
+                        <li>Atrybuty <i>selected</i>, <i>disabled</i> etc.</li>
+                        <li><i>addEventListener</i> vs. <i>attachEvent</i></li>
+                        <li><i>e.stopPropagation</i> vs. <i>e.cancelBubble</i></li>                        
+                        <li>Problem <i>onkeydown</i> w Operze</li>
+                        <li>jQuery, Microsoft Ajax, Prototype...</li>
+                        <li><i>setTimeout(..., 0)</i></li>
+                        <li><i>XHR</i> a <i>JSONP</i></li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Informacja o setAttribute (checked, disabled, selected) i ... removeAttribute, bo nie może go być jeśli chcemy włączyć mimo, że zgodnie ze schemą XTHML powinien mieć wartość<br/>
+                    żeby być aktywnym.<br./>
+                    - IE9 ma dopiero addEventListener, nietypowość w obiekcie event dotyczy też preventDefault().<br/>
+                    - Opera: chodzi o brak możliwości anulowania zdarzenia i nie możliwość powtarzania zdarzeń klawiszy z automatu (onkeypress tylko tak działa).<br/>
+                    - Różnego rodzaju frameworki przykrywaja ten bałagan ale musimy wiedzieć co jest pod spodem. Brak wiedzy mści się straszliwie (podać przykład z iframe pod IE i DOMContentLoaded).<br/>
+                    - MS AJAX - rozszerza String, Array, Date - dodaje Sys.UI - do obliczania fizycznych parametrów dla elementów DOM, dodaje StringBuilder (który jest banalny do zrobienia).
+                    - StringBuilder - tablica + metoda join. 
+                    - Pattern dla długo trwających metod (0 oznacza zrób asynchronicznie tak szybko jak się da, a nie natychmiast) - każda przeglądarka ma swoje minimalne czasy (nigdy to nie jest 0). 
+                    - XHR - domain policy, JSONP - brak tego ograniczenia, ale niebezpieczeństwo XSS - na JSONP zbudowane jest API Twittera.
+                    </section>
+                </aside>
+            </div> 
+
+            <div class="slide contentSlide" id="dom-3">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Errors handling</h2>
+                    <p>Globalna funkcja obsługi błędów:</p>
+                    <pre>   window.addEventListener("error", function() { /* Error handler */ }, false);</pre>
+                    <p>IE 6/7/8 ma bardzo <i>nieleganckie zachowanie</i><br/> polegające na <i>wyciszaniu błędów</i><p/>
+                    <p>Błędy pokazują się tylko przy aktywnej konsolce,<br/>a na dodatek przy ukrytej konsolce wspomniany handler się nie wywołuje.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - window.onerror to prymitywny mechanizm, ale to ostatnia linia obrony przed niezłapanymi wyjątkami. W związku ze słabą integracją wyjątków JS <br/>
+                    z DOM i BOM musimy tak pisać programy aby nie powodowały błędów i jak najwcześniej wyłapywały problemy. O technikach wspomagających tego typu pisanie<br/>
+                    opowiemy potem (rozdział design patterns).
+                    </section>
+                </aside>
+            </div> 
+
+            <div class="slide contentSlide" id="repaint-and-reflow">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Repaint &amp; Reflow</h2>
+                    <div class="formula" data-build>
+                        <p><b>Reflow</b> - przeliczenie fizycznych właściwości i ponowne ułożenie elementów. <br/>Następuje po zmianach layoutu, geometrii tj. dodawanie/usuwanie elementów, <br/>
+                        zmiana rozmiaru, resize, zmiana zawartości.</p>
+                        <p><b>Repaint</b> - odmalowanie fragmentu drzewa po zmianie stylu lub<br/> po zdarzeniu <i>reflow</i>.</p>                    
+                    </div>
+                </section>
+                <aside class="note">
+                    <section>         
+                    - Pokazać filmik z wikipedią - <a href="http://video.google.com/videoplay?docid=-5863446593724321515#">reflow animation</a>.
+                    </section>
+                </aside>
+            </div> 
+
+            <div class="slide contentSlide" id="repaint-and-reflow-img">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Rendering process:</h2>
+                    <img style="padding: 2px;"src="src/RenderingProcess.png" alt="Rendering process">
+                </section>
+                <aside class="note">
+                    <section>          
+                    - Zwrócić uwagę na to że operacje na drzewie DOM i stylach powodują prawie zawsze pełen cykl reflow, repaint.
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide contentSlide" id="repaint-and-reflow-opt">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Repaint &amp; Reflow - optimization</h2>
+                    <ul class="formula" data-build>
+                        <li>Grupowe operacje DOM (<i>DocumentFragment</i>)</li>
+                        <li>Grupowanie operacji na stylach (<i>cssText</i>)</li>
+                        <li>Cache'owanie pobranych elementów</li> 
+                        <li>Zawężanie obszaru animowanego</li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>     
+                    - Opowiedzieć wiecej o API DocumentFragment.<br/>
+                    - Pokazać różnicę w dodawaniu styli.<br/>
+                    - Co to znaczy cacheowanie elementów pobranych z drzewa? Nie chodzi o detach, tylko o zawężanie przedziału przeszukiwań i nie wyszukiwanie za każdym razem kontenera do dodania.<br/>
+                    - Zawężanie za pomocą selektorów.
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide contentSlide" id="feature-detection">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Feature detection<br/>vs.<br/>User Agent Sniffing</h2>
+                    <p>Podstawową techniką wykrywania powinno być<br/><i>wykrywanie funkcjonalności</i>.</p>
+                    <p><i>Wykrywanie oparte na User Agent</i> ma sens<br/> tylko jako technika wspomagająca.</p>
+                    <p>Dlaczego? Główny powód to łatwość podmiany<br/>takiego stringa. Kolejny, to oszustwa samych przeglądarek.</p>                    
+                </section>
+                <aside class="note">
+                    <section>
+                    - Głównym celem wykrywania przeglądarki jest dostosowanie kodu do środowiska w którym będzie uruchamiany. Wszelkie błędnie poczynione założenia,<br/>
+                    także te wykryte z UAStringa lub założone na podstawie samego odcisku odbiją się negatywnie na działaniu aplikacji - potrzebne jest jak najdokładniesze<br/>
+                    badanie, jak najdokładniejsza metoda - a nie ma metody bardziej dokładnej niż sprawdzenie czy podany element funkcjonalności istnieje, czy da się go wywołać<br/>
+                    czy po wywołaniu element zachowuje się poprawnie. Ciekawym pomysłem byłoby budowanie systemu założeń w oparciu o UT w projekcie - budowanie swoistej bazy wiedzy<br/>
+                    o środowisku, które umożliwiłoby dokładniejsze dostosowanie frameworków projektowych do środowisk uruchomieniowych.
+                    </section>
+                </aside>
+            </div>                 
+
+            <div class="slide contentSlide" id="jit">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Just-in-time Compilation Engines</h2>
+                    <p>V8, Carakan, Chakra, JaegerMonkey, JavaScriptCore</p>
+                    <ul class="formula" data-build>
+                        <li><i>Method JIT</i> - V8 (CrankShaft), Carakan, Chakra</li>
+                        <li><i>Tracing JIT</i> - JaegerMonkey (IonMonkey)</li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Wspomnieć o tracing JIT i method JIT - czym się różnią i na co zwracać uwagę przy optymalizacji.<br/>
+                    - Method JIT preferuje małe metody, dobrze wyselekcjonowane - po osiągnięciu odpowiedniego licznika wywołań metoda jest kompilowana i keszowana.<br/>
+                    - Tracing JIT to zupełnie co innego. Tracing nie kompiluje metod a przepływ kodu - liczy się odpowiedni przepływ kodu, gałęzie wykonywanego programu.<br/>
+                    Widać wyraźnie, że metoda jest dużo trudniejsza w implementacji ale może dawać dużo lepsze rezultaty - przeszkodą jest dynamiczne typowanie, jeśli te same zmienne<br/>
+                    mają różne typy w jednym przepływie to całość jest do wyrzucenia i nie uda się takiej metody skompliować i zkeszować.<br/>
+                    - JaegerMonkey to rewolucyjny ale niedopracowany JIT.<br/>
+                    - Optymalizacja "dead code", IE9 ma optymalizacje "living code" - w SpiderMonkey wyrzuca całą funkcję bo nic nie zwraca i nie kontaktuje się z otoczeniem.
+                    - V8 jest najszybszy, Crankshaft to następca - równie szybki jest silnik Chakra IE10, IonMonkey czeka na ulepszenia które mogą zmiażdżyć konkurencję.
+                    </section>
+                </aside>
+            </div> 
+
+            <div class="slide contentSlide" id="benchmarks">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Benchmarks</h2>
+                    <p>V8, SpiderMonkey, Dromaeo, Kraken</p>
+                    <p>Testy z <i>IE10 Platform Preview</i> to nie są benchmarki ;]</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Benchmarki to miarodajne testy. Nie powinny być syntetyczne, powinny jak najlepiej odzwierciedlać rzeczywiste aplikacje.<br/>
+                    - Zdecydowanie najlepsze testy to dromaeo (złożenie V8, SpiderMonkey i mozilla tests).
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="deployment">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Deplyoment</h2>
+                    <ul class="formula" data-build>                    
+                        <li>Minimalizacja skryptów, kompresja (<i>gzip</i>)</li>
+                        <li>Prawidłowe nagłówki '<i>ExpireDate</i>'</li>
+                        <li>Content Delivery Network, Domain Sharding</li>
+                        <li>Rozmieszczanie skryptów</li>
+                        <li>Nieblokujące ściąganie skryptów</li>
+                        <li><i>require</i></li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>
+                    - ...najlepiej: jeden zaraz przed &lt;body/&gt; a jeśli musi być w &lt;head&gt; to też tylko jeden.
+                    - ...defer, async (HTML5) - albo XHR + eval, <i>dynamic script tags</i>
+                    - Deployment to bardzo ważny element budowania aplikacji webowej. Tutaj również nowe technologie dostarczają wzorców i rozwiązań<br/>
+                    - Minimalizacja i scalanie skryptów to podstawa. Nieblokujące ładowanie skryptów to także ważny feature.<br/>
+                    - Do walki z zależnościami można zaprząc pattern require (do odnalezienia na stronach internetowych, jako gotowe biblioteki - rozwiązanie nie jest trywialne mimo wszystko).
+                    </section>
+                </aside>
+            </div>                    
+
+            <div class="slide" id="questions-5">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Pytania ?</h1> 
+                    <p class="message">...</p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide transitionSlide" id="design-patterns">
+                <style>
+                    #design-patterns h2 {
+                        font-size: 85px !important;
+                    }  
+                    #design-patterns p {
+                        margin-top: 25px;
+                    }                     
+                </style>                
+                <section class="middle">
+                    <h2>Design Patterns</h2>
+                    <p>Singleton, Factory, Observer, Strategy, Module pattern, Coding patterns</p>
+                </section>
+            </div>  
+
+            <div class="slide contentSlide" id="singleton">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Singleton:</h2>
+			        <pre>  function Universe() {
+        var instance;
+
+        Universe = function Universe() {
+                             return instance;
+                          };	
+
+        Universe.prototype = this;
+        instance = new Universe();
+        instance.constructor = Universe;
+
+        this.start_time = 0;
+        this.message = "Big bang!";
+				
+        return instance;
+  }</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Korzystamy z nadpisywania zawartości funkcji oraz lokalnego zasięgu do ukrycia zmiennych przed światem.<br/>
+                    - Możemy mieć tylko jeden wszechświat przecież ;)
+                    </section>
+                </aside>
+            </div>               
+
+            <div class="slide contentSlide" id="factory">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Factory:</h2>
+                    <pre>  CarMaker.factory = function(type) {
+      var constr = type, newcar;
+				
+      // Sprawdzenie czy "constr" znajduje się naszym obiekcie.
+      // Inicjalizacja dziedziczenia i prototypów.				
+
+      // Tworzymy obiekt.
+      newcar = new CarMaker[constr];
+      return newcar;
+  };
+
+  // Metody fabrykujące obiekty - wyszukiwane po nazwie.
+  CarMaker.Compact = function() {};
+  CarMaker.SUV = function() {};
+  CarMaker.Convertible = function() {};</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - W JS bardzo łatwo zaimplementować fabrykę ze względu na łatwość definiowania callbacków/delegatów etc. 
+                    </section>
+                </aside>
+            </div>  
+
+            <div class="slide contentSlide" id="observer">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Observer:</h2>
+                    <pre>
+  function Observer() {
+      this.fns = [];
+  }
+  Observer.prototype = {
+      subscribe : function(fn) {
+          this.fns.push(fn);
+      },
+      unsubscribe : function(fn) {
+          this.fns = this.fns.filter(function(el) {
+                                        if ( el !== fn ) {
+                                           return el;
+                                        } 
+                                     });
+      },
+      fire : function(o, thisObj) {
+          var scope = thisObj || window;
+          this.fns.forEach(function(el) { el.call(scope, o); });
+      }
+  };</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    
+                    </section>
+                </aside>
+            </div>  
+
+            <div class="slide contentSlide" id="stategy">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Strategy:</h2>
+                    <pre>  // Główna funkcja walidacji.
+  var type = el.getAttribute('validationtype');
+  var isValid = Validator[type];
+
+  if ( cic.visible(el) ) { 
+      if ( !isValid(el) ) {
+          element.style.border = "1px solid #B23232";
+          errors.push(element.getAttribute('validationmsg'));
+      } else {
+          element.style.border = "1px solid #CAD5DE";
+      }
+  }
+
+  // Walidacja zależna od typu.
+  var Validator = {
+      "text": function (data) {},
+      "email": function (data) {},
+      // ...
+  }</pre>                
+                </section>
+                <aside class="note">
+                    <section>
+                    - Standardowy wzorzec strategii - to wybór algorytmu w trakcie działani/w czasie kompilacji.<br/>
+                    - Na podstawie danych przechowywanych w widoku, kontroler podejmuje decyzję o wyborze strategii walidacji.<br/>
+                    </section>
+                </aside>
+            </div>  
+
+            <div class="slide contentSlide" id="module">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Module pattern:</h2>
+                    <pre>  var MODULE = (function (global) {
+      var my = {}, 
+          privateVariable = 1; 
+
+      function privateMethod() { 
+             // ... 
+      } 
+     
+      my.moduleProperty = 1; 
+      my.moduleMethod = function () { 
+            // ... 
+      }; 
+     
+      return my; 
+  }(this));</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Import globalnej przestrzeni nazw.<br/>
+                    - Export tylko niezbędnej funkcjonalności reszta zamknięta w lokalnym zasięgu, dostęp przez funkcje uprzywilejowane.<br/>
+                    - Zwróćmy uwagę na nawiasy otaczające immediate function - w zgodzie z jsLint - natomiast mogą być jeszcze wokół samego ciała funkcji i też będzie poprawnie.
+                    </section>
+                </aside>
+            </div>  
+
+            <div class="slide contentSlide" id="unobtrusive-js">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Unobtrusive JavaScript</h2>
+                    <p>Dosłowne tłumaczenie to <i>dyskretny JavaScript</i><br/>Sama koncepcja jest prosta - chodzi o rozdzielenie<br/>warstwy zachowania od warstwy semantycznej<br/></p>
+                    <p>Ma to na celu udostępnienie informacji jak największej ilości osób,<br/> także tym którzy z JavaScriptu nie korzystają.<p/>
+                    <p>Również zapobiega to sytuacji<br/> gdy błędy mogą zablokować dostęp do zawartości strony.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Dyskrecja JS polega na nieblokowaniu dostępu do informacji i warstwy semantycznej/zawartości - błędy a tym bardziej nieobecność JS<br/>
+                    nie powinnna blokować dostępu do zawartości.<br/>
+                    - Cały "paradygmat" ma na celu zabezpieczenie przed błędami i ma być podstawą do rozszerzania funkcjonalności w przeglądarkach lepiej wyposażonych.
+                    </section>
+                </aside>
+            </div>  
+
+            <div class="slide contentSlide" id="progressive-enhancement">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Progressive Enhancement</h2>
+                    <p>To koncepcja rozszerzania funkcjonalości strony<br/>wtedy gdy naprawdę jest dostępna.</p>
+                    <p>Poprzez <i>feature detection</i> i inne techniki wykrywania<br/>programista może odpowiednio obsłużyć sytuacje wyjątkowe<br/> i dostępne elementy,
+                    które są zależne od środowiska.</p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Idea jest równie prosta co unobtrusive javascript - jednak realizacja jest dużo trudniejsza, należy pamiętać o wielu czynnikach takich jak różne środowiska przeglądarek<br/>
+                    różne prędkości silników JS, accessibility, standardy internetowe i przede wszystkim gusta użytkowników.
+                    </section>
+                </aside>
+            </div>              
+
+            <div class="slide contentSlide" id="defensive-programming">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Defensive programming</h2>
+                    <p><i>Don't assume anything</i></p>
+                    <p>To pewien sposób myślenia.<br/>Nie posiadamy <i>w ogóle</i> założeń (lub posiadamy ich <i>minimalną</i> ilość).</p>
+                    <p>Od tego momentu w sposób maksymalnie defensywny (bezpieczny) <br/>korzystamy z kolejnych elementów, metod i funkcji.</p>                
+                </section>
+                <aside class="note">
+                    <section>
+                    - Można łatwo zauważyć, że programowanie defensywne bardzo współgra z powyższymi technikami - wręcz dzikie i zróżnicowane środowiska przeglądarek wymuszają<br/>
+                    zastosowanie takich a nie innych "taktyk" programistycznych. Oczywiście w przypadku pisania strony internetowej techniki mają jak najbardziej zastosowanie, ale <br/>
+                    już w przypadku aplikacji webowej niekoniecznie progressive enhacement musi być zastosowane w każdym przypadku - należy się zastanowić co ma sens, a co jest bezcelowe.
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide contentSlide" id="negative-indices-es5">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Ciekawostka*</h2>
+                    <pre>  [-1, -2, -3].forEach(function (negativeIndex) {
+      Object.defineProperty(Array.prototype, negativeIndex, {
+          get: function () {
+              return this[this.length + negativeIndex];
+          },
+          set: function (value) {
+              this[this.length + negativeIndex] = value;
+          }
+      });
+  });</pre>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Pattern pokazujący użycie nowej składni getterów/setterów - można uzyskać ciekawe efekty, w tym przypadku dodajemy do tablicy
+                    ujemne indeksy aby uzyskać zawijanie w tablicach jak np. w Pythonie - to przykład potęgi i elastyczności języka.
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide" id="questions-6">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Pytania ?</h1> 
+                    <p class="message">...</p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div> 
+
+            <div class="slide transitionSlide" id="tools">
+                <style>
+                    #tools h2 {
+                        font-size: 85px !important;
+                    }  
+                    #tools p {
+                        margin-top: 15px;
+                    }                     
+                </style>                
+                <section class="middle">
+                    <h2>Tools</h2>
+                    <p style='font-family: "Segoe UI";'>...czyli coś co ułatwia życie</p>
+                </section>
+            </div>  
+
+           <div class="slide contentSlide" id="console">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>console</h2>
+                    <div class="formula listOfPre" data-build>
+                        <pre>  console.log("A", "B", "C");  // A B C </pre>
+                        <pre>  console.warn("A"); </pre>
+                        <pre>  console.debug("A"); </pre>
+                        <pre>  console.error("A"); </pre>
+                        <pre>  console.info("A"); </pre><br/>
+                        <img src="src/ConsoleResults.png" alt="Console object"/>
+                    </div>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Konsola JavaScriptowa - logowanie do niej zamiast korzystanie z alertów, wymienione metody powinny być w każdej cywilizowanej przeglądarce.<br/>
+                    - Wygląd logowanych elementów i inne metody są zależne od przeglądarki - zamieszczone zdjęcia pochodzą z Chrome.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="console-object">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Chrome console:</h2>
+                    <img src="src/Console.png" alt="Console object"/><br/>                
+                </section>
+                <aside class="note">
+                    <section>
+                    - Obiekt konsoli z Chrome - zachęcam do zapoznania się tym obiektem pod swoją ulubioną przeglądarką - userzy IE i starej Opery mogą poczuć się oszukani ;].
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="debuggers">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Debuggery:</h2>
+                    <ul class="middle formula" data-build>
+                        <li>Firebug</li>
+                        <li>Chrome debugger</li>                        
+                        <li>Safari inspector</li>                                                
+                        <li>IE WebDeveloper Toolbar</li>
+                        <li>Opera DragonFly</li>  
+                        <li>Visual Studio</li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Firebug - najlepszy <i>debbuger</i>, zawsze trochę przed wszystkimi.<br/>
+                    - Chrome Debugger/Safari inspector - jeden z najlepszych, nie odstaje znacznie od <i>Firebuga</i>.<br/>
+                    - IE WD toolbar - algorytm genetyczny który ewoluuje w strone <i>debuggera</i>.<br/>
+                    - Opera DragonFly - Niedawno wyszła wersja 1.0, która wreszcie nie odstaje od reszty.<br/>
+                    - Visual Studio - nie korzystałem, istnieje jednak opcja aby debugować skrypty pod Visualem, większość rzeczy oczywiście nie będzie działać.<br/>
+                    - Chrome, IE, Firebug mają wbudowane profilery! <br/>
+                    - Wspomnieć o wtyczkach do przeglądarek (podglądanie pokolorowanego kodu, formatowanie JSON, XML, browser resizer itp.)
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="firebug">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Sztuczki w Firebugu:</h2>
+                    <div class="formula listOfPre" data-build>
+                        <pre>  $("id")        // getElementbyId</pre>
+                        <pre>  $$("css")      // Dowolny selektor Css</pre>
+                        <pre>  $x("xpath")    // Zwraca elementy pasujące 
+                 // do selektora XPath.</pre>
+                        <pre>  $0             // Ostatnio sprawdzany obiekt.</pre>
+                        <pre>  $n             // Obiekt sprawdzany jako n-ty 
+                 // od końca licząc od ostatniego.</pre>
+                        <pre>  inspect(el)    // Pokazuje element 
+                 // w inspektorze obiektów.</pre>
+                        <pre>  dir(el)        // Zwraca tablice nazw 
+                 // właściwości obiektu.</pre>
+                        <pre>  clear()        // Czyści konsolę.</pre>
+                    </div>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Można w prosty sposób napisać własne skryptozakładki do firebuga korzystając z tych elementów ;)
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="jsperf">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>jsperf.com</h2>
+                    <p><i>Framework</i> (strona internetowa) do zabaw z wydajnością<br/>Umożliwia wysyłanie testów do wielu użytkowników</p>
+                    <img src="src/JsPerf.png" alt="jsPerf" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Plac zabaw do testów wydajności, umożliwia tworzenie testów, zapis, wysyłanie ich w świat i gromadzenie wyników.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide contentSlide" id="jsfiddle">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>jsfiddle.com</h2>
+                    <p>Strona internetowa, która umożliwia budowanie szybkich prototypów <br/>w technologiach HTML5, CSS3 i JavaScript</p>
+                    <img src="src/JsFiddle.png" alt="jsFiddle" />                    
+                </section>
+                <aside class="note">
+                    <section>
+                    - Duża ilość bibliotek.<br/>
+                    - Mozliwość ukrywania snippetów lub udostępniania ich dalej.
+                    </section>
+                </aside>
+            </div>            
+
+            <div class="slide contentSlide" id="speedtracer">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Chrome SpeedTracer</h2>
+                    <p>Profiler rodem z <i>GWT</i> - podpinany jako wtyczka do Chrome</p>                
+                    <img src="src/SpeedTracer.png" alt="SpeedTracer" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Potężne narzędzie, nie tylko do frameworka GWT, generuje świetne wykresy czasowe i transferowe.
+                    </section>
+                </aside>
+            </div>            
+
+            <div class="slide contentSlide" id="dynatrace-ajax">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>dynaTrace AJAX</h2>
+                    <p>Potężny kombajn do testowania prawie wszystkich elementów stron internetowych.<br/>Wersja <i>premium</i> jest płatna.</p>                
+                    <img src="src/DynaTrace.png" alt="dynaTrace AJAX" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Posiada moduł do badania każdego aspektu aplikacji webowych - kompletne narzędzie, niestety (przynajmniej wersja darmowa) wspiera <br/>
+                    tylko IE i tą przeglądarkę wykorzystuje do testów.
+                    </section>
+                </aside>
+            </div>            
+
+            <div class="slide contentSlide" id="yslow">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>ySlow</h2>
+                    <p>Wtyczka do Firebuga wprost od Yahoo.<br/>Pozwala przetestować aplikację webową od strony najczęstszych problemów.</p>     
+                    <img src="src/yslow.png" alt="ySlow" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Świetne narzędzie do "oceniania" aplikacji - za każdy aspekt ySlow nadaje naszej aplikacji ocenę w skali angielskiej od A do F,<br/>
+                    dokladnie wypunktowywując co musimy poprawić i co może być przyczyną niewydajnego działania.
+                    </section>
+                </aside>
+            </div>            
+
+            <div class="slide contentSlide" id="fiddler">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Fiddler</h2>
+                    <p>Proxy przechwytujące cały ruch <i>HTTP</i></p>
+                    <img src="src/fiddler.png" alt="Fiddler" />                    
+                </section>
+                <aside class="note">
+                    <section>
+                    - Kompletne narzędzie do podsłuchiwania i szpiegowania całego ruchu HTTP.
+                    </section>
+                </aside>
+            </div>     
+
+            <div class="slide contentSlide" id="blackbird">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Blackbird</h2>
+                    <p>Uniwersalna konfigurowalna konsola - projekt <i>OpenSource</i></p>
+                    <img src="src/Blackbird.png" alt="Blackbird" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Ładna, konfigurowalna, elastyczna konsola, podpinalna jako element drzewa DOM.
+                    </section>
+                </aside>
+            </div>                 
+
+            <div class="slide contentSlide" id="microjs">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>micro.js</h2>
+                    <p>Strona internetowa do wyszukiwania <i>micro-framework'ów</i></p>
+                    <img src="src/Microjs.png" alt="microjs" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Pożyteczna strona, umożliwia łatwe wyszukiwanie wśród całej masy bibliotek JS.
+                    </section>
+                </aside>
+            </div>  
+
+            <div class="slide contentSlide" id="linters">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>jsLint, jsHint</h2>
+                    <p>Programy sprawdzające składnię według prekonfigurowanych reguł.</p>
+                    <img src="src/Linters.png" alt="Linters" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - jsHint jest bardziej konfigurowalny przez co lepszy - mniej bzdurnych reguł mozna mieć włączonych.
+                    </section>
+                </aside>
+            </div>              
+
+            <div class="slide contentSlide" id="modernizr">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>modernizr</h2>
+                    <p>Biblioteka zapewniająca <i>fallback</i> i detekcję<br/>dla nowych własności z HTML5 oraz CSS3.</p>
+                    <img src="src/modernizr.png" alt="modernizr" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Bardzo pożyteczna biblioteka.
+                    </section>
+                </aside>
+            </div>             
+
+            <div class="slide contentSlide" id="yui-compressor">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>YUICompressor</h2>
+                    <p>Szwajcarski scyzoryk jeśli chodzi o <i>oczyszczanie</i> i kompresję skryptów.<br/><i>(ang. minification and compression)</i></p>
+                    <img src="src/yuicompressor.png" alt="YUICompressor" />
+                </section>
+                <aside class="note">
+                    <section>
+                    - Niezbędne narzędzie, to powinien być krok budowania w systemie CI.
+                    </section>
+                </aside>
+            </div>              
+
+            <div class="slide contentSlide" id="compat-table">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Compatibility Tables:</h2>
+                    <p><a href="http://kangax.github.com/es5-compat-table/">es5-compat-table</a></p>
+                    <p><a href="http://www.browserscope.org/">www.browserscope.org</a></p>
+                    <p><a href="http://caniuse.com/">caniuse.com</a></p>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Kawał świetnej roboty wykonanej przez Kangaxa (Zaytsev) - porównanie kombatybilności ES5 w różnych przeglądarkach<br/>
+                    - Browserscope - różne ciekawe statystyki porównawcze i test harnesy z rożnych dziedzin<br/>
+                    - CanIUse - stronka do sprawdzania czy nowy feature (HTML5, CSS5, ES5, ES6 itp.) jest obsługiwany w naszych przeglądarkach.
+                    </section>
+                </aside>
+            </div>      
+
+            <div class="slide contentSlide" id="profilers">
+                <style>
+                </style>
+                <section class="middle">
+                    <h2>Profilery:</h2>
+                    <ul class="formula" data-build>
+                        <li>Firebug</li>
+                        <li>Chrome</li>
+                        <li>IE WebDeveloper Toolbar (&gt;= IE8)</li>
+                        <li>YUIProfiler</li>
+                        <li><i>własne rozwiązania</i>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>
+                    - Oprócz tego jest SpeedTracer i dynaTrace AJAX.<br/>
+                    - YUI profiler to profiler kodu JS napisany w JavaScripcie, element YUI library.<br/>
+                    - Nie jest ciężko napisać prosty profiler/benchmark i np. dołączyć go UT po stronie JavaScriptu.
+                    </section>
+                </aside>
+            </div>                                   
+
+            <div class="slide transitionSlide" id="what-next">
+                <style>
+                    #what-next h2 {
+                        font-size: 85px !important;
+                    }  
+                    #what-next p {
+                        margin-top: 15px;
+                    }                     
+                </style>                
+                <section class="middle">
+                    <h2>Co dalej ?</h2>
+                    <p>Podsumowanie</p>
+                </section>
+            </div>    
+
+            <div class="slide" id="other-options">
+                <style>
+                    p.message {
+                        padding-top: 0px;
+                    }
+                    #other-options h1 {
+                        font-size: 65px !important;
+                        line-height: 65px !important;
+                        color: black;
+                        font-weight: bold;
+                    }
+                    #other-options ul {
+                        font-size: 35px;
+                        line-height: 35px !important;
+                        text-align: left;
+                        list-style: circle inside;
+                    }
+                    #other-options ul li {
+                        font-size: 35px;
+                        line-height: 35px !important;
+                        text-align: left;
+                        list-style: circle inside;
+                    }                      
+                </style>
+                <section class="middle">                    
+                    <h1>Inne zagadnienia:</h1>
+                    <ul class="middle formula" data-build>
+                        <li><i>Bookmarklets</i> - skrypty pomocnicze</li>                    
+                        <li><b>SSJS</b> - node.js, SpiderNode, Rhino</li>
+                        <li><i>Test-Driven Development</i> (jsTestDriver, sinon.js)</li>
+                        <li>Desktop applications - XUL <i>(MetroUI ?)</i></li>
+                        <li>HTML5 Canvas - Low Level API lub <b>fabric.js</b></li>
+                        <li><b>PhoneGap</b> (iOS, Android), <b>WebWorks</b> (BlackBerry)</li>
+                        <li>ECMAScript 6</li>
+                        <li>NoSQL - <b>MongoDB</b>, CouchDB, <b>HTML Storage</b></li>           
+                        <li><b>WebGL</b> i programowanie gier</li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>        
+                    - Slajd zbiorczy dla zagadnień nie poruszonych w prezentacji. W sumie najważniejsze rzeczy są wymienione (brakuje buster.js do TDD).
+                    W sumie najbardziej niezaakceptowaną dziedziną jest Desktop, mimo że xulrunner i całe środowisko mozilli jest przyzwoite, GUI oparte o box model
+                    to mimo wszystko jest to dosyć wąska dziedzina rozwiązań. WebGL to cały czas rozwojowa technika, ale mająca b. duży potencja (IDSoftware i Carmack interesują się
+                    tą technologią, pomagali portować renderer RAGE pod WebGL (OpenGL ES 2.0) - tak naprawdę problemem są tylko i wyłącznie przeglądarki).
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide" id="books">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                        font-family: "Segoe UI";
+                    }
+                    #books ul {
+                        font-size: 35px;
+                        line-height: 35px !important;
+                        text-align: left;
+                        list-style: circle inside;
+                    }
+                    #books ul li {
+                        font-size: 35px;
+                        line-height: 35px !important;
+                        text-align: left;
+                        list-style: circle inside;
+                    }                     
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Książki:</h1> 
+                    <ul class="middle formula" data-build>
+                        <li><b>JavaScript - Mocne strony</b> <i>Crockford</i></li>
+                        <li>JavaScript Patterns <i>Stefanov</i></li>
+                        <li>High Performance JavaScript <i>Zakas</i></li>
+                        <li>Test-Driven JavaScript Development <i>Johansen</i></li>                        
+                        <li>JavaScript - the Definitive Guide <i>Flangan</i></li>
+                        <li><b>Just advanced JavaScript</b> <i>Wielgosik</i></li>
+                        <li><b>JavaScript Programowanie obiektowe</b> <i>Stefanov</i></li>   
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>         
+                    - Pogrubione są dostępne na polskim rynku, Wielgosik to tak naprawdę prezentacja-ebook który świetnie wyłapuje podstawowe braki w wiedzy zw. JS.
+                    Patterns, TDD JS Development i High Performance są dostępne w FP.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide" id="pages">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    #pages section .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                        font-family: "Segoe UI";
+                    }
+                    #pages ul {
+                        font-size: 25px;
+                        line-height: 0px !important;
+                        text-align: left;
+                        list-style: circle inside;
+                    }
+                    #pages ul li {
+                        font-size: 20px;
+                        line-height: 0px !important;
+                        text-align: left;
+                        list-style: circle inside;
+                    }                     
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Strony i portale:</h1> 
+                    <ul class="middle formula" data-build>
+                        <li><a href="http://www.bookofspeed.com/">Book of Speed</a> <i>Stefanov</i></li>
+                        <li><a href="http://www.yuiblog.com/crockford/">Video tutorials</a> <i>Crockford</i></li>
+                        <li><a href="http://ferrante.pl">ferrante.pl</a> <i>Wielgosik</i></li>                        
+                        <li><a href="http://jportal.pl">jportal.pl</a></li>                                                
+                        <li><a href="http://140byt.es">140byt.es</a></li>                                                                        
+                        <li><a href="http://functionsource.com">Function source</a></li>
+                        <li><a href="https://developer.mozilla.org/pl/">Mozilla Developer Network</a></li>
+                        <li><a href="http://jqapi.com/">jQuery API Alternative Documentation</a></li>
+                        <li><a href="http://ejohn.org/">John Resig Blog</a></li>
+                        <li><a href="http://eloquentjavascript.net/">Eloquent JavaScript</a></li>
+                        <li><a href="http://jqfundamentals.com/book/index.html">JQuery Fundamentals</a></li>
+                        <li><a href="http://javascriptweekly.com/">JavaScript Weekly</a></li>
+                    </ul>
+                </section>
+                <aside class="note">
+                    <section>         
+                    - Polecam JS Weekly - można być na bieżąco bez oglądania setek stron.
+                    - Polecam MDN - najbardziej kompletne źródło wiedzy o HTML, DOM i JS - nie tak zwalone jak quirks i w3schools.
+                    - Polecam ferrant i video-tutoriale Crockforda.
+                    - Book of Speed to książka o szybkich i responsywnych aplikacjach Web2.0 - ciągle in progress.
+                    </section>
+                </aside>
+            </div>
+
+            <div class="slide" id="questions-last">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1 {
+                        font-size: 85px !important;
+                        line-height: 65px !important;
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1">Pytania ?</h1> 
+                    <p class="message">...</p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div> 
+
+            <div class="slide" id="last">
+                <style>
+                    p.message {
+                        margin: 0px;
+                    }
+                    .questionsH1last {
+                        font-size: 75px !important;
+                        line-height: 35px !important;
+                        font-family: "Segoe UI";
+                        margin: 0px;
+                        color: black;
+                        font-weight: bold;
+                    }
+                </style>
+                <section class="middle">
+                    <h1 class="questionsH1last">Dziękuję za uwagę</h1> 
+                    <p class="message"><a href="http://goo.gl/UY9oK">http://goo.gl/UY9oK</a></p>
+                </section>
+                <aside class="note">
+                    <section>                    
+                    </section>
+                </aside>
+            </div>             
+
+        </div> <!-- slides -->        
+
+        <style>
+            #speaker-note {
+                position:absolute;
+                left: 0;
+                top: 80%;
+                width: 100%;
+                height: 20%;
+                z-index: 50;
+                opacity: 0.75;
+                background-color: white;
+                overflow: auto;
+                padding: 2px 20px;
+                -webkit-transition: top 0.5s ease-in-out;
+                -moz-transition: top 0.5s ease-in-out;
+                -o-transition: top 0.5s ease-in-out;
+                transition: top 0.5s ease-in-out;
+            }
+            #speaker-note.invisible {
+                top: 101%;
+            }
+        </style>
+
+        <div id="speaker-note" class="invisible" style="display: none;">
+        </div> <!-- speaker note -->     
+
+    </div> <!-- presentation -->
+
+    <script src="js/prettify.js" onload="prettyPrint();" defer></script>
+    <script src="js/utils.js"></script>
+  </body>
+</html>

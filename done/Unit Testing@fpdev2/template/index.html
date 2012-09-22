@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Unit Tests</title>
+    <meta charset='utf-8'>
+    <script src='../slides.js'></script>
+  </head>
+  
+  <style>
+  </style>
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-default'>
+
+      <article>
+        <h1>
+            Unit Testing 
+        </h1>
+        <h2>
+            TDD, Moq, AutoFixture, sinon.js
+        </h2>
+        <h3>
+            fpdev2@future-processing.com
+        </h3>
+        <p>                
+            wgawronski@future-processing.com
+            <br>
+            (12.09.2011)
+        </p>
+      </article>
+      
+      <article>
+        <h1>
+            Definitions
+        </h1>
+      </article>
+
+      <article class="smaller">    
+        <q>
+            A unit is the smallest testable part of an application.
+        </q>
+        <h2>
+            unit
+        </h2>
+      </article>
+
+      <article class="smaller">    
+        <q>
+            Part (or whole subsystem) of library or application which we are testing at the moment (our actual test environment).
+        </q>
+        <h2>
+            SUT (ang. system under test)
+        </h2>
+      </article>
+
+      <article class="smaller">    
+        <q>
+            Some tests grouped by logical or physical criteria.
+        </q>
+        <h2>
+            test case (test fixture)
+        </h2>
+      </article>        
+
+      <article class="smaller">    
+        <q>
+            You ain't gonna need it...
+        </q>        
+        <h2>
+            YAGNI
+        </h2>
+      </article>     
+
+      <article class="smaller">    
+        <q>
+            Keep it simple, stupid!
+        </q>
+        <h2>
+            KISS
+        </h2>
+      </article>         
+
+      <article class="smaller">
+        <h1>
+            Test-Driven Development    
+        </h1>
+        <q>
+            Clean code that works - now.
+        </q>
+        <div class="author">
+            K. Beck
+        </div>
+      </article>
+
+      <article>
+        <h3>Four pillars of TDD:</h3>
+        <ol class="build">
+            <li>Write a test (documentation what you going next).</li>
+            <li class="red">Watch it fail (assure it fails already).</li>
+            <li class="green">Making the test pass (quick and dirty).</li>
+            <li>Refactor and remove duplication (change existing code).</li>
+        </ol>
+        <div class="build">
+            <p style="color: brown;">First phase is called a <i>dirty</i> step (brown or gray).</p>
+            <p>Last phase is called a <i style="background-color: black; color: white;">white</i> phase.</p>            
+        </div>
+      </article>
+
+      <article>
+        <h3>Motivation</h3>
+        <ol class="build">            
+            <li><i>Thinking about quality and code reuse</i>.</li>
+            <li>Tests are motivation for writing production code.</li>
+            <li>Requirements specification.</li>
+            <li>Constantly updated documentation (<i>live documentation</i>).</li>
+            <li>API Usage and Documentation.</li>        
+            <li>Learning and documenting environments quirks and <i>hidden</i> prerequisites.</li>
+            <li>Testing code (insurance and investment).</li>            
+        </ol>
+      </article>
+
+      <article>
+        <h3>Kata:</h3>
+        <ol class="build">            
+            <li><i>Practice makes perfect.</i></li>
+            <li><div>Ask yourself when you're coding:</div>
+                <ul class="build">
+                    <li>Where should I start?</li>
+                    <li>How can I use this?</li>
+                    <li>In which direction should I implement this feature?</li>
+                    <li>How can I remove duplication?</li>                    
+                </ul>
+            </li>
+        </ol>
+      </article>
+
+      <article>
+        <h3>
+            Test model
+        </h3>        
+        <ul class="big">
+            <li>Record-and-replay</li>
+            <li>Arrange-Act-Assert</li>
+            <li>Auto-Fixtures</li>
+        </ul>
+      </article>        
+
+      <article>
+        <h3>
+            Toolbox
+        </h3>
+        <ol class="build">
+            <li>Assertion</li>
+            <li>Attribute</li>
+            <li>Stub</li>
+            <li>Mock</li>
+            <li>Spy</li>            
+        </ol>
+      </article>        
+
+      <article>
+        <h2>
+          Samples
+        </h2>
+      </article> 
+
+      <article>
+        <h1>
+            MsTest
+        </h1>
+      </article>
+
+      <article>
+        <h3>
+            C# - Attributes
+        </h3>
+        <section>
+            <pre>
+    [Ignore]
+    [ExpectedException]
+    [Timeout]
+    [TestProperty]
+    [DeploymentItem]
+    [TestCategory]
+    [Owner]
+            </pre>
+        </section>
+        </article>
+
+      <article>
+        <h3>
+            C# - TestProperty
+        </h3>
+        <section>
+            <pre>
+      [TestMethod()]
+      [TestProperty("MyProperty1", "Big")]
+      [TestProperty("MyProperty2", "Small")]
+      public void MyTestMethod()
+      {
+         MethodInfo mi = GetType().GetMethod("MyTestMethod");
+         Type MyType = typeof(TestPropertyAttribute);
+         object[] attributes = mi.GetCustomAttributes(MyType, false);
+
+         for (int i = 0; i < attributes.Length; i++)
+         {
+            ((TestPropertyAttribute)attributes[i]).Name;
+            ((TestPropertyAttribute)attributes[i]).Value;
+         }
+      }
+            </pre>
+        </section>
+        </article>      
+
+        <article>
+            <h3>
+                C# - Internals
+            </h3>
+            <section>
+                <pre>
+    public ClassName
+    {
+        internal ClassName(IMagicInterface injection)
+        {
+        }
+    }
+
+    [assembly:InternalsVisibleTo("TestProjectAssemblyName")]                    
+                </pre>
+            </section>
+        </article>
+
+
+      <article>
+        <h1>
+            js-test-driver
+        </h1>
+      </article>
+
+      <article class="smaller">
+        <h3>
+            js-test-driver - Assertions
+        </h3>
+        <ul>
+            <li>fail([msg])</li>
+            <li>assert([msg], actual)</li>
+            <li>assertTrue([msg], actual)</li>
+            <li>assertFalse([msg], actual)</li>
+            <li>assertEquals([msg], expected, actual)</li>
+            <li>assertException([msg], callback, error)</li>
+            <li>assertNoException([msg], callback)</li>
+            <li>assertTypeOf([msg], expected, value)</li>
+            <li>assertMatch([msg], regexp, actual)</li>
+            <li>assertNoMatch([msg], regexp, actual)</li>
+            <li>assertTagName([msg], tagName, element)</li>
+            <li>assertClassName([msg], className, element)</li>
+            <li>assertElementId([msg], id, element)</li>
+            <li>assertInstanceOf([msg], constructor, actual)</li>
+            <li>assertNotInstanceOf([msg], constructor, actual)</li>          
+        </ul>
+      </article>
+
+      <article>
+        <h1>
+            Moq
+        </h1>
+      </article>
+
+      <article>
+        <h1>
+            AutoFixture
+        </h1>
+      </article>
+
+      <article>
+        <h1>
+            sinon.js
+        </h1>
+      </article>
+
+      <article class="smaller">
+        <h3>
+            sinon.js - Assertions &amp; TestCase
+        </h3>
+        <ul>
+            <li>sinon.assert.called(spy)</li>        
+            <li>sinon.assert.calledOnce(spy)</li>              
+            <li>sinon.assert.calledCount(spy, num)</li>        
+            <li>sinon.assert.callOrder(spy1, spy2, ...)</li>
+            <li>sinon.assert.calledWith(spy, arg1, arg2, ...)</li>
+            <li>sinon.assert.threw(spy, exception)</li>            
+        </ul>
+        <q>
+            sinon.testCase({});
+        </q>
+      </article>        
+
+        <article>
+          <h2>
+            Qualities of Good tests
+          </h2>
+        </article>
+
+        <article class="smaller">
+            <ul class="build">
+                <li>Naming - focus on one thing, also it should be short but descriptive.</li>
+                <li>Formatting - keep close your formatting style to your test model (e.g. <i>AAA</i>). </li>
+                <li>LOC - too many LOC and complicated logic are problematic when you're analyse test.</li>
+            </ul>
+            <h2>
+                Readable
+            </h2>
+        </article>
+
+        <article class="smaller">
+            <ul class="build">
+                <li>One test = One feature</li>
+                <li>Avoid complicated logic in test.</li>
+                <li>Never trust a test you have not seen fail.</li>
+                <li>One behaviour at a time (multiple assertions testing the same functionallity are wrong)</li>
+                <li>Reduce duplication not clarity (don't reduce to much).</li>
+            </ul>
+            <h2>
+                Trustworthy
+            </h2>
+        </article>            
+
+        <article class="smaller">
+            <ul class="build">
+                <ul class="build">
+                    <li>Separation of concerns.</li>
+                    <li>Changing implementation shouldn't fail test - only when API changed.</li>
+                    <li>Keep tests readable but and not overgrownth (after changing implementation we must fix the smallest amout of tests).</li>
+                </ul>
+            </ul>
+            <h2>
+                Maintainable
+            </h2>
+        </article>
+
+        <article class="smaller">
+            <ul class="build">
+                <li>Custom assertions (names are important - they're increasing readability, easier to change, less typing = speed).</li>
+                <li>Custom test helpers (most important thing - pros as above).</li>
+                <li>Simple well defined tasks for controllers (small parts of application).</li>      
+                <li>Broken test should provide as much as possible informations (<i>it's all about feedback</i>).
+            </ul>
+            <h2>
+                Documentative
+            </h2>
+        </article>        
+
+        <article>
+            <h3>Organisation</h3>
+            <ul class="build">
+                <li>Operate on small parts of code.</li>
+                <li>Run tests with every 5-10 minutes.</li>
+                <li>One file per object.</li>
+                <li>One test case per method.</li>
+                <li>Descriptive scenarios for each method.</li>
+            </ul>
+        </article>
+
+        <article>
+            <h1>
+                Thank you for your attention!
+            </h1>
+        </article>
+    </section>
+
+  </body>
+</html>

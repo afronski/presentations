@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>node.js</title>
+    <meta charset='utf-8'>
+    <script src='../slides.js'></script>
+  </head>
+  
+  <style>
+  </style>
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-default'>
+
+      <article class="titlePage">
+        <h1>
+            <img alt="node.js" src="images/nodelogo.png" /> 
+        </h1>
+        <h3>
+            experts.ria@future-processing.com
+        </h3>
+        <p>                
+            wgawronski@future-processing.com
+            <br>
+            (13.09.2011)
+        </p>
+      </article>    
+
+      <article>
+        <h2>
+            Dive into SSJS
+        </h2>
+      </article>
+
+      <article>
+        <h3>
+            SSJS:
+        </h3>
+        <ul class="build">
+            <li>Very old idea (Netscape era, RingoJS - 11 years).</li>
+            <li>Node.js is an Evented I/O for V8 JavaScript (not a framework).</li>
+            <li>Asynchronous operations - Not new idea for other languages and frameworks - Twisted (Python), Event Machine (Ruby), signalIR (ASP.NET)</li>
+            <li><a href="http://jobs.nodejs.org/a/jbb/job-details/551675">http://jobs.nodejs.org/a/jbb/job-details/551675</a></li>
+        </ul>
+      </article>        
+
+      <article>
+        <h2>
+            Pros and cons
+        </h2>
+      </article>
+
+      <article>
+        <h3>
+            Pros:
+        </h3>
+        <ul class="build">
+            <li>V8</li>
+            <li>ECMAScript5</li>
+            <li>"use strict;"</li>
+            <li>EventEmitter</li>
+            <li>Asynchronous patterns and Event Driven Development</li>
+            <li>REST, Ajax, JSON, WebSockets, NoSQL</li>
+            <li>... comparision with Tomcat/Apache - :)</li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>
+            Cons:
+        </h3>
+        <ul class="build">
+            <li>... comparision with nginx/Erlang - :(</li>
+            <li>Memory leaks and V8 overhead.</li>
+            <li>Uncaught Exceptions.</li>
+            <li>Hosting and deploying.</li>
+            <li>Debugging support (remote debugging - node-inspector &amp; Chrome).</li>
+            <li>Language...</li>
+        </ul>
+      </article>        
+
+      <article class="smaller">
+        <h2>
+            Good choice: Content Generation
+        </h2>
+        <div style="left: 25%; top: 15%; position:absolute;">
+            <img src="images/middle_end.png" alt="Middle-end Diagram" />
+        </div>            
+      </article>
+
+      <article class="smaller">
+        <h2>
+            Good choice: Crawlers
+        </h2> 
+      </article>        
+
+      <article class="smaller">
+        <h2>
+            Good choice: Validation
+        </h2> 
+      </article>        
+
+      <article class="smaller">
+        <h2>
+            Good choice: NoSQL (MongoDB)
+        </h2> 
+      </article>          
+
+      <article class="smaller">
+        <h2>
+            Good choice: node.js + socket.io
+        </h2> 
+      </article>         
+
+      <article class="smaller">
+        <h3>
+            Performance myth - WCAT vs. node.exe
+        </h3>
+        <div class="build">
+            <ul class="build">
+                <li>Approx. 10'000 requests in 90 seconds... :)</li>
+                <li>IHttpHandler which doing exact same thing gets 2x more requests... :(</li>
+                <li>Myth about incredible performance boost of node.js was overthrown here...</li>        
+            </ul>
+            <q>
+                "If you do nothing, you can scale infinitely."
+            </q>
+            <div class="author">
+                S. Hanselman
+            </div>
+        </div>
+        </article>
+
+      <article class="smaller">
+        <h2>
+            Performance myth - Benchmark results
+        </h2>
+        <div style="left: 25%; top: 15%; position:absolute;">
+            <img src="images/perf_charts.png" alt="Performance charts" />
+        </div>   
+      </article>        
+
+      <article>
+        <h2>
+            Linux vs. Windows
+        </h2>
+      </article>
+
+      <article class="smaller">
+        <div class="build">
+            <ul class="build">
+                <li>Unix shell vs. Windows shell</li>
+                <li>NPM aka. Node Package Manager.</li>
+                <li>Support is equal for all three major platforms.</li>
+            </ul>
+            <q>
+                I’m pleased to announce that Microsoft is partnering with Joyent in formally contributing resources towards porting Node to Windows.
+            </q>
+            <div class="author">
+                R. Dahl (<a href="http://blog.nodejs.org/2011/06/23/porting-node-to-windows-with-microsoft%E2%80%99s-help/">source</a>)
+            </div>
+        </div>
+      </article>        
+
+      <article>
+        <h2>
+            Windows Installation
+        </h2>
+      </article>
+
+      <article class="smaller">
+        <h2>
+            1. Download node.exe (<a href='http://nodejs.org/dist/v0.5.5/node.exe'>http://nodejs.org/dist/v0.5.5/node.exe</a>)
+        </h2>
+      </article>      
+
+      <article class="smaller">
+        <h2>
+            2. Download iisnode (<a href='https://github.com/tjanczuk/iisnode'>https://github.com/tjanczuk/iisnode</a>)
+        </h2>
+      </article> 
+
+      <article class="smaller">
+        <h2>
+            3. Move node.exe into C:\node directory
+        </h2>
+      </article>         
+
+      <article class="smaller">
+        <h2>
+            4. Run install.bat from iisnode
+        </h2>
+      </article>           
+
+      <article class="smaller">
+        <h3>
+            5. [x64] Do some IIS Magic ;]
+        </h3>
+        <div class="build">
+            <q>
+                Fix for default IIS settings for x64 architecture:
+            </q>
+            <pre>
+cscript C:\inetpub\adminscripts\adsutil.vbs SET
+        W3SVC/AppPools/Enable32bitAppOnWin64 0            
+            </pre>
+        </div>
+      </article>
+
+      <article class="smaller">
+        <h2>
+            6. Go to <a href="http://localhost/node/helloworld/hello.js">http://localhost/node/helloworld/hello.js</a> ... :)
+        </h2>
+      </article>   
+
+      <article>
+        <h3>Hall of fame:</h3>
+        <ul class="build">
+            <li>Joyent</li>
+            <li>Yahoo!</li>            
+            <li>Proxlet - Chrome extension for twitter integration.</li>
+            <li>Yammer - a cross domain proxy for developers.</li>
+            <li>Bocup - IRC chat bot.</li>
+            <li>Uber - Distributed web architecture.</li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>Modules:</h3>
+        <ul class="build">
+            <li>mysql, mysql-pool</li>
+            <li>node-mongodb-native</li>            
+            <li>ldapjs, oauth2-server, oauth2-client</li>
+            <li>express.io, EJS</li>
+            <li>socket.io</li>
+            <li>nodemailer, node-imap</li>
+            <li>xml2js</li>
+            <li>jsdom</li>
+            <li>node-xmpp</li>
+            <li>node-secure, uglifyJS, packnode (RSA)</li>
+            <li>multinode</li>            
+        </ul>
+      </article>      
+
+      <article>
+        <h2>
+            Sample - Chat
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+            Sample - Middle-End
+        </h2>
+      </article>
+
+      <article>
+        <h2>
+            Thank you for your attention!
+        </h2>
+      </article>        
+
+    </section>
+
+  </body>
+</html>
