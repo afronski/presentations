@@ -186,9 +186,21 @@ a:focus {
     transform:         translateZ(50px);
 }
 
+.step p {
+    font-family: "Cantarell";
+    margin: 55px 0;
+}
+
 .step .footnote {
     margin-top: 10px;
     font-size: 32px;
+}
+
+.informative-list {
+    font-family: "Cantarell";
+    list-style-type: disc;
+    margin-left: 45px;
+    margin-top: 50px;
 }
 
 #LDAP {

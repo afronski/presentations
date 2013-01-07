@@ -34,24 +34,44 @@
         </div>
 
         <div class="step slide" data-x="0" data-y="-1500">
-            <q><strong>Autentykacja</strong></q>
+            <q><strong>Uwierzytelnianie</strong></q>
+            <p><em>(ang. authentication, po polsku niepoprawnie - autentykacja)</em></p>
+            <p>Po identyfikacji użytkownika następuje faza potwierdzenia tożsamości poprzez uwierzytelnienie.</p>
         </div>
 
         <div class="step slide" data-x="0" data-y="-3000">
             <q><strong>Autoryzacja</strong></q>
+            <p><em>(ang. authorisation)</em></p>
+            <p>Inaczej kontrola dostępu, potwierdzenie czy dany podmiot ma uprawnienia do korzystania z żądanego zasobu.</p>
         </div>
 
         <div class="step slide" data-x="1000" data-y="-1500">
             <q><strong>Basic access authentication</strong></q>
+            <p>Prosty proces uwierzytelniania oparty o protokół HTTP.</p>
+            <p>Dostarcza dane uwierzytelniające w żądaniu HTTP (nagłówki).</p>
         </div>
 
         <div class="step slide" data-x="1000" data-y="-3000">
             <q><strong>Dlaczego nie Basic?</strong></q>
+            <ul class="informative-list">
+                <li>Opiera się na nadmiarowym protokole (HTTP).</li>
+                <li>Dane przesyłane są w postaci czystego tekstu.</li>
+                <li>Nie możliwości wylogowania się z takiej sesji.</li>
+                <li><em>Konta użytkowników</em> nie odzwierciedlają żadnych relacji ani nie są z niczym powiązane.</li>
+                <li>Co z innymi zasobami i usługami sieciowymi?</li>
+            </ul>
         </div>
 
         <div class="step slide" data-x="2000" data-y="-1500">
             <q><strong>Directory service</strong></q>
             <div><a href="http://pl.wikipedia.org/wiki/Us%C5%82uga_katalogowa" target="_blank">Szczegóły</a></div>
+            <p><em>Usługa katalogowa</em></p>
+            <ul class="informative-list">
+                <li>Precyzyjny sposób opisu urządzeń i usług sieciowych.</li>
+                <li>Hierarchiczna struktura</li>
+                <li>Metadane i powiązania</li>
+                <li>Bezpieczeństwo</li>
+            </ul>
         </div>
 
         <div id="X500" class="step" data-x="0" data-y="0" data-scale="4">
