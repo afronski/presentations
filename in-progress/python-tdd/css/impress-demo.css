@@ -46,8 +46,9 @@ table {
 body {
     font-family: 'PT Sans', sans-serif;
     min-height: 740px;
+    color: #4F4D49;
 
-    background: #EAEAE2;
+    background: #98FA83;
 }
 
 b, strong { font-weight: bold }
@@ -72,23 +73,6 @@ a:hover,
 a:focus {
     background: rgba(255,255,255,1);
     text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
-}
-
-.fallback-message {
-    font-family: sans-serif;
-    line-height: 1.3;
-
-    width: 780px;
-    padding: 10px 10px 0;
-    margin: 20px auto;
-
-    border: 1px solid #E4C652;
-    border-radius: 10px;
-    background: #EEDC94;
-}
-
-.fallback-message p {
-    margin-bottom: 10px;
 }
 
 .impress-supported .fallback-message {
@@ -162,6 +146,17 @@ a:focus {
     padding: 0;
 }
 
+.logo {
+    background-image: url(../logo.png);
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position: 600px 0;
+}
+
+.first h1 {
+    font-size: 180% !important;
+}
+
 .step .try {
     font-size: 64px;
     position: absolute;
@@ -177,7 +172,7 @@ a:focus {
 
 .step h1 {
     font-size: 190px;
-    color: #18B3DD;
+    color: #467E24;
 
     -webkit-transform: translateZ(50px);
     -moz-transform:    translateZ(50px);

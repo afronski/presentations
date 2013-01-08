@@ -1,14 +1,11 @@
 0. Witamy.
-Na samym początku zanim powiemy sobie do czego służą usługi katalogowe i jaki jest cel wykorzystywania standardów DAP/X.500 i protokołu LDAP, musimy rozróżnić podstawowe definicje.
+Nazywam się Wojciech Gawroński i chciałbym zaprezentować zupełnie inne podejście do tworzenia kodu, w odwróconym procesie wywodzącym się wprost z ruchu związanego z Agile Manifesto.
 
-1. Uwierzytelnianie.
-Jak mam nadzieje wszyscy wiemy, uwierzytelnianie (z angielskiego autentykacja) to proces weryfikacji zadeklarowanej przez użytkownika tożsamości. Użytkownik deklaruje poprzez np. podanie loginu kim jest, następnie potwierdza swoją tożsamość poprzez uwierzytelnienie (podanie tokenu lub hasła).
+1. Dlaczego Python?
 
-2. Autoryzacja.
-Zupełnie czym innym jest autoryzacja czyli tzw. kontrola dostępu będąca funkcją bezpieczeństwa potwierdzającą uprawnienia podmiotu do korzystania z zasobu (Czy dany pracownik może oglądać raporty przychodów miesięcznych?).
+2. TDD By Example.
 
-3. Basic Access Authentication.
-Jest to bardzo podstawowa, wręcz prymitywna forma uwierzytelniania użytkownika ściśle powiądzana z protokołem HTTP (umożliwia przesłanie danych identyfikujących i uwierzytelniających za pomocą żądania HTTP).
+3. Agile Manifesto, XP, TDD...
 
 4. Dlaczego nie Basic?
 Mimo, że jest nieskomplikowany to posiada szereg wad. Opiera się na połączeniu klient-serwer, w niekoniecznie zaufanym środowisku. Dane uwierzytelniające i identyfikujące przesyłane są w postaci czystego tekstu (i jeśli nie używamy szyfrowania TLS/SSL dane mogą zostać przechwycone/podsłuchane). Dane uwierzytelniające są przechowywane w pamięci przeglądarki, więc zamknięcie karty nie jest równoznaczne z zamknięciem sesji (nie istnieje metoda "wylogowania" się z takiego połączenia bez dodatkowych zabiegów).
