@@ -2,44 +2,59 @@
 Nazywam się Wojciech Gawroński i chciałbym zaprezentować zupełnie inne podejście do tworzenia kodu, w odwróconym procesie wywodzącym się wprost z ruchu związanego z Agile Manifesto.
 
 1. Dlaczego Python?
+Efektywny (dla mnie, w sensie umiejętności) język skryptowy, bardzo dobre wsparcie dla obu systemów operacyjnych (Linux, Windows), łatwość stworzenia prototypu.
+Na początku stworzyłem prototyp potrzebnego narzędzia, potem pojawił się pomysł rozbudowania narzędzia, przez co należało zrobić refactoring. Narzędzie nie jest efektowne, konsolowy program, przetwarzanie plików, szablonów ale bardzo duża ilość złożonej logiki.
 
-2. TDD By Example.
+Nie chciałem zepsuć funkcjonalności, a jednocześnie od kilku miesięcy pracowałem zgodnie z metodologią TDD w C# i JavaScript, co automatycznie zaowocowało próbą zaadaptowania TDD do warunków związanych z "Wężem".
 
-3. Agile Manifesto, XP, TDD...
+2. Agile Manifesto, XP, TDD...
+Aby dobrze wyjaśnić pochodzenie TDD i skąd pojawiła sie potrzeba wysokiej jakości kodu musimy cofnąć się o prawie 12 lat - 13 lutego 2001 podpisano tzw. Agile Manifesto. Najbardziej znane autorytety programistyczne sfrustrowane wiecznie spóźnionymi projektami, niedotrzymanymi terminami, brakiem profesjonalizmu i przerostem formy nad treścią sformułowały zasady podejścia zwinnego do tworzenia oprogramowania (co po polsku nie brzmi zbyt dobrze, "agile" dosłownie znaczy zwinny, inna nazwa to metodyki lekkie).
 
-4. Dlaczego nie Basic?
-Mimo, że jest nieskomplikowany to posiada szereg wad. Opiera się na połączeniu klient-serwer, w niekoniecznie zaufanym środowisku. Dane uwierzytelniające i identyfikujące przesyłane są w postaci czystego tekstu (i jeśli nie używamy szyfrowania TLS/SSL dane mogą zostać przechwycone/podsłuchane). Dane uwierzytelniające są przechowywane w pamięci przeglądarki, więc zamknięcie karty nie jest równoznaczne z zamknięciem sesji (nie istnieje metoda "wylogowania" się z takiego połączenia bez dodatkowych zabiegów).
+Jednym z sygnatariuszy dokumentu jest Kent Beck, autor i gorący orędownik podejścia "Extreme Programming". To on sformułował podstawowe zasady dot. XP którego jednym z fundamentów było właśnie TDD.
 
-Co z powiązaniami, uprawnieniami i innymi zasobami/usługami sieciowymi? Koszt utrzymania różnych mechanizmów dla różnych elementów jest zbyt wysoki. Potrzeba unifikacji i spójnego środowiska.
+3. TDD By Example.
+Kentowi przypisuje się "odnalezienie" tej techniki w gąszczu zapomnianych elementów i 2003 roku powstała książka, którą bardzo polecam "TDD: By Example". Co najważniejsze, całość przykładów i kodu w książce jest napisana właśnie w Pythonie.
 
-5. Usługa katalogowa.
-Rozwiązaniem było zdefiniowanie takiego standardu, który w spójny i jednolity sposób pozwalałby na opisywanie zasobów i usług sieciowych, pozwalał na przypisanie metadanych, uprawnień itp i organizowanie całości w hierarchiczne struktury.
+4. Unit Test
+(tyle ile na slajdzie)
 
-Powstało wymaganie nazwane po polsku usługą katalogową.
+5. xUnit
+(tyle ile na slajdzie)
 
-6. X.500
-To zbiór standardów sieciowych stworzony przez ITU-T (International Telecommunication Union - Telecommunication Standardization Sector). Jednym z elementów jest infrastruktura certyfikatów (X.509) oraz właśnie ciężkie protokoły do obsługi usług katalogowych (m.in DAP).
+6. Proces
+Powiedzieliśmy sobie dużo o testach, o genezie TDD, nie powiedzieliśmy sobie jednak jak właściwie przebiega cały proces.
 
-7. LDAP
-To lekka alternatywa dla pełnego protokołu DAP (X.500) oparta o wymianę informacji za pomocą TCP/IP. Protokół został stworzony ponieważ był potrzebny w pełni funkcjonalnym i jednocześnie lekki podzbior DAP. W ramach LDAP możemy wykonać operacje bind (uwierzytelnienie), unbind (zakończenie sesji i połączenia), search (poszukiwanie zasobu), modify (modyfikacja wpisów), add (dodawanie wpisów), delete (kasowanie wpisów).
+7. Red
+Pierwsza faza czerwona polega na napisaniu testu - PRZED IMPLEMENTACJĄ, na początku wydaje się to nienaturalne, wywraca do góry nogami sposób myślenia, ale otwiera pewien nieszablonowy sposób rozpatrywania codziennych problemów - skupiamy się bowiem na tym, jak chciałbym tego fragmentu kodu użyć, jak wchodzi on w interakcje z systemem (jakie ma zewnętrzne zależności?).
 
-8. AD
-To specjalizowana usługa katalogowa dla systemów Windows (np. Server) będąca implementacją protokołu LDAP (zachowano kompatybilność). Wprowadzono ją pod nazwą NTDS w 1999 wraz z premierą Windows 2000 Server. Jednak dopiero Active Directory Domain Services wprowadziła hierarchiczność przechowywanych informacji oraz rozszerzalny schemat definicji obiektów.
+Odwrócenie myślenia, to klucz do polubienia całej metodyki - potem będzie już tylko prościej. Ten element "innego sposobu myślenia" ma jeszcze kilka dodatkowych zalet oraz mitów o których powiemy później.
 
-9. AD uwagi
-(tylko na slajdzie)
+Gdy napiszemy test, uruchamiamy je i przekonujemy się, że są faktycznie "czerwone". Ktoś może zapytać po co? Przed chwilą napisaliśmy test, z implementacją która nie istnieje, przecież wiadomo, że to nie zadziała. To tylko półprawda ;). To, że zobaczymy na własne oczy "wysypane testy" jest dla Nas założeniem, że Nasze założenie początkowe np. o niezajętej nazwie funkcji, nazwie klasy, istnieniu pewnych klas etc. jest prawidłowe. To Nasza polisa ubezpieczeniowa przed zewnętrznym światem.
 
-10. NTLM
-Jeśli mówimy o AD i usługach katalogowych warto wspomnieć o rozwiązaniach, które zapewniają bezpieczeństwo w przypadku uwierzytelniania.
+8. Green
+Następny krok to jak najprostsza implementacja, która usatysfakcjonuje test. Warto położyć nacisk na najprostsza - zahardkodowane wartości, przybliżenia - wszystkie chwyty dozwolone. Po usatysfakcjonowaniu testu, po raz kolejny uruchamiamy testy, których wynik powinien być oznaczony kolorem zielonym.
 
-NT Lan Manager to kryptograficzny protokół sieciowy opracowany przez Microsoft. Był to pierwszy protokół dostarczony wraz AD, został jednak zastąpiony przez Kerberos, który omówimy za chwilę. Może zostać jednak zastosowany np. gdy klient nie wspiera Kerberosa lub kontroler domeny nie jest dostępny (jedno i drugie AD zapewnia automatycznie).
+9. Refactor
+Następnie poprawiamy nasz kod - eliminujemy duplikacje, dopracowywujemy wnętrze - cały czas poruszając sie w obrębie obszaru pokrytego testami i co ważne na podstawie aktualnego stanu wiedzy bez dodawania nowej funkcjonalności. Podczas zmian testy cały czas powinny zwracać poprawne wyniki, to zagwarantuje nam dokładnie to samo zachowanie jeśli chodzi o objęty testami obszar.
 
-Sam NTLM korzysta z dwóch metod haszowania danych wrażliwych LM Hash (DES) i NT Hash (MD4 oparte na UTF-16 Unicode Little Endian). Jak można się domyślić, nie są to zbyt bezpieczne metody.
+10. Repeat
+Cały czas poruszamy się w takiej zamkniętej pętli sprzężenia zwrotnego (czas trwania to z reguły do 10 minut, nie więcej) do momentu aż nie skończymy implementacji programu lub pewnej funkcjonalności. Warto nadmienić, że taki iteracyjny proces warto przerywać (np. przerwa) po napisaniu testów, gdy są one czerwone - dużo łatwiej wdrożyć się i złapać ponownie kontekst sytuacyjny.
 
-11. Kerberos
-Cerber jest protokołem uwierzytelniania i autoryzacji opartym na zupełnie innej zasadzie. Sam protokół zaprojektowano na MIT. Kerberos korzysta z centrum dystrybucji kluczy.
+Cała procedura wygląda na żmudną, w wielu miejscach niepotrzebną i duplikującą pewne fragmenty, oraz zachowania. Mam nadzieję, że przekonam Was podczas praktycznej sesji, że jest odwrotnie.
 
-Procedura wygląda następująco w pierwszej fazie klient komunikuje się z serwerem uwierzytelniającym, który weryfikuje użytkownika w centrum dystrybucji klucza. Centrum wysyła żądanie na stworzenie ticketu, który zaszyfrowany wraca do komputera użytkownika (sam ticket wygasa po pewnym czasie, jednak może zostać odniowiony przy korzystaniu z systemu). Przy próbie kontaktu z inną usługą, następuje tylko weryfikacja ticketu w systemie i po poprawnej weryfikacji następuje odesłanie nowej sesji do podanej usługi.
+11. Zalety
 
-12. Serwery
-(tylko na slajdzie)
+12. Wady
+
+13. Mity
+
+14. Live Coding
+
+  1. Test runner - budowa.
+  2. Budowa przykładowych testów.
+  3. Bardzo proste przykłady TDD (triangulacja, hardkodowanie, zgadywanie).
+  4. Prezentacja Nose i Cover.
+
+15. Co dalej?
+
+16. Dziękuję za uwagę...

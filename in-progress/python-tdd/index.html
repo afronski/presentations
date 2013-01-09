@@ -32,93 +32,106 @@
             <h1>Dlaczego <em>Python</em> ?</h1>
         </div>
 
+        <div class="step first" data-x="1000" data-y="-3000">
+            <h1>Agile Manifesto</h1>
+            <h2>XP, Scrum, TDD, BDD, SpecByExample...</h2>
+            <a href="http://agilemanifesto.org/iso/pl/" target="_blank" class="spaced">Manifest</a>
+        </div>
+
         <div class="step" data-x="0" data-y="-1500">
-            <img alt="Kent Beck's TDD By Example Book Cover" src="book.jpg" />
+            <img style="margin-left: 75px;" alt="Kent Beck's TDD By Example Book Cover" src="book.jpg" /><br/>
+            <q class="special">Clean code that works - now.</q>
         </div>
 
         <div class="step slide" data-x="1000" data-y="-1500">
-            <q><strong>Basic access authentication</strong></q>
-            <p>Prosty proces uwierzytelniania oparty o protokół HTTP.</p>
-            <p>Dostarcza dane uwierzytelniające w żądaniu HTTP (nagłówki).</p>
-        </div>
-
-        <div class="step slide" data-x="1000" data-y="-3000">
-            <q><strong>Dlaczego nie Basic?</strong></q>
-            <ul class="informative-list">
-                <li>Opiera się na nadmiarowym protokole (HTTP).</li>
-                <li>Dane przesyłane są w postaci czystego tekstu.</li>
-                <li>Nie możliwości wylogowania się z takiej sesji.</li>
-                <li><em>Konta użytkowników</em> nie odzwierciedlają żadnych relacji ani nie są z niczym powiązane.</li>
-                <li>Co z innymi zasobami i usługami sieciowymi?</li>
-            </ul>
+            <q><strong>Unit Test</strong></q>
+            <q class="special">A unit is the smallest testable part of an application.</q>
         </div>
 
         <div class="step slide" data-x="2000" data-y="-1500">
-            <q><strong>Directory service</strong></q>
-            <div><a href="http://pl.wikipedia.org/wiki/Us%C5%82uga_katalogowa" target="_blank">Szczegóły</a></div>
-            <p><em>Usługa katalogowa</em></p>
-            <ul class="informative-list">
-                <li>Precyzyjny sposób opisu urządzeń i usług sieciowych.</li>
-                <li>Hierarchiczna struktura</li>
-                <li>Metadane i powiązania</li>
-                <li>Bezpieczeństwo</li>
+            <q><strong>xUnit</strong></q>
+            <q style="font-size: 120%; margin: 25px 0;"><em>W uproszczeniu</em>:<br/> Jest to konkretna architektura systemu testów.</q>
+            <ul class="disc">
+                <li><em>Test Suite</em></li>
+                <li><em>Test Case</em></li>
+                <li><em>Setup</em></li>
+                <li><em>Teardown</em></li>
+                <li>Asercje</li>
             </ul>
         </div>
 
-        <div id="X500" class="step" data-x="0" data-y="0" data-scale="4">
-            <h1>X.500</h1>
-            <span>jest zbiorem sieciowych standardów <strong>pokrywających usługi katalogowe</strong>(m.in. <a target="_blank" href="http://pl.wikipedia.org/wiki/Directory_Access_Protocol">DAP</a>)</span>
+        <div id="TDD" class="step" data-x="0" data-y="0" data-scale="4">
+            <h1>Proces</h1>
+            <h2>Co? Jak? Gdzie?</h2>
         </div>
 
-        <div id="LDAP" class="step" data-x="150" data-y="3600" data-rotate="90" data-scale="5">
-            <h1>LDAP</h1>
-            <span>Lightweight Directory Access Protocol</span>
-            <div><a href="http://pl.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">Szczegóły</a></div>
-            <div class="footnote">Konkretny protokół będący lekką alternatywą<br/>dla standardów X.500/DAP</div>
+        <div id="Red" class="step" data-x="150" data-y="3600" data-rotate="90" data-scale="5">
+            <h1 style="color: red;">Red</h1>
         </div>
 
-        <div id="AD" class="step" data-x="4500" data-y="7100" data-rotate="180" data-scale="4">
-            <h1>Active Directory</h1>
-            <div><a href="http://pl.wikipedia.org/wiki/Active_Directory" target="_blank">Szczegóły</a></div>
-            <div>Inny typ hierarchicznej struktury:</div>
-            <ul>
-                <li><em>liść</em></li>
-                <li><em>drzewo</em></li>
-                <li><em>las</em></li>
+        <div id="Green" class="step" data-x="4500" data-y="7100" data-rotate="180" data-scale="4">
+            <h1 style="color: darkgreen;">Green</h1>
+        </div>
+
+        <div id="Refactor" class="step" data-x="5500" data-y="8100" data-z="-6000" data-rotate="-90" data-scale="2">
+            <h1 style="color: white;">Refactor</h1>
+        </div>
+
+        <div id="Repeat" class="step" data-x="2225" data-y="2325" data-z="-3000" data-rotate="300" data-scale="2">
+            <p><code><pre><a href="#Red"><b>while</b></a> <i>True</i>:
+    pisz_testy()
+    uruchom_testy()
+    pisz_kod()
+    uruchom_testy()
+    popraw_jakosc_kodu()
+    uruchom_testy()
+    <b>if</b> program_skonczony():
+        <b>break</b></pre></code></p>
+        </div>
+
+        <div id="Advantages" class="step" data-x="4825" data-y="2325" data-z="-6000" data-rotate="90" data-scale="2">
+            <h1>Zalety</h1>
+            <ul class="disc">
+                <li>Siatka bezpieczeństwa (ang. <em>safety net</em>)</li>
+                <li>Małe kroki (<em>dziel-i-rządź</em>)</li>
+                <li>Poprawa jakości kodu może odbywać się bezboleśnie</li>
+                <li>Żywa dokumentacja</li>
+                <li><em>Continuous Integration, Delivery</em></li>
             </ul>
         </div>
 
-        <div id="AD-more" class="step" data-x="5500" data-y="8100" data-z="-6000" data-rotate="-90" data-scale="2">
-            <div><em>Dodatkowa zaleta:</em></div>
-            <div><strong>Aktywna Domena</strong> jest <em>out-of-box</em> połączona z wewnętrznymi kontami użytkowników systemu.</div>
-            <div class="footnote">W przypadku LDAP musimy zadbać o to sami.</div>
-        </div>
-
-        <div id="NTLM" class="step" data-x="2225" data-y="2325" data-z="-3000" data-rotate="300" data-scale="2">
-            <h1>NTLM</h1>
-            <div><a href="http://en.wikipedia.org/wiki/NTLM" target="_blank">Szczegóły</a></div>
-            <span class="footnote">NT LAN Manager</span>
-        </div>
-
-        <div id="Kerberos" class="step" data-x="3825" data-y="2325" data-z="-6000" data-rotate="90" data-scale="2">
-            <h1>Kerberos</h1>
-            <div><a href="http://en.wikipedia.org/wiki/Kerberos_(protocol)" target="_blank">Szczegóły</a></div>
-            <span class="footnote">(ang. Cerber)</span>
-        </div>
-
-        <div id="Solutions" class="step" data-x="6000" data-y="3600" data-scale="3">
-            <h1>Serwery</h1>
-            <ul>
-                <li>ApacheDS</li>
-                <li>Apache + <em>moduł LDAP</em><br/><em>(rozszerzenie Basic Access Authentication)</em></li>
-                <li>JBoss</li>
-                <li>IIS <em>(Windows only)</em></li>
-                <li>OpenLDAP <em>(slapd)</em></li>
+        <div id="Disadvantages" class="step" data-x="6000" data-y="3600" data-scale="4">
+            <h1>Wady</h1>
+            <ul class="disc">
+                <li>Nie wybacza braku doświadczenia<br/>(<em>false positives</em>)</li>
+                <li>Wymaga olbrzymiego doświadczenia</li>
+                <li><em>Dla niektórych to wada:</em> Kata</li>
+                <li>No dobra, ale od czego mam zacząć?</li>
             </ul>
+        </div>
+
+        <div id="Myths" class="step" data-x="16825" data-y="6325" data-z="-6000" data-rotate="90" data-scale="2">
+            <h1>Mity</h1>
+            <ul class="disc">
+                <li>Lepsza architektura i lepsze API</li>
+                <li>Lepsza jakość kodu</li>
+                <li>Pisze-w-TDD-więc-moje-testy-są-super</li>
+                <li>To tylko testy, tu jakość kodu się nie liczy</li>
+                <li></li>
+            </ul>
+        </div>
+
+        <div id="Live" class="step" data-x="12500" data-y="8100" data-z="-6000" data-rotate="-90" data-scale="6">
+            <div><strong>Live Coding</strong></div>
+        </div>
+
+        <div id="WhatNext" class="step" data-x="12500" data-y="1200" data-z="-6000" data-rotate="-90" data-scale="6">
+            <h1>Co dalej?</h1>
+            <h2><em>Acceptance Testing</em>,<br/><em><a href="http://lettuce.it/" target="_blank">Behaviour Driven Development</a></em>,<br/><em>Specification By Example</em></h2>
         </div>
 
         <div id="Finish" class="step" data-x="8500" data-y="8100" data-z="-6000" data-rotate="-90" data-scale="2">
-            <div><strong>A teraz czas na laboratorium...</strong></div>
+            <div><strong>Dziękuję za uwagę ☺ !</strong></div>
         </div>
 
         <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="15">
