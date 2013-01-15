@@ -8,3 +8,7 @@ Presentations which were presented internally in my current workplace:
 
 Presentation which were presented on conference IT Academic Days 2012 (at Poland, Sosnowiec):
 - *.NET 4.5 – new things waiting in Windows 8* (2012)
+
+Presentations for school:
+- *Python TDD* (2013)
+- *Accounting and Authorisation* (2013)
