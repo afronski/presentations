@@ -47,12 +47,34 @@ body {
   color: #8cc84b;
 }
 
-.quoted em {
+.reveal .quoted em {
   color: #8cc84b;
 }
 
-.quoted strong {
+.reveal .quoted strong {
   color: #8cc84b;
+}
+
+.reveal .spaced {
+  margin-top: 75px;
+}
+
+.reveal .no-bullets {
+  list-style: none;
+  margin-left: 0;
+}
+
+.reveal .no-bullets li em {
+  font-size: 50%;
+  display: inline-block;
+}
+
+.reveal .no-bullets li span {
+  display: block;
+}
+
+.reveal .move-up {
+  margin-top: -100px;
 }
 
 /*********************************************

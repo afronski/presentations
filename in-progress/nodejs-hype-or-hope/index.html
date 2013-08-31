@@ -2,9 +2,10 @@
 <html lang="pl">
   <head>
     <meta charset="utf-8">
-    <title>Presentation Template</title>
+    <title>Node.js - Hype or Hope? ;)</title>
 
-    <meta name="description" content="Presentation template for all my presentations made after August 2013">
+    <meta name="description"
+     content="Presentation about introduction to core concepts of Node.js and with pros and cons of this platform.">
     <meta name="author" content="Wojciech Gawroński">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -30,20 +31,25 @@
           <h1>Node.js</h1>
           <h2>Hype or hope?</h2>
           <aside class="notes">
-
+            <ul>
+              <li>
+                Witam Was na prezentacji poświęconej Node.js. Technologii, która swego czasu narobiła niemałego zamieszania (nie ze względu na nowatorskie podejście, ale na pewne nietypowe, zapomniane połączenie).
+              </li>
+              <li>
+                Ja nazywam się Wojciech Gawroński i w FP pracuję od 4 lat. Chciałbym zaprosić Was na dość intensywne 25 minut, które przybliżą wam tę technologię, zaprezenują mocne i słabe punkty oraz zasadę działania całej platformy.
+              </li>
+              <li>Slajdy będą dostępne do ściągnięcia wraz z bibliografią i notatkami.</li>
+            </ul>
           </aside>
         </section>
 
         <section>
+
           <section>
             <h1>Hello Node!</h1>
-          </section>
-
-          <section>
-            <pre><code data-trim contenteditable>
-var http = require("http");
-
-http.createServer(function(request, response) {
+            <div class="spaced">
+              <pre><code data-trim>
+require("http").createServer(function(request, response) {
 
   response.writeHead(200, { "Content-Type": "text/plain" });
   response.end("Hello World\n");
@@ -51,77 +57,143 @@ http.createServer(function(request, response) {
 }).listen(1337, "127.0.0.1");
 
 console.log("Server running at http://127.0.0.1:1337/");
-            </code></pre>
+              </code></pre>
+            </div>
             <aside class="notes">
-
+              <ul>
+                <li>
+                  Zaczniemy od przykładu i małej refleksji, która pokaże dlaczego wokół tej ciekawej technologii jest tyle niezdrowego zamieszania.
+                </li>
+                <li>
+                  Myślę, że nie przesadzę gdy powiem, że lubimy wgryzać się w zasadę działania metodą ogół-szczegół.Najpierw poznajemy bardzo ogólne elementy, składamy rozwiązania z gotowych klocków i według podanego przepisu. Dopiero gdy receptury zaczną Nas ograniczać zaczynamy sięgać głębiej po kolejne szczegóły i detale. Taki model nauki jest zgodny z modelem przyswajania wiedzy braci Dreyfus (chętnych odsyłam do bibliografii zamieszczonej na końcu prezentacji), w ten sam sposób pracowaliśmy w szkole czy na studiach.
+                </li>
+                <li>
+                  Można powiedzieć, patrząc na powyższy przykład, że Node jest zoptymalizowany pod tym kątem - autor tej platformy, nawet się nie spodziewał jak wielkie zamieszanie osiągnie prezentując powyższy kod. Stworzyliśmy serwer HTTP w kilku linijkach kodu, a to dopiero Nasze pierwsze spotkanie z tą technologią.
+                <li>
+                  Niestety, bardzo często zapominamy, że przy takim sposobie nauki, krzywa rośnie powoli tylko na początku i wtedy musimy mocniej przysiąść nad szczegółami. A my, jako ludzie, mamy tendencję do "selektywnego słuchania" i tzw. "cognitive biases", które wypaczają nasze poglądy. O tych wypaczeniach powiem więcej za chwilę.
+                </li>
+                <li>Teraz przeanalizujmy jak działa powyższy kod.</li>
+              </ul>
             </aside>
           </section>
 
           <section>
-            <pre><code data-trim contenteditable>
-var http = require("http");
-
-http.createServer(...).listen(1337, "127.0.0.1");
+            <h2>Analiza</h2>
+            <div>
+              <p>Tworzymy serwer HTTP i nasłuchujemy</p>
+              <pre><code data-trim>
+require("http").createServer(handleRequest).listen(1337, "127.0.0.1");
 
 console.log("Server running at http://127.0.0.1:1337/");
-            </code></pre>
-            <aside class="notes">
+              </code></pre>
+            </div>
 
-            </aside>
-          </section>
-
-          <section>
-            <h2>I gdy nadejdzie odpowiedni moment...</h2>
-            <pre><code data-trim contenteditable>
-function(request, response) {
-
+            <div class="fragment">
+              <p>Po nadejściu żądania wywołana zostanie funkcja <code>handleRequest</code></p>
+              <pre><code data-trim>
+function handleRequest(request, response) {
   response.writeHead(200, { "Content-Type": "text/plain" });
   response.end("Hello World\n");
-
 }
-            </code></pre>
+              </code></pre>
+            </div>
             <aside class="notes">
-
+              <ul>
+                <li>W uproszczeniu możemy powiedzieć, że kod wykonywany jest w dwóch etapach.</li>
+                <li>
+                  Aby to lepiej zobrazować, wyodrębnimy i tylko na chwilę pominiemy funkcję służącą do obsługi żądania.
+                </li>
+                <li>
+                  Po stworzeniu serwera HTTP, podpinamy naszą implementację jako obsługę każdego żądania i nasłuchujemy na podanym porcie.
+                </li>
+                <li>
+                  Dopiero gdy klient wykona żądanie do naszego serwera, w odpowiedzi wywołana zostanie funkcja handleRequest, czego konsekwencją będzie wysłanie odpowiedzi i zamknięcie połączenia.
+                </li>
+                <li>
+                  Już w tym prostym przykładzie widać podstawową zasadę, która jest podstawą działania tej platformy - chodzi oczywiście o asynchroniczną obsługę wszelkiego rodzaju operacji - nie czekamy i nie blokujemy wykonania, to "ktoś" ma nas poinformować, że zaszło interesujące Nas zdarzenie. Skojarzenia z tzw. złotą zasadą Hollywood ("Nie dzwoń do nas. My oddzwonimy do ciebie") są jak najbardziej słuszne ;).
+                </li>
+              </ul>
             </aside>
           </section>
+
         </section>
 
         <section>
-          <h1>Historia</h1>
-          <ul>
-            <li class="fragment grow">W roku 2009 Ryan Dahl prezentuje </li>
-            <li class="fragment grow">B</li>
-            <li class="fragment grow">C</li>
-            <li class="fragment grow">D</li>
-            <li class="fragment grow">E</li>
-          </ul>
-        </section>
 
-        <section>
           <section>
+            <h2>Czym jest Node.js?</h2>
             <p class="quoted"><strong><em>Node.js</em></strong> is a platform built on <strong>Chrome's JavaScript runtime</strong> for easily building fast, scalable network applications. Node.js uses an <strong>event-driven</strong>, <strong>non-blocking I/O model</strong> that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.</p>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Więc czym właściwie jest Node.js? Skoro już potrafimy napisać własny serwer HTTP w kilku linijkach kodu, chcielibyśmy wiedzieć coś więcej o wykorzystanym narzędziu.
+                </li>
+                <li>
+                  Bardzo ważne: Node.js to nie framework - to bardziej platforma lub środowisko, bardzo lekkie, dostarczające wszystkich podstawowych elementów bezpośrednio związanych z sieciami komputerowymi (obsługę protokołów HTTP, DNS, TCP, UDP itd.).
+                </li>
+                <li>
+                   To co widzimy na slajdzie to definicja z głównej strony (http://nodejs.org). Widać, że to co napotkaliśmy to bardzo marketingowa definicja, w której brakuje konkretów oraz dodatkowo ukrywa pewne ważne elementy przed nami.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
-            <h1>Marketingowy Bełkot</h1>
-            <h2>Rozszyfrujmy to!</h2>
+            <h2>Marketingowy Bełkot</h2>
+            <h3>Rozszyfrujmy to!</h3>
+            <aside class="notes">
+              <ul>
+                <li>Spróbujmy to rozszyfrować!</li>
+                <li>
+                  Bardzo dużo "buzz-words" a niestety mało treści. Ta definicja jest również bardzo często płaszczyzną nieporozumień i przyczyną tak dużego szumu wokół tej technologii.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>V8</h1>
             <h2>Chrome's JavaScript runtime</h2>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Kluczowy element - interpreter JavaScript z przeglądarki Google Chrome. Otwarte źródła na dość liberalnej licencji, bardzo mocny kompilator optymalizujący (zwany Crankshaft, twórcy V8 uwielbiają terminologię związaną z mechaniką) oraz ówczesne, najlepsze wyniki w testach wydajności, zdecydowały o tym, że Node.js oparty jest właśnie o ten kawałek oprogramowania.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>Event-Driven Programming Model</h1>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Koncepcja programowania oparta o zdarzenia nie jest niczym nowym, jest natomiast głównym i jedynym nurtem programowania w JavaScript po stronie klienta (wszystkie opracje dot. komunikacji z przeglądarką są obsługiwane za pomocą obsługi zdarzeń). Autorzy Node'a postanowili wykorzystać ten model, tworząc dzięki następnemu elementowi w pełni asynchroniczną implementację obsługi zdarzeń.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>Non-blocking I/O</h1>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Idea nieblokującego, asynchronicznego sposobu obsługi zdarzeń wejścia-wyjścia to kluczowy element ponieważ jest podstawą efektywniejszego wykorzystania zasobów. W połączeniu z następnym elementem, tworzy clue całej platformy.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>Event Loop</h1>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Tego elementu nigdzie nie ma w przytoczonej definicji, ale jest ona tzw. "wiedzą ukrytą" i najważniejszym elementem, jeśli chodzi o nieporozumienia dotyczące tej technologii. Połączenie pętli obsługi zdarzeń i ich asynchronicznej obsługi jest kluczowym elementem, ponieważ wpływa na model programowania i skalowalność zaimplementowanego rozwiązania. Nie jest również innowacyjnym elementem ;).
+                </li>
+              </ul>
+            </aside>
           </section>
 
         </section>
@@ -129,12 +201,147 @@ function(request, response) {
         <section>
 
           <section>
-            <h1>C10K</h1>
-            <p></p>
+            <h2>No i gdzie ta innowacja?</h2>
+            <ul>
+              <li>
+                JavaScript na serwerze nie jest nową koncepcją.
+              </li>
+              <li class="fragment">
+                Asynchroniczna obsługa żądań również nie jest niczym nowym.
+              </li>
+              <li class="fragment">
+                Innowacyjne jest dopiero <strong>połączenie obu elementów</strong>.
+              </li>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>
+                  JavaScript na serwerze to nie jest nowa koncepcja - w jej zastosowaniu przodują środowiska związane z Javą - Rhino, RingoJS, Helma etc.
+                </li>
+                <li>
+                  Tak naprawdę pierwszy był LiveScript (poprzednia nazwa JavaScript), który 1994 roku był dostarczany z Netscape Enterprise Server.
+                </li>
+                <li>
+                  Właśnie to połączenie - JavaScript po stronie serwera oraz tzw. "non-blocking I/O" było największą innowacją.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
-            <h1>Inne rozwiązania</h1>
+            <h2>Dlaczego więc JavaScript?</h2>
+            <h3 class="fragment">Z trzech powodów:</h3>
+            <ul>
+              <li class="fragment">
+                Asynchroniczna obsługa zdarzeń to standardowe podejście stosowane w przeglądarce.
+              </li>
+              <li class="fragment">
+                Brak zależności w postaci biblioteki do obsługi operacji I/O.
+              </li>
+              <li class="fragment">V8</li>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>
+                  JavaScript w swoim "sercu" i w codziennej pracy mocno wykorzystuje model zdarzeniowy - ze względu na budowę wewnętrzną przeglądarek (w uproszczeniu: skrypt jest wykonywany w jednym wątku i następuje przełączanie kontekstu pomiędzy skryptem, renderowaniem strony i obsługą I/O) cała interakcja ze stroną jest oparta o obsługę zdarzeń.
+                </li>
+                <li>
+                  Wykorzystanie "non-blocking I/O" to olbrzymia zmiana w koncepcji i sposobie programowania. Ryan eksperymentował z kilkoma językami, ale aby dostosować język programowania do tego modelu należałoby przepisać lub stworzyć na nowo praktycznie wszystkie moduły biblioteki standardowej tego języka.
+                </li>
+                <li>
+                  Jeśli jednak spojrzymy na ECMAScript / JavaScript to fakt że, nie posiada żadnej ustandaryzowanej biblioteki na tym polu jest bardzo pożądany - mamy otwarte pole aby stworzyć własną implementację.
+                </li>
+                <li>
+                  Jak już wspominałem - jednym z najważniejszych powodów dlaczego JavaScript był właśnie silnik z przeglądarki Google Chrome - V8. Gdy Ryan tworzył pierwszą wersję Node.js to był najszybszy silnik z potężnym kompilatorem optymalizującym oraz otwartym kodem źródłowym na liberalnej licencji.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Historia</h1>
+            <h2>Kartka z kalendarza</h2>
+            <aside class="notes">
+              <ul>
+                <li>Cofnijmy się w czasie i spójrzmy w jaki sposób rozwijał się Node.js.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <ol class="move-up no-bullets">
+              <li>
+                <em>2009</em>
+                <span>Ryan Dahl zatrudniony przez Joyent rozpoczyna tworzenie Node.js
+              </li>
+              <li class="fragment">
+                <em>2009 - 2011</em>
+                <span>To lata ciągłego rozwoju, powstają wersje 0.2 oraz 0.4</span>
+              </li>
+              <li class="fragment">
+                <em>Wrzesień 2011</em>
+                <span>Utworzenie biblioteki libuv</span>
+              </li>
+              <li class="fragment">
+                <em>Listopad 2011</em>
+                <span>Pojawia się wersja 0.6, określana jako "pierwsza stabilna" gałąź</span>
+              </li>
+              <li class="fragment">
+                <em>Grudzień 2011</em>
+                <span>Microsoft ogłasza wsparcie dla Node.js na platformie Windows Azure</span>
+              </li>
+              <li class="fragment">
+                <em>Styczeń 2012</em>
+                <span>Ryan odchodzi z Joyent - opiekunem zostaje Isaac Schlueter</span>
+              </li>
+              <li class="fragment">
+                <em>Czerwiec 2012</em>
+                <span>Pojawia najpopularniejsza obecnie wersja 0.8</span>
+              </li>
+              <li class="fragment">
+                <em>Grudzień 2012</em>
+                <span>Pojawia się nowe API dla strumieni w wersji 0.10.x</span>
+              </li>
+              <li class="fragment">
+                <em>Maj 2013</em>
+                <span>Isaac ogłasza, że gałąź 0.12 będzie ostatnią przed wersją 1.0</span>
+              </li>
+            </ol>
+            <aside class="notes">
+              <ul>
+                <li>Joyent to pierwszy pracodawca Ryana, firma mocno inwestująca w Node.js.</li>
+                <li>
+                  Cykl wydawniczy jest bardzo szybki - numery parzyste oznaczają stabilne wersje, nieparzyste to rozwojowe gałęzie.
+                </li>
+                <li>
+                  O libuv szczegółowo opowiem później - ważne jednak, że powstanie biblioteki związane jest konsekwencją wymagania obsługi wielu platform. W uproszczeniu można powiedzieć, że libuv jest warstwą pośredniczącą między systemem operacyjnym a V8, która wprowadza nieblokujące opracje wejścia-wyjścia.
+                </li>
+                <li>
+                  Moment ogłoszenia wsparcia ze strony Microsoftu to bardzo ważny element, wiele firm zwiazanych typowo z Enterprise, zaczyna dostrzegać Node'a - dodatkowo dzięki oddelegowaniu programistów wsparcie dla systemu Windows ulega znacznej poprawie (Microsoft pomaga zarówno przy rdzeniu Node.js jak i przy bibliotece libuv).
+                </li>
+                <li>
+                  Nie znane są dokładne powody odejścia Ryana z firmy. Plotki mówiły o nowym projekcie, w który Ryan zaangażował się na 100%.
+                </li>
+                <li>Wersja 1.0 zaplanowana jest na pierwszy kwartał 2014.</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Motywacja</h1>
+            <h2>C10K</h2>
+          </section>
+
+          <section>
+            <h2>Inne rozwiązania problemu C10K</h2>
             <ul>
               <li class="fragment grow"></li>
               <li class="fragment grow"></li>
@@ -144,23 +351,21 @@ function(request, response) {
           </section>
 
           <section>
-            <h1>libuv</h1>
+            <h1>Joyent</h1>
+            <p>SmartOS</p>
           </section>
 
           <section>
             <h1>Scalability</h1>
             <h2>Modne słówko ;)</h2>
           </section>
+
         </section>
 
         <section>
 
           <section>
             <h1>Pro</h1>
-          </section>
-
-          <section>
-            <h1>Ewolucja "mash-up" (kroki!)</h1>
           </section>
 
         </section>
@@ -178,13 +383,16 @@ function(request, response) {
           <section>
             <h1>Kto zaufał tej technologii?</h1>
             <h2>Przypadki użycia</h2>
+          </section>
+
+          <section>
+            <h1>Ewolucja "mash-up" (kroki!)</h1>
             <p>WebSockets</p>
             <p>Soft RT (ale uwaga na GC)</p>
             <p>Streamming</p>
             <p>REST API oparty o JSON</p>
             <p>command line tools (grunt, bower, yeoman)</p>
             <p>LightTable, Brackets, ...</p>
-            <p></p>
           </section>
 
         </section>
@@ -192,62 +400,90 @@ function(request, response) {
         <section>
 
           <section>
-            <h1>Kluczowe koncepcje</h1>
+            <h1>Kluczowe koncepcje i elementy</h1>
           </section>
 
           <section>
-            <h1>Callbacks</h1>
+            <h2>libuv</h2>
           </section>
 
           <section>
-            <h1>EventEmitter</h1>
+            <h2>Callbacks</h2>
           </section>
 
           <section>
-            <h1>NPM</h1>
+            <h2>EventEmitter</h2>
+          </section>
+
+          <section>
+            <h2>NPM</h2>
             <p>curse and bless, klęska urodzaju, jakość modułów, stabilność, tempo rozwoju (Tangle!)</p>
           </section>
 
           <section>
-            <h1>Streams</h1>
+            <h2>Streams</h2>
           </section>
 
           <section>
-            <h1>Ewolucja i płynne przejście</h1>
+            <h3>Ewolucja i płynne przejście</h3>
           </section>
 
           <section>
-            <h1>Domains</h1>
+            <h2>Domains</h2>
+            <p>Let it Crash</p>
           </section>
 
           <section>
-            <h1>Callbacks Hell</h1>
+            <h3>Callbacks Hell</h3>
           </section>
 
           <section>
-            <h1>Poprawne podejście</h1>
+            <h3>Poprawne podejście</h3>
           </section>
 
           <section>
-            <h1>Unix Philosophy of Small Tools</h1>
-            <h2>aka "Thin Core"</h2>
+            <h2>Unix Philosophy of Small Tools</h2>
+            <h3>aka "Thin Core"</h3>
           </section>
 
           <section>
-            <h1>ECMAScript 5</h1>
-            <h2>ECMAScript 6, Next</h2>
+            <h2>ECMAScript 5, 6 oraz NEXT</h2>
             <p>brak wymówki dot. niemożności stosowania związanej z szerokim wsparciem przeglądarek</p>
             <p>0.11.x -> node --v8-options | grep harmony</p>
           </section>
 
+          <section>
+            <pre><code data-trim contenteditable>
+// Pokaz możliwości ECMAScript 6
+            </code></pre>
+          </section>
+
         </section>
 
         <section>
-          <h1>Czas na pytania...</h1>
+          <h1>Pytania?</h1>
         </section>
 
         <section>
-          <h1>Dziękuję za uwagę!</h1>
+          <h2>Dziękuję za uwagę!</h1>
+          <h3>Bibliografia</h2>
+          <ul>
+            <li>
+              <a href="http://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition">
+                Model nabywania kompetencji braci Dreyfus
+              </a>
+            </li>
+            <li>
+              <a href="http://www.kegel.com/c10k.html">
+                Problem C10K
+              </a>
+            </li>
+            <li>
+              <a href="http://blogs.teamb.com/craigstuntz/2008/05/19/37819/">
+                Filozofia <em>Let it Crash</em>
+              </a>
+            </li>
+          </ul>
         </section>
       </div>
     </div>
