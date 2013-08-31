@@ -27,31 +27,226 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h1>Presentation Template</h1>
+          <h1>Node.js</h1>
+          <h2>Hype or hope?</h2>
           <aside class="notes">
-            This way you can provide aside speaker notes ;).
+
           </aside>
         </section>
 
         <section>
-          <h2>Code Sample</h2>
-          <pre><code data-trim contenteditable>
--module(math).
--export([factorial/1]).
+          <section>
+            <h1>Hello Node!</h1>
+          </section>
 
-factorial(0) ->
-  1;
-factorial(X) when X > 0 ->
-  X * factorial(X-1).
-          </code></pre>
+          <section>
+            <pre><code data-trim contenteditable>
+var http = require("http");
+
+http.createServer(function(request, response) {
+
+  response.writeHead(200, { "Content-Type": "text/plain" });
+  response.end("Hello World\n");
+
+}).listen(1337, "127.0.0.1");
+
+console.log("Server running at http://127.0.0.1:1337/");
+            </code></pre>
+            <aside class="notes">
+
+            </aside>
+          </section>
+
+          <section>
+            <pre><code data-trim contenteditable>
+var http = require("http");
+
+http.createServer(...).listen(1337, "127.0.0.1");
+
+console.log("Server running at http://127.0.0.1:1337/");
+            </code></pre>
+            <aside class="notes">
+
+            </aside>
+          </section>
+
+          <section>
+            <h2>I gdy nadejdzie odpowiedni moment...</h2>
+            <pre><code data-trim contenteditable>
+function(request, response) {
+
+  response.writeHead(200, { "Content-Type": "text/plain" });
+  response.end("Hello World\n");
+
+}
+            </code></pre>
+            <aside class="notes">
+
+            </aside>
+          </section>
         </section>
 
         <section>
-          <h1>Questions?</h1>
+          <h1>Historia</h1>
+          <ul>
+            <li class="fragment grow">W roku 2009 Ryan Dahl prezentuje </li>
+            <li class="fragment grow">B</li>
+            <li class="fragment grow">C</li>
+            <li class="fragment grow">D</li>
+            <li class="fragment grow">E</li>
+          </ul>
         </section>
 
         <section>
-          <h1>Thank you for your attention!</h1>
+          <section>
+            <p><em>Node.js</em> is a platform built on <b>Chrome's JavaScript runtime</b> for easily building fast, scalable network applications. Node.js uses an <b>event-driven</b>, <b>non-blocking I/O model</b> that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.</p>
+          </section>
+
+          <section>
+            <h1>Rozszyfrujmy to!</h1>
+          </section>
+
+          <section>
+            <h1>V8</h1>
+            <h2>Chrome's JavaScript runtime</h2>
+          </section>
+
+          <section>
+            <h1>Event-Driven Programming Model</h1>
+          </section>
+
+          <section>
+            <h1>Non-blocking I/O</h1>
+          </section>
+
+          <section>
+            <h1>Event Loop</h1>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>C10K</h1>
+            <p></p>
+          </section>
+
+          <section>
+            <h1>Inne rozwiązania</h1>
+            <ul>
+              <li class="fragment grow"></li>
+              <li class="fragment grow"></li>
+              <li class="fragment grow"></li>
+              <li class="fragment grow"></li>
+            </ul>
+          </section>
+
+          <section>
+            <h1>libuv</h1>
+          </section>
+
+          <section>
+            <h1>Scalability</h1>
+            <h2>Modne słówko ;)</h2>
+          </section>
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Pro</h1>
+          </section>
+
+          <section>
+            <h1>Ewolucja "mash-up" (kroki!)</h1>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Contra</h1>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Kto zaufał tej technologii?</h1>
+            <h2>Przypadki użycia</h2>
+            <p>WebSockets</p>
+            <p>Soft RT (ale uwaga na GC)</p>
+            <p>Streamming</p>
+            <p>REST API oparty o JSON</p>
+            <p>command line tools (grunt, bower, yeoman)</p>
+            <p>LightTable, Brackets, ...</p>
+            <p></p>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Kluczowe koncepcje</h1>
+          </section>
+
+          <section>
+            <h1>Callbacks</h1>
+          </section>
+
+          <section>
+            <h1>EventEmitter</h1>
+          </section>
+
+          <section>
+            <h1>NPM</h1>
+            <p>curse and bless, klęska urodzaju, jakość modułów, stabilność, tempo rozwoju (Tangle!)</p>
+          </section>
+
+          <section>
+            <h1>Streams</h1>
+          </section>
+
+          <section>
+            <h1>Ewolucja i płynne przejście</h1>
+          </section>
+
+          <section>
+            <h1>Domains</h1>
+          </section>
+
+          <section>
+            <h1>Callbacks Hell</h1>
+          </section>
+
+          <section>
+            <h1>Poprawne podejście</h1>
+          </section>
+
+          <section>
+            <h1>Unix Philosophy of Small Tools</h1>
+            <h2>aka "Thin Core"</h2>
+          </section>
+
+          <section>
+            <h1>ECMAScript 5</h1>
+            <h2>ECMAScript 6, Next</h2>
+            <p>brak wymówki dot. niemożności stosowania związanej z szerokim wsparciem przeglądarek</p>
+            <p>0.11.x -> node --v8-options | grep harmony</p>
+          </section>
+
+        </section>
+
+        <section>
+          <h1>Pytania? &#9786;</h1>
+        </section>
+
+        <section>
+          <h1>Dziękuję za uwagę!</h1>
         </section>
       </div>
     </div>
