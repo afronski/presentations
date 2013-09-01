@@ -33,10 +33,10 @@
           <aside class="notes">
             <ul>
               <li>
-                Witam Was na prezentacji poświęconej Node.js. Technologii, która swego czasu narobiła niemałego zamieszania (nie ze względu na nowatorskie podejście, ale na pewne nietypowe, zapomniane połączenie).
+                Witam Was na prezentacji poświęconej Node.js. Technologii, która swego czasu narobiła niemałego zamieszania - nie ze względu na nowatorskie podejście, ale na pewne nietypowe, zapomniane połączenie.
               </li>
               <li>
-                Ja nazywam się Wojciech Gawroński i w FP pracuję od 4 lat. Chciałbym zaprosić Was na dość intensywne 25 minut, które przybliżą wam tę technologię, zaprezenują mocne i słabe punkty oraz zasadę działania całej platformy.
+                Ja nazywam się Wojciech Gawroński i w FP pracuję od 4 lat. To będzie dość intensywne 25 minut, które przybliżą wam tę technologię, zaprezenują mocne i słabe punkty oraz zasadę działania całej platformy.
               </li>
               <li>Slajdy będą dostępne do ściągnięcia wraz z bibliografią i notatkami.</li>
             </ul>
@@ -48,7 +48,7 @@
           <section>
             <h1>Hello Node!</h1>
             <div class="spaced">
-              <pre><code data-trim>
+              <pre><code data-trim class="javascript">
 require("http").createServer(function(request, response) {
 
   response.writeHead(200, { "Content-Type": "text/plain" });
@@ -65,14 +65,14 @@ console.log("Server running at http://127.0.0.1:1337/");
                   Zaczniemy od przykładu i małej refleksji, która pokaże dlaczego wokół tej ciekawej technologii jest tyle niezdrowego zamieszania.
                 </li>
                 <li>
-                  Myślę, że nie przesadzę gdy powiem, że lubimy wgryzać się w zasadę działania metodą ogół-szczegół.Najpierw poznajemy bardzo ogólne elementy, składamy rozwiązania z gotowych klocków i według podanego przepisu. Dopiero gdy receptury zaczną Nas ograniczać zaczynamy sięgać głębiej po kolejne szczegóły i detale. Taki model nauki jest zgodny z modelem przyswajania wiedzy braci Dreyfus (chętnych odsyłam do bibliografii zamieszczonej na końcu prezentacji), w ten sam sposób pracowaliśmy w szkole czy na studiach.
+                  Myślę, że nie przesadzę gdy powiem, że lubimy wgryzać się w zasadę działania metodą ogół-szczegół.Najpierw poznajemy bardzo ogólne elementy, składamy rozwiązania z gotowych klocków i według podanego przepisu. Dopiero gdy receptury zaczną Nas ograniczać zaczynamy sięgać głębiej po kolejne szczegóły i detale. Taki model nauki jest zgodny z modelem nabywania kompetencji braci Dreyfus (chętnych odsyłam do bibliografii zamieszczonej na końcu prezentacji), w ten sam sposób pracowaliśmy w szkole czy na studiach.
                 </li>
                 <li>
                   Można powiedzieć, patrząc na powyższy przykład, że Node jest zoptymalizowany pod tym kątem - autor tej platformy, nawet się nie spodziewał jak wielkie zamieszanie osiągnie prezentując powyższy kod. Stworzyliśmy serwer HTTP w kilku linijkach kodu, a to dopiero Nasze pierwsze spotkanie z tą technologią.
                 <li>
-                  Niestety, bardzo często zapominamy, że przy takim sposobie nauki, krzywa rośnie powoli tylko na początku i wtedy musimy mocniej przysiąść nad szczegółami. A my, jako ludzie, mamy tendencję do "selektywnego słuchania" i tzw. "cognitive biases", które wypaczają nasze poglądy. O tych wypaczeniach powiem więcej za chwilę.
+                  Niestety, bardzo często zapominamy, że przy takim sposobie nauki, krzywa rośnie powoli tylko na początku i wtedy musimy mocniej przysiąść nad szczegółami. A my, jako ludzie, mamy tendencję do "selektywnego słuchania" i tzw. "cognitive biases", które wypaczają nasze poglądy. O tych wypaczeniach powiem więcej za chwilę. Aby wykorzystać pełen potencjał ukryty pod tymi kilkoma linijkami kodu, należy sięgnąć dużo głębiej.
                 </li>
-                <li>Teraz przeanalizujmy jak działa powyższy kod.</li>
+                <li>Właśnie dlatego zacznijmy od analizy jak działa powyższy kod.</li>
               </ul>
             </aside>
           </section>
@@ -81,7 +81,7 @@ console.log("Server running at http://127.0.0.1:1337/");
             <h2>Analiza</h2>
             <div>
               <p>Tworzymy serwer HTTP i nasłuchujemy</p>
-              <pre><code data-trim>
+              <pre><code data-trim class="javascript">
 require("http").createServer(handleRequest).listen(1337, "127.0.0.1");
 
 console.log("Server running at http://127.0.0.1:1337/");
@@ -90,7 +90,7 @@ console.log("Server running at http://127.0.0.1:1337/");
 
             <div class="fragment">
               <p>Po nadejściu żądania wywołana zostanie funkcja <code>handleRequest</code></p>
-              <pre><code data-trim>
+              <pre><code data-trim class="javascript">
 function handleRequest(request, response) {
   response.writeHead(200, { "Content-Type": "text/plain" });
   response.end("Hello World\n");
@@ -104,13 +104,13 @@ function handleRequest(request, response) {
                   Aby to lepiej zobrazować, wyodrębnimy i tylko na chwilę pominiemy funkcję służącą do obsługi żądania.
                 </li>
                 <li>
-                  Po stworzeniu serwera HTTP, podpinamy naszą implementację jako obsługę każdego żądania i nasłuchujemy na podanym porcie.
+                  Po stworzeniu serwera HTTP, podpinamy naszą implementację jako funkcję obsługi każdego żądania i nasłuchujemy na zadanym porcie.
                 </li>
                 <li>
-                  Dopiero gdy klient wykona żądanie do naszego serwera, w odpowiedzi wywołana zostanie funkcja handleRequest, czego konsekwencją będzie wysłanie odpowiedzi i zamknięcie połączenia.
+                  Dopiero gdy klient wykona żądanie do naszego serwera w konsekwencji wywołana zostanie funkcja handleRequest, czego efektem będzie wysłanie odpowiedzi i zamknięcie połączenia.
                 </li>
                 <li>
-                  Już w tym prostym przykładzie widać podstawową zasadę, która jest podstawą działania tej platformy - chodzi oczywiście o asynchroniczną obsługę wszelkiego rodzaju operacji - nie czekamy i nie blokujemy wykonania, to "ktoś" ma nas poinformować, że zaszło interesujące Nas zdarzenie. Skojarzenia z tzw. złotą zasadą Hollywood ("Nie dzwoń do nas. My oddzwonimy do ciebie") są jak najbardziej słuszne ;).
+                  Już w tym prostym przykładzie widać zasadę, która jest podstawą działania tej platformy - chodzi oczywiście o asynchroniczną obsługę wszelkiego rodzaju operacji - nie czekamy i nie blokujemy wykonania - to "ktoś" ma nas poinformować, że zaszło interesujące Nas zdarzenie. Skojarzenia z tzw. złotą zasadą Hollywood ("Nie dzwoń do nas. My oddzwonimy do ciebie") są jak najbardziej słuszne ;).
                 </li>
               </ul>
             </aside>
@@ -126,13 +126,13 @@ function handleRequest(request, response) {
             <aside class="notes">
               <ul>
                 <li>
-                  Więc czym właściwie jest Node.js? Skoro już potrafimy napisać własny serwer HTTP w kilku linijkach kodu, chcielibyśmy wiedzieć coś więcej o wykorzystanym narzędziu.
+                  Po przeanalizowaniu przykładu możemy skupić się na odpowiedzi na pytanie: Czym właściwie jest Node.js? Skoro już potrafimy napisać własny serwer HTTP w kilku linijkach kodu, chcielibyśmy wiedzieć coś więcej o wykorzystanym narzędziu.
                 </li>
                 <li>
-                  Bardzo ważne: Node.js to nie framework - to bardziej platforma lub środowisko, bardzo lekkie, dostarczające wszystkich podstawowych elementów bezpośrednio związanych z sieciami komputerowymi (obsługę protokołów HTTP, DNS, TCP, UDP itd.).
+                  W pierwszym zdaniu jest zawarta bardzo ważna informacja: Node.js to nie framework - to platforma (często mówi się również środowisko), bardzo lekka, dostarczające wszystkich podstawowych elementów bezpośrednio związanych z programowaniem sieciowym (np. obsługę protokołów HTTP, DNS, TCP, UDP).
                 </li>
                 <li>
-                   To co widzimy na slajdzie to definicja z głównej strony (http://nodejs.org). Widać, że to co napotkaliśmy to bardzo marketingowa definicja, w której brakuje konkretów oraz dodatkowo ukrywa pewne ważne elementy przed nami.
+                   Niestety, (to co widzimy dalej na slajdzie to definicja z głównej strony - http://nodejs.org) widać, że to co napotkaliśmy to bardzo marketingowa definicja, w której brakuje konkretów. Co gorsza, ukrywa ona przed nami jeden ważny szczegół.
                 </li>
               </ul>
             </aside>
@@ -152,45 +152,47 @@ function handleRequest(request, response) {
           </section>
 
           <section>
-            <h1>V8</h1>
-            <h2>Chrome's JavaScript runtime</h2>
+            <h2>V8</h2>
+            <h3>Chrome's JavaScript runtime</h3>
             <aside class="notes">
               <ul>
                 <li>
-                  Kluczowy element - interpreter JavaScript z przeglądarki Google Chrome. Otwarte źródła na dość liberalnej licencji, bardzo mocny kompilator optymalizujący (zwany Crankshaft, twórcy V8 uwielbiają terminologię związaną z mechaniką) oraz ówczesne, najlepsze wyniki w testach wydajności, zdecydowały o tym, że Node.js oparty jest właśnie o ten kawałek oprogramowania.
+                  Kluczowy element, fundament całego rozwiązania - interpreter języka JavaScript z przeglądarki Google Chrome. Otwarte źródła na dość liberalnej licencji, bardzo mocny kompilator optymalizujący (zwany Crankshaft, twórcy V8 uwielbiają terminologię związaną z mechaniką) oraz ówczesne, najlepsze wyniki w testach wydajności, zdecydowały o tym, że Node.js oparty jest właśnie o ten kawałek oprogramowania.
                 </li>
               </ul>
             </aside>
           </section>
 
           <section>
-            <h1>Event-Driven Programming Model</h1>
+            <h2>Event-Driven Model</h2>
             <aside class="notes">
               <ul>
                 <li>
-                  Koncepcja programowania oparta o zdarzenia nie jest niczym nowym, jest natomiast głównym i jedynym nurtem programowania w JavaScript po stronie klienta (wszystkie opracje dot. komunikacji z przeglądarką są obsługiwane za pomocą obsługi zdarzeń). Autorzy Node'a postanowili wykorzystać ten model, tworząc dzięki następnemu elementowi w pełni asynchroniczną implementację obsługi zdarzeń.
+                  Koncepcja programowania oparta o zdarzenia nie jest niczym nowym, jest natomiast głównym nurtem programowania w JavaScript po stronie klienta (wszystkie opracje dot. komunikacji z przeglądarką są obsługiwane za pomocą obsługi zdarzeń). Autorzy Node'a postanowili wykorzystać ten model, a dzięki następnemu elementowi stworzyli oni w pełni asynchroniczną implementację obsługi zdarzeń.
                 </li>
               </ul>
             </aside>
           </section>
 
           <section>
-            <h1>Non-blocking I/O</h1>
+            <h2>Non-blocking I/O</h2>
+            <h3>TODO: Animacja</h3>
             <aside class="notes">
               <ul>
                 <li>
-                  Idea nieblokującego, asynchronicznego sposobu obsługi zdarzeń wejścia-wyjścia to kluczowy element ponieważ jest podstawą efektywniejszego wykorzystania zasobów. W połączeniu z następnym elementem, tworzy clue całej platformy.
+                  Idea nieblokującego, asynchronicznego sposobu obsługi zdarzeń wejścia-wyjścia to kluczowy element ponieważ jest podstawą efektywniejszego wykorzystania zasobów.
                 </li>
               </ul>
             </aside>
           </section>
 
           <section>
-            <h1>Event Loop</h1>
+            <h2>Event Loop</h2>
+            <h3>TODO: Animacja</h3>
             <aside class="notes">
               <ul>
                 <li>
-                  Tego elementu nigdzie nie ma w przytoczonej definicji, ale jest ona tzw. "wiedzą ukrytą" i najważniejszym elementem, jeśli chodzi o nieporozumienia dotyczące tej technologii. Połączenie pętli obsługi zdarzeń i ich asynchronicznej obsługi jest kluczowym elementem, ponieważ wpływa na model programowania i skalowalność zaimplementowanego rozwiązania. Nie jest również innowacyjnym elementem ;).
+                  Niestety, tego elementu nigdzie nie ma w przytoczonej definicji. Jest on tzw. "wiedzą ukrytą" i główną przyczyną nieporozumień dotyczących Node.js. Połączenie pętli obsługi zdarzeń i ich asynchronicznej obsługi jest kluczowym elementem, ponieważ wpływa na model programowania i skalowalność zaimplementowanego rozwiązania. Nie jest również innowacyjnym elementem ;) o czym w szczegółach opowiem za chwilę.
                 </li>
               </ul>
             </aside>
@@ -216,13 +218,19 @@ function handleRequest(request, response) {
             <aside class="notes">
               <ul>
                 <li>
-                  JavaScript na serwerze to nie jest nowa koncepcja - w jej zastosowaniu przodują środowiska związane z Javą - Rhino, RingoJS, Helma etc.
+                  No to zaraz, wymieniłem wszystkie elementy ale żaden z nich nie jest innowacyjny. To czemu ta technologia wytworzyła tyle szumu dookoła siebie?
+                </li>
+                <li>
+                  Przecież JavaScript na serwerze to nie jest nowa koncepcja - w jej zastosowaniu przodują środowiska związane z Javą - Rhino, RingoJS, Helma etc.
                 </li>
                 <li>
                   Tak naprawdę pierwszy był LiveScript (poprzednia nazwa JavaScript), który 1994 roku był dostarczany z Netscape Enterprise Server.
                 </li>
                 <li>
-                  Właśnie to połączenie - JavaScript po stronie serwera oraz tzw. "non-blocking I/O" było największą innowacją.
+                  Asynchroniczna obsługa żądań to również nie jest nowe rozwiązanie.
+                </li>
+                <li>
+                  Całe zamieszanie wywołane zostało właśnie przez połączenie obu światów - JavaScript po stronie serwera oraz wykorzystanie tzw. "non-blocking I/O" było największą innowacją.
                 </li>
               </ul>
             </aside>
@@ -233,10 +241,15 @@ function handleRequest(request, response) {
             <h3 class="fragment">Z trzech powodów:</h3>
             <ul>
               <li class="fragment">
-                Asynchroniczna obsługa zdarzeń to standardowe podejście stosowane w przeglądarce.
+                Asynchroniczna obsługa zdarzeń to standardowe podejście stosowane w JavaScript.
+                <pre>
+                  <code class="javascript" data-trim>
+document.addEventListener("DOMContentLoaded", eventHandler, true);
+                  </code>
+                </pre>
               </li>
               <li class="fragment">
-                Brak zależności w postaci biblioteki do obsługi operacji I/O.
+                Brak zależności w postaci bibliotek obsługujących operacje wejścia-wyjścia.
               </li>
               <li class="fragment">V8</li>
             </ul>
@@ -313,7 +326,7 @@ function handleRequest(request, response) {
             </ol>
             <aside class="notes">
               <ul>
-                <li>Joyent to pierwszy pracodawca Ryana, firma mocno inwestująca w Node.js.</li>
+                <li>Joyent to pierwszy pracodawca Ryana, jest to firma do dziś mocno inwestująca w Node.js.</li>
                 <li>
                   Cykl wydawniczy jest bardzo szybki - numery parzyste oznaczają stabilne wersje, nieparzyste to rozwojowe gałęzie.
                 </li>
@@ -324,7 +337,7 @@ function handleRequest(request, response) {
                   Moment ogłoszenia wsparcia ze strony Microsoftu to bardzo ważny element, wiele firm zwiazanych typowo z Enterprise, zaczyna dostrzegać Node'a - dodatkowo dzięki oddelegowaniu programistów wsparcie dla systemu Windows ulega znacznej poprawie (Microsoft pomaga zarówno przy rdzeniu Node.js jak i przy bibliotece libuv).
                 </li>
                 <li>
-                  Nie znane są dokładne powody odejścia Ryana z firmy. Plotki mówiły o nowym projekcie, w który Ryan zaangażował się na 100%.
+                  Nie znane są dokładne powody odejścia Ryana z firmy. Plotki mówiły o nowym projekcie, w który Ryan zaangażował się na 100%. Najważniejsze, że odejście nie spowodowało przestoju ani załamania się pracy nad projektem.
                 </li>
                 <li>Wersja 1.0 zaplanowana jest na pierwszy kwartał 2014.</li>
               </ul>
@@ -337,27 +350,88 @@ function handleRequest(request, response) {
 
           <section>
             <h1>Motywacja</h1>
-            <h2>C10K</h2>
+            <h2>Jak efektywniej wykorzystać istniejącą infrastrukturę?</h2>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Ryan tworzył sporo rozwiązań w PHP i Ruby (we frameworku którego nazwy nie wolno wymawiać) i był sfrustrowany tym, że jedynym sposobem aby obsłużyć duży ruch było ... kupienie większego lub nowego serwera. Dodatkowo wiedział, że rozmiar frameworka jest bardzo widoczną wadą jeśli chodzi o skalowanie.
+                </li>
+                <li>
+                  Jednocześnie był zafascynowany modelem działania nginx i EventMachine. Nadal jednak widział pole do usprawnień i postanowił stworzyć własne dedykowane rozwiązanie.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
-            <h2>Inne rozwiązania problemu C10K</h2>
-            <ul>
-              <li class="fragment grow"></li>
-              <li class="fragment grow"></li>
-              <li class="fragment grow"></li>
-              <li class="fragment grow"></li>
+            <h2>Joyent</h2>
+            <ul class="no-bullets">
+              <li>Jeśli nie wiadomo o co chodzi, to chodzi o pieniądze...</li>
+              <li class="fragment">... a zwłaszcza o to jak ich zbyt dużo nie wydać ;)</li>
             </ul>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Praktycznie po pierwszej prezentacji Node.js na forum PHPowego meetupu do Ryana zgłasza się przedstawiciel Joyent, start-up'u z doliny krzemowej który tworzy własną platformę cloud computing zorientowaną na skalowalność i najefektywniejsze wykorzystanie infrastruktury.
+                </li>
+                <li>
+                  Joyent zatrudnia Ryana, tworzy zespół i rozwija Node.js jednocześnie proponując pierwszy dedykowany hosting dla Node.js na systemie SmartOS (jest to system operacyjny, który wyewoluował z Solarisa - zorientowany na skalowalność, rozwiązania typu cloud computing i wirtualizację tj. KVM lub Solaris Secure Zones. System posiada olbrzymie możliwości instrumentacji dzięki DTrace). Zainteresowanych szczegółami zapraszam do bibliografii.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
-            <h1>Joyent</h1>
-            <p>SmartOS</p>
+            <h2 class="no-uppercase">C10k problem</h2>
+            <p><em>concurrent ten thousand connections problem</em></p>
+            <p>
+              Problem optymalizacji zasobów w celu osiągnięcia jak największej liczby żądań obsłużonych równolegle.
+            </p>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Główną motywacją była optymalizacja wykorzystania zasobów w celu obsłużenia jak największej liczby żądań w tym samym czasie. Ten problem jest znany właśnie pod tą nazwą i został zdefiniowany przez Dana Kegela.
+                </li>
+                <li>
+                  Joyent jako firma zmagająca się z tym problemem, która chciała jak najlepiej wykorzystać zasoby tworzonej przez siebie chmury potrzebowała dedykowanego rozwiązania.
+                </li>
+                <li>
+                  Dzięki obsłudze żądań za pomocą modelu zdarzeń, możemy efektywniej wykorzystać istniejącą infrastrukturę lub mniejszym kosztem zbudować efektywniejszą.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Inne rozwiązania problemu C10k</h2>
+            <ul>
+              <li class="fragment">nginx</li>
+              <li class="fragment">lighttpd</li>
+              <li class="fragment">Sinatra</li>
+              <li class="fragment">EventMachine</li>
+              <li class="fragment">Twisted</li>
+              <li class="fragment">Netty</li>
+              <li class="fragment">IIS + WebSync</li>
+              <li class="fragment">Yaws</li>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Node nie jest pierwszą odpowiedzią jeśli chodzi o próbę rozwiązania "C10k problem".</li>
+                <li>
+                  Najbardziej dojrzałym rozwiązaniem jest oczywiście nginx, ale praktycznie każdy język lub platforma związana z programowaniem webowym posiada własną alternatywę.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>Scalability</h1>
-            <h2>Modne słówko ;)</h2>
+            <h2>TODO: Animacja skalowania (Tangle!)</h2>
+            <aside class="notes">
+              <ul>
+                <li>TODO</li>
+              </ul>
+            </aside>
           </section>
 
         </section>
@@ -366,6 +440,49 @@ function handleRequest(request, response) {
 
           <section>
             <h1>Pro</h1>
+            <aside class="notes">
+              <ul>
+                <li>Spójrzmy na sytuacje, w których wykorzystanie Node.js przynosi wymierne korzyści.</li>
+                <li>
+                  Zwróćcie uwagę i zapamiętajcie omawiane przykłady za oraz przeciw i w jednej z następnych sekcji pokażę, kto obecnie używa Node.js z sukcesem w środowisku produkcyjnym i zobaczymy jak bardzo "success stories" pokrywają się z aktualnym zapotrzebowaniem.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>DIRTy Applications</h2>
+            <h3><acronym class="fragment">DIRT = Data Intensive Real-Time</acronym></h3>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Rozwinięciem skrótu DIRT jest Data Intensive Real-Time. Oznacza to ni mniej, nie więcej że, aplikacja
+                  przetwarza duże ilości danych w czasie rzeczywistym. Bardzo często potrzebuje ona utrzymywać równolegle kilka tysięcy aktywnych połączeń, intensywnie korzysta z Web Socketów, Server-Side Events.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Mashup Applications</h2>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Pod pojęciem Mashup kryje się webowa aplikacja hybrydowa, łącząca wiele usług w celu rozwiązania określonego problemu. Bardzo dobrym przykładem takiej aplikacji może być IFTTT (if-this-than-that, sterowanie i wykonywanie pewnych akcji w serwisach webowych jako konsekwencje innych akcji w innym serwisie) lub wizualizacja aktywności konta Twitter i Instagram na mapie Microsoft Bing z personalizacją za pomocą konta Facebooka lub Google.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2><em>Glue</em> Layer / Middleware</h2>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Bardzo częstym przypadkiem użycia jest wykorzystanie Node.js jako serwisu pośredniczącego między dwoma usługami - bardzo popularnym rozwiązaniem jest tworzenie małych serwerów proxy, inteligentnego serwera cache-ującego lub konwersji jednego typu akcji na inny typ.
+                </li>
+              </ul>
+            </aside>
           </section>
 
         </section>
@@ -374,6 +491,50 @@ function handleRequest(request, response) {
 
           <section>
             <h1>Contra</h1>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Spójrzmy na sytuacje w których wykorzystanie Node.js jest ewidentnym błędem i wprowadzi więcej problemów niż korzyści.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Aplikacje intensywnie wykorzystujące CPU</h2>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Przykładem takiej klasy aplikacji, zwanych dalej "CPU bound" są przede wszystkim aplikacje operujące na wideo / audio - kompresja / dekompresja, kodowanie i dekodowanie itp. Ze względu na budowę Node.js i pętlę zdarzeń działającą w głównym wątku, stworzenie takiej aplikacji w Node.js to prosta droga do zablokowania całego procesu, ponieważ obliczenia wykonują się synchronicznie w ramach danego wątku i wymagają utylizacji CPU na poziomie bliskim 100% przez określony czas lub wymagają równoległego przetwarzania za pomocą kilku wątków.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Aplikacje typu <em>CRUD</em> / <em>CMS</em></h2>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Budowa aplikacji typu CRUD lub CMS w Node.js nie jest czymś wybitnie złym, ale nie jest to najwygodniejsze i najefektywniejsze narzędzie do budowy tego typu aplikacji. Zdecydowanie lepszym rozwiązaniem będzie wykorzystanie dedykowanego frameworka do tej klasy zadań. W innym przypadku, dużą część kodu będziemy musieli stworzyć sami (a więc i po co wynajdywać koło na nowo i tracić czas na ewolucję, którą już ktoś przeszedł).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Moda</h2>
+            <h4 class="fragment"><em>Magic-Unicorn-NoSQL-Async-Non-Blocking-I/O<br/>buzzwords bullshit</em></h4>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Powodem który jednak wywołał największe zamieszanie, i duży odsetek stwierdzeń, że Node.js jest złym rozwiązaniem, źle zaprojektowanym opiera się jednak na błędnym zastosowaniu i nie zrozumieniu jego mocnych i słabych stron. Tak naprawdę duży szum i moda na Node.js, a do tego wykorzystanie bardzo popularnego języka jakim jest JavaScript spowodowała największą krzywdę jeśli chodzi o zbudowanie opinii i marki tej platformy.
+                </li>
+                <li>
+                  Dla kontrastu, proszę sprawdzić jak solidnym i skalowalnym, ale stosunkowo niepopularnym rozwiązaniem jest wykorzystanie języka Erlang i plaformy OTP do budowy aplikacji czasu rzeczywistego. Dość nietypowa składnia języka, paradygmat funkcyjny i skoncentrowanie się na branży telekomunikacyjnej skutecznie odstraszały programistów właśnie od tego rozwiązania.
+                </li>
+              </ul>
+            </aside>
           </section>
 
         </section>
@@ -381,18 +542,196 @@ function handleRequest(request, response) {
         <section>
 
           <section>
-            <h1>Kto zaufał tej technologii?</h1>
-            <h2>Przypadki użycia</h2>
+            <h1>Kto?</h1>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Porównamy teraz omawiane sytuacje z praktycznym zapotrzebowaniem, zobaczymy kto korzysta z Node.js obecnie i w jakich przypadkach wykorzystanie tej technologii dało wymierne korzyści.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-background-color="#33342C">
+            <h2 class="no-uppercase">Microsoft</h2>
+            <p>
+              Wsparcie dla Node.js na platformie Windows Azure oraz wsparcie rozwoju Node.js oraz libuv na platformie Windows.
+            </p>
+            <p>
+              Dla Microsoftu to nie tylko wizerunkowa kwestia ponieważ, mocno inwestuje również w moduł do IIS zwany <a href="https://github.com/tjanczuk/iisnode">IISNode</a> oraz projekt <a href="https://github.com/tjanczuk/edge">Edge.js</a>.
+            </p>
+            <img src="http://nodejs.org/industry/data/microsoft/logo.png" alt="Microsoft Logo" />
+          </section>
+
+          <section data-background-color="#33342C">
+            <h2 class="no-uppercase">eBay</h2>
+            <p>
+              Silne wykorzystanie <em>non-blocking I/O</em> po stronie serwera poprawiło responsywność API oraz zmniejszyło liczbę problemów związanych z równoległym dostępem i blokowaniem zasobów.
+            </p>
+            <img src="http://nodejs.org/industry/data/ebay/logo.png" alt="eBay Logo" />
+          </section>
+
+          <section data-background-color="#33342C">
+            <h2 class="no-uppercase">PayPal</h2>
+            <p>
+              Znacznie skrócony czas tworzenia prototypu nowej infrastruktury kluczowej usługi, krótkie iteracje, praca z <em>Lean UX</em> - wszystko to było możliwe dzięki <a href="http://cferdinandi.github.io/kraken/">Project Kraken</a> oraz Node.js.
+            </p>
+            <img src="img/paypal-logo.jpg" alt="PayPal Logo" />
+            <aside class="notes">
+              <ul>
+                <li>
+                  Oryginalny PayPal został stworzony w Javie i technologiach pokrewnych takich jak JSP etc. Ze względu na to, że wprowadzenie jakiejkolwiek zmiany było bardzo kosztowne, postanowiono postawić na inne rozwiązanie i stopniowo przebudowywać serwis webowy głównej usługi wykorzystując nową technologię. Po półrocznym poszukiwaniu i analizie sztab odpowiedzialny za Project Kraken wybrał Node.js jako technologię serwerową oraz Bootstrap jako główną bibliotekę wykorzystywaną po stronie klienta.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-background-color="#33342C">
+            <h2 class="no-uppercase">Voxer</h2>
+            <p>
+              Aplikacja służąca do wysyłania wiadomości tekstowych / audio / wideo, przekształcająca Twój smartfon w krótkofalówkę. Bardzo duży i zróżnicowany ruch.
+            </p>
+            <img src="http://nodejs.org/industry/data/voxer/logo.png" alt="Voxer Logo" />
+          </section>
+
+          <section data-background-color="#33342C">
+            <h2 class="no-uppercase">LinkedIn</h2>
+            <p>
+              Cała infrastruktura przeznaczona dla urządzeń mobilnych jest zbudowana wyłącznie w oparciu o Node.js.
+            </p>
+            <img src="http://nodejs.org/industry/data/linkedin/logo.png" alt="LinkedIn Logo" />
+          </section>
+
+          <section data-background-color="#33342C">
+            <h2 class="no-uppercase">Uber</h2>
+            <p>
+              Aplikacja czasu rzeczywistego służąca do globalnego monitorowania ruchu ulicznego i wizualizacji połączeń logistycznych.
+            </p>
+            <img src="http://nodejs.org/industry/data/uber/logo.png" alt="Uber Logo" />
+          </section>
+
+          <section data-background-color="#33342C">
+            <h2 class="no-uppercase">Nodejitsu</h2>
+            <p>
+              Kolejna firma oferująca hosting i rozwiązania <em>cloud computing</em> gdzie Node.js jest wykorzystywany jako platforma do budowy narzędzi zarządzających i monitorujących pracę chmury.
+            </p>
+            <img src="http://nodejs.org/industry/data/nodejitsu/logo.png" alt="Nodejitsu Logo" />
+          </section>
+
+          <section data-background-color="#33342C">
+            <h2 class="no-uppercase">Clound9 IDE</h2>
+            <p>
+              IDE hostowane w chmurze, zbudowane wyłącznie w oparciu o język JavaScript od strony serwerowej do części klienckiej.
+            </p>
+            <img src="http://nodejs.org/industry/data/cloud9/logo.png" alt="Cloud9 IDE Logo">
           </section>
 
           <section>
-            <h1>Ewolucja "mash-up" (kroki!)</h1>
-            <p>WebSockets</p>
-            <p>Soft RT (ale uwaga na GC)</p>
-            <p>Streamming</p>
-            <p>REST API oparty o JSON</p>
-            <p>command line tools (grunt, bower, yeoman)</p>
-            <p>LightTable, Brackets, ...</p>
+            <h2>Inne ciekawe przypadki użycia</h2>
+            <ul>
+              <li class="fragment">Intensywne wykorzystanie Web Sockets.</li>
+              <li class="fragment">Strumieniowanie danych.</b></li>
+              <li class="fragment">API typu REST, zwłaszcza gdy jest ono oparte o JSON.</li>
+              <li class="fragment">Narzędzia konsolowe (<em>grunt</em>, <em>bower</em>, <em>yeoman</em>).</li>
+              <li class="fragment">Aplikacje desktopowe - LightTable, Brackets</li>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Proszę nie mylić strumieniowania z dekodowaniem / kodowaniem strumienia danych.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Ewolucja aplikacji typu Mashup</h2>
+            <p>
+              Cel: chcemy stworzyć aplikację, która z powodu braku API za pomocą GUI wykona warunkową akcję ściągnięcia pliku ZIP, a następnie za pomocą protokołu SFTP oraz po SSH prześle ściągnięte archiwum na dwa osobne serwery.
+            </p>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Pokażę teraz poszczególne kroki rozwoju prostej aplikacji typu Mashup, której cel opisany został na slajdzie.
+                </li>
+                <li>
+                  Prezentowany będzie rozwój zależności, zamieszczanych dla Node.js w pliku package.json.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Zaczynamy od pustej listy zależności</h2>
+            <pre>
+              <code data-trim class="javascript">
+{
+  "name": "jira-backup",
+  "version": "0.1.0",
+  "description": "Simple tool for backuping JIRA OnDemand versions.",
+
+  "dependencies" : {}
+}
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Wykorzystamy moduł do symulujący przeglądarkę</h2>
+            <pre>
+              <code data-trim class="javascript">
+{
+  "dependencies" : {
+    "chimera": "0.3.x"
+  }
+}
+              </code>
+            </pre>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Warto zauważyć, że wpisywane wersje dla zależności są zgodne ze standardem Semantic Versioning.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Dodajemy moduł do obsługi SFTP oraz SSH</h2>
+            <pre>
+              <code data-trim class="javascript">
+{
+  "dependencies" : {
+    "chimera": "0.3.x",
+    "ssh2": "0.2.x"
+  }
+}
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Na koniec moduły do obsługi argumentów z linii poleceń</h2>
+            <pre>
+              <code data-trim class="javascript">
+{
+  "dependencies" : {
+    "chimera": "0.3.x",
+    "ssh2": "0.2.x",
+    "optimist": "0.6.x",
+    "colors": "0.6.x"
+  }
+}
+              </code>
+            </pre>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Za pomocą 4 modułów i około 200 linijek kodu zaimplementowany został prosty i rozszerzalny automat, wykonujący pewną skomplikowaną manualną pracę.
+                </li>
+                <li>
+                  Dodając 2 nowe moduły (cron i mailer) i 50 linijek kodu otrzymamy automat, który cyklicznie wykonuje backup oraz wysyła podsumowanie na podany adres emailowy.
+                </li>
+              </ul>
+            </aside>
           </section>
 
         </section>
@@ -453,7 +792,7 @@ function handleRequest(request, response) {
           </section>
 
           <section>
-            <pre><code data-trim contenteditable>
+            <pre><code data-trim class="javascript">
 // Pokaz możliwości ECMAScript 6
             </code></pre>
           </section>
@@ -465,8 +804,8 @@ function handleRequest(request, response) {
         </section>
 
         <section>
-          <h2>Dziękuję za uwagę!</h1>
-          <h3>Bibliografia</h2>
+          <h2>Dziękuję za uwagę!</h2>
+          <h4>Odniesienia dla <em>ciekawskich</em></h4>
           <ul>
             <li>
               <a href="http://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition">
@@ -479,8 +818,46 @@ function handleRequest(request, response) {
               </a>
             </li>
             <li>
+              <a href="http://www.joyent.com/technology/smartos">
+                Smart OS
+              </a>
+            </li>
+            <li>
+              <a href="http://en.wikipedia.org/wiki/Mashup_(web_application_hybrid)">
+                Mashup
+              </a>
+            </li>
+            <li>
+              <a href="http://www.youtube.com/watch?v=tZWGb0HU2QM">
+                Release the Kraken (Node.js at PayPal)
+              </a>
+            </li>
+            <li>
+              <a href="http://www.chris-granger.com/2013/01/24/the-ide-as-data/">
+                LighTable
+              </a>
+            </li>
+            <li>
+              <a href="http://brackets.io/">
+                Brackets
+              </a>
+            </li>
+            <li>
               <a href="http://blogs.teamb.com/craigstuntz/2008/05/19/37819/">
-                Filozofia <em>Let it Crash</em>
+                Filozofia Let it Crash
+              </a>
+            </li>
+            <li>
+              <a href="http://semver.org/">
+                Semantic Versioning
+              </a>
+            </li>
+          </ul>
+          <h4 class="spaced">Wykorzystane obrazki pochodzą ze stron</h4>
+          <ul>
+            <li>
+              <a href="http://nodejs.org/industry">
+                Node.js Industry Page
               </a>
             </li>
           </ul>
