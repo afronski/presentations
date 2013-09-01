@@ -293,7 +293,7 @@ body {
 .reveal pre {
 	display: block;
 	position: relative;
-	width: 90%;
+	width: 95%;
 	margin: 15px auto;
 
 	text-align: left;
@@ -311,7 +311,7 @@ body {
 .reveal pre code {
 	padding: 5px;
 	overflow: auto;
-	max-height: 400px;
+	max-height: 600px;
 	word-wrap: normal;
 }
 
@@ -1610,7 +1610,7 @@ body {
  *********************************************/
 
 #leap {
-  position: absolute; 
+  position: absolute;
   z-index: 50;
   visibility: hidden;
 }

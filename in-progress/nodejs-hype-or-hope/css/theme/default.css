@@ -85,6 +85,10 @@ body {
   box-shadow: none;
 }
 
+.reveal .margined {
+  margin-left: 35px;
+}
+
 .reveal h2.no-uppercase {
   text-transform: none;
 }
