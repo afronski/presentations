@@ -89,6 +89,20 @@ body {
   text-transform: none;
 }
 
+.reveal .license {
+  font-size: 40%;
+
+  position: absolute;
+
+  top: 500px;
+  right: 0;
+}
+
+.reveal .license a {
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+
 /*********************************************
  * LINKS
  *********************************************/
