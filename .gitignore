@@ -5,3 +5,4 @@ azure_error
 *.o
 *.dblite
 *.pid
+*.zip
