@@ -508,7 +508,7 @@ document.addEventListener("DOMContentLoaded", eventHandler);
 
           <section>
             <h2><em>Glue</em> Layer / Middleware</h2>
-            <h3>Warstwa pośrednicząca pomiędzy dwoma usługami / serwisami</h3>
+            <h3>Warstwa pomiędzy usługami</h3>
             <svg id="convert" version="1.1" width="340" height="200" xmlns="http://www.w3.org/2000/svg"></svg>
             <aside class="notes">
               <ul>
@@ -535,9 +535,9 @@ document.addEventListener("DOMContentLoaded", eventHandler);
                     element = paper.path(rect).attr({ "stroke": black, "fill": red });
 
                     setInterval(function() {
-                      element.stop().animate(attributes[+(which = !which)], 1000);
-                    }, 2000);
-                })();
+                      element.stop().animate(attributes[+(which = !which)], 2000);
+                    }, 3000);
+                } ());
             </script>
           </section>
 
