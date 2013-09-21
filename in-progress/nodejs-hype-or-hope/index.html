@@ -161,7 +161,7 @@ function handleRequest(request, response) {
               <ul>
                 <li>Koncepcja programowania oparta o zdarzenia nie jest niczym nowym.</li>
                 <li>Główny nurt programowania w JavaScript w przeglądarce.</li>
-                <li>Wszystkie opracje związane z przeglądarką są obsługiwane za pomocą obsługi zdarzeń.</li>
+                <li>Wszystkie operacje związane z przeglądarką są obsługiwane za pomocą obsługi zdarzeń.</li>
                 <li>TODO: OPIS</li>
               </ul>
             </aside>
@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", eventHandler);
             <ol class="no-bullets">
               <li>
                 <em>2009</em>
-                <span>Ryan Dahl zatrudniony przez Joyent tworzy Node.js</span>
+                <span>Ryan Dahl prezentuje koncepcję Node.js</span>
               </li>
               <li class="fragment">
                 <em>2009 - 2011</em>
@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", eventHandler);
               </li>
               <li class="fragment">
                 <em>Styczeń 2012</em>
-                <span>Ryan opuszcza Joyent, opiekunem zostaje Isaac</span>
+                <span>Ryan opuszcza Node.js, opiekunem zostaje Isaac</span>
               </li>
               <li class="fragment">
                 <em>Czerwiec 2012</em>
@@ -312,16 +312,15 @@ document.addEventListener("DOMContentLoaded", eventHandler);
             </ol>
             <aside class="notes">
               <ul>
-                <li>Joyent to pierwszy pracodawca Ryana, jest to firma do dziś mocno inwestująca w Node.js.</li>
                 <li>Cykl wydawniczy jest szybki - numery parzyste = stabilne wersje, nieparzyste = rozwojowe gałęzie.</li>
                 <li>Powstanie libuv związane jest konsekwencją wymagania obsługi wielu platform.</li>
                 <li>W uproszczeniu można powiedzieć, że libuv jest warstwą pośrednią między systemem operacyjnym a V8.</li>
-                <li>Wprowadza ona nieblokujące opracje wejścia-wyjścia.</li>
+                <li>Wprowadza ona nieblokujące operacje wejścia-wyjścia.</li>
                 <li>Wsparcia ze strony Microsoftu to ważny element z poważnymi konsekwencjami.</li>
-                <li>Wiele firm zwiazanych typowo z Enterprise, zaczyna dostrzegać Node.</li>
+                <li>Wiele firm związanych typowo z Enterprise, zaczyna dostrzegać Node.</li>
                 <li>Dodatkowo dzięki oddelegowaniu programistów wsparcie dla systemu Windows ulega znacznej poprawie.</li>
                 <li>Microsoft pomaga zarówno przy rdzeniu Node.js jak i przy libuv.</li>
-                <li>Nie znane są dokładne powody odejścia Ryana z firmy.</li>
+                <li>Nie znane są dokładne powody odejścia Ryana.</li>
                 <li>Plotki mówiły o nowym projekcie, w który Ryan zaangażował się na 100%.</li>
                 <li>Najważniejsze, że odejście nie spowodowało przestoju ani załamania się pracy nad projektem.</li>
                 <li>Wersja 1.0 zaplanowana jest na pierwszy kwartał 2014.</li>
@@ -363,7 +362,7 @@ document.addEventListener("DOMContentLoaded", eventHandler);
                 <li>System operacyjny, który wyewoluował z Solarisa.</li>
                 <li>Zorientowany na skalowalność, cloud computing i wirtualizację tj. KVM lub Solaris Secure Zones.</li>
                 <li>System posiada olbrzymie możliwości instrumentacji dzięki DTrace.</li>
-                <li>CIEKAWOSTKĄ: dtrace jest niemożliwe do przeniesienia na platformę UNIX/Linux (Oracle i patenty).</li>
+                <li>CIEKAWOSTKĄ: dtrace jest niemożliwy do przeniesienia na platformę UNIX/Linux (Oracle i patenty).</li>
                 <li>Zainteresowanych szczegółami zapraszam do bibliografii.</li>
                 </li>
               </ul>
@@ -499,7 +498,7 @@ document.addEventListener("DOMContentLoaded", eventHandler);
               <ul>
                 <li>Aplikacje operujące na wideo / audio - kompresja / dekompresja, kodowanie i dekodowanie itp.</li>
                 <li>Wymagające intensywnych zasobów CPU, typowo obliczeniowe.</li>
-                <li>Przez udowę Node i pętlę zdarzeń wszelkie obliczenia działają w głównym wątku.</li>
+                <li>Przez budowę Node i pętlę zdarzeń wszelkie obliczenia działają w głównym wątku.</li>
                 <li>To prosta droga do zablokowania całego procesu, ponieważ obliczenia wykonują się synchronicznie.</li>
                 <li>Blokujemy w ten sposób obsługę pozostałych żądań.</li>
               </ul>
@@ -621,7 +620,7 @@ document.addEventListener("DOMContentLoaded", eventHandler);
             <p>
               Sam rdzeń platformy jest bardzo cienki, moduły przygotowane przez społeczność są bardzo ważnym elementem.
             </p>
-            <h6>TODO: Animacja jak szybko rosnął NPM (Tangle)</h6>
+            <h6>TODO: Animacja jak szybko rośnie NPM (Tangle)</h6>
             <p class="fragment">
               Oczywiście nigdy nie jest tak dobrze, żeby nie mogło być lepiej.
             </p>
@@ -630,7 +629,7 @@ document.addEventListener("DOMContentLoaded", eventHandler);
                 <li>NPM = Maven, NuGet, gem, pip.</li>
                 <li>Ilość modułów = Olbrzymia.</li>
                 <li>Tempo rozwoju = Olbrzymie.</li>
-                <li>Tempo rozwoju wcale nie zwalna, co możemy zauważyć na interaktywnej animacji.</li>
+                <li>Tempo rozwoju wcale nie zwalnia, co możemy zauważyć na interaktywnej animacji.</li>
                 <li>Niestety, przeważnie taka ilość nie zawsze przekłada się na jakość.</li>
                 <li>Główni opiekunowie całego projektu mają jednak masę pomysłów jak olbrzymią ilość danych.</li>
                 <li>Budują oni system ocen, oparty zarówno na ocenie kodu, testów, feedbacku, wykorzystaniu.</li>
@@ -708,42 +707,42 @@ $ node --v8-options | grep harmony
           <ul>
             <li>
               <a href="http://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition">
-                Model nabywania kompetencji braci Dreyfus
+                Model nabywania kompetencji braci <em>Dreyfus</em>
               </a>
             </li>
             <li>
               <a href="http://www.kegel.com/c10k.html">
-                Problem c10k
+                <em>Problem c10k</em>
               </a>
             </li>
             <li>
               <a href="http://www.joyent.com/technology/smartos">
-                Smart OS
+                <em>Smart OS</em>
               </a>
             </li>
             <li>
               <a href="http://en.wikipedia.org/wiki/Mashup_(web_application_hybrid)">
-                Mashup
+                <em>Mashup</em>
               </a>
             </li>
             <li>
               <a href="http://www.youtube.com/watch?v=tZWGb0HU2QM">
-                Clash of the Titans: Releasing the Kraken (Node.js at PayPal)
+                Clash of the Titans: Releasing the Kraken (<em>Node.js at PayPal</em>)
               </a>
             </li>
             <li>
               <a href="http://www.chris-granger.com/2013/01/24/the-ide-as-data/">
-                Light Table
+                <em>Light Table</em>
               </a>
             </li>
             <li>
               <a href="http://lab.hakim.se/reveal-js/#/">
-                Reveal.js
+                <em>Reveal.js</em>
               </a>
             </li>
             <li>
               <a href="http://semver.org/">
-                Semantic Versioning
+                <em>Semantic Versioning</em>
               </a>
             </li>
             <li>
@@ -752,16 +751,21 @@ $ node --v8-options | grep harmony
               </a>
             </li>
             <li>
-              <a href="https://nodeschool.io">
-                nodeschool.io
+              <a href="http://nodeschool.io">
+                Jak rozpocząć przygodę z Node.js (<em>nodeschool.io</em>) ?
               </a>
             </li>
           </ul>
-          <h4 class="spaced">Wykorzystane obrazki pochodzą ze stron</h4>
-          <ul>
+          <h4 class="spaced-max half-sized">Wykorzystane obrazy pochodzą ze stron:</h4>
+          <ul class="photo-credits">
             <li>
               <a href="http://nodejs.org/industry">
-                Node.js Industry Page
+                <em>Node.js Industry Page</em>
+              </a>
+            </li>
+            <li>
+              <a href="http://www.flickr.com/photos/cjmartin">
+                <em>Flickr - cjmartin</em>
               </a>
             </li>
           </ul>

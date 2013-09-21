@@ -55,8 +55,30 @@ body {
   color: #8cc84b;
 }
 
+.reveal .photo-credits {
+  font-size: 50%;
+  list-style: none;
+}
+
+.reveal .photo-credits li {
+  display: inline;
+}
+
+.reveal .photo-credits li:after {
+  content: ",";
+}
+
+.reveal .photo-credits li:last-child:after {
+  content: "";
+}
+
 .reveal .spaced {
   margin-top: 0.4em;
+}
+
+.reveal .spaced-max {
+  margin-top: 75px;
+  margin-bottom: 0;
 }
 
 .reveal .half-sized {
