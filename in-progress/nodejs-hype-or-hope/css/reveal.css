@@ -290,6 +290,10 @@ body {
 	font-style: italic;
 }
 
+.reveal .pre-inline {
+  display: inline;
+}
+
 .reveal pre {
 	display: block;
 	position: relative;
@@ -311,7 +315,7 @@ body {
 .reveal pre code {
 	padding: 5px;
 	overflow: auto;
-	max-height: 600px;
+	max-height: 700px;
 	word-wrap: normal;
 }
 
