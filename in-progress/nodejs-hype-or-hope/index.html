@@ -17,10 +17,50 @@
 
     <link rel="stylesheet" href="lib/css/github.css" />
 
+    <script src="js/raphael.js"></script>
     <script>
-      document.write("<link rel="stylesheet" href="css/print/" +
+      function createRectPath(x, y, a) {
+        return "M" + x + "," + y + "l" + a + ",0 0," + a + "-" + a + ",0z";
+      }
+
+      function createTrianglePath(x, y, a) {
+        return "M" + x + "," + y + "l" + a / 2 + "," + a + " -" + a + ",0z";
+      }
+
+      Raphael.fn.arrow = function (x, y) {
+          return this.path(["M", x, y ] + "m-10-10l20,0 0-6 10,16 -10,16 0-6 -20,0 0,6 -10-16 10-16z")
+                     .attr({ fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.2 });
+      };
+
+      Raphael.fn.thinArrow = function(x1, y1, x2, y2, size) {
+        var angle = Raphael.angle(x1, y1, x2, y2);
+            a45   = Raphael.rad(angle-45),
+            a45m  = Raphael.rad(angle+45),
+            a135  = Raphael.rad(angle-135),
+            a135m = Raphael.rad(angle+135),
+            x1a = x1 + Math.cos(a135) * size,
+            y1a = y1 + Math.sin(a135) * size,
+            x1b = x1 + Math.cos(a135m) * size,
+            y1b = y1 + Math.sin(a135m) * size,
+            x2a = x2 + Math.cos(a45) * size,
+            y2a = y2 + Math.sin(a45) * size,
+            x2b = x2 + Math.cos(a45m) * size,
+            y2b = y2 + Math.sin(a45m) * size;
+
+        return this.path("M" + x1 + " " + y1 + "L" + x1a + " " + y1a + "M" + x1 + " " + y1 + "L" + x1b + " " + y1b +
+                         "M" + x1 + " " + y1 + "L" + x2 +  " " + y2 +
+                         "M" + x2 + " " + y2 + "L" + x2a + " " + y2a + "M" + x2 + " " + y2 + "L" + x2b + " " + y2b);
+      };
+
+      var dashed = { fill: "none", stroke: "#666", "stroke-dasharray": "- " },
+          black = "#333",
+          red = "#ff0000",
+          green = "#00ff00";
+    </script>
+    <script>
+      document.write('<link rel="stylesheet" href="css/print/' +
                      (window.location.search.match(/print-pdf/gi) ? "pdf" : "paper") +
-                    ".css" type="text/css" media="print">");
+                    '.css" type="text/css" media="print">');
     </script>
   </head>
   <body>
@@ -468,13 +508,37 @@ document.addEventListener("DOMContentLoaded", eventHandler);
 
           <section>
             <h2><em>Glue</em> Layer / Middleware</h2>
-            <h3>TODO: Animacja (Raphael.js Konwersja A => B)</h3>
+            <h3>Warstwa pośrednicząca pomiędzy dwoma usługami / serwisami</h3>
+            <svg id="convert" version="1.1" width="340" height="200" xmlns="http://www.w3.org/2000/svg"></svg>
             <aside class="notes">
               <ul>
                 <li>Bardzo częstym przypadkiem użycia jest wykorzystanie Node.js jako serwisu pośredniczącego.</li>
                 <li>Popularne: małe serwery proxy, inteligentne serwery cache, konwersji jednego typu akcji na inny.</li>
               </ul>
             </aside>
+            <script>
+              (function () {
+                    var paper = Raphael("convert", 340, 200),
+                        rect = createRectPath(0, 40, 80),
+                        triangle = createTrianglePath(235, 40, 80),
+                        element,
+                        attributes = [ { path: rect, stroke: black, fill: red },
+                                       { path: triangle, stroke: black, fill: green } ],
+                        which = 1;
+
+                    paper.arrow(140, 80);
+                    paper.text(140, 60, "Node.js").attr({ font: "18px 'Helvetica Neue', Arial", fill: "#fff" });
+
+                    paper.path(rect).attr(dashed);
+                    paper.path(triangle).attr(dashed);
+
+                    element = paper.path(rect).attr({ "stroke": black, "fill": red });
+
+                    setInterval(function() {
+                      element.stop().animate(attributes[+(which = !which)], 1000);
+                    }, 2000);
+                })();
+            </script>
           </section>
 
         </section>
