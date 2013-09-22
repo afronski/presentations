@@ -18,7 +18,12 @@
     <link rel="stylesheet" href="lib/css/github.css" />
 
     <script src="js/raphael.js"></script>
+    <script src="js/raphael.tachometer.min.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/popup.js"></script>
     <script>
+      var RAD = Math.PI / 180;
+
       function createRectPath(x, y, a) {
         return "M" + x + "," + y + "l" + a + ",0 0," + a + "-" + a + ",0z";
       }
@@ -27,17 +32,35 @@
         return "M" + x + "," + y + "l" + a / 2 + "," + a + " -" + a + ",0z";
       }
 
+      function createRightArrowPath(x, y) {
+        return "M" + x + "," + y + "m-10-10l40,0 0-6 20,16 -20,16 0-6 -40,0 -0-16z"
+      }
+
+      function createArcPath(cx, cy, r, startAngle, endAngle) {
+        var x1 = cx + r * Math.cos(-startAngle * RAD),
+            x2 = cx + r * Math.cos(-endAngle * RAD),
+            y1 = cy + r * Math.sin(-startAngle * RAD),
+            y2 = cy + r * Math.sin(-endAngle * RAD);
+
+        return ["M", cx, cy, "L", x1, y1, "A", r, r, 0, +(endAngle - startAngle > 180), 0, x2, y2, "z"];
+      }
+
       Raphael.fn.arrow = function (x, y) {
           return this.path(["M", x, y ] + "m-10-10l20,0 0-6 10,16 -10,16 0-6 -20,0 0,6 -10-16 10-16z")
                      .attr({ fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.2 });
       };
 
+      Raphael.fn.rightArrow = function (x, y) {
+          return this.path(createRightArrowPath(x, y))
+                     .attr({ fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.5 });
+      };
+
       Raphael.fn.thinArrow = function(x1, y1, x2, y2, size) {
         var angle = Raphael.angle(x1, y1, x2, y2);
-            a45   = Raphael.rad(angle-45),
-            a45m  = Raphael.rad(angle+45),
-            a135  = Raphael.rad(angle-135),
-            a135m = Raphael.rad(angle+135),
+            a45   = Raphael.rad(angle - 45),
+            a45m  = Raphael.rad(angle + 45),
+            a135  = Raphael.rad(angle - 135),
+            a135m = Raphael.rad(angle + 135),
             x1a = x1 + Math.cos(a135) * size,
             y1a = y1 + Math.sin(a135) * size,
             x1b = x1 + Math.cos(a135m) * size,
@@ -54,8 +77,12 @@
 
       var dashed = { fill: "none", stroke: "#666", "stroke-dasharray": "- " },
           black = "#333",
+          gray = "#888",
+          white = "#ffffff",
           red = "#ff0000",
-          green = "#00ff00";
+          green = "#00ff00",
+          yellow = "#ffff00",
+          lightBlue = "#00ffff";
     </script>
     <script>
       document.write('<link rel="stylesheet" href="css/print/' +
@@ -512,32 +539,32 @@ document.addEventListener("DOMContentLoaded", eventHandler);
             <svg id="convert" version="1.1" width="340" height="200" xmlns="http://www.w3.org/2000/svg"></svg>
             <aside class="notes">
               <ul>
-                <li>Bardzo częstym przypadkiem użycia jest wykorzystanie Node.js jako serwisu pośredniczącego.</li>
+                <li>Bardzo częstym przypadkiem użycia jest wykorzystanie Node.js jako serwera pośredniczącego.</li>
                 <li>Popularne: małe serwery proxy, inteligentne serwery cache, konwersji jednego typu akcji na inny.</li>
               </ul>
             </aside>
             <script>
               (function () {
-                    var paper = Raphael("convert", 340, 200),
-                        rect = createRectPath(0, 40, 80),
-                        triangle = createTrianglePath(235, 40, 80),
-                        element,
-                        attributes = [ { path: rect, stroke: black, fill: red },
-                                       { path: triangle, stroke: black, fill: green } ],
-                        which = 1;
+                var paper = Raphael("convert", 340, 200),
+                    rect = createRectPath(0, 40, 80),
+                    triangle = createTrianglePath(235, 40, 80),
+                    element,
+                    attributes = [ { path: rect, stroke: black, fill: red },
+                                   { path: triangle, stroke: black, fill: green } ],
+                    which = 1;
 
-                    paper.arrow(140, 80);
-                    paper.text(140, 60, "Node.js").attr({ font: "18px 'Helvetica Neue', Arial", fill: "#fff" });
+                paper.arrow(140, 80);
+                paper.text(140, 60, "Node.js").attr({ font: "18px 'Helvetica Neue', Arial", fill: white });
 
-                    paper.path(rect).attr(dashed);
-                    paper.path(triangle).attr(dashed);
+                paper.path(rect).attr(dashed);
+                paper.path(triangle).attr(dashed);
 
-                    element = paper.path(rect).attr({ "stroke": black, "fill": red });
+                element = paper.path(rect).attr({ "stroke": black, "fill": red });
 
-                    setInterval(function() {
-                      element.stop().animate(attributes[+(which = !which)], 2000);
-                    }, 3000);
-                } ());
+                setInterval(function() {
+                  element.stop().animate(attributes[+(which = !which)], 2000);
+                }, 3000);
+              } ());
             </script>
           </section>
 
@@ -557,7 +584,9 @@ document.addEventListener("DOMContentLoaded", eventHandler);
 
           <section>
             <h2>Aplikacje intensywnie wykorzystujące CPU</h2>
-            <h2>TODO: Animacja CPU-bound (Tangle)</h2>
+            <br/>
+            <div id="cpu-bound"></div>
+            <div id="gauge"></div>
             <aside class="notes">
               <ul>
                 <li>Aplikacje operujące na wideo / audio - kompresja / dekompresja, kodowanie i dekodowanie itp.</li>
@@ -567,6 +596,52 @@ document.addEventListener("DOMContentLoaded", eventHandler);
                 <li>Blokujemy w ten sposób obsługę pozostałych żądań.</li>
               </ul>
             </aside>
+            <script>
+              (function() {
+                function getRandomArbitary(min, max) {
+                  return Math.random() * (max - min) + min;
+                }
+
+                var cpu = Raphael("cpu-bound", 300, 300),
+                    gauge = Raphael("gauge", 230, 230),
+                    speedo = gauge.tachometer(85, {
+                      interactive: true,
+                      numberMargin: 30,
+                      needleAnimationDuration: 400,
+                      number: false,
+                      needleAnimationEasing: "easy-in"
+                    }),
+                    font = function(color) {
+                      return {
+                        "font": "14px 'Helvetica Neue', Arial",
+                        "font-weight": "bold",
+                        "fill": color
+                      };
+                    },
+                    which = 1,
+                    steps = [],
+                    rejectedArrow;
+
+                gauge.text(118, 75, "Zużycie CPU\nw procentach").attr(font(white));
+
+                cpu.rect(120, 40, 160, 160).attr({ fill: white });
+
+                cpu.text(200, 60, "Serwer\nNode.js").attr(font(black));
+                cpu.text(70, 62, "Żądania").attr(font(white));
+
+                cpu.rightArrow(70, 80).attr({ fill: green });
+                rejectedArrow = cpu.rightArrow(50, 160).attr({ fill: red });
+
+                steps.push({ path: createRightArrowPath(50, 160), fill: red });
+                steps.push({ path: createRightArrowPath(70, 160), fill: gray });
+
+                setInterval(function() {
+                  speedo.set(getRandomArbitary(90, 100));
+
+                  rejectedArrow.stop().animate(steps[+(which = !which)], 200);
+                }, 1000);
+              } ());
+            </script>
           </section>
 
           <section>
@@ -680,11 +755,27 @@ document.addEventListener("DOMContentLoaded", eventHandler);
           <section>
             <h2>NPM</h2>
             <h3>Node Packaged Modules</h3>
-            <p>Jest to menadżer pakietów dla Node.js.</p>
             <p>
-              Sam rdzeń platformy jest bardzo cienki, moduły przygotowane przez społeczność są bardzo ważnym elementem.
+              Sam rdzeń platformy jest bardzo cienki, więc moduły przygotowane przez społeczność są bardzo ważnym elementem.
             </p>
-            <h6>TODO: Animacja jak szybko rośnie NPM (Tangle)</h6>
+            <strong>Codziennie powstaje 97 nowych modułów.</strong>
+            <table id="data">
+              <tfoot>
+                <tr>
+                  <th>September 2011</th>
+                  <th>September 2012</th>
+                  <th>September 2013</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td>4700</td>
+                  <td>15000</td>
+                  <td>42000</td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="chart"></div>
             <p class="fragment">
               Oczywiście nigdy nie jest tak dobrze, żeby nie mogło być lepiej.
             </p>
@@ -711,8 +802,14 @@ document.addEventListener("DOMContentLoaded", eventHandler);
           </section>
 
           <section>
-            <h2>Unix Philosophy of Small Tools</h2>
-            <h3><em>Thin Core</em></h3>
+            <h2>Unix Philosophy</h2>
+            <p class="justified-to-left">
+              <em>
+                Write programs that do one thing and do it well.<br/>
+                Write programs to work together.<br/>
+                Write programs to handle streams.<br/>
+              </em>
+            </p>
             <aside class="notes">
               <ul>
                 <li>Node.js posiada bardzo chudy rdzeń - co jest zgodne z filozofią narzędzi unixowych.</li>
@@ -768,7 +865,7 @@ $ node --v8-options | grep harmony
         <section>
           <h2>Dziękuję za uwagę!</h2>
           <h4>Odniesienia dla <em>ciekawskich</em></h4>
-          <ul>
+          <ul class="links">
             <li>
               <a href="http://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition">
                 Model nabywania kompetencji braci <em>Dreyfus</em>
@@ -818,6 +915,9 @@ $ node --v8-options | grep harmony
               <a href="http://nodeschool.io">
                 Jak rozpocząć przygodę z Node.js (<em>nodeschool.io</em>) ?
               </a>
+            </li>
+            <li>
+              <a href="http://www.modulecounts.com/"><em>Module Counts</em></a>
             </li>
           </ul>
           <h4 class="spaced-max half-sized">Wykorzystane obrazy pochodzą ze stron:</h4>

@@ -11,6 +11,31 @@
 body {
   background-color: #46483e; }
 
+.reveal .hidden {
+  position: absolute;
+  left: -9999em;
+  top: -9999em;
+}
+
+.reveal #gauge {
+  float: right;
+  margin-right: 200px;
+}
+
+.reveal #cpu-bound {
+  float: left;
+  margin-left: 200px;
+}
+
+.reveal .links li {
+  line-height: 1em;
+}
+
+.reveal .justified-to-left {
+  text-align: left;
+  margin-left: 4.5em;
+}
+
 .reveal {
   font-family: "News Cycle", sans-serif;
   font-size: 36px;
