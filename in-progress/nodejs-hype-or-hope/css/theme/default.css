@@ -17,6 +17,10 @@ body {
   top: -9999em;
 }
 
+.reveal .notDisplayed {
+  visibility: hidden !important;
+}
+
 .reveal #sendEvents {
   font-size: 1em;
   width: 400px;
@@ -47,6 +51,18 @@ body {
 .reveal #gauge {
   float: right;
   margin-right: 200px;
+}
+
+.reveal #apache {
+  float: left;
+  margin-left: 150px;
+  cursor: wait;
+}
+
+.reveal #node {
+  float: right;
+  margin-right: 150px;
+  cursor: pointer;
 }
 
 .reveal #cpu-bound {

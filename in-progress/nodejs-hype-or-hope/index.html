@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="lib/css/github.css" />
 
     <script src="js/raphael.js"></script>
+    <script src="js/raphael.group.js"></script>
     <script src="js/raphael.tachometer.min.js"></script>
     <script src="js/analytics.js"></script>
     <script src="js/popup.js"></script>
@@ -53,6 +54,68 @@
             y2 = cy + r * Math.sin(-endAngle * RAD);
 
         return ["M", cx, cy, "L", x1, y1, "A", r, r, 0, +(endAngle - startAngle > 180), 0, x2, y2, "z"];
+      }
+
+      function spinner(r, centerx, centery, spinnerId, R1, R2, count, stroke_width, colour) {
+        var sectorsCount = count || 12,
+            color = colour || "#888",
+            group = r.group(),
+            width = stroke_width || 5,
+            r1 = Math.min(R1, R2) || 10,
+            r2 = Math.max(R1, R2) || 25,
+            cx = centerx + r2 + width,
+            cy = centery + r2 + width,
+
+            sectors = [],
+            opacity = [],
+            beta = 2 * Math.PI / sectorsCount,
+
+            pathParams = { stroke: color, "stroke-width": width, "stroke-linecap": "round" };
+
+        Raphael.getColor.reset();
+
+        if (spinnerId) {
+          group.id(spinnerId);
+        }
+
+        for (var i = 0; i < sectorsCount; i++) {
+          var alpha = beta * i - Math.PI / 2,
+              cos = Math.cos(alpha),
+              sin = Math.sin(alpha);
+
+          opacity[i] = 1 / sectorsCount * i;
+          sectors[i] = r.path([["M", cx + r1 * cos, cy + r1 * sin], ["L", cx + r2 * cos, cy + r2 * sin]])
+                        .attr(pathParams);
+
+          group.push(sectors[i]);
+
+          sectors[i].attr("data-name", "sectors");
+
+          if (color == "rainbow") {
+            sectors[i].attr("stroke", Raphael.getColor());
+          }
+        }
+
+        var tick;
+
+        (function ticker() {
+          opacity.unshift(opacity.pop());
+
+          for (var i = 0; i < sectorsCount; i++) {
+            sectors[i].attr("opacity", opacity[i]);
+          }
+
+          r.safari();
+          tick = setTimeout(ticker, 1000 / sectorsCount);
+        } ());
+
+        return function () {
+          clearTimeout(tick);
+
+          for (var i = 0; i < sectorsCount; i++) {
+            sectors[i].remove();
+          }
+        };
       }
 
       Raphael.fn.arrow = function (x, y) {
@@ -415,7 +478,8 @@ function handleRequest(request, response) {
 
           <section>
             <h2>Non-blocking I/O</h2>
-            <h3>TODO</h3>
+            <div id="apache"></div>
+            <div id="node"></div>
             <aside class="notes">
               <ul>
                 <li>Idea nieblokującego, asynchronicznego sposobu obsługi zdarzeń wejścia-wyjścia to kluczowy element.</li>
@@ -424,6 +488,104 @@ function handleRequest(request, response) {
               </ul>
             </aside>
             <script>
+              (function() {
+                var paper = Raphael("apache", 300, 300),
+                    font = function(color) {
+                      return {
+                        "font": "14px 'Helvetica Neue', Arial",
+                        "font-weight": "bold",
+                        "fill": color
+                      };
+                    },
+                    which = 1,
+                    steps = [],
+                    rejectedArrow;
+
+                paper.rect(120, 40, 160, 160).attr({ fill: white });
+
+                paper.text(200, 80, "Serwer\nApache").attr(font(black));
+                paper.text(70, 62, "Żądania").attr(font(white));
+
+                paper.rightArrow(70, 80).attr({ fill: green });
+                rejectedArrow = paper.rightArrow(50, 160).attr({ fill: red });
+
+                steps.push({ path: createRightArrowPath(50, 160), fill: red });
+                steps.push({ path: createRightArrowPath(70, 160), fill: gray });
+
+                spinner(paper, 170, 70);
+
+                setInterval(function() {
+                  rejectedArrow.stop().animate(steps[+(which = !which)], 200);
+                }, 1000);
+              } ());
+
+              (function() {
+                var paper = Raphael("node", 300, 300),
+                    font = function(color) {
+                      return {
+                        "font": "14px 'Helvetica Neue', Arial",
+                        "font-weight": "bold",
+                        "fill": color
+                      };
+                    },
+                    which = 1,
+                    acceptedWhich = 1,
+                    steps = [],
+                    acceptedSteps = [],
+                    clear,
+                    spinnerElement,
+                    acceptedArrow,
+                    rejectedArrow;
+
+                paper.rect(120, 40, 160, 160).attr({ fill: white });
+
+                paper.text(200, 80, "Serwer\nNode.js").attr(font(black));
+                paper.text(70, 62, "Żądania").attr(font(white));
+
+                acceptedArrow = paper.rightArrow(70, 80).attr({ fill: green });
+                rejectedArrow = paper.rightArrow(50, 160).attr({ fill: gray });
+
+                steps.push({ path: createRightArrowPath(70, 160), fill: green });
+                steps.push({ path: createRightArrowPath(50, 160), fill: gray });
+
+                acceptedSteps.push({ path: createRightArrowPath(50, 80), fill: gray });
+                acceptedSteps.push({ path: createRightArrowPath(70, 80), fill: green });
+
+                spinner(paper, 170, 70);
+                spinnerElement = document.querySelector("#node svg g");
+
+                setInterval(function() {
+                  var object = steps[+(which = !which)]
+
+                  object.callback = function() {
+                    if (+which === 0) {
+                      spinnerElement.classList.remove("notDisplayed");
+                    }
+                  };
+
+                  if (+acceptedWhich === 0) {
+                    spinnerElement.classList.add("notDisplayed");
+                  }
+
+                  rejectedArrow.stop().animate(object, 500);
+                }, 590);
+
+                setInterval(function() {
+                  var object = acceptedSteps[+(acceptedWhich = !acceptedWhich)];
+
+                  object.callback = function() {
+                    if (+acceptedWhich !== 0) {
+                      spinnerElement.classList.remove("notDisplayed");
+                    }
+                  };
+
+                  if (+which !== 0) {
+                    spinnerElement.classList.add("notDisplayed");
+                  }
+
+                  acceptedArrow.stop().animate(object, 500);
+                }, 2000);
+              } ());
             </script>
           </section>
 
