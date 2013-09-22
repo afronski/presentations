@@ -229,7 +229,8 @@ function handleRequest(request, response) {
 
           <section>
             <h2>Event-Driven Model</h2>
-            <h3>TODO: Animacja (Tangle)</h3>
+            <button id="sendEvents">Trigger events</button>
+            <div id="edd"></div>
             <aside class="notes">
               <ul>
                 <li>Koncepcja programowania oparta o zdarzenia nie jest niczym nowym.</li>
@@ -238,6 +239,58 @@ function handleRequest(request, response) {
                 <li>TODO: OPIS</li>
               </ul>
             </aside>
+            <script>
+              (function() {
+                var paper = Raphael("edd", 400, 400),
+                    opacity = 0.5,
+                    set,
+                    events,
+                    fade = function (id) {
+                      return function () {
+                        set[id].attr({ fill: white, r: 12 }).animate({ fill: gray, r: 8 }, 500);
+                      };
+                    },
+                    duration = 1000,
+                    i;
+
+                function reset() {
+                  set = paper.set(paper.circle(300, 200, 8).attr({ fill: green, opacity: opacity }),
+                                  paper.circle(200, 100, 8).attr({ fill: green, opacity: opacity }),
+                                  paper.circle(100, 200, 8).attr({ fill: green, opacity: opacity }),
+                                  paper.circle(200, 300, 8).attr({ fill: green, opacity: opacity }),
+                                  paper.circle(200, 200, 12).attr({ fill: red, opacity: opacity }));
+                }
+
+                paper.text(200, 120, "Nadawca")
+                     .attr({ font: "14px 'Helvetica Neue', Arial", "font-weight": "bold", fill: red });
+
+                paper.text(200, 40, "Odbiorcy")
+                     .attr({ font: "14px 'Helvetica Neue', Arial", "font-weight": "bold", fill: green });
+
+                reset();
+
+                document.querySelector("#sendEvents").addEventListener("click", function() {
+                  reset();
+
+                  events = paper.set(paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }));
+
+                  events[0].stop().animate({ cy: 100, easing: "linear", callback: fade(1) }, duration)
+                                  .animate({ cx: 200, easing: "linear" }, duration);
+
+                  events[1].stop().animate({ cy: 200, easing: "linear", callback: fade(2) }, duration)
+                                  .animate({ cx: 100, easing: "linear" }, duration);
+
+                  events[2].stop().animate({ cy: 300, easing: "linear", callback: fade(3) }, duration)
+                                  .animate({ cx: 200, easing: "linear" }, duration);
+
+                  events[3].stop().animate({ cy: 200, easing: "linear", callback: fade(0) }, duration)
+                                  .animate({ cx: 300, easing: "linear" }, duration);
+                });
+              } ());
+            </script>
           </section>
 
           <section>

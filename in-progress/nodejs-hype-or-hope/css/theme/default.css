@@ -17,6 +17,19 @@ body {
   top: -9999em;
 }
 
+.reveal #sendEvents {
+  font-size: 1em;
+  width: 400px;
+
+  border: 2px solid #33342C;
+  border-radius: 5px;
+  background: #33342C;
+
+  padding: 15px;
+
+  color: #888888;
+}
+
 .reveal .justified-to-left ul {
   margin: 25px 0;
   list-style: none;
