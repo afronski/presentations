@@ -17,6 +17,10 @@ body {
   top: -9999em;
 }
 
+.reveal .fdd-logo {
+  background: transparent;
+}
+
 .reveal .notDisplayed {
   visibility: hidden !important;
 }
