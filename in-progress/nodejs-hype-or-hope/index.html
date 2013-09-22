@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/TangleKit.css" />
     <link rel="stylesheet" href="css/theme/default.css" id="theme" />
 
     <link rel="stylesheet" href="lib/css/github.css" />
@@ -21,6 +22,11 @@
     <script src="js/raphael.tachometer.min.js"></script>
     <script src="js/analytics.js"></script>
     <script src="js/popup.js"></script>
+    <script src="js/Tangle.js"></script>
+    <script src="js/mootools.js"></script>
+    <script src="js/sprintf.js"></script>
+    <script src="js/BVTouchable.js"></script>
+    <script src="js/TangleKit.js"></script>
     <script>
       var RAD = Math.PI / 180;
 
@@ -477,13 +483,96 @@ document.addEventListener("DOMContentLoaded", eventHandler);
           </section>
 
           <section>
-            <h1>Scalability</h1>
-            <h2>TODO: Animacja skalowania (Tangle)</h2>
+            <h1>Skalowalność</h1>
+            <div id="scalability" class="justified-to-left">
+              <span data-var="requests"
+                    data-step="100"
+                    data-min="1"
+                    data-max="10000"
+                    data-format="requests"
+                    class="TKAdjustableNumber"></span> a zużycie pamięci serwera:
+              <ul>
+                <li><div>Tomcat</div> <span data-var="javaMemory" data-format="memory"></span></li>
+                <li><div>IIS</div> <span data-var="netMemory" data-format="memory"></span></li>
+                <li><div>Apache</div> <span data-var="apacheMemory" data-format="memory"></span></li>
+                <li><div>lighttpd</div> <span data-var="lighttpdMemory" data-format="memory"></span></li>
+                <li><div>nginx</div> <span data-var="nginxMemory" data-format="memory"></span></li>
+                <li><div>Node.js</div> <span data-var="nodeMemory" data-format="memory"></span></li>
+              </ul>
+            </div>
             <aside class="notes">
               <ul>
-                <li>TODO: Opis.</li>
+                <li>Jednym z wymiarów skalowalności jest zużycie pamięci.</li>
+                <li>Jedynie Node.js jest w stanie obsłużyć 10k żądań dla małej instancji na Amazon EC2.</li>
+                <li>Tylko nginx, Node.js oraz lighttpd potrafią obsłużyć 10k dla jednej dużej instacji.</li>
+                <li>Wartości obliczane na podstawie zużycia pamięci przy domyślnej konfiguracji i braku pluginów.</li>
+                <li>Wartość jest sumą zużycia pamięci samego procesu oraz iloczynu zużycia pamięci żądania i ich ilości.</li>
               </ul>
             </aside>
+            <script>
+              function pad(value) {
+                if (value < 100 && value >= 10) {
+                  return "0" + value;
+                } else if (value < 10 && value >= 0) {
+                  return "00" + value;
+                } else {
+                  return value;
+                }
+              }
+
+              function thousands(value) {
+                if (value >= 1000) {
+                  return ~~(value / 1000) + " " + pad(value % 1000);
+                } else {
+                  return value.toString();
+                }
+              }
+
+              Tangle.formats.requests = function(value) {
+                if (value === 1) {
+                  return thousands(value) + " żądanie";
+                } else if (value > 1 && value < 5) {
+                  return thousands(value) + " równoległe żądania";
+                } else {
+                  return thousands(value) + " równoległych żądań";
+                }
+              };
+
+              Tangle.formats.memory = function(value) {
+                var memory;
+
+                if (value < 1024) {
+                  return value + " KB";
+                } else if ((value / 1024) < 1024) {
+                  return ~~(value / 1024) + " MB";
+                } else if ((value / (1024 * 1024)) < 1024) {
+                  memory = ~~(value / (1024 * 1024));
+
+                  if (memory > 8) {
+                    memory = "<span style='color: red;'>" + memory + " GB</span>";
+                  } else {
+                    memory = "<span style='color: yellow;'>" + memory + " GB</span>";
+                  }
+
+                  return memory;
+                }
+              };
+
+              var MB = function(value) {
+                    return value * 1024;
+                  },
+                  tangle = new Tangle(document.querySelector("#scalability"), {
+                    initialize: function () { this.requests = 1; },
+                    update:     function () {
+                      this.javaMemory = MB(120) + this.requests * MB(18);
+                      this.netMemory = MB(100) + this.requests * MB(15);
+                      this.apacheMemory = MB(40) + this.requests * MB(10);
+                      this.lighttpdMemory = MB(10) + this.requests * 160;
+                      this.nginxMemory = MB(10) + this.requests * 128;
+                      this.nodeMemory = MB(3) + this.requests * 32;
+                    }
+                  });
+            </script>
           </section>
 
         </section>

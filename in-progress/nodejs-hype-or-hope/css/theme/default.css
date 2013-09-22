@@ -17,6 +17,20 @@ body {
   top: -9999em;
 }
 
+.reveal .justified-to-left ul {
+  margin: 25px 0;
+  list-style: none;
+}
+
+.reveal .justified-to-left ul li {
+  margin-left: 75px;
+}
+
+.reveal .justified-to-left ul li div {
+  display: inline-block;
+  width: 250px;
+}
+
 .reveal #gauge {
   float: right;
   margin-right: 200px;
