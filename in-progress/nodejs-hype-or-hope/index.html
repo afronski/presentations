@@ -250,7 +250,7 @@ function handleRequest(request, response) {
                 <li>Gdy klient wyśle żądanie zostanie wykonana druga część kodu, wcześniej podpięta, obsługująca żądanie.</li>
                 <li>Zasada działania platformy - asynchroniczna obsługa wszelkich operacji.</li>
                 <li>Nie czekamy i nie blokujemy wykonania - to Nas informują, że zaszło interesujące Nas zdarzenie.</li>
-                <li>Złota zasada Hollywood ("Nie dzwoń do nas. My oddzwonimy do ciebie").<li>
+                <li>Złota zasada Hollywood ("Nie dzwoń do nas. My oddzwonimy do ciebie").</li>
               </ul>
             </aside>
           </section>
@@ -371,7 +371,7 @@ function handleRequest(request, response) {
               <ul>
                 <li>Tego elementu nigdzie nie ma w przytoczonej definicji.</li>
                 <li>Jest on tzw. "wiedzą ukrytą" i główną przyczyną nieporozumień dotyczących Node.js.</li>
-                <li>Mocno wpłwya na model programowania i skalowalność zaimplementowanego rozwiązania.</li>
+                <li>Mocno wpływa na model programowania i skalowalność zaimplementowanego rozwiązania.</li>
                 <li>OPIS: Zdarzenia pobierane są z kolejki, przetwarzane.</li>
                 <li>OPIS: Jeśli pojawia się nowe zdarzenie jest odkładane do kolejki.</li>
                 <li>OPIS: Tylko jedno zdarzenie jest przetwarzane w danej chwili.</li>
@@ -486,7 +486,8 @@ function handleRequest(request, response) {
               <ul>
                 <li>Idea nieblokującego, asynchronicznego sposobu obsługi zdarzeń wejścia-wyjścia to kluczowy element.</li>
                 <li>Podstawa efektywniejszego wykorzystania zasobów.</li>
-                <li>TODO: OPIS</li>
+                <li>OPIS: Podczas gdy zablokowany, przez wolne zasoby serwer po lewej nie może obsłużyć żądania.</li>
+                <li>OPIS: Node.js świetnie sobie radzi, wykorzystując moment oczekiwania na wolniejszy zasób.</li>
               </ul>
             </aside>
             <script>
@@ -889,11 +890,11 @@ document.addEventListener("DOMContentLoaded", eventHandler);
                   tangle = new Tangle(document.querySelector("#scalability"), {
                     initialize: function () { this.requests = 1; },
                     update:     function () {
-                      this.javaMemory = MB(120) + this.requests * MB(18);
-                      this.netMemory = MB(100) + this.requests * MB(15);
+                      this.javaMemory = MB(180) + this.requests * MB(18);
+                      this.netMemory = MB(140) + this.requests * MB(15);
                       this.apacheMemory = MB(40) + this.requests * MB(10);
-                      this.lighttpdMemory = MB(10) + this.requests * 160;
-                      this.nginxMemory = MB(10) + this.requests * 128;
+                      this.lighttpdMemory = MB(18) + this.requests * 160;
+                      this.nginxMemory = MB(8) + this.requests * 128;
                       this.nodeMemory = MB(3) + this.requests * 32;
                     }
                   });
@@ -1271,6 +1272,7 @@ $ node --v8-options | grep harmony
 
         <section>
           <h1>Pytania?</h1>
+          <h5>Zapraszam do zapisów na warsztaty</h5>
         </section>
 
         <section>
