@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Presentation Template</title>
+
+    <meta name="description" content="Presentation template for all my presentations made after August 2013">
+    <meta name="author" content="Wojciech Gawroński">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/TangleKit.css" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+
+    <link rel="stylesheet" href="lib/css/github.css" />
+
+    <script src="js/raphael.js"></script>
+    <script src="js/raphael.group.js"></script>
+    <script src="js/raphael.tachometer.min.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/Tangle.js"></script>
+    <script src="js/mootools.js"></script>
+    <script src="js/sprintf.js"></script>
+    <script src="js/BVTouchable.js"></script>
+    <script src="js/TangleKit.js"></script>
+    <script>
+      var RAD = Math.PI / 180;
+
+      function getRandomArbitary(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function createRectPath(x, y, a) {
+        return "M" + x + "," + y + "l" + a + ",0 0," + a + "-" + a + ",0z";
+      }
+
+      function createTrianglePath(x, y, a) {
+        return "M" + x + "," + y + "l" + a / 2 + "," + a + " -" + a + ",0z";
+      }
+
+      function createRightArrowPath(x, y) {
+        return "M" + x + "," + y + "m-10-10l40,0 0-6 20,16 -20,16 0-6 -40,0 -0-16z"
+      }
+
+      function createArcPath(cx, cy, r, startAngle, endAngle) {
+        var x1 = cx + r * Math.cos(-startAngle * RAD),
+            x2 = cx + r * Math.cos(-endAngle * RAD),
+            y1 = cy + r * Math.sin(-startAngle * RAD),
+            y2 = cy + r * Math.sin(-endAngle * RAD);
+
+        return ["M", cx, cy, "L", x1, y1, "A", r, r, 0, +(endAngle - startAngle > 180), 0, x2, y2, "z"];
+      }
+
+      function spinner(r, centerx, centery, spinnerId, R1, R2, count, stroke_width, colour) {
+        var sectorsCount = count || 12,
+            color = colour || "#888",
+            group = r.group(),
+            width = stroke_width || 5,
+            r1 = Math.min(R1, R2) || 10,
+            r2 = Math.max(R1, R2) || 25,
+            cx = centerx + r2 + width,
+            cy = centery + r2 + width,
+
+            sectors = [],
+            opacity = [],
+            beta = 2 * Math.PI / sectorsCount,
+
+            pathParams = { stroke: color, "stroke-width": width, "stroke-linecap": "round" };
+
+        Raphael.getColor.reset();
+
+        if (spinnerId) {
+          group.id(spinnerId);
+        }
+
+        for (var i = 0; i < sectorsCount; i++) {
+          var alpha = beta * i - Math.PI / 2,
+              cos = Math.cos(alpha),
+              sin = Math.sin(alpha);
+
+          opacity[i] = 1 / sectorsCount * i;
+          sectors[i] = r.path([["M", cx + r1 * cos, cy + r1 * sin], ["L", cx + r2 * cos, cy + r2 * sin]])
+                        .attr(pathParams);
+
+          group.push(sectors[i]);
+
+          sectors[i].attr("data-name", "sectors");
+
+          if (color == "rainbow") {
+            sectors[i].attr("stroke", Raphael.getColor());
+          }
+        }
+
+        var tick;
+
+        (function ticker() {
+          opacity.unshift(opacity.pop());
+
+          for (var i = 0; i < sectorsCount; i++) {
+            sectors[i].attr("opacity", opacity[i]);
+          }
+
+          r.safari();
+          tick = setTimeout(ticker, 1000 / sectorsCount);
+        } ());
+
+        return function () {
+          clearTimeout(tick);
+
+          for (var i = 0; i < sectorsCount; i++) {
+            sectors[i].remove();
+          }
+        };
+      }
+
+      Raphael.fn.arrow = function (x, y) {
+          return this.path(["M", x, y ] + "m-10-10l20,0 0-6 10,16 -10,16 0-6 -20,0 0,6 -10-16 10-16z")
+                     .attr({ fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.2 });
+      };
+
+      Raphael.fn.rightArrow = function (x, y) {
+          return this.path(createRightArrowPath(x, y))
+                     .attr({ fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.5 });
+      };
+
+      Raphael.fn.thinArrow = function(x1, y1, x2, y2, size) {
+        var angle = Raphael.angle(x1, y1, x2, y2);
+            a45   = Raphael.rad(angle - 45),
+            a45m  = Raphael.rad(angle + 45),
+            a135  = Raphael.rad(angle - 135),
+            a135m = Raphael.rad(angle + 135),
+            x1a = x1 + Math.cos(a135) * size,
+            y1a = y1 + Math.sin(a135) * size,
+            x1b = x1 + Math.cos(a135m) * size,
+            y1b = y1 + Math.sin(a135m) * size,
+            x2a = x2 + Math.cos(a45) * size,
+            y2a = y2 + Math.sin(a45) * size,
+            x2b = x2 + Math.cos(a45m) * size,
+            y2b = y2 + Math.sin(a45m) * size;
+
+        return this.path("M" + x1 + " " + y1 + "L" + x1a + " " + y1a + "M" + x1 + " " + y1 + "L" + x1b + " " + y1b +
+                         "M" + x1 + " " + y1 + "L" + x2 +  " " + y2 +
+                         "M" + x2 + " " + y2 + "L" + x2a + " " + y2a + "M" + x2 + " " + y2 + "L" + x2b + " " + y2b);
+      };
+
+      var dashed = { fill: "none", stroke: "#666", "stroke-dasharray": "- " },
+          black = "#333",
+          gray = "#888",
+          white = "#ffffff",
+          red = "#ff0000",
+          green = "#00ff00",
+          yellow = "#ffff00",
+          lightBlue = "#00ffff",
+          nodeGreen = "#8CC84B";
+    </script>
+    <script>
+      document.write("<link rel='stylesheet' href='css/print/" +
+                     (window.location.search.match(/print-pdf/gi) ? "pdf" : "paper") +
+                    ".css' type='text/css' media='print'>");
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Presentation Template</h1>
+          <span class="license">
+            License:<a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+          </span>
+          <aside class="notes">
+            This way you can provide aside speaker notes ;).
+          </aside>
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Fragments</h1>
+
+            <ul>
+              <li class="fragment">1</li>
+              <li class="fragment">2</li>
+              <li class="fragment">3</li>
+              <li class="fragment">4</li>
+            </ul>
+
+            <aside class="notes">
+              Presentation of fragments and vertical layout.
+            </aside>
+          </section>
+
+          <section>
+            <h1>Next</h1>
+          </section>
+
+          <section>
+            <h1>Another</h1>
+          </section>
+
+          <section>
+            <h1>Last one<h1>
+          </section>
+
+        </section>
+
+        <section>
+          <h2>Code Sample</h2>
+          <pre><code data-trim contenteditable>
+-module(math).
+-export([factorial/1]).
+
+factorial(0) ->
+  1;
+factorial(X) when X > 0 ->
+  X * factorial(X-1).
+          </code></pre>
+        </section>
+
+        <section>
+          <h1>Questions?</h1>
+        </section>
+
+        <section>
+          <h2>Thanks!</h2>
+          <h4>References:</h4>
+          <ul class="links">
+            <li>
+              <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">
+                <em>License for presentation</em>
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: "default",
+        transition: "linear",
+        backgroundTransition: "slide",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js",condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
