@@ -2,15 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Presentation Template</title>
+    <title>Podstawy profilowania i analiza wydajności aplikacji webowych</title>
 
-    <meta name="description" content="Presentation template for all my presentations made after August 2013">
+    <meta name="description" content="Podstawy profilowania i analiza wydajności aplikacji webowych">
     <meta name="author" content="Wojciech Gawroński">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto&subset=latin,latin-ext"
+          rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="css/reveal.css" />
     <link rel="stylesheet" href="css/TangleKit.css" />
@@ -168,72 +171,103 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h1>Presentation Template</h1>
+          <h2>Podstawy profilowania<br/>i analiza wydajności aplikacji webowych</h2>
+          <div id="gauge"></div>
+
           <span class="license">
-            License:<a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+            Licencja: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
           </span>
+
           <aside class="notes">
-            This way you can provide aside speaker notes ;).
           </aside>
+
+          <script>
+            (function() {
+              var gauge = Raphael("gauge", 230, 230),
+                  speedo = gauge.tachometer(85, {
+                    interactive: true,
+                    numberMargin: 30,
+                    needleAnimationDuration: 400,
+                    number: false,
+                    needleAnimationEasing: "easy-in"
+                  }),
+                  font = function(color) {
+                    return {
+                      "font": "14px 'Helvetica Neue', Arial",
+                      "font-weight": "bold",
+                      "fill": color
+                    };
+                  };
+
+              gauge.text(118, 75, "CPU").attr(font(white));
+              setInterval(function() { speedo.set(getRandomArbitary(90, 100)); }, 1000);
+            } ());
+          </script>
         </section>
 
         <section>
 
-          <section>
-            <h1>Fragments</h1>
-
-            <ul>
-              <li class="fragment">1</li>
-              <li class="fragment">2</li>
-              <li class="fragment">3</li>
-              <li class="fragment">4</li>
-            </ul>
+          <section class="section-header">
+            <h1>Oznaczenia</h1>
 
             <aside class="notes">
-              Presentation of fragments and vertical layout.
+            </aside>
+          </section>
+
+          <section class="good">
+            <h1>Dobre praktyki</h1>
+
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section class="warning">
+            <h1>Ostrzeżenie!<h1>
+
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section class="bad">
+            <h1>Złe przykłady</h1>
+
+            <aside class="notes">
             </aside>
           </section>
 
           <section>
-            <h1>Next</h1>
-          </section>
+            <h1>Kod źródłowy</h1>
 
-          <section>
-            <h1>Another</h1>
-          </section>
+            <pre><code data-trim class="javascript">
+function findEmployee(id) {
+  var employee;
 
-          <section>
-            <h1>Last one<h1>
+  employees.some(function (e) {
+    if (e.id === id) {
+      employee = e;
+      return true;
+    }
+  });
+
+  return employee;
+}
+            </code></pre>
+
+            <aside class="notes">
+            </aside>
           </section>
 
         </section>
 
-        <section>
-          <h2>Code Sample</h2>
-          <pre><code data-trim contenteditable>
--module(math).
--export([factorial/1]).
-
-factorial(0) ->
-  1;
-factorial(X) when X > 0 ->
-  X * factorial(X-1).
-          </code></pre>
+        <section class="section-header">
+          <h1>Pytania?</h1>
         </section>
 
-        <section>
-          <h1>Questions?</h1>
-        </section>
-
-        <section>
-          <h2>Thanks!</h2>
-          <h4>References:</h4>
+        <section class="section-header">
+          <h2>Dziękuję za uwagę!</h2>
+          <h4>Odniesienia dla <em>ciekawskich </em>:</h4>
           <ul class="links">
-            <li>
-              <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">
-                <em>License for presentation</em>
-              </a>
-            </li>
+            <li></li>
           </ul>
         </section>
       </div>
@@ -243,6 +277,33 @@ factorial(X) when X > 0 ->
     <script src="js/reveal.min.js"></script>
 
     <script>
+      var BLUE = "#63ABF0",
+          RED = "#FA5F0C",
+          GREEN = "#52A617",
+          YELLOW = "#FFC03C";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        element.setAttribute("data-background", color);
+      }
+
+      getArrayOfDomElements(".section-header").forEach(applyColor.curry(BLUE));
+      getArrayOfDomElements(".good").forEach(applyColor.curry(GREEN));
+      getArrayOfDomElements(".bad").forEach(applyColor.curry(RED));
+      getArrayOfDomElements(".warning").forEach(applyColor.curry(YELLOW));
+
       Reveal.initialize({
         controls: true,
         progress: true,
@@ -250,8 +311,9 @@ factorial(X) when X > 0 ->
         center: true,
 
         theme: "default",
-        transition: "linear",
-        backgroundTransition: "slide",
+        transition: "slide",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
 
         dependencies: [
           {
