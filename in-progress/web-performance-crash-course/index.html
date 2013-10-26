@@ -326,7 +326,7 @@
                   Inną kategorią narzędzi są strony porównawcze - Browserscope jest najpopularniejszą i najobszerniejszą bazą wiedzy nt. przeglądarek, również związaną z wydajnością.
                 </li>
                 <li>
-                  Ostatnia kategoria to ciężka artyleria czyli tak naprawdę niskopoziomowe profilery dla V8/Node, które umożliwiają dosłownie na spojrzenie pod maskę silnika JavaScript i wykrycia potencjalnych błędów.
+                  Ostatnia kategoria to ciężka artyleria, którą krótko zaprezentowałem wcześniej - czyli tak naprawdę niskopoziomowe profilery dla V8/Node, które umożliwiają dosłownie na spojrzenie pod maskę silnika JavaScript i wykrycia potencjalnych błędów.
                 </li>
               </ul>
             </aside>
@@ -334,39 +334,93 @@
 
           <section class="bad">
             <h2>Microbenchmarks</h2>
-            <pre class="fragment"><code data-trim class="javascript">
-
-            </code></pre>
+            <img src="img/microbenchmark.png" alt="Microbenchmark sample" />
             <aside class="notes">
               <ul>
                 <li>
-                  Powiedzieliśmy sobie, że bardzo łatwo nadużyć jsperf. Prowadzi to do zjawiska zw. Microbenchmarkingiem, czyli skupienie na bardzo małych fragmentach kodu i wyciśnięciu z nich siódmych potów.
+                  Powiedzieliśmy sobie, że bardzo łatwo nadużyć jsperf. Prowadzi to do zjawiska zwanego Microbenchmarkingiem, czyli skupienie na bardzo małych fragmentach kodu i wyciśnięciu z nich siódmych potów.
                 </li>
                 <li>
                   Problem polega na tym, że środowisko przeglądarkowe nie jest dobrym miejscem do skupiania się na tego typu optymalizacjach, ponieważ mamy zbyt mały wpływ na nie.
                 </li>
                 <li>
-                  W przykładzie widzimy ...
-                </li>
-                <li>
-                  Przez to, że nie mamy praktycznie żadnego wpływu na JIT zostaliśmy oszukani i co gorsza wyciągamy błędne wnioski.
+                  W przykładzie widzimy prostą funkcję z 4 parametrami i będziemy testować narzut dla określonego sposobu jej wywołania (6 przypadków testowych).
                 </li>
               </ul>
             </aside>
           </section>
 
-          <section class="warning">
-            <h2>Jak to naprawić?</h2>
-            <pre class="fragment"><code data-trim class="javascript">
+          <section class="bad">
+            <h2>You do it wrong!</h2>
+            <img src="img/microbenchmark-results.png" alt="Microbenchmark sample" />
+            <aside class="notes">
+              <ul>
+                <li>
+                  Przez to, że nie mamy praktycznie żadnego wpływu na JIT zostaliśmy oszukani i co gorsza wyciągamy błędne wnioski pt. "W Chrome 32 znacznie przyspieszyli klasyczny sposób wywoływania funkcji".
+                </li>
+              </ul>
+            </aside>
+          </section>
 
+          <section data-transition="none">
+            <h2>Dlaczego?</h2>
+            <pre><code data-trim class="javascript">
+function benchmark() {
+  function fn(a, b, c, d) {
+    return a + b + c + d;
+  }
+
+  var start = new Date;
+  for (var n = 0; n < 1e6; n++) {
+    fn('a', 'b', 'c', 'd');
+  }
+  return (new Date - start);
+}
+            </code></pre>
+          </section>
+
+          <section data-transition="none">
+            <h2>Dlaczego?</h2>
+            <pre><code data-trim class="javascript">
+function benchmark() {
+  var start = new Date;
+  for (var n = 0; n < 1e6; n++) {
+    // Ponieważ znamy fn, rozwijamy ją w miejscu wywołania:
+    a + b + c + d;
+  }
+  return (new Date - start);
+}
+            </code></pre>
+          </section>
+
+          <section data-transition="none">
+            <h2>Dlaczego?</h2>
+            <pre><code data-trim class="javascript">
+function benchmark() {
+  var start = new Date;
+  for (var n = 0; n < 1e6; n++) {
+    // Wynik nie jest nigdzie używany więc kompilator go usunie...
+  }
+  return (new Date - start);
+}
+            </code></pre>
+          </section>
+
+          <section data-transition="none">
+            <h2>Dlaczego?</h2>
+            <pre><code data-trim class="javascript">
+function benchmark() {
+  var start = new Date;
+
+  // ... razem z pętlą for, która była teraz pusta ;).
+
+  return (new Date - start);
+}
             </code></pre>
             <aside class="notes">
               <ul>
                 <li>
-                  Oto jak musimy poprawić nasz benchmark ...
-                </li>
-                <li>
-                  Ważniejsze jednak do tego jak to naprawić, jest zupełnie co innego. Powinniśmy skupiać się raczej na profilowaniu całości i optymalizacji całego rozwiązania, niż wyszukiwać który sposób łączenia łańcuchów tekstowych jest najoptymalniejszy dla przeglądarki (za dużo przeglądarek, zbyt mały wpływ na środowisko, od tego jest JIT).
+                  Ważniejsze jednak od tego jak to naprawić, jest zupełnie co innego. Powinniśmy skupiać się raczej na profilowaniu całości i optymalizacji całego rozwiązania, niż wyszukiwać najoptymalniejsze drobiazgi implementacyjne (za dużo przeglądarek, zbyt mały wpływ na środowisko, od tego jest JIT).
                 </li>
               </ul>
             </aside>
@@ -376,7 +430,7 @@
             <h2>Don't take performance advices from strangers!</h2>
             <h4><a href="https://github.com/felixge/faster-than-c">Felix Geisendörfer</a></h4>
             <aside class="notes">
-              Na koniec dwie bardzo ważne rady - nie przyjmujmy rad dot. wydajności od obcych na ślepo. Nie szukajmy w internecie, na blogach, na forach odpowiedzi na Nasze pytania - to My znamy system i My powinniśmy go zbadać.
+              Na koniec dwie bardzo ważne rady - nie przyjmujmy rad dot. wydajności od obcych na ślepo. Nie szukajmy w internecie, na blogach, na forach odpowiedzi na Nasze pytania - to My znamy system i to My powinniśmy go zbadać.
             </aside>
           </section>
 
@@ -384,7 +438,7 @@
             <h2>Don't guess it, test it!</h2>
             <h4><a href="http://www.aerotwist.com/blog/dont-guess-it-test-it/">Paul Lewis</a></h4>
             <aside class="notes">
-              Właśnie! Najpierw zbadać, potem poprawić - najpierw zmierzyć potem uciąć. Nie powinniśmy tym bardziej strzelać na oślep technikami optymalizacyjnymi (zasada Pareto 80/20 ma wszędzie zastosowanie).
+              Nic dodać nic ująć - Najpierw zbadać, potem optymalizować - najpierw zmierzyć potem uciąć. Nie powinniśmy strzelać na oślep technikami optymalizacyjnymi (zasada Pareto 80/20 ma wszędzie zastosowanie) mimo, że z dużym prawdopodobieństwem trafimy to zmarnujemy czas i zasoby.
             </aside>
           </section>
 
