@@ -179,6 +179,14 @@
           </span>
 
           <aside class="notes">
+            <ul>
+              <li>
+                Witam Was na szkoleniu dotyczącym profilowania i analizy wydajności aplikacji webowych. Przez 1.5 godziny będę chciał zaprezentować wam teoretyczne podstawy badania wydajności aplikacji webowych, przybliżyć najpopularniejsze narzędzia oraz zaprezentować je w akcji, poprawiając przykładowe problemy.
+              </li>
+              <li>
+                Prezentacja będzie dostępna po szkoleniu.
+              </li>
+            </ul>
           </aside>
 
           <script>
@@ -211,6 +219,14 @@
             <h1>Oznaczenia</h1>
 
             <aside class="notes">
+              <ul>
+                <li>
+                  Zanim zaczniemy chciałbym porozmawiać o tym jak zbudowana jest prezentacja i jakich oznaczeń będziemy używać.
+                </li>
+                <li>
+                  Niebieski to nagłówki poszczególnych działów.
+                </li>
+              </ul>
             </aside>
           </section>
 
@@ -218,6 +234,9 @@
             <h1>Dobre praktyki</h1>
 
             <aside class="notes">
+              <li>
+                Dobre praktyki i ważne rzeczy bedą na zielono.
+              </li>
             </aside>
           </section>
 
@@ -225,6 +244,11 @@
             <h1>Ostrzeżenie!<h1>
 
             <aside class="notes">
+              <ul>
+                <li>
+                  Ostrzeżenia i miejsca na które warto zwrócić uwagę oznaczymy kolorem żółtym.
+                </li>
+              </ul>
             </aside>
           </section>
 
@@ -232,29 +256,160 @@
             <h1>Złe przykłady</h1>
 
             <aside class="notes">
+              <ul>
+                <li>
+                  Błędne podejście oznaczymy sobie kolorem pomarańczowym.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Budowa przeglądarki</h1>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Narzędzia</h1>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Benchmarki</h1>
+
+            <aside class="notes">
+              Chciałbym zająć się teraz trudną sztuką tworzenia benchmarków. Jest to zagadnienie tak obszerne, że naprawdę można mu poświęcić całą nową prezentację, natomiast ja chciałbym pokazać jak uniknąć najpopularniejszych pułapek przy tworzeniu benchmarków typowo JavaScriptowych i problemów związanych z tą tematyką.
+            </aside>
+          </section>
+
+          <section class="good">
+            <h1>Tryb prywatny</h1>
+            <aside class="notes">
+              <ul>
+                 <li>
+                   Zanim przejdziemy do narzędzi. Chciałbym podkreślić najważniejszą rzecz. Najważniejsza jest odpowiednia izolacja takiego benchmarku i w ogóle testów wydajnościowych - najlepiej jest to robić w tzw. trybie prywatnym (incognito).
+                 </li>
+                 <li>
+                   Nie musimy pamiętać o wszystkich elementach które mogą wpływać na nasze testy tj. o pluginach, cache, historii, ustawieniach profilu, ciasteczkach etc.
+                 </li>
+               </ul>
             </aside>
           </section>
 
           <section>
-            <h1>Kod źródłowy</h1>
-
-            <pre><code data-trim class="javascript">
-function findEmployee(id) {
-  var employee;
-
-  employees.some(function (e) {
-    if (e.id === id) {
-      employee = e;
-      return true;
-    }
-  });
-
-  return employee;
-}
-            </code></pre>
+            <h1>Narzędzia</h1>
+            <ul>
+              <li class="fragment"><a href="http://jsperf.com/">jsperf</a></li>
+              <li class="fragment"><a href="http://www.browserscope.org/">Browserscope</a></li>
+              <li class="fragment">d8, node --profiler</li>
+            </ul>
 
             <aside class="notes">
+              <ul>
+                <li>
+                  Przejdźmy do narzędzi - najpopularniejszym jest ten przeklęty jsperf. Przeklęty ponieważ jest bardzo łatwy w (nad)użyciu. Prostota stworzenia testu i łatwość współdzielenia wyników przysłania bardzo często zdrowy rozsądek.
+                </li>
+                <li>
+                  O nadużywaniu jsperf opowiemy sobie dokładnie za chwilę.
+                </li>
+                <li>
+                  Inną kategorią narzędzi są strony porównawcze - Browserscope jest najpopularniejszą i najobszerniejszą bazą wiedzy nt. przeglądarek, również związaną z wydajnością.
+                </li>
+                <li>
+                  Ostatnia kategoria to ciężka artyleria czyli tak naprawdę niskopoziomowe profilery dla V8/Node, które umożliwiają dosłownie na spojrzenie pod maskę silnika JavaScript i wykrycia potencjalnych błędów.
+                </li>
+              </ul>
             </aside>
+          </section>
+
+          <section class="bad">
+            <h2>Microbenchmarks</h2>
+            <pre class="fragment"><code data-trim class="javascript">
+
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Powiedzieliśmy sobie, że bardzo łatwo nadużyć jsperf. Prowadzi to do zjawiska zw. Microbenchmarkingiem, czyli skupienie na bardzo małych fragmentach kodu i wyciśnięciu z nich siódmych potów.
+                </li>
+                <li>
+                  Problem polega na tym, że środowisko przeglądarkowe nie jest dobrym miejscem do skupiania się na tego typu optymalizacjach, ponieważ mamy zbyt mały wpływ na nie.
+                </li>
+                <li>
+                  W przykładzie widzimy ...
+                </li>
+                <li>
+                  Przez to, że nie mamy praktycznie żadnego wpływu na JIT zostaliśmy oszukani i co gorsza wyciągamy błędne wnioski.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="warning">
+            <h2>Jak to naprawić?</h2>
+            <pre class="fragment"><code data-trim class="javascript">
+
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Oto jak musimy poprawić nasz benchmark ...
+                </li>
+                <li>
+                  Ważniejsze jednak do tego jak to naprawić, jest zupełnie co innego. Powinniśmy skupiać się raczej na profilowaniu całości i optymalizacji całego rozwiązania, niż wyszukiwać który sposób łączenia łańcuchów tekstowych jest najoptymalniejszy dla przeglądarki (za dużo przeglądarek, zbyt mały wpływ na środowisko, od tego jest JIT).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="good">
+            <h2>Don't take performance advices from strangers!</h2>
+            <h4><a href="https://github.com/felixge/faster-than-c">Felix Geisendörfer</a></h4>
+            <aside class="notes">
+              Na koniec dwie bardzo ważne rady - nie przyjmujmy rad dot. wydajności od obcych na ślepo. Nie szukajmy w internecie, na blogach, na forach odpowiedzi na Nasze pytania - to My znamy system i My powinniśmy go zbadać.
+            </aside>
+          </section>
+
+          <section class="good">
+            <h2>Don't guess it, test it!</h2>
+            <h4><a href="http://www.aerotwist.com/blog/dont-guess-it-test-it/">Paul Lewis</a></h4>
+            <aside class="notes">
+              Właśnie! Najpierw zbadać, potem poprawić - najpierw zmierzyć potem uciąć. Nie powinniśmy tym bardziej strzelać na oślep technikami optymalizacyjnymi (zasada Pareto 80/20 ma wszędzie zastosowanie).
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Case Studies</h1>
+          </section>
+
+          <section>
+            <h2>JavaScript</h2>
+          </section>
+
+          <section>
+            <h1>Pamięć</h1>
+          </section>
+
+          <section>
+            <h1>DOM</h1>
+          </section>
+
+          <section>
+            <h1>Sieć</h1>
           </section>
 
         </section>
@@ -267,7 +422,16 @@ function findEmployee(id) {
           <h2>Dziękuję za uwagę!</h2>
           <h4>Odniesienia dla <em>ciekawskich </em>:</h4>
           <ul class="links">
-            <li></li>
+            <li>
+              <a href="http://mrale.ph/blog/2012/12/15/microbenchmarks-fairy-tale.html">
+                Microbenchmarks fairy tale
+              </a>
+            </li>
+            <li>
+              <a href="http://www.youtube.com/watch?v=65-RbBwZQdU">
+                Performance and benchmarking
+              </a>
+            </li>
           </ul>
         </section>
       </div>
