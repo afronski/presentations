@@ -18,13 +18,3 @@
 ### Benchmarks
 
 - Nie mów jak używać narzędzi, skup się jak nie robić benchmarków.
-
-# Cheatsheet
-
-## JavaScript
-
-## Pamięć
-
-## DOM
-
-## Sieć

@@ -269,6 +269,23 @@
         <section>
 
           <section class="section-header">
+            <h1>Wprowadzenie</h1>
+          </section>
+
+          <section class="good">
+            <h1>Co to znaczy <em>szybko</em>?</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Tabelka z czasem reakcji.</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
             <h1>Budowa przeglądarki</h1>
           </section>
 
@@ -276,8 +293,8 @@
             <h1>Architektura</h1>
             <aside class="notes">
               <ul>
-                <li>"Context Switching" pomiędzy UI a JavaScript.</li>
-                <li>Jednak same przeglądarki nie są jednowątkowe ;).</li>
+                <li>TODO: "Context Switching" pomiędzy UI a JavaScript.</li>
+                <li>TODO: Jednak same przeglądarki nie są jednowątkowe ;).</li>
               </ul>
             </aside>
           </section>
@@ -285,12 +302,18 @@
           <section class="warning">
             <h1>Złożoność</h1>
             <p>
-              <em>Przeglądarki wraz z zależnościami mają dużo więcej linii kodu niż jądro Linuxa (wraz z modułami).</em>
+              <em>TODO: Przeglądarki wraz z zależnościami mają dużo więcej linii kodu niż jądro Linuxa (wraz z modułami).</em>
             </p>
           </section>
 
           <section class="good">
             <h1>Proces</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Blokujące skrypty (document.write) oraz sync, async, defer (+ obrazek).</li>
+                <li>TODO: Prezentacja jak wygląda ładowanie.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -301,7 +324,7 @@
             <h1>A co z <em>mobile</em>?</h1>
             <aside class="notes">
               <ul>
-                <li>"Latency", wstrzymywanie i wznawianie w 3G.</li>
+                <li>TODO: "Latency", wstrzymywanie i wznawianie w 3G.</li>
               </ul>
             </aside>
           </section>
@@ -320,14 +343,48 @@
 
           <section>
             <h1>Zużycie baterii</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Poza mobile i trybem uśpienia, ciągłe rysowanie oraz "zamulające skrypty wszystko niszczą".</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="warning">
             <h1>GC</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Opisać główny problem z CG (mark-and-sweep, stop the world, scavenge).</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="good">
             <h1>A co z <em>GPU</em>?</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Composite all the things!</li>
+                <li>TODO: No. VRAM is limited :(.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="good">
+            <h1>Ścieżka krytyczna</h1>
+          </section>
+
+          <section class="bad">
+            <h1>Ilość żądań</h1>
+          </section>
+
+          <section class="good">
+            <h1>Ilość żądań</h1>
+            <h2>Optymalizacja</h2>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Optymalizacja obrazków, CDN, smaller RTT, sharding, fewer HTTP requests.</li>
+              </ul>
+            </aside>
           </section>
 
         </section>
@@ -342,8 +399,9 @@
             <h1>Developer Tools</h1>
             <aside class="notes">
               <ul>
-                <li>Dla 'Chrome' prezentuję funkcjonalność z kanału 'Canary'.</li>
-                <li>Dla 'Firefox' prezentuję funkcjonalność z kanału 'Nightly'.</li>
+                <li>
+                  Wszystkie zaprezentowane funkcjonalności są dostępne w wersjach deweloperskich przeglądarek (Chrome Canary, Firefox Nightly).
+                </li>
               </ul>
             </aside>
           </section>
@@ -352,7 +410,7 @@
             <h1>Chrome - Timeline</h1>
             <aside class="notes">
               <ul>
-                <li>Prezentacja timeline, filtrowanie, ostrzeżenia, wyłaśnienie wyglądu.</li>
+                <li>TODO: Prezentacja timeline, filtrowanie, ostrzeżenia, wyłaśnienie wyglądu.</li>
               </ul>
             </aside>
           </section>
@@ -361,7 +419,7 @@
             <h1>Chrome - Profilowanie</h1>
             <aside class="notes">
               <ul>
-                <li>Flamecharts, CPU</li>
+                <li>TODO: Flamecharts, CPU</li>
               </ul>
             </aside>
           </section>
@@ -370,7 +428,7 @@
             <h1>Chrome - Pamięć</h1>
             <aside class="notes">
               <ul>
-                <li>Spanshots, differences, comparison etc.</li>
+                <li>TODO: Spanshots, differences, comparison etc.</li>
               </ul>
             </aside>
           </section>
@@ -379,7 +437,7 @@
             <h1>Chrome - Network</h1>
             <aside class="notes">
               <ul>
-                <li>Wyjaśnienie, przydatne tricki, kolory kresek.</li>
+                <li>TODO: Wyjaśnienie, przydatne tricki, kolory kresek.</li>
               </ul>
             </aside>
           </section>
@@ -388,7 +446,7 @@
             <h1>Chrome - Konsola</h1>
             <aside class="notes">
               <ul>
-                <li>Wywoływanie profilera, formatowanie, tabelki, snapshoty, skróty.</li>
+                <li>TODO: Wywoływanie profilera, formatowanie, tabelki, snapshoty, skróty.</li>
               </ul>
             </aside>
           </section>
@@ -397,7 +455,7 @@
             <h1>Chrome - Renderowanie</h1>
             <aside class="notes">
               <ul>
-                <li>FPS, Continuous repaint mode, Layers etc.
+                <li>TODO: FPS, Continuous repaint mode, Layers etc.
               </ul>
             </aside>
           </section>
@@ -406,13 +464,18 @@
             <h1>Firefox</h1>
             <aside class="notes">
               <ul>
-                <li>Skupić się na profilowaniu.</li>
+                <li>TODO: Skupić się na profilowaniu.</li>
               </ul>
             </aside>
           </section>
 
           <section>
             <h1>IE 9 / 10</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Krótki opis i szybki gif.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -428,8 +491,9 @@
             <h1>Inne</h1>
             <aside class="notes">
               <ul>
+                <li>TODO: Opisówka.</li>
                 <li>
-                  Jedna z wersji Safari posiada narzędzie do pokazywania warstw i kompozycji umieszczonych w pamięci GPU. Nie wiedzieć dlaczego funkcjonalność została wycofana zaraz w następnej wersji.
+                  Jedna z wersji Safari posiada narzędzie do pokazywania warstw i kompozycji umieszczonych w pamięci GPU. Nie wiadomo dlaczego funkcjonalność została wycofana w następnej wersji.
                 </li>
               </ul>
             </aside>
@@ -437,18 +501,38 @@
 
           <section>
             <h1>Navigation Timing API</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Obrazki (2x - podział, overview) + GIF z konsoli.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>ySlow</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Prezentacja w postaci gifa.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>PageSpeed</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Ścieżka krytyczna (online)!</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>Google Speed Tracer</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Krótko, bez rozwodzenia się.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -458,10 +542,20 @@
 
           <section>
             <h1>Windows Performance Toolkit</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Dokładnie opisać, pokazać screeny i powiedzieć, że przyjrzymy się temu w przykładzie.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
             <h1>V8 profiler - D8</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Krótko, bez rozwodzenia się + prezentacja w gif.</li>
+              </ul>
+            </aside>
           </section>
 
         </section>
@@ -661,6 +755,11 @@ function benchmark() {
           <h4>Odniesienia dla <em>ciekawskich </em>:</h4>
           <ul class="links">
             <li>
+              <a href="https://docs.google.com/presentation/d/1ZRIQbUKw9Tf077odCh66OrrwRIVNLvI_nhLm2Gi__F0/pub#slide=id.p">
+                How WebKit works
+              </a>
+            </li>
+            <li>
               <a href="http://mrale.ph/blog/2012/12/15/microbenchmarks-fairy-tale.html">
                 Microbenchmarks fairy tale
               </a>
@@ -669,6 +768,17 @@ function benchmark() {
               <a href="http://www.youtube.com/watch?v=65-RbBwZQdU">
                 Performance and benchmarking
               </a>
+            </li>
+            <li>
+              <a href="http://tools.ietf.org/html/draft-ietf-httpbis-http2-04">HTTP 2.0</a>
+              oraz
+              <a href="http://tools.ietf.org/html/draft-mbelshe-httpbis-spdy-00">SPDY</a>
+            </li>
+            <li>
+              <a href="https://github.com/marcelduran/yslow">YSlow</a>
+            </li>
+            <li>
+              <a href="http://w3c-test.org/webperf/specs/NavigationTiming/">Navigation Timing API</a>
             </li>
           </ul>
         </section>
