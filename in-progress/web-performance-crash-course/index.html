@@ -181,7 +181,7 @@
           <aside class="notes">
             <ul>
               <li>
-                Witam Was na szkoleniu dotyczącym profilowania i analizy wydajności aplikacji webowych. Przez 1.5 godziny będę chciał zaprezentować wam teoretyczne podstawy badania wydajności aplikacji webowych, przybliżyć najpopularniejsze narzędzia oraz zaprezentować je w akcji, poprawiając przykładowe problemy.
+                Witam Was na szkoleniu dotyczącym profilowania i analizy wydajności aplikacji webowych. Przez 1.5 godziny będę chciał zaprezentować wam teoretyczne podstawy badania wydajności aplikacji webowych, oraz będę chciał Wam przybliżyć najpopularniejsze narzędzia i techniki oraz zaprezentować je w akcji, poprawiając przykładowe problemy.
               </li>
               <li>
                 Prezentacja będzie dostępna po szkoleniu.
@@ -269,14 +269,82 @@
         <section>
 
           <section class="section-header">
-            <h1>Wprowadzenie</h1>
-          </section>
-
-          <section class="good">
-            <h2>Jak szybko to <em>szybko </em>?</h2>
+            <h2>Wprowadzenie</h2>
             <aside class="notes">
               <ul>
-                <li>TODO: Tabelka z czasem reakcji.</li>
+                <li>Na początku chciałbym odpowiedzieć na jedno bardzo ważne pytanie.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Co to znaczy <em>szybko </em>?</h2>
+            <div id="delays">
+              <table>
+                <thead>
+                  <tr><th class="delay">Opóźnienie</th><th class="reaction">Reakcja użytkownika</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td class="delay">0 - 100 ms</td><td class="reaction">Błyskawicznie</td></tr>
+                  <tr><td class="delay">100 - 300 ms</td><td class="reaction">Minimalne opóźnienie</td></tr>
+                  <tr><td class="delay">300 - 1000 ms</td><td class="reaction">Wyczuwalne opóźnienie</td></tr>
+                  <tr><td class="delay">&gt; 1 s</td><td class="reaction">Zmiana kontekstu</td></tr>
+                  <tr><td class="delay">&gt; 10 s</td><td class="reaction">"Wrócę później..."</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>Wyraźnie widać, że każde opóźnienie większe od 1s jest opóźnieniem niedopuszczalnym.</li>
+                <li>Użytkownik traci fokus === My tracimy klienta.</li>
+                <li>Idealny czas ładowania strony oscyluje w okolicach 1 sekundy.</li>
+                <li>Interakcja z UI powinna być poniżej &lt; 100 ms.</li>
+                <li>Wszelkie przerwy przeznaczone na wykonywanie operacji powinny być mniejsze od 75 ms.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Co to znaczy <em>płynnie </em>?</h2>
+            <h2 id="fps-to-ms">
+              <span data-var="fps" data-min="25" data-max="60" data-format="fps" class="TKAdjustableNumber"></span> ===
+              <span data-var="ms" data-format="miliseconds"></span>
+            </h2>
+            <aside class="notes">
+              <ul>
+                <li>Aby wszystko działało płynnie (60 FPS) kod obsługi rysowania powinno "zmieścić" się w 16.67 ms.</li>
+                <li>
+                  Co ważne - jeśli nie zmieścimy się w podanej wartości powinniśmy utrzymywać stałą długość trwania klatki, ponieważ zmienna wartość czasu wykonania negatywnie wpływa na user experience (skakanie, szarpanie etc).
+                </li>
+              </ul>
+            </aside>
+
+            <script>
+              Tangle.formats.fps = function(value) {
+                return value + " FPS"
+              };
+
+              Tangle.formats.miliseconds = function(value) {
+                return value + " ms"
+              };
+
+              var tangle = new Tangle(document.querySelector("#fps-to-ms"), {
+                    initialize: function () { this.fps = 25; },
+                    update:     function () {
+                      this.ms = ((1 / this.fps) * 1000.0).toFixed(2);
+                    }
+                  });
+            </script>
+          </section>
+
+          <section class="warning">
+            <h2>Jak to osiągnąć?</h2>
+            <h2 class="fragment">Musimy wiedzieć jak najwięcej o środowisku</h2>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Jeśli chcemy osiągnąć czas ładowania bliski 1 sekundy i 60 klatek na sekundę, musimy dokładnie poznać Nasze środowisko, w którym przyjdzie nam działać.
+                </li>
               </ul>
             </aside>
           </section>
