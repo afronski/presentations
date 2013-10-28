@@ -22,6 +22,7 @@
 ### Co MUSZĘ powiedzieć?
 ### Co WARTO powiedzieć?
 
+- Przeglądarki są coraz bardziej złożone (6 mln LOC dla Firefox 26).
 - Nie nadużywać CPU, GPU, WiFi, 3G / 4G dla urządzeń mobilnych, bo to znacząco obniża czas pracy na baterii.
 
 ### Nad czym się NIE rozwodzić?
