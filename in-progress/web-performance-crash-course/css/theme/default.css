@@ -39,6 +39,56 @@ body {
   box-shadow: 2px 2px 20px #333333;
 }
 
+@-webkit-keyframes pound {
+  0%   { -webkit-transform: translateZ(0); }
+  50%  { -webkit-transform: scale(1.4) translateZ(0); }
+  100% { -webkit-transform: translateZ(0); }
+}
+
+@keyframes pound {
+  0%   { -webkit-transform: translateZ(0); }
+  50%  { -webkit-transform: scale(1.4) translateZ(0); }
+  100% { -webkit-transform: translateZ(0); }
+}
+
+.reveal .pound {
+  margin-right: 20px;
+  display: inline-block;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+
+  -webkit-animation: pound 3s infinite;
+  animation: pound 3s infinite;
+
+  -webkit-transform-origin: center;
+}
+
+.reveal .smaller {
+  font-size: 60%;
+  padding-bottom: 45px;
+}
+
+.reveal .label {
+  color: #650;
+  position: absolute;
+  font-size: 0.7em
+}
+
+.reveal .times {
+  top: 235px;
+  left: 415px;
+}
+
+.reveal .browser {
+  top: 183px;
+  left: 110px;
+}
+
+.reveal .os {
+  top: 183px;
+  right: 150px;
+}
+
 .reveal #delays {
   margin-left: 14%;
 }

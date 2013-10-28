@@ -6,3 +6,4 @@ azure_error
 *.dblite
 *.pid
 *.zip
+*.sublime-workspace
