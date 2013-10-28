@@ -34,6 +34,11 @@ body {
   list-style: none;
 }
 
+.reveal img {
+  border-radius: 5px;
+  box-shadow: 2px 2px 20px #333333;
+}
+
 .reveal #delays {
   margin-left: 14%;
 }

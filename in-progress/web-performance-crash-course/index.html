@@ -355,6 +355,11 @@
 
           <section class="section-header">
             <h1>Budowa przeglądarki</h1>
+            <aside class="notes">
+              <ul>
+                <li>Zapoznajmy się więc z budową przeglądarki.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -427,10 +432,23 @@
           </section>
 
           <section>
-            <h1>Zużycie baterii</h1>
+            <h1>Bateria</h1>
+            <img src="img/battery-died.png" alt="Battery exhausted image" />
+            <ul>
+              <li class="fragment">Nadmierne wykorzystanie WiFi / 3G / 4G</li>
+              <li class="fragment">Nadmierne wykorzystanie CPU i GPU</li>
+            </ul>
             <aside class="notes">
               <ul>
-                <li>TODO: Poza mobile i trybem uśpienia, ciągłe rysowanie oraz "zamulające skrypty wszystko niszczą".</li>
+                <li>
+                  Wydajność to nie tylko szybkość, to również efektywność - w przypadku "mobile" duże znaczenie ma właśnie czas pracy na baterii, na który również jako twórcy aplikacji webowych możemy mieć wpływ.
+                </li>
+                <li>
+                  Dla urządzeń mobilnych radio - czyli WiFi i modemy 3G / 4G - są drugim, po wyświetlaczu, elementem najbardziej zużywającym energię. Mocne wykorzystanie i "wybudzanie" z trybu uśpienia modemu dosłownie "pożerają energię". Strony powinny więc minimalizować ilość żądań, optymalizacja dla urządzeń mobilnych bardzo często polega na przesyłaniu jak największej ilości danych przy pierwszej odpowiedzi od serwera.
+                </li>
+                <li>
+                  Ciągłe odświeżanie strony, przerysowywanie, operacje mocno obciążające CPU również negatywnie wpływają na czas pracy na baterii. Jeśli chcemy zmaksymalizować ten czas, powinniśmy zdecydowanie unikać tego typu operacji.
+                </li>
               </ul>
             </aside>
           </section>

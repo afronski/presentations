@@ -21,6 +21,9 @@
 
 ### Co MUSZĘ powiedzieć?
 ### Co WARTO powiedzieć?
+
+- Nie nadużywać CPU, GPU, WiFi, 3G / 4G dla urządzeń mobilnych, bo to znacząco obniża czas pracy na baterii.
+
 ### Nad czym się NIE rozwodzić?
 
 ## Narzędzia
