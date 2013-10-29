@@ -609,7 +609,7 @@
           </section>
 
           <section>
-            <h1>Reflow / Layout</h1>
+            <h2>Reflow / Layout</h2>
             <aside class="notes">
               <ul>
                 <li>TODO: DomTree.</li>
@@ -629,7 +629,7 @@
           </section>
 
           <section>
-            <h1>Repaint</h1>
+            <h2>Repaint</h2>
 
             <aside class="notes">
               <ul>
@@ -641,11 +641,21 @@
           </section>
 
           <section>
-            <h1>requestAnimationFrame()</h1>
+            <div class="simulate-header">requestAnimationFrame()</div>
+
+            <img src="img/request-animation-frame.png" alt="requestAnimationFrame importance visualization TODO" />
 
             <aside class="notes">
               <ul>
-                <li>TODO: Rysunek + opis.</li>
+                <li>
+                  W celu zachowania jak największej płynności przy rysowaniu, musimy się upewnić, że jesteśmy zsynchronizowani z VSYNC (vertical sync).
+                </li>
+                <li>
+                  Jeśli Nasz budżet czasowy dla jednej ramki nie zostanie przekroczony (16.67 ms), wykorzystanie tej funkcji zagwarantuje nam, że rysowania nowej klatki rozpocznie się natychmiast po synchronizacji pionowej.
+                </li>
+                <li>
+                  Jeśli użyjemy setTimeout/setInterval nie mamy takiej gwarancji, ponieważ nie są one powiązane z VSYNC. Jeśli wykorzystamy jedną z nich do rysowania kolejnych klatek, z bardzo dużym prawdopodobieństwem (zwiększającym się wraz ze wzrostem czasu wykonania) zaczniemy "gubić" klatki, co poskutkuje nieprzyjemnym efektem nienaturalnej animacji czy tzw. "darcia" animacji.
+                </li>
               </ul>
             </aside>
           </section>

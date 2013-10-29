@@ -40,6 +40,8 @@
 - Opisać różnicę między regular/async/defer.
 - Powiedzieć o ściąganiu skryptów na żądanie (on demand).
 
+- Powiedzieć krótko o ważności requestAnimationFrame().
+
 - Wiele rzeczy już jest oznaczonych do akceleracji sprzętowej przez przeglądarkę automatycznie.
   - CSS3 transforms/animations, video, canvas ...
 - Nie wrzucajmy wszystkiego na GPU!

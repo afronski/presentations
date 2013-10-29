@@ -89,6 +89,12 @@ body {
   right: 150px;
 }
 
+.reveal .simulate-header {
+  text-align: center;
+  font-family: monospace;
+  font-weight: normal;
+}
+
 .reveal .orange-color {
   color: #FA5F0C;
 }
