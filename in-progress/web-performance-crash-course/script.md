@@ -22,6 +22,9 @@
 
 ### Co MUSZĘ powiedzieć?
 
+- Korzystaj z HTTP Cache.
+- Limit 6 równolegle otwartych połączeń do jednej subdomeny (sharding obchodzi ten problem).
+
 - Opisać proces przetwarzania strumienia bajtów na drzewo DOM (parsowanie).
 - Nigdy nie używać document.write!
 
@@ -42,6 +45,8 @@
 
 - Przeglądarki są coraz bardziej złożone (6 mln LOC dla Firefox 26).
 
+- Można pomóc przeglądarce przygotować się na kolejne za pomocą DNS prefetching i znaczników link z odpowiednim atrybutem rel.
+
 - HTML 5 wreszcie posiada zdefiniowany w specyfikacji sposób parsowania dokumentu, poprzednie wersje takiego algorytmu nie
   definiują co doprowadziło do dużej niespójności między poszczególnymi przeglądarkami.
 
@@ -51,6 +56,8 @@
 - Nie nadużywać CPU, GPU, WiFi, 3G / 4G dla urządzeń mobilnych, bo to znacząco obniża czas pracy na baterii.
 
 ### Nad czym się NIE rozwodzić?
+
+- Raczej mów krótko i zwięźle o optymalizacji.
 
 - Jakie biblioteki lub jak rozwiązać dociąganie skryptów on demand.
 
@@ -62,8 +69,15 @@
 
 - Navigation Timing API - ważne z punktu widzenia metryk i informacji o połączeniu jakie posiada klient.
 
+- Grunt to dobrze poznać narzędzia deweloperskie w ulubionej przeglądarce.
+
 ### Co WARTO powiedzieć?
+
+- Geneze powstania "responsiveness timeline" w IE 11.
+
 ### Nad czym się NIE rozwodzić?
+
+- Nie mówić o Operze, Safari i za dużo o IE 9 / 10.
 
 ## Benchmarks
 

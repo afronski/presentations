@@ -443,9 +443,33 @@
           <section class="good">
             <h1>Ilość żądań</h1>
             <h2>Optymalizacja</h2>
+
+            <ul>
+              <li class="fragment">Dla dużej ilości obrazków używaj techniki <em>sprites </em></li>
+              <li class="fragment">Unikaj przekierowań i powolnych serwerów <em>DNS </em></li>
+              <li class="fragment">Korzystaj z serwerów <em>CDN </em></li>
+              <li class="fragment">Rozprosz zasoby i zastosuj <em>sharding </em></li>
+              <li class="fragment">Hostuj statyczne zasoby na osobnym serwerze</li>
+              <li class="fragment">Hostuj statyczne zasoby bez <em>SSL </em></li>
+              <li class="fragment">Usuwanie ciasteczek i zbędnych nagłówków</li>
+              <li class="fragment"><em>HTTP </em> Cache - <em>ETags </em> oraz <em>If-Modified-Since</em></li>
+              <li class="fragment">Zmniejsz liczbę osobnych plików <em>*.js </em> oraz <em>*.css </em></li>
+            </ul>
+
             <aside class="notes">
               <ul>
-                <li>TODO: Optymalizacja obrazków, CDN, smaller RTT, sharding, fewer HTTP requests.</li>
+                <li>
+                  Korzystaj z techniki zwanej sprajtami - polega ona na scaleniu wielu obrazów do jednego a następnie wycinanie za pomocą CSS fragmentów z jednego wielkiego obrazu. Dzięki temu zmniejszamy liczbę żądań.
+                </li>
+                <li>
+                  Korzystaj gdzie można z serwerów CDN, uważaj na wolne serwery DNS, unikaj przekierowań.
+                </li>
+                <li>
+                  Stosuj "sharding", czyli rozproszenie zasobów - dzięki serwowaniu różnych zasobów z różnych domen, możliwe będzie wykorzystanie większej liczby połączeń (średnio 6 na domenę).
+                </li>
+                <li>
+                  Hostuj statyczne zasoby (obrazy, arkusze stylów, skrypty, pliki) z osobnego serwera, jeśli nie są wrażliwe z punktu widzenia bezpieczeństwa bez SSL, bez zbędnych ciasteczek, nagłówków, z odpowiednimi nagłówkami ułatwiającymi cacheowanie, oraz połącz skrypty i arkusze stylów w jeden plik.
+                </li>
               </ul>
             </aside>
           </section>
@@ -791,9 +815,13 @@
 
           <section>
             <h1>Inne</h1>
+            <h4>Najważniejsze to dobrze poznać własne narzędzia</h4>
+
             <aside class="notes">
               <ul>
-                <li>TODO: Opisówka.</li>
+                <li>
+                  Obecnie narzędzia deweloperskie w Safari i Operze nie różnią się znacznie od zaprezentowanych narzędzi z Google Chrome (to przecież nadal silniki Webkit i Blink).
+                </li>
                 <li>
                   Jedna z wersji Safari posiada narzędzie do pokazywania warstw i kompozycji umieszczonych w pamięci GPU. Nie wiadomo dlaczego funkcjonalność została wycofana w następnej wersji.
                 </li>
@@ -811,7 +839,7 @@
                   Bardzo pożyteczne API, umożliwiające zebranie statystyk po stronie klienta w celu określenia parametrów jego połączenia.
                 </li>
                 <li>
-                  Trzy kolory na obrazku reprezentują podział na część sieciową (niebieski), czas spędzony na serwerze (czerwony), oraz po stronie przeglądarki (zielony).
+                  Trzy kolory na obrazku reprezentują podział na część sieciową (niebieski), czas spędzony na serwerze (czerwony), oraz po stronie przeglądarki (zielony). Pomarańczowym kolorem wyróżniono w którym momencie wywoływane są zdarzenia związane z ładowaniem strony.
                 </li>
               </ul>
             </aside>
@@ -823,9 +851,7 @@
 
             <aside class="notes">
               <ul>
-                <li>
-                  Widzimy na slajdzie przykład zastosowania omawianego API.
-                </li>
+                <li>Widzimy na slajdzie przykład zastosowania omawianego API.</li>
               </ul>
             </aside>
           </section>
@@ -1074,7 +1100,7 @@ function benchmark() {
 
         <section class="section-header">
           <h2>Dziękuję za uwagę!</h2>
-          <h4>Odniesienia dla <em>ciekawskich </em>:</h4>
+          <h4>Odniesienia i bibliografia:</h4>
           <ul class="links">
             <li>
               <a href="https://docs.google.com/presentation/d/1ZRIQbUKw9Tf077odCh66OrrwRIVNLvI_nhLm2Gi__F0/pub#slide=id.p">
@@ -1104,6 +1130,12 @@ function benchmark() {
             </li>
             <li>
               <a href="TODO">Visualizations of LOC</a>
+            </li>
+            <li>
+              <a href="TODO">CodeSchool - Google Chrome Developer Tools</a>
+            </li>
+            <li>
+              <a href="TODO">Developer Tools Tips and Tricks</a>
             </li>
           </ul>
         </section>
