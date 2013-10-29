@@ -1,5 +1,6 @@
 # TODO
 
+## Gifs and images from internet
 ## Close note on github
 ## Add task to the calendar about creating common-transaction-processing module
 

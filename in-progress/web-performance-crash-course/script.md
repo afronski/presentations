@@ -89,9 +89,19 @@
 
 ### Co MUSZĘ powiedzieć?
 
-- Navigation Timing API - ważne z punktu widzenia metryk i informacji o połączeniu jakie posiada klient.
+- Krótko o IE 9, 10, 11.
 
 - Grunt to dobrze poznać narzędzia deweloperskie w ulubionej przeglądarce.
+
+- Navigation Timing API - ważne z punktu widzenia metryk i informacji o połączeniu jakie posiada klient.
+
+- Krótko o ySlow, PageSpeed i Google Speed Tracer.
+
+- Opowiedz do czego mogą służyć Google Web Performance Toolkit oraz chrome://tracing.
+
+- Zachęcić do Windows Performance Toolkit.
+
+- Zachęcić do zbadania tematu na temat V8 profiler, ale nie rozwodzić się.
 
 ### Co WARTO powiedzieć?
 
@@ -99,7 +109,7 @@
 
 ### Nad czym się NIE rozwodzić?
 
-- Nie mówić o Operze, Safari i za dużo o IE 9 / 10.
+- Nie mówić o Operze, Safari i nie za dużo o IE 9 / 10.
 
 ## Benchmarks
 
