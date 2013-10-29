@@ -610,10 +610,24 @@
 
           <section>
             <h2>Reflow / Layout</h2>
+            <h3>... czyli las w przeglądarce ;)</h3>
+
+            <img src="img/detailed-process-for-layout.png" alt="Visualization of layout in the browser" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: DomTree.</li>
-                <li>TODO: Definicja.</li>
+                <li>
+                  Layout to proces przetwarzania drzewa DOM w struktury przechowujące dane na temat faktycznego ułożenia na stronie, jednak nie zawierające jeszcze informacji na temat w jaki sposób należy je rysować.
+                </li>
+                <li>
+                  Widzimy na diagramie, że tzw. drzewo renderowania składa się w wielu niezależnych drzew przechowujących różnorakie informacje. Zostało ono stworzone po wczytaniu strony i przekształceniach wykonanych za pomocą CSS oraz JavaScript.
+                </li>
+                <li>
+                  Modyfikacja niektórych właściwości drzewa DOM z poziomu skryptów uruchamia ten proces ponownie, wraz z następstwami.
+                </li>
+                <li>
+                  Reflow to terminologia Mozilli, Layout - to termin używany w WebKit / Blink.
+                </li>
               </ul>
             </aside>
           </section>
@@ -630,12 +644,19 @@
 
           <section>
             <h2>Repaint</h2>
+            <h3>... czyli przenosimy las na ekran ;)</h3>
+
+            <img src="img/detailed-process-for-repaint.png" alt="Visualization of forest in the browser" />
 
             <aside class="notes">
               <ul>
-                <li>TODO: RenderTree.</li>
-                <li>TODO: Definicja.</li>
-                <li>TODO: Kolejne drzewo? Las w przeglądarce.</li>
+                <li>Na niebiesko został oznaczony fragment, który odpowiada za repaint.</li>
+                <li>
+                  Jest to proces odpowiadający za przeniesienie stworzonego layoutu do bitmap, pamięci GPU i rysowanie, jak również późniejsze odrysowanie fragmentów, które uległy zmianie.
+                </li>
+                <li>
+                  Modyfikacja niektórych właściwości drzewa DOM z poziomu skryptów uruchamia ten proces ponownie.
+                </li>
               </ul>
             </aside>
           </section>

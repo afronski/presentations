@@ -1,5 +1,8 @@
 # TODO
 
+## Close note on github
+## Add task to the calendar about creating common-transaction-processing module
+
 ## JavaScript
 
 - Slow JavaScript on Google Chrome (timeline, profiler, flamecharts).
