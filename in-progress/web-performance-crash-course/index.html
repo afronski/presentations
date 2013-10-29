@@ -24,7 +24,7 @@
     <script src="js/raphael.js"></script>
     <script src="js/raphael.group.js"></script>
     <script src="js/raphael.tachometer.min.js"></script>
-    <script src="js/analytics.js"></script>
+    <!-- <script src="js/analytics.js"></script> -->
     <script src="js/popup.js"></script>
     <script src="js/Tangle.js"></script>
     <script src="js/mootools.js"></script>
@@ -48,6 +48,10 @@
 
       function createRightArrowPath(x, y) {
         return "M" + x + "," + y + "m-10-10l40,0 0-6 20,16 -20,16 0-6 -40,0 -0-16z"
+      }
+
+      function createGearboxPath() {
+        return "M295.186,122.908c12.434,18.149,32.781,18.149,45.215,0l12.152-17.736c12.434-18.149,22.109-15.005,21.5,6.986l-0.596,21.49c-0.609,21.992,15.852,33.952,36.579,26.578l20.257-7.207c20.728-7.375,26.707,0.856,13.288,18.29l-13.113,17.037c-13.419,17.434-7.132,36.784,13.971,43.001l20.624,6.076c21.103,6.217,21.103,16.391,0,22.608l-20.624,6.076c-21.103,6.217-27.39,25.567-13.971,43.001l13.113,17.037c13.419,17.434,7.439,25.664-13.287,18.289l-20.259-7.207c-20.727-7.375-37.188,4.585-36.578,26.576l0.596,21.492c0.609,21.991-9.066,25.135-21.5,6.986L340.4,374.543c-12.434-18.148-32.781-18.148-45.215,0.001l-12.152,17.736c-12.434,18.149-22.109,15.006-21.5-6.985l0.595-21.492c0.609-21.991-15.851-33.951-36.578-26.576l-20.257,7.207c-20.727,7.375-26.707-0.855-13.288-18.29l13.112-17.035c13.419-17.435,7.132-36.785-13.972-43.002l-20.623-6.076c-21.104-6.217-21.104-16.391,0-22.608l20.623-6.076c21.104-6.217,27.391-25.568,13.972-43.002l-13.112-17.036c-13.419-17.434-7.439-25.664,13.288-18.29l20.256,7.207c20.728,7.374,37.188-4.585,36.579-26.577l-0.595-21.49c-0.609-21.992,9.066-25.136,21.5-6.986L295.186,122.908z";
       }
 
       function createArcPath(cx, cy, r, startAngle, endAngle) {
@@ -129,6 +133,11 @@
       Raphael.fn.rightArrow = function (x, y) {
           return this.path(createRightArrowPath(x, y))
                      .attr({ fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.5 });
+      };
+
+      Raphael.fn.gearBox = function() {
+          return this.path(createGearboxPath())
+                     .attr({ stroke: "#666", opacity: 0.9, "stroke-width": 10 });
       };
 
       Raphael.fn.thinArrow = function(x1, y1, x2, y2, size) {
@@ -313,6 +322,7 @@
             <aside class="notes">
               <ul>
                 <li>Aby wszystko działało płynnie (60 FPS) kod obsługi rysowania powinno "zmieścić" się w 16.67 ms.</li>
+                <li>Omawiana wartość, nazywana jest często budżetem.</li>
                 <li>
                   Co ważne - jeśli nie zmieścimy się w podanej wartości powinniśmy utrzymywać stałą długość trwania klatki, ponieważ zmienna wartość czasu wykonania negatywnie wpływa na user experience (skakanie, szarpanie etc).
                 </li>
@@ -389,16 +399,19 @@
             </aside>
           </section>
 
-          <section class="good">
-            <h1>Proces</h1>
+          <section>
+            <img src="img/browser-flow.png" alt="Browser flow" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Big picture.</li>
+                <li>Widzimy tutaj spojrzenie z lotu ptaka na przepływ danych wewnątrz przeglądarki.</li>
+                <li>Kierunek i zależności został pokazany za pomocą strzałek.</li>
+                <li>Ogólnie możemy podzielić całość na 3 sekcje: sieć, parsowanie, rysowanie.</li>
               </ul>
             </aside>
           </section>
 
-          <section>
+          <section class="section-header">
             <h1>Sieć</h1>
             <aside class="notes">
               <ul>
@@ -418,7 +431,36 @@
             </aside>
           </section>
 
-          <section>
+          <section class="bad">
+            <h1>Ilość żądań</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Przykład za dużej liczby żądań.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="good">
+            <h1>Ilość żądań</h1>
+            <h2>Optymalizacja</h2>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Optymalizacja obrazków, CDN, smaller RTT, sharding, fewer HTTP requests.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="good">
+            <h1>Ścieżka krytyczna</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: Jeszcze lepiej niż optymalizacja.</li>
+                <li>TODO: W przypadku SPA idealne rozwiązanie, bo to pierwszy jedyny page load.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="section-header">
             <h1>Parsowanie</h1>
             <aside class="notes">
               <ul>
@@ -429,11 +471,103 @@
           </section>
 
           <section>
-            <h1>Reflow</h1>
+            <h1>Reflow / Layout</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: DomTree.</li>
+                <li>TODO: Definicja.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="section-header">
+            <h1>Rysowanie</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Teraz dowiemy się jak przeglądarka układa piksele na ekranie.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
-            <h1>Layout</h1>
+            <h1>Repaint</h1>
+            <aside class="notes">
+              <ul>
+                <li>TODO: RenderTree.</li>
+                <li>TODO: Definicja.</li>
+                <li>TODO: Kolejne drzewo? Las w przeglądarce.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>A co z GPU?</h1>
+            <img src="img/composition.png" alt="Composition sample" />
+            <div class="fragment">Możemy wymuszać akcelerację sprzętową dla poszczególnych elementów</div>
+
+            <aside class="notes">
+              <ul>
+                <li>Obecne komputery czy urządzenia mobilne posiadają bardzo wydajne GPU.</li>
+                <li>
+                  Kluczem do tego jest tzw. backing store i kompozycja warstw.
+                </li>
+                <li>
+                  Przeglądarki potrafią korzystać samodzielnie z nich, jednak przy odpowiednich wskazówkach od strony twórcy aplikacji, możemy jeszcze więcej "wycisnąć" z GPU. Przykładem może być optymalizacja: CSS3 animations, CSS3 transforms, video itp. za pomocą GPU, którą praktycznie każde współczesne przeglądarki posiadają.
+                </li>
+                <li>
+                  Najpierw element jest renderowany do tzw. bufora (który widzimy jako jedną z warstw na obrazku), następnie wysyłany do GPU i na nim odbywają się np. przekształcenia i transformacje.
+                </li>
+                <li>
+                  Możemy dawać również wskazówki przeglądarce, wymuszając aby poszczególne elementy zostały wysłane do GPU.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="bad">
+            <h2>Wszystko na <em>GPU </em>!</h2>
+            <img src="img/composite-all-the-things.jpg" alt="Composite all the things meme ;)" />
+
+            <aside class="notes">
+              <ul>
+                <li>To co, wrzucamy wszystko na GPU ? ;)</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="good">
+            <h2>Na pewno nie wszystko</h2>
+            <ul>
+              <li class="fragment">Pamięć na GPU jest skończona</li>
+              <li class="fragment">Koszt przesyłu danych pomiędzy RAM a VRAM</li>
+              <li class="fragment">Kluczem jest tutaj znajomość aplikacji</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Brak pamięci jest szczególnie dotkliwy na urządzeniach mobilnych, gdzie w przypadku wypełnienia pamięci VRAM w najlepszym przypadku aplikacja bardzo mocno się spowolni (przesyłanie stron z RAM do VRAM), w najgorszym wysypie całą przeglądarkę.
+                </li>
+                <li>
+                  Nawet na współczesnych komputerach kosztu przesyłu danych szyną pomiędzy RAM a Video RAM jest duży. Jeśli spróbujemy przepychać gigabajty danych (np. wprowadzając warstwy na wszystkie obrazki, animowane elementy etc.).
+                </li>
+                <li>
+                  To my jako twórcy aplikacji wiemy gdzie ona tak naprawdę posiada najcieższe elementy, i możemy w ten sposób
+                  wskazać przeglądarce co powinna zoptymalizować, przerzucając rysowanie tej warstwy właśnie na GPU. Bardzo często elementy takie jak CSS3 animations/transforms czy np. tag video już są akcelerowane sprzętowo.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="section-header">
+            <h2>Ale to jeszcze nie koniec...</h2>
+
+            <aside class="notes">
+              <ul>
+                <li>Zręcznie przemilczeliśmy kilka aspektów ;).</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -459,46 +593,62 @@
           </section>
 
           <section class="warning">
-            <h1>GC</h1>
+            <h2>Garbage Collector</h2>
+            <ul class="list-style-none">
+              <li>Scavenge</li>
+              <li>Mark-Sweep</li>
+            </ul>
+
+            <div id="scavenge"></div>
+            <div id="mark-sweep"></div>
+
             <aside class="notes">
               <ul>
-                <li>TODO: Opisać główny problem z CG (mark-and-sweep, stop the world, scavenge).</li>
+                <li>Temat jest tak obszerny, że można stworzyć drugie szkolenie skupione tylko na tym.</li>
+                <li>Główny problem z GC jest taki, że pauzy ucinają nam czas z naszego "budżetu" na daną ramkę.</li>
+                <li>
+                  Większość GC w przeglądarkach zaimplementowana jest w podobny sposób, więc aby dobrze opisać problem posłużymy się terminologią rodem z V8 (Google Chrome).
+                </li>
+                <li>
+                  GC grupuje zaalokowane elementy w tzw. generacje, biorąc pod uwagę jak dawno zostały zaalokowane i jak często się do nich odwołuje.
+                </li>
+                <li>
+                  Pierwszy typ - "scavenge" służy do usuwania młodej generacji, która już nie jest wykorzystana. Ten typ jest bardzo szybki, lub nawet bardzo często implementowany jako działający w tle, więc nie ucina czasu przeznaczonego na Naszą aktualną ramkę.
+                </li>
+                <li>
+                  Drugi typ to bardzo kosztowna operacja, ponieważ ona zatrzymuje wykonanie w bliżej nieokreślony momencie, na który nie mamy żadnego wpływu. Czas przerwy jest zależny od rozmiaru sterty i stopnia skomplikowania grafu powiązań.
+                </li>
+                <li>
+                  Jeśli mamy budżet ramki 16.67 ms a faza 'mark-sweep' trwa 60 ms mamy spory problem.
+                </li>
+                <li>
+                  Jedyny wpływ jaki mamy na GC to zmiana sposobu tworzenia/'usuwania' nowych elementów w skryptach.
+                </li>
               </ul>
             </aside>
-          </section>
 
-          <section class="good">
-            <h1>A co z GPU?</h1>
-            <aside class="notes">
-              <ul>
-                <li>TODO: Composite all the things!</li>
-                <li>TODO: No. VRAM is limited :(.</li>
-              </ul>
-            </aside>
-          </section>
+            <script>
+              (function() {
+                var scavengePaper = Raphael("scavenge", 640, 480),
+                    markSweepPaper = Raphael("mark-sweep", 640, 480),
 
-          <section class="bad">
-            <h1>Ilość żądań</h1>
-          </section>
+                    scavenge = scavengePaper.gearBox(),
+                    markSweep = markSweepPaper.gearBox(),
 
-          <section class="good">
-            <h1>Ilość żądań</h1>
-            <h2>Optymalizacja</h2>
-            <aside class="notes">
-              <ul>
-                <li>TODO: Optymalizacja obrazków, CDN, smaller RTT, sharding, fewer HTTP requests.</li>
-              </ul>
-            </aside>
-          </section>
+                    scavengeCounter = 0,
+                    markSweepCounter = 0;
 
-          <section class="good">
-            <h1>Ścieżka krytyczna</h1>
-            <aside class="notes">
-              <ul>
-                <li>TODO: Jeszcze lepiej niż optymalizacja.</li>
-                <li>TODO: W przypadku SPA idealne rozwiązanie, bo to pierwszy jedyny page load.</li>
-              </ul>
-            </aside>
+                setInterval(function() {
+                  scavenge.animate({ transform: "r" + scavengeCounter }, 500);
+                  scavengeCounter += 50;
+                }, 501);
+
+                setInterval(function() {
+                  markSweep.animate({ transform: "r" + markSweepCounter }, 1000);
+                  markSweepCounter += 15;
+                }, 1001);
+              } ());
+            </script>
           </section>
 
         </section>
