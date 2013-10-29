@@ -851,9 +851,28 @@
             <h2>Google Chrome</h2>
             <h3>Zdarzenia</h3>
 
+            <img src="img/google-chrome-timeline.gif" alt="Google Chrome timeline presentation TODO" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Prezentacja timeline, filtrowanie, ostrzeżenia, wyłaśnienie wyglądu.</li>
+                <li>
+                  Timeline jest centralnym punktem, który pokazuje co tak naprawdę zachodzi podczas ładowania i interakcji ze stroną.
+                </li>
+                <li>
+                  Możemy śledzić zdarzenia w widoku 'Events' lub ramki w widoku 'Frames'. Ten drugi widok pokazuje jak często nasze ramki przekraczają określony budżet czasowy.
+                </li>
+                <li>
+                  W widoku szczegółowym dla 'Events' lub 'Frames' zobaczymy listę akcji wraz z wykresem czasowym i adnotacjami informującymi Nas (informacja w tooltipie) o szczegółach wykonania operacji. Niektóre z akcji posiadają źółty trójkąt ostrzegawczy, który informuje Nas, że to zdarzenie trwa tak długo z określonego powodu.
+                </li>
+                <li>
+                  Pożyteczny skrót klawiszowy - CTRL - E, uruchamiający nową sesję nagrywania.
+                </li>
+                <li>
+                  Bardzo pożyteczny jest widok 'Memory', który umożliwia śledzenie liczników dla węzłów drzewa DOM, całych dokumentów (przydatne gdy operujemy na iframeach lub Web Components) oraz event listenerów. Dzięki wykresom bardzo łatwo zauważyć i powiązać ze sobą przyczynę i skutek.
+                </li>
+                <li>
+                  Ważną funkcją dostępną na timeline jest możliwość wymuszenia odśmiecania (przycisk z koszem na śmieci).
+                </li>
               </ul>
             </aside>
           </section>
@@ -862,9 +881,19 @@
             <h2>Google Chrome</h2>
             <h3>Profilowanie</h3>
 
+            <img src="img/google-chrome-cpu.gif" alt="Google Chrome profiling presentation TODO" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Flamecharts, CPU</li>
+                <li>
+                  Google Chrome umożliwia profilowanie wykonania kodu JavaScript, wraz z późniejszym raportowaniem w postaci drzewa lub tzw. 'flamegraphu'.
+                </li>
+                <li>
+                  Wysokość to stopień zagłębienia, natomiast długość to czas wykonania poszczególnych funkcji.
+                </li>
+                <li>
+                  Na koniec chciałbym wspomnieć o 'Audits', które są wbudowanym w narzędzia deweloperskie predefiniowanym audytem, dzięki któremu bardzo często jesteśmy w stanie odkryć problemy od razu po spojrzeniu w wyniki audytu.
+                </li>
               </ul>
             </aside>
           </section>
@@ -873,9 +902,16 @@
             <h2>Google Chrome</h2>
             <h3>Pamięć</h3>
 
+            <img src="img/google-chrome-memory.gif" alt="Google Chrome memory presentation TODO" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Spanshots, differences, comparison etc.</li>
+                <li>
+                  Zakłada 'Profiles' umożliwia również wykonanie aktualnego zrzutu pamięci. Po wykonaniu kilku zrzutów mamy możliwość wyświetlenie różnic pomiędzy poszczególnymi wynikami.
+                </li>
+                <li>
+                  Niedawno pojawił się również tryb automatyczny, który sam wykonuje zrzuty co określony czas i umożliwia w graficzny sposób zawężenie i filtrowanie rezultatów.
+                </li>
               </ul>
             </aside>
           </section>
@@ -884,9 +920,22 @@
             <h2>Google Chrome</h2>
             <h3>Sieć</h3>
 
+            <img src="img/google-chrome-network.gif" alt="Google Chrome network tab presentation TODO" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Wyjaśnienie, przydatne tricki, kolory kresek.</li>
+                <li>
+                  Prezentowany widok służy do śledzenia i filtrowania żądań podsystemu sieciowego. Możemy podglądać nagłówki, treść, inne protokoły (nie tylko HTTP a np. Web Sockets) oraz metryki dot. czasu przetwarzania danego żądania.
+                </li>
+                <li>
+                  Możemy zmodyfikować wyświetlane kolumny, pokazać widok zwarty lub szczegółowy oraz filtrować.
+                </li>
+                <li>
+                  Jeśli klikniemy prawym przyciskiem możemy na konkretnym żądaniu znajdziemy interesujące menu, które pozwoli nam skopiować dane HAR lub komendę curl, która odpowiada danemu żądaniu.
+                </li>
+                <li>
+                  Niebieska kreska to zdarzenie DOMContentLoaded, czerwona to window.load. Fioletowa oznacza, że oba zdarzenia wystąpiły równocześnie.
+                </li>
               </ul>
             </aside>
           </section>
@@ -895,9 +944,16 @@
             <h2>Google Chrome</h2>
             <h3>Konsola</h3>
 
+            <img src="img/google-chrome-console-presentation.gif" alt="Google Chrome console presentation TODO" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Wywoływanie profilera, formatowanie, tabelki, snapshoty, skróty.</li>
+                <li>
+                  Warto zapoznać się szczegółowo z konsolą Google Chrome / Chromium. Możemy z jej poziomu wywołać wiele rzeczy tj. zrzuty pamięci, profiler. Możemy formatować wyjście, wyświetlać tabelki, zagnieżdżać logi.
+                </li>
+                <li>
+                  Warto zapoznać się ze skrótami klawiszowymi np. CTRL - L to czyszczenie konsoli.
+                </li>
               </ul>
             </aside>
           </section>
@@ -906,9 +962,16 @@
             <h2>Google Chrome</h2>
             <h3>Renderowanie</h3>
 
+            <img src="img/google-chrome-layers.png" alt="Google Chrome rendering tools" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: FPS, Continuous repaint mode, Layers etc.
+                <li>
+                  Widzimy po prawej stronie histogram z trybu ciągłego przerysowania, widzimy zaznaczone kolorem niebieskim kratownice warstw przeniesionych do pamięci GPU, na czerwono zaznaczone są prostokąty które są odrysowywane etc.
+                </li>
+                <li>
+                  To wszystko jest równiez dostępne dla przeglądarki pod Androidem.
+                </li>
               </ul>
             </aside>
           </section>
