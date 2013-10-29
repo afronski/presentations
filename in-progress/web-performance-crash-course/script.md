@@ -58,7 +58,7 @@
 
 ### Co WARTO powiedzieć?
 
-- Przeglądarki są coraz bardziej złożone (6 mln LOC dla Firefox 26).
+- Przeglądarki są coraz bardziej złożone (10 mln LOC dla obecnej wersji Firefox).
 
 - TCP three way handshake i wpływ opóźnienia na ten parametr oraz RTT (round trip time).
 
@@ -88,6 +88,8 @@
 ## Narzędzia
 
 ### Co MUSZĘ powiedzieć?
+
+- Dokładnie opowiedzieć o funkcjonalnościach zawartych w Google Chrome Developer Tools.
 
 - Krótko o Firefox Nightly i zachęcić do śledzenia rozwoju tej przeglądarki.
 

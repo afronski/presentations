@@ -14,7 +14,7 @@
 - Sprawdzamy co spowalnia na Firefox za pomocą profilera.
 - Poprawiamy i pokazujemy różnicę.
 
-### WPT
+### WPT i IE 11
 
 - Analizujemy przykład dogłębniej na IE 11, jednocześnie nagrywając dane do WPT.
 - Prezentujemy dane i przeglądamy, skupiając się tylko na znalezieniu przyczyny.

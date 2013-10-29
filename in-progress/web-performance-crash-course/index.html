@@ -24,7 +24,7 @@
     <script src="js/raphael.js"></script>
     <script src="js/raphael.group.js"></script>
     <script src="js/raphael.tachometer.min.js"></script>
-    <!-- <script src="js/analytics.js"></script> -->
+
     <script src="js/popup.js"></script>
     <script src="js/Tangle.js"></script>
     <script src="js/mootools.js"></script>
@@ -215,10 +215,10 @@
           <aside class="notes">
             <ul>
               <li>
-                Witam Was na szkoleniu dotyczącym profilowania i analizy wydajności aplikacji webowych. Przez 1.5 godziny będę chciał zaprezentować wam teoretyczne podstawy badania wydajności aplikacji webowych, oraz będę chciał Wam przybliżyć najpopularniejsze narzędzia i techniki oraz zaprezentować je w akcji, poprawiając przykładowe problemy.
+                Witam Was na szkoleniu dotyczącym profilowania i analizy wydajności aplikacji webowych. Przez 1.5 godziny będę chciał zaprezentować wam teoretyczne podstawy badania wydajności aplikacji webowych oraz spróbuję przybliżyć najpopularniejsze narzędzia i techniki oraz pokażę jak zaprezentować je w akcji, operując na przygotowanych wcześniej przykładach.
               </li>
               <li>
-                Prezentacja będzie dostępna po szkoleniu.
+                Prezentacja oraz dema będzie dostępna po szkoleniu na moim repozytorium na githubie.
               </li>
             </ul>
           </aside>
@@ -299,7 +299,7 @@
             <h2>Wprowadzenie</h2>
             <aside class="notes">
               <ul>
-                <li>Na początku chciałbym odpowiedzieć na jedno bardzo ważne pytanie.</li>
+                <li>Zanim zaczniemy, chciałbym odpowiedzieć na kilka bardzo ważnych pytań.</li>
               </ul>
             </aside>
           </section>
@@ -325,8 +325,7 @@
                 <li>Wyraźnie widać, że każde opóźnienie większe od 1s jest opóźnieniem niedopuszczalnym.</li>
                 <li>Użytkownik traci fokus === My tracimy klienta.</li>
                 <li>Idealny czas ładowania strony oscyluje w okolicach 1 sekundy.</li>
-                <li>Interakcja z UI powinna być poniżej &lt; 100 ms.</li>
-                <li>Wszelkie przerwy przeznaczone na wykonywanie operacji powinny być mniejsze od 75 ms.</li>
+                <li>Interakcja z UI powinna się odbywać z opóźnieniem poniżej 100 ms.</li>
               </ul>
             </aside>
           </section>
@@ -339,10 +338,12 @@
             </h2>
             <aside class="notes">
               <ul>
-                <li>Aby wszystko działało płynnie (60 FPS) kod obsługi rysowania powinno "zmieścić" się w 16.67 ms.</li>
-                <li>Omawiana wartość, nazywana jest często budżetem.</li>
                 <li>
-                  Co ważne - jeśli nie zmieścimy się w podanej wartości powinniśmy utrzymywać stałą długość trwania klatki, ponieważ zmienna wartość czasu wykonania negatywnie wpływa na user experience (skakanie, szarpanie etc).
+                  Aby wszystko działało płynnie (60 FPS) wykonanie skryptu, rysowanie i obsługa wejścia musi "zmieścić" się w 16.67 ms.
+                </li>
+                <li>Omawiana wartość, nazywana jest często budżetem czasowym ramki.</li>
+                <li>
+                  Co ważne - jeśli nie zmieścimy się w podanej wartości powinniśmy utrzymywać stałą długość trwania klatki, ponieważ zmienna wartość czasu wykonania negatywnie wpływa na user experience (skakanie, szarpanie etc. - badania przeprowadzone przez Facebooka).
                 </li>
               </ul>
             </aside>
@@ -402,7 +403,7 @@
             <aside class="notes">
               <ul>
                 <li>Widzimy porównanie wielkości repozytorów pomiędzy Firefox 26 i Linux Kernel w wersji 3.3.</li>
-                <li>Przeglądarka zawiera tylko 1.5 raza mniej kodu niż współczesny system operacyjny.</li>
+                <li>Przeglądarka zawiera tylko 1.5 razy mniej kodu niż współczesny system operacyjny.</li>
               </ul>
             </aside>
           </section>
@@ -416,10 +417,12 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Przeglądarka przełącza się pomiędzy rysowaniem, obsługą wejścia (np. sieci czy zdarzeń z urządzeń wejścia) i wykonaniem kodu JavaScript. Powiedzieliśmy, że aby zapewnić płynność na poziomie 60 FPS, ten "Context Switching" na czas wykonania kodu powinien być krótszy niż 16.67 ms.
+                  W uproszczeniu możemy powiedzieć, że od strony programity przeglądarka "przełącza" się pomiędzy rysowaniem, obsługą wejścia (np. sieci czy klawiatury) i wykonaniem kodu JavaScript. Powiedzieliśmy, że aby zapewnić płynność na poziomie 60 FPS, wszystkie operacje sumarycznie nie mogą przekroczyć 16.67 ms.
                 </li>
                 <li>Wiele rzeczy pod spodem dzieje się równolegle o czym dokładnie opowiemy sobie za chwilę.</li>
-                <li>Na żółto został zaznaczony bardzo ważny moment - synchronizacji rysowania z GPU.</li>
+                <li>
+                  Na żółto został zaznaczony bardzo ważny moment synchronizacji rysowania aktualnej klatki z tzw. sygnałem synchronizacji pionowej.
+                </li>
               </ul>
             </aside>
 
@@ -461,19 +464,19 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Poza ograniczeniami związanymi bezpośrednio z protokołem, najpoważniejszym Naszym przeciwnikiem jest opóźnienie. Zmniejszenie tego parametru jest bardzo kosztowne, dużo mniej niż zwiększenie przepustowości.
+                  Poza ograniczeniami związanymi bezpośrednio z protokołem, najpoważniejszym Naszym przeciwnikiem jest opóźnienie na łączu (zwłaszcza, jeśli odwołujemy się do zewnętrznych serwisów np. za oceanem). Zmniejszenie tego parametru jest bardzo kosztowne, dużo bardziej niż zwiększenie przepustowości łącza.
                 </li>
                 <li>
-                  Latencja wpływa na najważniejsze parametry protokołu TCP - ponieważ HTTP jest zbudowany w oparciu o TCP, również i ten protokół cierpi.
+                  Latencja wpływa na najważniejsze parametry protokołu TCP, przez co cierpi także HTTP, bo jest zbudowany w oparciu o ten protokół.
                 </li>
                 <li>
-                  Należy jednak pamiętać, że HTTP ma swoje wady (brak multiplexingu dla jednego otwartego połączenia TCP czy nadmierna "gadatliwość" w postaci nagłówków, ciastek etc.).
+                  Należy jednak pamiętać, że HTTP 1.1 ma swoje wady (brak multiplexingu dla jednego otwartego połączenia TCP czy obszerność informacji w postaci nagłówków, ciastek etc.).
                 </li>
                 <li>
                   Nadomiar złego szyfrowanie w postaci SSL wprowadza dodatkowy narzut.
                 </li>
                 <li>
-                  Jest jednak nadzieja na przyszłość - Google pracuje nad SPDY, a IETF pracuje nad HTTP 2.0. Nowa wersja protokołu HTTP właściwie załatwia dużą część optymalizacji o których za chwilę opowiemy. Zainteresowanych zachęcam do lektury linków.
+                  Jest jednak nadzieja - Google pracuje nad SPDY, a organizacje zrzeszone w IETF pracują nad HTTP 2.0. Nowa wersja protokołu HTTP właściwie załatwia dużą część optymalizacji o których za chwilę opowiemy. Zainteresowanych zachęcam do lektury linków.
                 </li>
               </ul>
             </aside>
@@ -493,7 +496,7 @@
               <ul>
                 <li>Sieci komórkowe, ze względu na swoją budowę mają jeszcze większe opóźnienia.</li>
                 <li>
-                  Co gorsza - modemy 3G / 4G ze względu na swoje zuyżycie energii pracują w różnych trybach i bardzo często zostają uśpione a po wybudzeniu modem musi przejść pełen cykl uwierzytelniania z wieżami transmisyjnymi.
+                  Co gorsza - modemy 3G / 4G ze względu na duże zużycie energii pracują w różnych trybach, aby być bardziej oszczędnym i bardzo często zostają uśpione a po wybudzeniu modem musi przejść pełen cykl uwierzytelniania z wieżami transmisyjnymi.
                 </li>
               </ul>
             </aside>
@@ -507,6 +510,7 @@
             <aside class="notes">
               <ul>
                 <li>Na wykresie widzimy przykład zbyt dużej liczby żądań.</li>
+                <li>Dużo danych, dużo żądań - strona ładuje się wolno.</li>
               </ul>
             </aside>
           </section>
@@ -525,21 +529,26 @@
               <li class="fragment">Usuwanie ciasteczek i zbędnych nagłówków</li>
               <li class="fragment"><em>HTTP </em> Cache - <em>ETags </em> oraz <em>If-Modified-Since</em></li>
               <li class="fragment">Zmniejsz liczbę osobnych plików <em>*.js </em> oraz <em>*.css </em></li>
+              <li class="fragment">Kompresuj dane tekstowe</li>
+              <li class="fragment">Stosuj <em>DNS prefetching </em></li>
             </ul>
 
             <aside class="notes">
               <ul>
                 <li>
-                  Korzystaj z techniki zwanej sprajtami - polega ona na scaleniu wielu obrazów do jednego a następnie wycinanie za pomocą CSS fragmentów z jednego wielkiego obrazu. Dzięki temu zmniejszamy liczbę żądań.
+                  Korzystaj z techniki tzw. sprajtów - polega ona na scaleniu wielu obrazów do jednego a następnie wycinanie za pomocą CSS fragmentów z jednego wielkiego obrazu. Dzięki temu zmniejszamy liczbę żądań.
                 </li>
                 <li>
                   Korzystaj gdzie można z serwerów CDN, uważaj na wolne serwery DNS, unikaj przekierowań.
                 </li>
                 <li>
-                  Stosuj "sharding", czyli rozproszenie zasobów - dzięki serwowaniu różnych zasobów z różnych domen, możliwe będzie wykorzystanie większej liczby połączeń (średnio 6 na domenę).
+                  Stosuj "sharding", czyli rozproszenie zasobów - dzięki serwowaniu zasobów z różnych domen, możliwe będzie wykorzystanie większej liczby połączeń (dla jednego hostname to średnio 6 połączeń).
                 </li>
                 <li>
-                  Hostuj statyczne zasoby (obrazy, arkusze stylów, skrypty, pliki) z osobnego serwera, jeśli nie są wrażliwe z punktu widzenia bezpieczeństwa bez SSL, bez zbędnych ciasteczek, nagłówków, z odpowiednimi nagłówkami ułatwiającymi cacheowanie, oraz połącz skrypty i arkusze stylów w jeden plik.
+                  Hostuj statyczne zasoby (obrazy, arkusze styli, skrypty, pliki) z osobnego serwera, jeśli nie są wrażliwe z punktu widzenia bezpieczeństwa także bez SSL, bez zbędnych ciasteczek, nagłówków HTTP, z odpowiednimi nagłówkami ułatwiającymi cacheowanie, oraz połącz skrypty i arkusze w jeden plik. Kompresuj także dane tekstowe.
+                </li>
+                <li>
+                  DNS prefetching jest techniką służącą do informowania przeglądarki, które strony i adresy będą wykorzystywane w przyszłości.
                 </li>
               </ul>
             </aside>
@@ -552,10 +561,10 @@
 
             <aside class="notes">
               <ul>
-                <li>Najlepsza optymalizacja jeśli chodzi o pierwsze ładowanie.</li>
-                <li>W przypadku SPA idealne rozwiązanie, bo to pierwszy jedyny page load.</li>
-                <li>Polega ona na zoptymalizowaniu strony początkowej tak aby została załadowana maksymalnie w 1s.</li>
-                <li>Wszystkie niepotrzebne i dodatkowe funkcjonalności mogą zostać załadowane później.</li>
+                <li>Najlepsza optymalizacja jeśli chodzi o pierwsze ładowanie strony.</li>
+                <li>W przypadku SPA idealne rozwiązanie, bo pierwszy to często jedyny page load.</li>
+                <li>Polega ona na zoptymalizowaniu strony głównej, tak aby została załadowana maksymalnie w 1s.</li>
+                <li>Wszystkie niepotrzebne i dodatkowe funkcjonalności mogą zostać załadowane później, na żądanie.</li>
               </ul>
             </aside>
           </section>
@@ -590,13 +599,13 @@
                   Przy klasycznym podejściu zalecano aby wszystkie skrypty, które do działania potrzebują pełną wiedzę o drzewie DOM umieszczać przed zamykającym znacznikiem body.
                 </li>
                 <li>
-                  Obecnie możemy wykorzystać do tego atrybut defer lub async, należy jednak zwrócić na różnicę między nimi.
+                  Obecnie możemy wykorzystać do tego atrybut defer lub async, należy jednak zwrócić uwagę na różnicę między nimi.
                 </li>
                 <li>
                   Defer ściąga zasób w tle nie przerywając parsowania i odkłada wykonanie skryptu do momentu ściagnięcia i przetworzenia całego markupu.
                 </li>
                 <li>
-                  Async ściąga zasób w tle i po zakończeniu tej operacji wykonuje skrypt.
+                  Async ściąga zasób w tle i po zakończeniu tej operacji natychmiast wykonuje skrypt, przerywając parsowanie.
                 </li>
                 <li>
                   W nielicznych przypadkach (takich jak np. Google Analytics) uzasadnione jest pozostawienie skryptu wewnątrz znacznika head.
@@ -617,7 +626,7 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Layout to proces przetwarzania drzewa DOM w struktury przechowujące dane na temat faktycznego ułożenia na stronie, jednak nie zawierające jeszcze informacji na temat w jaki sposób należy je rysować.
+                  Layout to proces przetwarzania drzewa DOM w struktury przechowujące dane na temat faktycznego ułożenia na stronie, jednak nie zawierające jeszcze informacji w jaki sposób należy je rysować.
                 </li>
                 <li>
                   Widzimy na diagramie, że tzw. drzewo renderowania składa się w wielu niezależnych drzew przechowujących różnorakie informacje. Zostało ono stworzone po wczytaniu strony i przekształceniach wykonanych za pomocą CSS oraz JavaScript.
@@ -626,7 +635,7 @@
                   Modyfikacja niektórych właściwości drzewa DOM z poziomu skryptów uruchamia ten proces ponownie, wraz z następstwami.
                 </li>
                 <li>
-                  Reflow to terminologia Mozilli, Layout - to termin używany w WebKit / Blink.
+                  Reflow to terminologia wprowadzona przez Mozillę, Layout - to termin używany w WebKit / Blink.
                 </li>
               </ul>
             </aside>
@@ -652,7 +661,7 @@
               <ul>
                 <li>Na niebiesko został oznaczony fragment, który odpowiada za repaint.</li>
                 <li>
-                  Jest to proces odpowiadający za przeniesienie stworzonego layoutu do bitmap, pamięci GPU i rysowanie, jak również późniejsze odrysowanie fragmentów, które uległy zmianie.
+                  Jest to proces odpowiadający za przeniesienie stworzonego layoutu do bitmap, czasem wysłanie do pamięci GPU i w końcu rysowanie. Proces ten również odpowiada za późniejsze odrysowanie fragmentów, które uległy zmianie.
                 </li>
                 <li>
                   Modyfikacja niektórych właściwości drzewa DOM z poziomu skryptów uruchamia ten proces ponownie.
@@ -672,7 +681,7 @@
                   W celu zachowania jak największej płynności przy rysowaniu, musimy się upewnić, że jesteśmy zsynchronizowani z VSYNC (vertical sync).
                 </li>
                 <li>
-                  Jeśli Nasz budżet czasowy dla jednej ramki nie zostanie przekroczony (16.67 ms), wykorzystanie tej funkcji zagwarantuje nam, że rysowania nowej klatki rozpocznie się natychmiast po synchronizacji pionowej.
+                  Jeśli Nasz budżet czasowy dla jednej ramki nie zostanie przekroczony (16.67 ms), wykorzystanie tej funkcji zagwarantuje nam, że rysowania nowej klatki rozpocznie się natychmiast po synchronizacji pionowej (czyli po narysowaniu poprzedniej klatki).
                 </li>
                 <li>
                   Jeśli użyjemy setTimeout/setInterval nie mamy takiej gwarancji, ponieważ nie są one powiązane z VSYNC. Jeśli wykorzystamy jedną z nich do rysowania kolejnych klatek, z bardzo dużym prawdopodobieństwem (zwiększającym się wraz ze wzrostem czasu wykonania) zaczniemy "gubić" klatki, co poskutkuje nieprzyjemnym efektem nienaturalnej animacji czy tzw. "darcia" animacji.
@@ -690,16 +699,16 @@
               <ul>
                 <li>Obecne komputery czy urządzenia mobilne posiadają bardzo wydajne GPU.</li>
                 <li>
-                  Kluczem do tego jest tzw. backing store i kompozycja warstw.
+                  Kluczem do ich efektywnego wykorzystania jest tzw. backing store i kompozycja warstw.
                 </li>
                 <li>
-                  Przeglądarki potrafią korzystać samodzielnie z nich, jednak przy odpowiednich wskazówkach od strony twórcy aplikacji, możemy jeszcze więcej "wycisnąć" z GPU. Przykładem może być optymalizacja: CSS3 animations, CSS3 transforms, video itp. za pomocą GPU, którą praktycznie każde współczesne przeglądarki posiadają.
+                  Najpierw element jest renderowany do tzw. bufora (który widzimy jako jedną z warstw na obrazku), następnie wysyłany do GPU i na nim odbywają się np. przekształcenia, transformacje i w końcu bufor zostaje narysowany na ekranie.
                 </li>
                 <li>
-                  Najpierw element jest renderowany do tzw. bufora (który widzimy jako jedną z warstw na obrazku), następnie wysyłany do GPU i na nim odbywają się np. przekształcenia i transformacje.
+                  Przeglądarki potrafią korzystać samodzielnie z GPU, jednak przy odpowiednich wskazówkach od strony twórcy aplikacji, możemy jeszcze więcej "wycisnąć" ze sprzętu. Przykładem może być optymalizacja CSS3 animations, CSS3 transforms, video itp. za pomocą GPU, którą praktycznie każde współczesne przeglądarki posiadają.
                 </li>
                 <li>
-                  Możemy dawać również wskazówki przeglądarce, wymuszając aby poszczególne elementy zostały wysłane do GPU.
+                  Możemy również sami dawać odpowiednie wskazówki przeglądarce, wymuszając aby poszczególne elementy zostały wysłane do GPU.
                 </li>
               </ul>
             </aside>
@@ -727,14 +736,14 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Brak pamięci jest szczególnie dotkliwy na urządzeniach mobilnych, gdzie w przypadku wypełnienia pamięci VRAM w najlepszym przypadku aplikacja bardzo mocno się spowolni (przesyłanie stron z RAM do VRAM), w najgorszym wysypie całą przeglądarkę.
+                  Brak pamięci jest szczególnie dotkliwy na urządzeniach mobilnych, gdzie w przypadku wypełnienia pamięci VRAM w najlepszym przypadku aplikacja bardzo mocno się spowolni (przesyłanie stron z RAM do VRAM), w najgorszym przypadku - wysypiemy całą przeglądarkę.
                 </li>
                 <li>
-                  Nawet na współczesnych komputerach kosztu przesyłu danych szyną pomiędzy RAM a Video RAM jest duży. Jeśli spróbujemy przepychać gigabajty danych (np. wprowadzając warstwy na wszystkie obrazki, animowane elementy etc.).
+                  Nawet na współczesnych komputerach kosztu przesyłu danych szyną pomiędzy RAM a Video RAM jest duży. Jeśli spróbujemy przepychać gigabajty danych (np. wprowadzając warstwy na wszystkie obrazki, animowane elementy etc.) skutecznie spowolnimy podsystem rysowania.
                 </li>
                 <li>
                   To my jako twórcy aplikacji wiemy gdzie ona tak naprawdę posiada najcieższe elementy, i możemy w ten sposób
-                  wskazać przeglądarce co powinna zoptymalizować, przerzucając rysowanie tej warstwy właśnie na GPU. Bardzo często elementy takie jak CSS3 animations/transforms czy np. tag video już są akcelerowane sprzętowo.
+                  wskazać przeglądarce co powinna zoptymalizować, przerzucając rysowanie tej warstwy właśnie na GPU. Tak jak wspomniałem wcześniej, bardzo często elementy takie jak CSS3 animations/transforms czy np. tag video już są akcelerowane sprzętowo.
                 </li>
               </ul>
             </aside>
@@ -760,7 +769,7 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Wydajność to nie tylko szybkość, to również efektywność - w przypadku "mobile" duże znaczenie ma właśnie czas pracy na baterii, na który również jako twórcy aplikacji webowych możemy mieć wpływ.
+                  Wydajność to nie tylko szybkość, to również efektywność - w przypadku "mobile" duże znaczenie ma czas pracy na baterii, na który również jako twórcy aplikacji webowych możemy mieć wpływ.
                 </li>
                 <li>
                   Dla urządzeń mobilnych radio - czyli WiFi i modemy 3G / 4G - są drugim, po wyświetlaczu, elementem najbardziej zużywającym energię. Mocne wykorzystanie i "wybudzanie" z trybu uśpienia modemu dosłownie "pożerają energię". Strony powinny więc minimalizować ilość żądań, optymalizacja dla urządzeń mobilnych bardzo często polega na przesyłaniu jak największej ilości danych przy pierwszej odpowiedzi od serwera.
@@ -787,22 +796,22 @@
                 <li>Temat jest tak obszerny, że można stworzyć drugie szkolenie skupione tylko na tym.</li>
                 <li>Główny problem z GC jest taki, że pauzy ucinają nam czas z naszego "budżetu" na daną ramkę.</li>
                 <li>
-                  Większość GC w przeglądarkach zaimplementowana jest w podobny sposób, więc aby dobrze opisać problem posłużymy się terminologią rodem z V8 (Google Chrome).
+                  Większość GC w przeglądarkach zaimplementowana jest w podobny sposób, więc aby dobrze opisać problem posłużymy się terminologią z V8 (Google Chrome).
                 </li>
                 <li>
                   GC grupuje zaalokowane elementy w tzw. generacje, biorąc pod uwagę jak dawno zostały zaalokowane i jak często się do nich odwołuje.
                 </li>
                 <li>
-                  Pierwszy typ - "scavenge" służy do usuwania młodej generacji, która już nie jest wykorzystana. Ten typ jest bardzo szybki, lub nawet bardzo często implementowany jako działający w tle, więc nie ucina czasu przeznaczonego na Naszą aktualną ramkę.
+                  Pierwszy typ - "scavenge" służy do usuwania młodej generacji, która już nie jest wykorzystana. Ten typ jest bardzo szybki lub nawet bardzo często implementowany jako działający w tle, więc nie ucina czasu przeznaczonego na Naszą aktualną ramkę.
                 </li>
                 <li>
-                  Drugi typ to bardzo kosztowna operacja, ponieważ ona zatrzymuje wykonanie w bliżej nieokreślony momencie, na który nie mamy żadnego wpływu. Czas przerwy jest zależny od rozmiaru sterty i stopnia skomplikowania grafu powiązań.
+                  Drugi typ to bardzo kosztowna operacja, ponieważ zatrzymuje ona wykonanie w bliżej nieokreślonym momencie, na który nie mamy żadnego wpływu. Czas przerwy jest zależny od rozmiaru sterty i stopnia skomplikowania grafu powiązań.
                 </li>
                 <li>
-                  Jeśli mamy budżet ramki 16.67 ms a faza 'mark-sweep' trwa 60 ms mamy spory problem.
+                  Jeśli mamy budżet ramki 16.67 ms a faza 'mark-sweep' trwa np. 60 ms mamy spory problem.
                 </li>
                 <li>
-                  Jedyny wpływ jaki mamy na GC to zmiana sposobu tworzenia/'usuwania' nowych elementów w skryptach.
+                  Jedyny wpływ jaki mamy na GC to zmiana sposobu tworzenia/'usuwania' nowych elementów w Naszych skryptach.
                 </li>
               </ul>
             </aside>
@@ -840,6 +849,9 @@
 
             <aside class="notes">
               <ul>
+                <li>
+                  Postaram się teraz przybliżyć różnorakie narzędzia, które pomogą i dostarczą nam wyników do analizy.
+                </li>
                 <li>
                   Wszystkie zaprezentowane funkcjonalności są dostępne w wersjach deweloperskich przeglądarek (Chrome Canary, Firefox Nightly).
                 </li>
@@ -892,7 +904,7 @@
                   Wysokość to stopień zagłębienia, natomiast długość to czas wykonania poszczególnych funkcji.
                 </li>
                 <li>
-                  Na koniec chciałbym wspomnieć o 'Audits', które są wbudowanym w narzędzia deweloperskie predefiniowanym audytem, dzięki któremu bardzo często jesteśmy w stanie odkryć problemy od razu po spojrzeniu w wyniki audytu.
+                  Na koniec chciałbym wspomnieć o 'Audits', które są wbudowanym w narzędzia deweloperskie predefiniowanym audytem, dzięki któremu bardzo często jesteśmy w stanie odkryć problemy i zastosować zaproponowane optymalizacje zaraz po jego uruchomieniu.
                 </li>
               </ul>
             </aside>
@@ -928,10 +940,10 @@
                   Prezentowany widok służy do śledzenia i filtrowania żądań podsystemu sieciowego. Możemy podglądać nagłówki, treść, inne protokoły (nie tylko HTTP a np. Web Sockets) oraz metryki dot. czasu przetwarzania danego żądania.
                 </li>
                 <li>
-                  Możemy zmodyfikować wyświetlane kolumny, pokazać widok zwarty lub szczegółowy oraz filtrować.
+                  Możemy zmodyfikować wyświetlane kolumny, pokazać widok zwarty lub szczegółowy oraz filtrować typy żądań.
                 </li>
                 <li>
-                  Jeśli klikniemy prawym przyciskiem możemy na konkretnym żądaniu znajdziemy interesujące menu, które pozwoli nam skopiować dane HAR lub komendę curl, która odpowiada danemu żądaniu.
+                  Jeśli klikniemy prawym przyciskiem na konkretnym żądaniu, znajdziemy interesujące menu kontekstowe, które pozwoli nam skopiować dane HAR lub komendę curl, która odpowiada danemu żądaniu.
                 </li>
                 <li>
                   Niebieska kreska to zdarzenie DOMContentLoaded, czerwona to window.load. Fioletowa oznacza, że oba zdarzenia wystąpiły równocześnie.
@@ -949,10 +961,10 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Warto zapoznać się szczegółowo z konsolą Google Chrome / Chromium. Możemy z jej poziomu wywołać wiele rzeczy tj. zrzuty pamięci, profiler. Możemy formatować wyjście, wyświetlać tabelki, zagnieżdżać logi.
+                  Warto zapoznać się szczegółowo z konsolą Google Chrome / Chromium. Możemy z jej poziomu wywołać inne funkcje narzędzi deweloperskich tj. zrzuty pamięci, profiler. Możemy w dowolny sposób formatować wyjście, wyświetlać tabelki, zagnieżdżać logi etc.
                 </li>
                 <li>
-                  Warto zapoznać się ze skrótami klawiszowymi np. CTRL - L to czyszczenie konsoli.
+                  Warto zapoznać się ze skrótami klawiszowymi np. CTRL - L to czyszczenie konsoli, ESC chowa/pokazuje konsole w dowolnej innej karcie deweloper tools, F12 w praktycznie każdej przeglądarce pokazuje narzędzia deweloperskie.
                 </li>
               </ul>
             </aside>
@@ -967,10 +979,10 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Widzimy po prawej stronie histogram z trybu ciągłego przerysowania, widzimy zaznaczone kolorem niebieskim kratownice warstw przeniesionych do pamięci GPU, na czerwono zaznaczone są prostokąty które są odrysowywane etc.
+                  Widzimy po prawej stronie histogram z tzw. 'trybu ciągłego przerysowania', widzimy zaznaczone kolorem niebieskim kratownice warstw przeniesionych do pamięci GPU oraz na czerwono zaznaczone są prostokąty które są aktualnie odrysowywane.
                 </li>
                 <li>
-                  To wszystko jest równiez dostępne dla przeglądarki pod Androidem.
+                  Wszystkie narzędzia są równiez dostępne dla przeglądarki dla urządzeń mobilnych z systemem Android.
                 </li>
               </ul>
             </aside>
@@ -1015,7 +1027,7 @@
                 <li>
                   Zakładka symulująca timeline taki jak w Google Chrome, została stworzona po naciskach społeczności na Microsoft, które miały miejsce również na polskiej konferencji Front-Trends 2013 (akcja na Twitterze).
                 </li>
-                <li>Prezentacja z wersji IE dołączonej do Windows 8.1.</li>
+                <li>Prezentacja została wykonana na wersji IE dołączonej do Windows 8.1.</li>
               </ul>
             </aside>
           </section>
@@ -1029,10 +1041,10 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Obecnie narzędzia deweloperskie w Safari i Operze nie różnią się znacznie od zaprezentowanych narzędzi z Google Chrome (to przecież nadal silniki Webkit i Blink).
+                  Obecnie narzędzia deweloperskie w Safari i Operze nie różnią się znacznie od zaprezentowanych narzędzi z Google Chrome (to przecież silniki Webkit i Blink).
                 </li>
                 <li>
-                  Jedna z wersji Safari posiada narzędzie do pokazywania warstw i kompozycji umieszczonych w pamięci GPU. Nie wiadomo dlaczego funkcjonalność została wycofana w następnej wersji.
+                  Jedna z wersji Safari posiadała dodatkowe narzędzie do pokazywania warstw umieszczonych w pamięci GPU. Niestety, z niewiadomych przyczyn funkcjonalność została wycofana w kolejnej wersji.
                 </li>
               </ul>
             </aside>
@@ -1095,7 +1107,7 @@
                   Kolejne narzędzie służące do audytowania według określonych reguł, tym razem od Google. Dostępne w wersji online i jako rozszerzenie do Google Chrome / Chromium.
                 </li>
                 <li>
-                  Wersja webowa jest rozszerzona o np. wyszukiwanie ścieżki krytycznej lub testy pod kątem urządzeń mobilnych, ale wymaga aby aplikacja była dostępna w internecie.
+                  Wersja webowa jest rozszerzona o wyszukiwanie ścieżki krytycznej oraz testy pod kątem urządzeń mobilnych, ale wymaga ona aby testowana strona była dostępna publicznie.
                 </li>
               </ul>
             </aside>
@@ -1110,7 +1122,7 @@
             <aside class="notes">
               <ul>
                 <li>
-                  Kolejne narzędzia dostępne w postaci rozszerzenia do przeglądarki, zbierające dane dot. sieci oraz wykonania skryptów, renderowania etc.
+                  Kolejne narzędzia dostępne w postaci rozszerzenia do przeglądarki, zbierające dane dot. sieci oraz wykonania skryptów, renderowania itp.
                 </li>
               </ul>
             </aside>
@@ -1123,6 +1135,7 @@
               <li><a href="chrome://tracing">chrome://tracing</a></li>
               <li><a href="chrome://histograms/DNS.ResolveSuccess">chrome://histograms/DNS.ResolveSuccess</a></li>
               <li>... i wiele, wiele innych</li>
+              <li><a href="chrome://flags">chrome://flags</a></li>
             </ul>
 
             <aside class="notes">
@@ -1131,7 +1144,7 @@
                   Polecam zapoznać się ze stronami które Chrome domyślnie posiada, przykładowe trzy wymienione przeze mnie dostarczają ciekawych informacji.
                 </li>
                 <li>
-                  Warto również odwiedzić stronę chrome://flags i poeksperymentować z ustawieniami, być może znajdziemy nową ciekawą funkcjonalność.
+                  Warto również odwiedzić stronę chrome://flags i poeksperymentować z ustawieniami, a być może znajdziemy nową ciekawą funkcjonalność.
                 </li>
               </ul>
             </aside>
@@ -1147,10 +1160,10 @@
                 <li>Potężne narzędzie, zbierające dane na bardzo niskim poziomie, również z IE 11.</li>
                 <li>Dostępne na TODO.</li>
                 <li>
-                  Daje jeszcze większy przegląd sytuacji, zwłaszcza jeśli chodzi o szczegółowe informacje pochodzące z IE 11 (z dokładnością do wywołań funkcji systemowych i np. sterowników karty graficznej etc.).
+                  Daje jeszcze większy przegląd sytuacji, zwłaszcza jeśli chodzi o szczegółowe informacje pochodzące z IE 11 (z dokładnością do wywołań funkcji systemowych i wywołań sterowników np. karty graficznej etc.).
                 </li>
                 <li>
-                  Zaprezentuje dzisiaj możliwości tego narzędzia przy optymalizacji.
+                  Podczas demo zaprezentuję dzisiaj możliwości tego narzędzia przy optymalizacji.
                 </li>
               </ul>
             </aside>
@@ -1167,7 +1180,7 @@
                   d8 to profiler silnika i maszyny wirtualnej V8, który wykorzystywany jest w Google Chrome, Chromium oraz Node.js. Niestety, instalacja wymaga skompilowania źródeł V8 i samo wykorzystanie narzędzia wymaga wiedzy na temat działania silnika.
                 </li>
                 <li>
-                  Niemniej mamy dostępne potężne narzędzie, które w wielu przypadkach może wskazać nam potencjalne problemy wydajnościowe związane z kompilatorem JIT i cyklem optymalizacji kodu JavaScript.
+                  Niemniej mamy dostępne potężne narzędzie, które w wielu przypadkach może wskazać nam potencjalne problemy wydajnościowe związane z kompilatorem JIT, cyklem optymalizacji kodu JavaScript jak i GC.
                 </li>
               </ul>
             </aside>
