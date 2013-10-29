@@ -22,8 +22,17 @@
 
 ### Co MUSZĘ powiedzieć?
 
+- Opisać na czym polega "time slicing" / "context switching" w przeglądarce.
+
+- Opóźnienie ma większy wpływ na TCP niż brak przepustowości.
+- HTTP ma swoje wady (obszerność odpowiedzi, brak multiplexingu dla jednego otwartego połączenia).
+
+- Jasno zaznaczyć, że w mobile opóźnienia są jeszcze gorsze i tam szczególne znaczenie ma optymalizacja ilości żądań.
+
 - Korzystaj z HTTP Cache.
 - Limit 6 równolegle otwartych połączeń do jednej subdomeny (sharding obchodzi ten problem).
+
+- Opowiedzieć na czym polega optymalizacja dla ścieżki krytycznej.
 
 - Opisać proces przetwarzania strumienia bajtów na drzewo DOM (parsowanie).
 - Nigdy nie używać document.write!
@@ -45,6 +54,8 @@
 
 - Przeglądarki są coraz bardziej złożone (6 mln LOC dla Firefox 26).
 
+- TCP three way handshake i wpływ opóźnienia na ten parametr oraz RTT (round trip time).
+
 - Można pomóc przeglądarce przygotować się na kolejne za pomocą DNS prefetching i znaczników link z odpowiednim atrybutem rel.
 
 - HTML 5 wreszcie posiada zdefiniowany w specyfikacji sposób parsowania dokumentu, poprzednie wersje takiego algorytmu nie
@@ -57,6 +68,11 @@
 
 ### Nad czym się NIE rozwodzić?
 
+- Nie mów za dużo o SPDY i HTTP 2.0.
+
+- Nie mówić za dużo o trybach pracy modemów 3G / 4G.
+
+- Nie rozwodzić się nad obrazkiem dot. zbyt dużej ilości żądań.
 - Raczej mów krótko i zwięźle o optymalizacji.
 
 - Jakie biblioteki lub jak rozwiązać dociąganie skryptów on demand.
@@ -73,7 +89,7 @@
 
 ### Co WARTO powiedzieć?
 
-- Geneze powstania "responsiveness timeline" w IE 11.
+- Geneza powstania "responsiveness timeline" w IE 11 (akcja na Twitterze).
 
 ### Nad czym się NIE rozwodzić?
 

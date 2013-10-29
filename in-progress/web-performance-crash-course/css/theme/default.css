@@ -89,6 +89,18 @@ body {
   right: 150px;
 }
 
+.reveal .orange-color {
+  color: #FA5F0C;
+}
+
+.reveal .yellow-color {
+  color: #FFC03C;
+}
+
+.reveal .margin-top {
+  margin-top: 25px;
+}
+
 .reveal #scavenge {
   -webkit-transform: scale(0.2);
   transform: scale(0.2);

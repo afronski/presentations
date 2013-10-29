@@ -54,6 +54,14 @@
         return "M295.186,122.908c12.434,18.149,32.781,18.149,45.215,0l12.152-17.736c12.434-18.149,22.109-15.005,21.5,6.986l-0.596,21.49c-0.609,21.992,15.852,33.952,36.579,26.578l20.257-7.207c20.728-7.375,26.707,0.856,13.288,18.29l-13.113,17.037c-13.419,17.434-7.132,36.784,13.971,43.001l20.624,6.076c21.103,6.217,21.103,16.391,0,22.608l-20.624,6.076c-21.103,6.217-27.39,25.567-13.971,43.001l13.113,17.037c13.419,17.434,7.439,25.664-13.287,18.289l-20.259-7.207c-20.727-7.375-37.188,4.585-36.578,26.576l0.596,21.492c0.609,21.991-9.066,25.135-21.5,6.986L340.4,374.543c-12.434-18.148-32.781-18.148-45.215,0.001l-12.152,17.736c-12.434,18.149-22.109,15.006-21.5-6.985l0.595-21.492c0.609-21.991-15.851-33.951-36.578-26.576l-20.257,7.207c-20.727,7.375-26.707-0.855-13.288-18.29l13.112-17.035c13.419-17.435,7.132-36.785-13.972-43.002l-20.623-6.076c-21.104-6.217-21.104-16.391,0-22.608l20.623-6.076c21.104-6.217,27.391-25.568,13.972-43.002l-13.112-17.036c-13.419-17.434-7.439-25.664,13.288-18.29l20.256,7.207c20.728,7.374,37.188-4.585,36.579-26.577l-0.595-21.49c-0.609-21.992,9.066-25.136,21.5-6.986L295.186,122.908z";
       }
 
+      function font(color) {
+        return {
+          "font": "18px 'Helvetica Neue', Arial",
+          "font-weight": "bold",
+          "fill": color
+        };
+      }
+
       function createArcPath(cx, cy, r, startAngle, endAngle) {
         var x1 = cx + r * Math.cos(-startAngle * RAD),
             x2 = cx + r * Math.cos(-endAngle * RAD),
@@ -160,6 +168,23 @@
                          "M" + x2 + " " + y2 + "L" + x2a + " " + y2a + "M" + x2 + " " + y2 + "L" + x2b + " " + y2b);
       };
 
+      Raphael.fn.drawAnnotatedSlice = function(x, y, size, text, color, width, yOffset) {
+        var height = 20;
+
+        width = width || 1;
+        yOffset = yOffset || 0;
+
+        this.text(x + (size / 2), y - 65 - yOffset, text).attr(font(white));
+
+        this.path("M" + x + " " + y + "L" + (x + size) + " " + y).attr({ "stroke": color, "stroke-width": 10 });
+
+        this.path("M" + (x + size) + " " + (y - height) + "L" + (x + size) + " " + (y + height))
+            .attr({ "stroke": color, "stroke-width": width });
+
+        this.path("M" + x + " " + (y - height) + "L" + x + " " + (y + height))
+            .attr({ "stroke": color, "stroke-width": width });
+      };
+
       var dashed = { fill: "none", stroke: "#666", "stroke-dasharray": "- " },
           black = "#333",
           gray = "#888",
@@ -207,14 +232,7 @@
                     needleAnimationDuration: 400,
                     number: false,
                     needleAnimationEasing: "easy-in"
-                  }),
-                  font = function(color) {
-                    return {
-                      "font": "14px 'Helvetica Neue', Arial",
-                      "font-weight": "bold",
-                      "fill": color
-                    };
-                  };
+                  });
 
               gauge.text(118, 75, "CPU").attr(font(white));
               setInterval(function() { speedo.set(getRandomArbitary(90, 100)); }, 1000);
@@ -391,12 +409,33 @@
 
           <section>
             <h1>Architektura</h1>
+            <h2>Context Switching</h2>
+
+            <div id="slicing"></div>
+
             <aside class="notes">
               <ul>
-                <li>TODO: "Context Switching" pomiędzy UI a JavaScript.</li>
-                <li>TODO: Jednak same przeglądarki nie są jednowątkowe ;).</li>
+                <li>
+                  Przeglądarka przełącza się pomiędzy rysowaniem, obsługą wejścia (np. sieci czy zdarzeń z urządzeń wejścia) i wykonaniem kodu JavaScript. Powiedzieliśmy, że aby zapewnić płynność na poziomie 60 FPS, ten "Context Switching" na czas wykonania kodu powinien być krótszy niż 16.67 ms.
+                </li>
+                <li>Wiele rzeczy pod spodem dzieje się równolegle o czym dokładnie opowiemy sobie za chwilę.</li>
+                <li>Na żółto został zaznaczony bardzo ważny moment - synchronizacji rysowania z GPU.</li>
               </ul>
             </aside>
+
+            <script>
+              (function() {
+                var slicingPaper = Raphael("slicing", 640, 200);
+
+                slicingPaper.text(320, 10, "Kwant czasu - 16.67 ms (60 FPS)").attr(font(white));
+                slicingPaper.thinArrow(1, 100, 639, 100, 16).attr({ stroke: white });
+
+                slicingPaper.drawAnnotatedSlice(20, 100, 100, "Wejście", lightBlue);
+                slicingPaper.drawAnnotatedSlice(120, 100, 90, "Rysowanie", nodeGreen);
+                slicingPaper.drawAnnotatedSlice(210, 100, 10, "VSYNC", yellow, 1, -40);
+                slicingPaper.drawAnnotatedSlice(220, 100, 400, "Skrypty", gray);
+              } ());
+            </script>
           </section>
 
           <section>
@@ -413,29 +452,61 @@
 
           <section class="section-header">
             <h1>Sieć</h1>
+            <h2>Bandwidth vs. Latency</h2>
+
+            <img src="img/latency.png" alt="Visualization of latency costs" />
+
+            <div class="fragment">Zmniejszenie opóźnienia o 1 ms kosztuje 80 mln $</div>
+
             <aside class="notes">
               <ul>
-                <li>TODO: RTT, TCP handshake, SSL to jeszcze pogarsza.</li>
-                <li>TODO: Narzut w HTTP, ciastka, nagłówki.</li>
-                <li>TODO: Zwiększyć przepustowość? - proste - więcej i lepsze kable! Zmniejszyć latencje? - ups :(.</li>
+                <li>
+                  Poza ograniczeniami związanymi bezpośrednio z protokołem, najpoważniejszym Naszym przeciwnikiem jest opóźnienie. Zmniejszenie tego parametru jest bardzo kosztowne, dużo mniej niż zwiększenie przepustowości.
+                </li>
+                <li>
+                  Latencja wpływa na najważniejsze parametry protokołu TCP - ponieważ HTTP jest zbudowany w oparciu o TCP, również i ten protokół cierpi.
+                </li>
+                <li>
+                  Należy jednak pamiętać, że HTTP ma swoje wady (brak multiplexingu dla jednego otwartego połączenia TCP czy nadmierna "gadatliwość" w postaci nagłówków, ciastek etc.).
+                </li>
+                <li>
+                  Nadomiar złego szyfrowanie w postaci SSL wprowadza dodatkowy narzut.
+                </li>
+                <li>
+                  Jest jednak nadzieja na przyszłość - Google pracuje nad SPDY, a IETF pracuje nad HTTP 2.0. Nowa wersja protokołu HTTP właściwie załatwia dużą część optymalizacji o których za chwilę opowiemy. Zainteresowanych zachęcam do lektury linków.
+                </li>
               </ul>
             </aside>
           </section>
 
           <section>
-            <h1>A co z mobile?</h1>
+            <h2>A co z mobile?</h2>
+            <header class="fragment">
+              <h3>Jest jeszcze gorzej!</h3>
+
+              <div class="yellow-color">4G - średnie opóźnienie: 150 ms</div>
+              <div class="orange-color">3G - średnie opóźnienie: 400 ms</div>
+              <h3 class="fragment margin-top">Tryby pracy modemu</h3>
+            </header>
+
             <aside class="notes">
               <ul>
-                <li>TODO: "Latency", wstrzymywanie i wznawianie w 3G.</li>
+                <li>Sieci komórkowe, ze względu na swoją budowę mają jeszcze większe opóźnienia.</li>
+                <li>
+                  Co gorsza - modemy 3G / 4G ze względu na swoje zuyżycie energii pracują w różnych trybach i bardzo często zostają uśpione a po wybudzeniu modem musi przejść pełen cykl uwierzytelniania z wieżami transmisyjnymi.
+                </li>
               </ul>
             </aside>
           </section>
 
           <section class="bad">
             <h1>Ilość żądań</h1>
+
+            <img src="img/requests-abusing.png" alt="Too many requests TODO" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Przykład za dużej liczby żądań.</li>
+                <li>Na wykresie widzimy przykład zbyt dużej liczby żądań.</li>
               </ul>
             </aside>
           </section>
@@ -475,11 +546,16 @@
           </section>
 
           <section class="good">
-            <h1>Ścieżka krytyczna</h1>
+            <h2>Ścieżka krytyczna</h2>
+
+            <img src="img/visualization-of-critical-path.png" alt="Visualization of critical path TODO" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Jeszcze lepiej niż optymalizacja.</li>
-                <li>TODO: W przypadku SPA idealne rozwiązanie, bo to pierwszy jedyny page load.</li>
+                <li>Najlepsza optymalizacja jeśli chodzi o pierwsze ładowanie.</li>
+                <li>W przypadku SPA idealne rozwiązanie, bo to pierwszy jedyny page load.</li>
+                <li>Polega ona na zoptymalizowaniu strony początkowej tak aby została załadowana maksymalnie w 1s.</li>
+                <li>Wszystkie niepotrzebne i dodatkowe funkcjonalności mogą zostać załadowane później.</li>
               </ul>
             </aside>
           </section>
@@ -554,11 +630,22 @@
 
           <section>
             <h1>Repaint</h1>
+
             <aside class="notes">
               <ul>
                 <li>TODO: RenderTree.</li>
                 <li>TODO: Definicja.</li>
                 <li>TODO: Kolejne drzewo? Las w przeglądarce.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>requestAnimationFrame()</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>TODO: Rysunek + opis.</li>
               </ul>
             </aside>
           </section>
@@ -1129,13 +1216,13 @@ function benchmark() {
               <a href="http://w3c-test.org/webperf/specs/NavigationTiming/">Navigation Timing API</a>
             </li>
             <li>
-              <a href="TODO">Visualizations of LOC</a>
+              <a href="http://www.informationisbeautiful.net/visualizations/million-lines-of-code/">Visualizations of LOC</a>
             </li>
             <li>
-              <a href="TODO">CodeSchool - Google Chrome Developer Tools</a>
+              <a href="http://discover-devtools.codeschool.com/">CodeSchool - Google Chrome Developer Tools</a>
             </li>
             <li>
-              <a href="TODO">Developer Tools Tips and Tricks</a>
+              <a href="http://devtoolsecrets.com/">Developer Tools Tips and Tricks</a>
             </li>
           </ul>
         </section>
