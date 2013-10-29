@@ -462,9 +462,17 @@
 
           <section class="section-header">
             <h1>Parsowanie</h1>
+
+            <img src="img/parser.png" alt="Parser workflow" />
+
             <aside class="notes">
               <ul>
-                <li>TODO: Prezentacja jak wygląda ładowanie.</li>
+                <li>
+                  Od momentu otrzymania pierwszego fragmentu z podsystemu sieciowego przeglądarki uruchamiany jest parser, który przetwarza strumień bajtów na określone tokeny. Równolegle, są one przekształcane na węzły, z których powstaje drzewo DOM.
+                </li>
+                <li>
+                  Podczas parsowania musimy uważać na skrypty, ponieważ mogą zmodyfikować one istniejący strumień wejściowy (document.write - nigdy, nigdy tego nie róbcie - przeszkadzamy w ten sposób przeglądarce).
+                </li>
               </ul>
             </aside>
           </section>

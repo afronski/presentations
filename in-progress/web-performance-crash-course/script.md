@@ -22,6 +22,9 @@
 
 ### Co MUSZĘ powiedzieć?
 
+- Opisać proces przetwarzania strumienia bajtów na drzewo DOM (parsowanie).
+- Nigdy nie używać document.write!
+
 - Opisać różnicę między regular/async/defer.
 - Powiedzieć o ściąganiu skryptów na żądanie (on demand).
 
@@ -38,6 +41,9 @@
 ### Co WARTO powiedzieć?
 
 - Przeglądarki są coraz bardziej złożone (6 mln LOC dla Firefox 26).
+
+- HTML 5 wreszcie posiada zdefiniowany w specyfikacji sposób parsowania dokumentu, poprzednie wersje takiego algorytmu nie
+  definiują co doprowadziło do dużej niespójności między poszczególnymi przeglądarkami.
 
 - GPU nadaje się do operacji macierzowych, optymalizacji przesunięć, translacji, mieszania półprzezroczystych warstw.
 - GPU nie nadaje się np. do operacji typowo na 2D lub do renderowania fontów (artefakty).
