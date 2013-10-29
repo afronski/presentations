@@ -89,6 +89,8 @@
 
 ### Co MUSZĘ powiedzieć?
 
+- Krótko o Firefox Nightly i zachęcić do śledzenia rozwoju tej przeglądarki.
+
 - Krótko o IE 9, 10, 11.
 
 - Grunt to dobrze poznać narzędzia deweloperskie w ulubionej przeglądarce.
