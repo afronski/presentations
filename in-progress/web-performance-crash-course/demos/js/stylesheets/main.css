@@ -1,0 +1,110 @@
+body {
+  font-family: 'Lucida Grande', Verdana, Arial;
+  font-size: 12px;
+}
+
+button {
+  font-size: 2em;
+  color: white;
+
+  padding: 10px 20px;
+
+  background-color: #65a9d7;
+  border: 1px solid #96d1f8;
+
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #28597a;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.container {
+  margin: 150px auto;
+
+  width: 600px;
+  height: 400px;
+
+  -webkit-perspective: 800px;
+  -moz-perspective: 800px;
+  -ms-perspective: 800px;
+  perspective: 800px;
+}
+
+.controls {
+  position: relative;
+
+  margin: 50px auto;
+  width: 600px;
+
+  text-align: center;
+}
+
+.reel {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.ring {
+  margin: 0 auto;
+
+  display: inline-block;
+
+  height: 600px;
+  width: 100px;
+
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.ring > :nth-child(odd) {
+  background-color: gray;
+}
+
+.ring > :nth-child(even) {
+  background-color: lightgray;
+}
+
+.slot {
+  position: absolute;
+  left: 250px;
+
+  width: 100px;
+  height: 100px;
+
+  opacity: 0.7;
+
+  color: rgb(0, 0, 0);
+  color: rgba(0, 0, 0, 0.9);
+
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.slot > p {
+  font-family: 'Georgia', serif;
+
+  font-size: 36px;
+  font-weight: bold;
+
+  margin-top: 28px;
+  text-align: center;
+}
