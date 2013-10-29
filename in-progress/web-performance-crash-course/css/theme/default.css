@@ -89,6 +89,24 @@ body {
   right: 150px;
 }
 
+.reveal #scavenge {
+  -webkit-transform: scale(0.2);
+  transform: scale(0.2);
+
+  position: absolute;
+  top: -100px;
+  left: 20px;
+}
+
+.reveal #mark-sweep {
+  -webkit-transform: scale(0.4);
+  transform: scale(0.4);
+
+  position: absolute;
+  top: -20px;
+  right: -20px;
+}
+
 .reveal #delays {
   margin-left: 14%;
 }
