@@ -48,6 +48,9 @@
 ## Narzędzia
 
 ### Co MUSZĘ powiedzieć?
+
+- Navigation Timing API - ważne z punktu widzenia metryk i informacji o połączeniu jakie posiada klient.
+
 ### Co WARTO powiedzieć?
 ### Nad czym się NIE rozwodzić?
 
