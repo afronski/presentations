@@ -464,8 +464,38 @@
             <h1>Parsowanie</h1>
             <aside class="notes">
               <ul>
-                <li>TODO: Blokujące skrypty (document.write) oraz sync, async, defer (+ obrazek).</li>
                 <li>TODO: Prezentacja jak wygląda ładowanie.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Skrypty</h1>
+            <img src="img/async-defer-regular.png" alt="Difference between async, defer and regular" />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Jeśli parser napotka definicję klasycznego skryptu (odwołującego się do zasobu sieciowego lub inline), przerywa proces parsowania i wykonuje skrypt.
+                </li>
+                <li>
+                  Przy klasycznym podejściu zalecano aby wszystkie skrypty, które do działania potrzebują pełną wiedzę o drzewie DOM umieszczać przed zamykającym znacznikiem body.
+                </li>
+                <li>
+                  Obecnie możemy wykorzystać do tego atrybut defer lub async, należy jednak zwrócić na różnicę między nimi.
+                </li>
+                <li>
+                  Defer ściąga zasób w tle nie przerywając parsowania i odkłada wykonanie skryptu do momentu ściagnięcia i przetworzenia całego markupu.
+                </li>
+                <li>
+                  Async ściąga zasób w tle i po zakończeniu tej operacji wykonuje skrypt.
+                </li>
+                <li>
+                  W nielicznych przypadkach (takich jak np. Google Analytics) uzasadnione jest pozostawienie skryptu wewnątrz znacznika head.
+                </li>
+                <li>
+                  Najlepszym podejściem jest pobranie tylko niezbędnych i najpopularniejszych skryptów z użyciem async/defer, natomiast resztę powinniśmy ściągnąć na żądanie, tuż przed lub w momencie wykonania operacji przez użytkownika - dzięki temu unikniemy tzw. script bomb, czyli jednego, wielkiego pliku JavaScript umieszczonego tuż przed znacznikiem zamykającym.
+                </li>
               </ul>
             </aside>
           </section>

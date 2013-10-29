@@ -22,6 +22,9 @@
 
 ### Co MUSZĘ powiedzieć?
 
+- Opisać różnicę między regular/async/defer.
+- Powiedzieć o ściąganiu skryptów na żądanie (on demand).
+
 - Wiele rzeczy już jest oznaczonych do akceleracji sprzętowej przez przeglądarkę automatycznie.
   - CSS3 transforms/animations, video, canvas ...
 - Nie wrzucajmy wszystkiego na GPU!
@@ -42,6 +45,8 @@
 - Nie nadużywać CPU, GPU, WiFi, 3G / 4G dla urządzeń mobilnych, bo to znacząco obniża czas pracy na baterii.
 
 ### Nad czym się NIE rozwodzić?
+
+- Jakie biblioteki lub jak rozwiązać dociąganie skryptów on demand.
 
 - Jak wymuszać wrzucenie warstwy na GPU.
 
