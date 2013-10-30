@@ -4,7 +4,7 @@ Presentations
 Presentations which were presented internally in my current workplace:
 - *JavaScript Introduction* (2011)
 - *Why do we need node.js?* (2011)
-- *Performance analysis for web applications* (2012)
+- *Performance analysis for web applications* (2012, 2013)
 - *Node.js - hype or hope?* (2013)
 
 Presentation which were presented on conference IT Academic Days 2012 (at Poland, Sosnowiec):
