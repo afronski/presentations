@@ -5,6 +5,54 @@
   <title>Slooooow!</title>
 </head>
 <body>
+  <!-- <script src="http://localhost:8000/blocking.js"></script> -->
+  <button id="get">GET!</button>
+  <button id="post">POST!</button>
+
+  <div id="output"></div>
+
   <script type="text/javascript">
+    function get() {
+      var xhr= new XMLHttpRequest();
+
+      xhr.open("GET", "get-data");
+
+      xhr.onreadystatechange= function() {
+          if (this.readyState !== 4) {
+            return;
+          }
+
+          if (this.status !== 200) {
+            return;
+          }
+
+          document.getElementById("output").innerHTML = this.responseText;
+      };
+
+      xhr.send();
+    }
+
+    function post() {
+      var xhr= new XMLHttpRequest();
+
+      xhr.open("POST", "/post");
+
+      xhr.onreadystatechange= function() {
+          if (this.readyState !== 4) {
+            return;
+          }
+
+          if (this.status !== 200) {
+            return;
+          }
+
+          document.getElementById("output").innerHTML = this.responseText;
+      };
+
+      xhr.send("SOME STUFF");
+    }
+
+    document.querySelector("#get").addEventListener("click", get);
+    document.querySelector("#post").addEventListener("click", post);
   </script>
 </body>
