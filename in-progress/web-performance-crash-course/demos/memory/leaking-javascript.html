@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>JS Leak</title>
+</head>
+<body>
+  <button id="test">MOAR MEMORY!</button>
+
+  <script>
+    (function() {
+      window.hashtable = {};
+
+      document.querySelector("#test").addEventListener("click", function() {
+        window.hashtable[+(new Date())] = (function() {
+          var a = "Batman !" + new Array(100000).join("NaN") + "!";
+          var c = "Hello, World!";
+
+          return function() {
+            return c + a;
+          };
+        } ());
+      });
+    } ());
+  </script>
+</body>
+</html>
