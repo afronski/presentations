@@ -2,18 +2,22 @@ var http = require("http"),
     fileServer = require("node-static").Server,
     file = new fileServer("./");
 
-require('http').createServer(function (request, response) {
+function pushKitten(response, cat) {
+  cat.pipe(response);
+}
 
+function pipeKitten(request, response) {
+  var url = request.url.replace("-", ".");
+
+  console.log("Kitty, kitty, kitty ... %s", url);
+  http.get("http:/" + url, pushKitten.bind(null, response));
+}
+
+require("http").createServer(
+  function (request, response) {
     if (request.method === "GET" && request.url.indexOf("kitten") !== -1) {
-      setTimeout(function() {
-        console.log("http:/" + request.url.replace("-", "."));
-
-        http.get("http:/" + request.url.replace("-", "."), function(cat) {
-          cat.pipe(response);
-        });
-      }, 1000);
+      setTimeout(pipeKitten.bind(null, request, response), 1000);
     } else {
       file.serve(request, response);
     }
-
-}).listen(8000);
+  }).listen(8000);

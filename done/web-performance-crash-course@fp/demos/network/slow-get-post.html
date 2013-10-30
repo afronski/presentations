@@ -13,40 +13,40 @@
 
   <script type="text/javascript">
     function get() {
-      var xhr= new XMLHttpRequest();
+      var xhr = new XMLHttpRequest();
 
       xhr.open("GET", "get-data");
 
       xhr.onreadystatechange= function() {
-          if (this.readyState !== 4) {
-            return;
-          }
+        if (this.readyState !== 4) {
+          return;
+        }
 
-          if (this.status !== 200) {
-            return;
-          }
+        if (this.status !== 200) {
+          return;
+        }
 
-          document.getElementById("output").innerHTML = this.responseText;
+        document.getElementById("output").innerHTML = this.responseText;
       };
 
       xhr.send();
     }
 
     function post() {
-      var xhr= new XMLHttpRequest();
+      var xhr = new XMLHttpRequest();
 
       xhr.open("POST", "/post");
 
       xhr.onreadystatechange= function() {
-          if (this.readyState !== 4) {
-            return;
-          }
+        if (this.readyState !== 4) {
+          return;
+        }
 
-          if (this.status !== 200) {
-            return;
-          }
+        if (this.status !== 200) {
+          return;
+        }
 
-          document.getElementById("output").innerHTML = this.responseText;
+        document.getElementById("output").innerHTML = this.responseText;
       };
 
       xhr.send("SOME STUFF");
@@ -56,3 +56,4 @@
     document.querySelector("#post").addEventListener("click", post);
   </script>
 </body>
+</html>

@@ -9,29 +9,29 @@
   <script>
     (function() {
       function play() {
-        var i, element;
-
-        var createdElements = {};
-        var events = [];
+        var i,
+            element,
+            createdElements = {},
+            events = [];
 
         function attachAlert(element) {
-            element.onclick = function() { alert(element.innerHTML); };
+          element.onclick = function() { alert(element.innerHTML); };
         }
 
         function reallyBadAttachAlert(element) {
-            return function() { alert(element.innerHTML); };
+          return function() { alert(element.innerHTML); };
         }
 
         for (i = 0; i < 1000; i++) {
-            element = document.createElement('div');
-            element.innerHTML = i;
+          element = document.createElement("div");
+          element.innerHTML = i;
 
-            attachAlert(element);
-            createdElements['div' + i] = element;
+          attachAlert(element);
+          createdElements["div" + i] = element;
 
-            event = reallyBadAttachAlert(element);
-            events.push(event);
-            element.onclick = event;
+          event = reallyBadAttachAlert(element);
+          events.push(event);
+          element.onclick = event;
         }
       }
 
