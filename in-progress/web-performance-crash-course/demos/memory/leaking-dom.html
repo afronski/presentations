@@ -2,24 +2,41 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>JS Leak</title>
+  <title>DOM leak</title>
 </head>
 <body>
-  <button id="test">MOAR MEMORY!</button>
-
+  <button id="test">Play!</button>
   <script>
-    window.hashtable = {};
+    (function() {
+      function play() {
+        var i, element;
 
-    document.querySelector("#test").addEventListener("click", function() {
-      window.hashtable[+(new Date())] = (function() {
-        var a = "Batman !" + new Array(100000).join("NaN") + "!";
-        var c = "Hello, World!";
+        var createdElements = {};
+        var events = [];
 
-        return function() {
-          return c;
-        };
-      } ());
-    }
+        function attachAlert(element) {
+            element.onclick = function() { alert(element.innerHTML); };
+        }
+
+        function reallyBadAttachAlert(element) {
+            return function() { alert(element.innerHTML); };
+        }
+
+        for (i = 0; i < 1000; i++) {
+            element = document.createElement('div');
+            element.innerHTML = i;
+
+            attachAlert(element);
+            createdElements['div' + i] = element;
+
+            event = reallyBadAttachAlert(element);
+            events.push(event);
+            element.onclick = event;
+        }
+      }
+
+      document.querySelector("#test").addEventListener("click", play);
+    } ());
   </script>
 </body>
 </html>
