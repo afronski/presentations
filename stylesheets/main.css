@@ -1,0 +1,101 @@
+@import url(http://fonts.googleapis.com/css?family=News+Cycle&subset=latin,latin-ext);
+@import url(http://fonts.googleapis.com/css?family=Sniglet&subset=latin,latin-ext);
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'News Cycle', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  color: #1C140D;
+  background-color: #F2E9E1;
+}
+
+a, a:link {
+  color: #2F615E;
+  text-decoration: none;
+}
+
+a:active {
+  color: #2F615E;
+}
+
+a:visited {
+  color: #2F615E;
+}
+
+a:hover {
+  color: #2F615E;
+  text-decoration: underline;
+}
+
+.mobile-link {
+  display: none;
+}
+
+.talk-list {
+  min-height: 400px;
+
+  margin: 20px 0 0 120px;
+  padding: 0;
+
+  list-style: none;
+}
+
+.talk-list li time {
+  display: inline-block;
+
+  width: 90px;
+  margin-right: 15px;
+
+  color: #888888;
+
+  text-align: right;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sniglet', sans-serif;
+  font-weight: normal;
+
+  text-align: center;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+footer {
+  color: #888888;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+@media screen and (max-width: 50em) {
+  .mobile-link {
+    display: block;
+    margin-bottom: 10px
+  }
+
+  .container {
+    min-width: auto;
+    margin: 0;
+  }
+
+  footer {
+    position: static;
+    margin-top: 25px;
+  }
+
+  .posts-list li time {
+    margin: 0;
+  }
+}
