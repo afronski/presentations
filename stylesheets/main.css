@@ -85,6 +85,15 @@ footer {
     margin-bottom: 10px
   }
 
+  .talk-list {
+    min-height: auto;
+
+    margin: 20px 0 0 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
   .container {
     min-width: auto;
     margin: 0;
