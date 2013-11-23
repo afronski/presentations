@@ -44,7 +44,7 @@ a:hover {
 .talk-list {
   min-height: 400px;
 
-  margin: 20px 0 0 120px;
+  margin: 20px 0 20px 120px;
   padding: 0;
 
   list-style: none;
@@ -88,10 +88,26 @@ footer {
   .talk-list {
     min-height: auto;
 
-    margin: 20px 0 0 0;
+    margin: 20px 0 20px 0;
     padding: 0;
 
     list-style: none;
+  }
+
+  .talk-list li time {
+    margin-right: 5px;
+    vertical-align: top;
+  }
+
+  .talk-list li a {
+    width: 12em;
+    display: inline-block;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    overflow: hidden;
+    padding-right: 10px;
   }
 
   .container {
