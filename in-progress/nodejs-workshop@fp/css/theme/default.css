@@ -12,6 +12,24 @@ body {
   top: -9999em;
 }
 
+.reveal section.theory {
+  color: #333333;
+}
+
+.reveal .theory h1,
+.reveal .theory h2,
+.reveal .theory h3,
+.reveal .theory h4,
+.reveal .theory h5,
+.reveal .theory h6 {
+  color: #333333;
+  text-shadow: 0px 0px 6px rgba(20, 20, 20, 0.6);
+}
+
+.reveal .green-text {
+  color: #52A617;
+}
+
 .reveal .notDisplayed {
   visibility: hidden !important;
 }

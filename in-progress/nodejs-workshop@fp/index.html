@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <title>Node.js Workshop - 2014</title>
 
-    <meta name="description" content="Node.js workshop - 2014 - Made after presntation 'Node.js - hype or hoper?'">
-    <meta name="author" content="Wojciech Gawroński">
+    <meta name="description" content="Node.js workshop - 2014 - Made after presentation 'Node.js - hype or hope?'" />
+    <meta name="author" content="Wojciech Gawroński" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link href="http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto&subset=latin,latin-ext"
-          rel="stylesheet" type="text/css">
+          rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="css/reveal.css" />
     <link rel="stylesheet" href="css/TangleKit.css" />
@@ -206,15 +206,23 @@
       <div class="slides">
         <section>
           <h2>Node.js Workshop</h2>
-          <h3>Hype or hope? <span class="fragment">Fun ;)</span></h3>
+          <h3>Hype or hope? <span class="fragment"><b class="green-text">Fun ;)</b></span></h3>
+
+          <img src="img/NodeJsLogo.png" alt="Node.js logo" />
+
           <span class="license">
-            Wojciech Gawroński, 2014 &copy; License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+            Wojciech Gawroński - 2014 &copy; License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
           </span>
           <aside class="notes">
             <ul>
-              <li>Witam Was na warsztacie dotyczącym Node.js.</li>
+              <li>Welcome to the Node.js workshop at Future-Processing!</li>
               <li>
-                Zajmiemy się dzisiaj stworzeniem serwera dla gry akcji rozgrywanej w trybie multiplayer w czasie rzeczywistym. Poznamy wszystkie charakterystyczne dla Node.js konstrukcje i jednocześnie pod koniec zajęć uzyskamy działającą aplikację.
+                Today we will create server side code for multi-player arcade / action real-time game. We will discover best practices, patterns and characteristic behaviors for this platform. After all exercises, which I hope will be entertaining, we will play together!
+              </li>
+              <li>
+                If you have any questions - do not hesitate to interrupt me.</li>
+              <li>
+                So - let's start!
               </li>
             </ul>
           </aside>
@@ -222,67 +230,135 @@
 
         <section>
 
-          <section class="section-header">
-            <h1>Oznaczenia</h1>
+          <section class="theory">
+            <h1>Organization and Theory</h1>
 
             <aside class="notes">
               <ul>
                 <li>
-                  Zanim przejdziemy do zadań, chciałbym przybliżyć oznaczenia wykorzystywane w prezentacji.
+                  Before we start, I would like to describe how workshop is organized.
                 </li>
                 <li>
-                  Niebieski kolor przyporządkowany jest do nagłówka nowej sekcji.
+                  White color is associated with technical details, theory and introductory informations.
                 </li>
               </ul>
             </aside>
           </section>
 
-          <section class="good">
-            <h1>Dobra rada</h1>
+          <section class="theory">
+            <pre><code data-trim class="javascript" data-linenos>
+function sampleCode(request, response) {
+  if (request.path.indexOf("Is it readable?") !== -1) {
+    usersService.getAnswer(request.path, function(error, answer) {
+      if (answer === "YES") {
+        response.setStatusCode(200);
+        response.send("Move forward.");
+      } else {
+        //
+        // It is not acceptable!
+        //
+        response.setStatusCode(406);
+        response.send("Increase font size.");
+      }
+    });
+  }
+}
+            </code></pre>
+          </section>
+
+          <section class="task">
+            <h1>Tasks<h1>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  On yellow slides we will have actual task with detailed description, sometimes with useful tips.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Solutions</h1>
 
             <aside class="notes">
               <li>
-                Na zielonych slajdach będą zamieszczone dobre rady i wskazówki.
+                On green background I posted solutions, best practices, answers and explanations.
               </li>
             </aside>
           </section>
 
-          <section class="warning">
-            <h1>Uwaga!<h1>
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>Prerequisites</h1>
 
             <aside class="notes">
               <ul>
-                <li>
-                  Na żółto - ostrzeżenia.
-                </li>
+                <li>Quick checklist verification that we are on the same ground.</li>
               </ul>
             </aside>
           </section>
 
-          <section class="bad">
-            <h1>Złe podejście</h1>
+          <section class="theory">
+            <h2>Git</h2>
 
             <aside class="notes">
-              <ul>
-                <li>
-                  Złe podejście do problemu (wskazówka jak "nie robić") będą zamieszczone na slajdach w kolorze pomarańczowym.
-                </li>
-              </ul>
+              <li>CHECK: Git command availability</li>
+              <li>PROCEED: Git configuration</li>
             </aside>
           </section>
 
+          <section class="theory">
+            <h2>Node.js</h2>
+
+            <aside class="notes">
+              <li>CHECK: Node.js version - 0.10.24</li>
+              <li>CHECK: NPM availability</li>
+              <li>CHECK: NVM availability</li>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Sources and "Workshopper"</h2>
+
+            <aside class="notes">
+              <li>PROCEED: Install grunt-cli</li>
+              <li>PROCEED: Clone mighty-penguins-revenge repository</li>
+              <li>PROCEED: Clone and install "Workshopper" module</li>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>UNIX-crash-course</h2>
+
+            <aside class="notes">
+              <ul>
+                <li>QUESTION: How many people are familiar with UNIX ?</li>
+                <li>PROCEED: Quick crash course on simplest commands.</li>
+                <li>
+                  PROCEED: Quick crash course on simple and useful tools.
+                  <ul>
+                    <li>curl</li>
+                    <li>netcat</li>
+                  </ul>
+                </li>
+              </ul>
+            </aside>
         </section>
 
         <section>
-          <h1>Pytania?</h1>
+          <h1>Questions?</h1>
         </section>
 
         <section>
-          <h2>Dziękuję za uwagę!</h2>
-          <h4>Odniesienia dla <em>ciekawskich </em>:</h4>
+          <h2>Thank you!</h2>
+          <h4><em>References </em>:</h4>
           <ul class="links">
             <li>
-              <a href="http://jawsjs.com/">Jaws</a>
+              <a href="http://jawsjs.com/">Jaws</a> - a 2D game library powered by HTML5.
             </li>
           </ul>
         </section>
@@ -293,8 +369,7 @@
     <script src="js/reveal.min.js"></script>
 
     <script>
-      var BLUE = "#63ABF0",
-          RED = "#FA5F0C",
+      var WHITE = "#EFEFEF",
           GREEN = "#52A617",
           YELLOW = "#FFC03C";
 
@@ -315,10 +390,9 @@
         element.setAttribute("data-background", color);
       }
 
-      getArrayOfDomElements(".section-header").forEach(applyColor.curry(BLUE));
-      getArrayOfDomElements(".good").forEach(applyColor.curry(GREEN));
-      getArrayOfDomElements(".bad").forEach(applyColor.curry(RED));
-      getArrayOfDomElements(".warning").forEach(applyColor.curry(YELLOW));
+      getArrayOfDomElements(".theory").forEach(applyColor.curry(WHITE));
+      getArrayOfDomElements(".explanation").forEach(applyColor.curry(GREEN));
+      getArrayOfDomElements(".task").forEach(applyColor.curry(YELLOW));
 
       Reveal.initialize({
         controls: true,
@@ -327,7 +401,7 @@
         center: true,
 
         theme: "default",
-        transition: "slide",
+        transition: "linear",
         transitionSpeed: "fast",
         backgroundTransition: "linear",
 
