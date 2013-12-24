@@ -217,10 +217,10 @@
             <ul>
               <li>Welcome to the Node.js workshop at Future-Processing!</li>
               <li>
-                Today we will create server side code for multi-player arcade / action real-time game. We will discover best practices, patterns and characteristic behaviors for this platform. After all exercises, which I hope will be entertaining, we will play together!
+                Today we will create server side code for multi-player arcade / action, real-time game. We will discover best practices, patterns and characteristic behaviors for this platform. After all exercises and building complete game, which I hope will be entertaining, we will play together!
               </li>
               <li>
-                If you have any questions - do not hesitate to interrupt me.</li>
+                If you have any questions - do not hesitate to interrupt me anytime.</li>
               <li>
                 So - let's start!
               </li>
@@ -246,7 +246,7 @@
           </section>
 
           <section class="theory">
-            <pre><code data-trim class="javascript" data-linenos>
+            <pre><code data-trim class="javascript">
 function sampleCode(request, response) {
   if (request.path.indexOf("Is it readable?") !== -1) {
     usersService.getAnswer(request.path, function(error, answer) {
@@ -264,6 +264,11 @@ function sampleCode(request, response) {
   }
 }
             </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Is it readable?</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="task">
@@ -273,6 +278,9 @@ function sampleCode(request, response) {
               <ul>
                 <li>
                   On yellow slides we will have actual task with detailed description, sometimes with useful tips.
+                </li>
+                <li>
+                  Do not hesitate to write new unit tests for any task.
                 </li>
               </ul>
             </aside>
@@ -293,6 +301,45 @@ function sampleCode(request, response) {
         <section>
 
           <section class="theory">
+            <h2>UNIX-crash-course</h2>
+
+            <pre><code data-trim class="bash fragment">
+$ touch NEW_FILE
+$ mv SOURCE DESTINATION
+$ cp SOURCE DESTINATION
+$ rm -ri FILES_FOR_DELETING
+
+$ cp /path/{1,2,3}.txt DESTINATION
+$ mv /path/*.tar.gz DESTINATION
+
+$ cat BIG_FILE | grep -i CASE_INSENSITIVE_TEXT
+$ find DIRECTORY -iname *CASE_INSENSITIVE_PART_OF_NAME"
+
+$ nohup ./run-in-background &amp;
+$ ./run-script.sh > /dev/null
+
+$ curl -X POST -d "DATA" "http://localhost:8080/my/rest/api"
+$ netcat sql-server-hostname 1433
+$ wget -O OUTPUT_FILE http://http/address/to/file
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>QUESTION: How many people are familiar with UNIX ?</li>
+                <li>PROCEED: Quick crash course on simplest commands.</li>
+                <li>
+                  PROCEED: Quick crash course on simple and useful tools.
+                  <ul>
+                    <li>curl</li>
+                    <li>netcat</li>
+                    <li>wget</li>
+                  </ul>
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
             <h1>Prerequisites</h1>
 
             <aside class="notes">
@@ -305,6 +352,13 @@ function sampleCode(request, response) {
           <section class="theory">
             <h2>Git</h2>
 
+            <pre><code data-trim class="bash">
+$ git --version
+
+$ git config --global user.name "Jasiu Nowak"
+$ git config --global user.email "jnowak@company.com"
+            </code></pre>
+
             <aside class="notes">
               <li>CHECK: Git command availability</li>
               <li>PROCEED: Git configuration</li>
@@ -313,6 +367,12 @@ function sampleCode(request, response) {
 
           <section class="theory">
             <h2>Node.js</h2>
+
+            <pre><code data-trim class="bash">
+$ node --version
+$ npm --version
+$ nvm
+            </code></pre>
 
             <aside class="notes">
               <li>CHECK: Node.js version - 0.10.24</li>
@@ -324,33 +384,62 @@ function sampleCode(request, response) {
           <section class="theory">
             <h2>Sources and "Workshopper"</h2>
 
+            <pre><code data-trim class="bash">
+$ npm install -g jshint grunt-cli istanbul
+
+$ git clone git@github.com:afronski/mighty-penguins-revenge.git
+
+$ git clone git@github.com:afronski/node-js-greenhorn-workshopper.git
+$ cd node-js-greenhorn-workshopper
+$ npm install -g
+            </code></pre>
+
             <aside class="notes">
-              <li>PROCEED: Install grunt-cli and istanbul</li>
+              <li>PROCEED: Install jshint, grunt-cli and istanbul</li>
               <li>PROCEED: Clone mighty-penguins-revenge repository</li>
               <li>PROCEED: Clone and install "Workshopper" module</li>
             </aside>
           </section>
 
-          <section class="theory">
-            <h2>UNIX-crash-course</h2>
+        </section>
+
+        <section>
+
+          <section class="task">
+            <h1>Task 0<h1>
 
             <aside class="notes">
               <ul>
-                <li>QUESTION: How many people are familiar with UNIX ?</li>
-                <li>PROCEED: Quick crash course on simplest commands.</li>
                 <li>
-                  PROCEED: Quick crash course on simple and useful tools.
-                  <ul>
-                    <li>curl</li>
-                    <li>netcat</li>
-                  </ul>
                 </li>
               </ul>
             </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="task">
+            <h1>Task 1<h1>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                </li>
+              </ul>
+            </aside>
+          </section>
+
         </section>
 
         <section>
           <h1>Questions?</h1>
+        </section>
+
+        <section>
+          <h2>Remember about survey!</h2>
+          <h3>Feedback? Send me <a href="mailto:wgawronski@future-processing.com">an email</a>.</h3>
         </section>
 
         <section>
