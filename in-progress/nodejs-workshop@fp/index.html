@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Node.js Workshop - 2014</title>
+    <title>FDD Workshop - Node.js - 2014</title>
 
-    <meta name="description" content="Node.js workshop - 2014 - Made after presentation 'Node.js - hype or hope?'" />
+    <meta name="description" content="FDD workshop - 2014 - Made after presentation 'Node.js - hype or hope?'" />
     <meta name="author" content="Wojciech Gawroński" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -205,13 +205,13 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h2>Node.js Workshop</h2>
-          <h3>Hype or hope? <span class="fragment"><b class="green-text">Fun ;)</b></span></h3>
+          <h2>FDD 2013 - Workshop</h2>
+          <h3>"Node.js - hype or hope?" <span class="fragment"><b class="green-text">Fun ;)</b></span></h3>
 
           <img src="img/NodeJsLogo.png" alt="Node.js logo" />
 
           <span class="license">
-            Wojciech Gawroński - 2014 &copy; License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+            Wojciech Gawroński - 2014 &copy; License : <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
           </span>
           <aside class="notes">
             <ul>
@@ -430,11 +430,176 @@ $ node-js-greenhorn-workshopper
         <section>
 
           <section class="theory">
-            <h3>Serving static content</h3>
+            <h3>"JavaScript 2.0"</h3>
+
+            <pre><code data-trim class="javascript">
+"use strict";
+
+const PI = 3.14;
+
+var util = require("util");
+
+function Animal(options) {}
+
+function Dog(options) {
+    Animal.call(this, options);
+}
+
+util.inherits(Dog, Animal);
+
+var doge = Object.create(Dog.prototype),
+    doggyDoge = new Dog();
+            </code></pre>
 
             <aside class="notes">
               <ul>
-                <li>TODO</li>
+                <li>
+                  MENTION: In Node.js we have got full power of language, we have to stick to the one JavaScript engine, you can use the newest language features like Generators, Proxies, Object.observe etc.
+                </li>
+                <li>MENTION: "use strict";</li>
+                <li>MENTION: Wrappers for prototypical inheritance.</li>
+                <li>MENTION: ECMAScript 5 and higher versions (Object.create, const).</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>"JavaScript 2.0"</h3>
+
+            <pre><code data-trim class="javascript">
+"use strict";
+
+var http = require("http"),
+    links = [ "http://first-link.com", "http://second-link.com" ],
+    loaded;
+
+function isTrue(element) { return element === true; }
+
+function loaded(index, response) {
+    loaded[index] = (response.statusCode === 200);
+
+    if (loaded.every(isTrue)) {
+        console.log("All links downloaded successfully!");
+    }
+}
+
+loaded = links.map(function (link, index) {
+                       http.get(link, loaded.bind(null, index));
+                       return false;
+                   });
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Modules and Common JS.</li>
+                <li>
+                  MENTION: Full support for higher order functions and helpers. No more poly fills and uncertainty when using very useful helpers like Function.prototype.bind or Array.isArray etc.
+                </li>
+                <li>DISCUSS: You can benefit from purely functional programming style.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Tools</h1>
+
+            <ul>
+              <li><a href="http://npmjs.org">NPM</a></li>
+              <li class="fragment"><a href="https://github.com/creationix/nvm">NVM</a></li>
+              <li class="fragment"><a href="http://www.jshint.com/">jsHint</a></li>
+              <li class="fragment"><a href="http://gruntjs.com/">grunt</a></li>
+              <li class="fragment"><a href="https://github.com/trentm/json">jsontool</a></li>
+              <li class="fragment"><a href="https://github.com/nodejitsu/forever">forever</a></li>
+              <li class="fragment"><a href="http://yeoman.io/">yeoman</a></li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: Amazing tool chain created by skilled developers, based on Node.js and also useful when developing stuff with this platform.
+                </li>
+                <li>
+                  MENTION: Node Packaged Modules - tool for managing dependencies. It is a kind of 'gem' / 'NuGet' / 'maven' for Node.js.
+                </li>
+                <li>
+                  MENTION: Node Version Manager - Useful tool for using the same versions of Node.js at one machine. Similar to the RVM (Ruby Version Manager).
+                </li>
+                <li>MENTION: jsHint - which helps increasing and keeping quality of JavaScript code.</li>
+                <li>MENTION: grunt - which is incredibly useful and well-maintained task automation tool.</li>
+                <li>MENTION: jsontool - UNIX-way compatible tool for validating, pretty-printing JSON.</li>
+                <li>MENTION: forever - which is battle-proofed process monitor created by Nodejitsu.</li>
+                <li>
+                  MENTION: yeoman - which is tool for bootstrapping and extending existing projects, by automating repeatable stuff related with e.g. module creation, creating new tests etc. Depending on used generators, it can be similar to the 'rails' command for Ruby on Rails ;).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Dependencies</h1>
+
+            <h3><a href="http://semver.org">Semantic Versioning</a></h3>
+            <h3>package.json</h3>
+
+            <pre><code class="javascript">
+"dependencies": {
+  "underscore": "~1.3.0"
+},
+
+"devDependencies": {
+  "mocking-framework": "1.x.x"
+}
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>There are two important concepts when it comes to the Dependency Management.</li>
+                <li>'Semantic Versioning' for internal and external dependencies.</li>
+                <li>File 'package.json' for managing dependencies for production and development.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Useful Modules</h2>
+
+            <ul>
+              <li class="fragment"><a href="https://github.com/substack/node-optimist">optimist</a></li>
+              <li class="fragment"><a href="https://github.com/isaacs/readable-stream">readable-stream</a></li>
+              <li class="fragment"><a href="https://github.com/visionmedia/express">express</a></li>
+              <li class="fragment"><a href="https://github.com/mikeal/request">request</a></li>
+              <li class="fragment"><a href="https://github.com/visionmedia/should.js/">should.js</a></li>
+              <li class="fragment"><a href="https://github.com/visionmedia/mocha">mocha</a></li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: optimist - module for managing command line arguments.</li>
+                <li>MENTION: readable-stream - wrapper and polyfill for older Node.js version for Streams API.</li>
+                <li>MENTION: express - Sinatra inspired web development framework for Node.js.</li>
+                <li>MENTION: request - API for making HTTP calls.</li>
+                <li>MENTION: should.js - Library for providing fluent API to the assertions.</li>
+                <li>MENTION: mocha - Test framework and runner for Node.js.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Serving static content</h2>
+            <h3>Requirements</h3>
+
+            <ul class="fixed">
+              <li><span><code>src</code>, <code>libraries</code></span> JavaScript files</li>
+              <li><span><code>images</code></span> Images</li>
+              <li><span><code>sounds</code>, <code>music</code></span> Sound and music files</li>
+              <li><span><code>stylesheets</code></span> CSS</li>
+              <li><span><code>client</code></span> HTML files</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>In our task we need to serve various static assets from specified directories.</li>
+                <li>HINT: Read documentation of express.</li>
               </ul>
             </aside>
           </section>
@@ -447,12 +612,12 @@ $ cd mighty-penguins-revenge
 $ git checkout tags/TASK_1
             </code></pre>
 
-            <h3>1 assignment = 15 minutes</h3>
+            <h3>1 assignment = 10 minutes</h3>
 
             <aside class="notes">
               <ul>
                 <li>Basing on the theory that I said we can move to the next assignment.</li>
-                <li>PROCEED: 1 assignment in 15 minutes.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
               </ul>
             </aside>
           </section>

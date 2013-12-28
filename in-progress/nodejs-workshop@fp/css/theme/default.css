@@ -16,6 +16,13 @@ body {
   color: #333333;
 }
 
+.reveal .fixed li span {
+  display: inline-block;
+  width: 300px;
+
+  margin-right: 30px;
+}
+
 .reveal .theory h1,
 .reveal .theory h2,
 .reveal .theory h3,
@@ -455,10 +462,18 @@ body {
   -o-transition: color .15s ease;
   transition: color .15s ease; }
 
+.reveal .theory a:not(.image) {
+  color: #22F;
+}
+
 .reveal a:not(.image):hover {
   color: #71e9f4;
   text-shadow: none;
   border: none; }
+
+.reveal .theory a:not(.image):hover {
+  color: #77F;
+}
 
 .reveal .roll span:after {
   color: #fff;
