@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -1203,11 +1203,73 @@ cache.exposeStream(file).pipe(response);
         <section>
 
           <section class="theory">
-            <h3>Domains and Errors Handling</h3>
+            <h2>Error Handling</h2>
+
+            <pre><code data-trim class="javascript">
+asynchronousAction(parameters, function (error, results) {
+    if (error) {
+        continuation(error);
+        return;
+    }
+
+    asynchronousAction(parameters, function (error) {
+        if (error) {
+            continuation(error);
+            return;
+        }
+
+        asynchronousAction(function (error, results) {
+            if (error) {
+                continuation(error);
+                return;
+            }
+
+            // WTF ???
+            </code></pre>
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  MENTION: Error in asynchronous operations can be exceptionally painful. Execution flow is not sequential so for error, continuation callback should be notified each time at different phase, that something went wrong.
+                </li>
+                <li>MENTION: Callback hell.</li>
+                <li>
+                  MENTION: What is more dangerous and nasty - throwing an exception (synchronously) will explode the flow and do not invoke continuation until we catch this deliberately.
+                </li>
+                <li>
+                  MENTION: Enough? There is more! How we will manage resources (connections, timers etc.) in such situations? It is a nightmare and this provides big flame to this platform because of people which are not aware of that situation (called further "Ruby programmers").
+                </li>
+                <li>
+                  MENTION: People are abusing "uncaughtException" handler like in the C++ community in order to prevent applications from crashing instead of properly manage the error flow or letting application crash and reboot by external service with new, clean and valid state.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Domains</h1>
+
+            <p class="left-alignment">
+              <span class="bolded">Domains</span> provide a way to handle multiple different I/O operations as a single group.
+            </p>
+
+            <h2 class="spaced-from-top fragment">Resources? RAII</h2>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Simplest definition for domain concept is on the slide.</li>
+                <li>
+                  MENTION: We can "centralize" our error handling approach for group of I/O calls. We can automatically capture certain resources like Timers or Event Emitters and clean-up them when they were used somewhere inside domain.
+                </li>
+                <li>
+                  MENTION: We can easily capture and wrap each asynchronous callback in order to process the errornous state in the same way.
+                </li>
+                <li>
+                  MENTION: Connections with the C++ idiom called RAII (Resource-Acquisition-Is-Initialization) are correct and proper!
+                </li>
+                <li>
+                  MENTION: No more abusing "uncaughtException" handler! It leaves application in unstable and undetermined state.
+                </li>
               </ul>
             </aside>
           </section>
@@ -1225,8 +1287,8 @@ $ git checkout tags/TASK_5
 
             <aside class="notes">
               <ul>
-                <li>
-                </li>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
               </ul>
             </aside>
           </section>
@@ -1235,9 +1297,26 @@ $ git checkout tags/TASK_5
             <h1>Task 5</h1>
             <h3>Domains</h3>
 
+            <pre><code data-trim class="javascript">
+var domain = require("domain"),
+    handler = domain.create();
+
+handler.on("error", function(error) { /*...*/ });
+
+asynchronousAction(parameters, handler.intercept(function (results) {
+    asynchronousAction(parameters, handler.intercept(function () {
+        asynchronousAction(handler.intercept(function (results) {
+            /*...*/
+        }));
+    }));
+}));
+            </code></pre>
+
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  MENTION: Domain allows to centralize error handling and count up whole usage for resources and properly deal with them when it comes to unwind the stack for asynchronous and synchronous exceptions and errors.
+                </li>
               </ul>
             </aside>
           </section>

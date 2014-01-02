@@ -16,6 +16,19 @@ body {
   color: #333333;
 }
 
+.reveal .left-alignment {
+  text-align: justify;
+}
+
+.reveal .left-alignment .bolded {
+  font-weight: bold;
+  color: #8CC84B;
+}
+
+.reveal .spaced-from-top {
+  margin-top: 120px;
+}
+
 .reveal .fixed li span {
   display: inline-block;
   width: 300px;
