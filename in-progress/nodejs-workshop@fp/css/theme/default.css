@@ -41,6 +41,15 @@ body {
   visibility: hidden !important;
 }
 
+.reveal .logo-image {
+  zoom: 2.2;
+}
+
+.reveal .fixed-width {
+  width: 500px;
+  margin: 0 auto;
+}
+
 .reveal #sendEvents {
   font-size: 1em;
   width: 400px;

@@ -606,6 +606,7 @@ loaded = links.map(function (link, index) {
 
           <section class="task">
             <h1>Task 1</h1>
+            <h3>Serving static content</h3>
 
             <pre><code data-trim class="bash">
 $ cd mighty-penguins-revenge
@@ -624,6 +625,7 @@ $ git checkout tags/TASK_1
 
           <section class="explanation">
             <h1>Task 1</h1>
+            <h3>Serving static content</h3>
 
             <img src="img/DuctTape.jpg" alt="Apollo 13 - 'Duct Tape' Solution" />
 
@@ -640,13 +642,320 @@ $ git checkout tags/TASK_1
 
         <section>
 
-          <section class="task">
-            <h1>Task 2</h1>
+          <section class="theory">
+            <h1>Storage</h1>
+
+            <div class="fragment">
+              <img src="img/LevelDbLogo.png" alt="LevelDB Logo" class="logo-image" />
+              <p>
+                <em>
+                  An open source, on-disk, key-value store<br/> written and maintained by Google
+                </em>
+              </p>
+              <pre class="fragment"><code data-trim class="javascript fixed-width">
+{
+          "key1": "value1",
+          "key2": "value2"
+}
+              </code></pre>
+            </div>
+
+            <aside class="notes">
+              <ul>
+                <li>DESCRIBE: LevelDB is a Key-Value store provided and developed by Google.</li>
+                <li>DESCRIBE: Key-Value store can be easily visualized as JavaScript Object.</li>
+                <li>MENTION: Association to JSON is right and valid.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Asynchronous I/O</h2>
+
+            <div id="apache"></div>
+            <div id="node"></div>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Asynchronous means "Non-blocking".</li>
+                <li>MENTION: Means also "Call me when it is done".</li>
+                <li>MENTION: It is difficult because it is not a normal flow.</li>
+              </ul>
+            </aside>
+
+            <script>
+              (function() {
+                var paper = Raphael("apache", 300, 300),
+                    font = function(color) {
+                      return {
+                        "font": "14px 'Roboto'",
+                        "font-weight": "bold",
+                        "fill": color
+                      };
+                    },
+                    which = 1,
+                    steps = [],
+                    rejectedArrow;
+
+                paper.rect(120, 40, 160, 160).attr({ fill: white });
+
+                paper.text(200, 87, "Apache").attr(font(black));
+                paper.text(70, 62, "Requests").attr(font(black));
+
+                paper.rightArrow(70, 80).attr({ fill: green });
+                rejectedArrow = paper.rightArrow(50, 160).attr({ fill: red });
+
+                steps.push({ path: createRightArrowPath(50, 160), fill: red });
+                steps.push({ path: createRightArrowPath(70, 160), fill: gray });
+
+                spinner(paper, 170, 70);
+
+                setInterval(function() {
+                  rejectedArrow.stop().animate(steps[+(which = !which)], 200);
+                }, 1000);
+              } ());
+
+              (function() {
+                var paper = Raphael("node", 300, 300),
+                    font = function(color) {
+                      return {
+                        "font": "14px 'Roboto'",
+                        "font-weight": "bold",
+                        "fill": color
+                      };
+                    },
+                    which = 1,
+                    acceptedWhich = 1,
+                    steps = [],
+                    acceptedSteps = [],
+                    clear,
+                    spinnerElement,
+                    acceptedArrow,
+                    rejectedArrow;
+
+                paper.rect(120, 40, 160, 160).attr({ fill: white });
+
+                paper.text(200, 87, "Node.js").attr(font(black));
+                paper.text(70, 62, "Requests").attr(font(black));
+
+                acceptedArrow = paper.rightArrow(70, 80).attr({ fill: green });
+                rejectedArrow = paper.rightArrow(50, 160).attr({ fill: gray });
+
+                steps.push({ path: createRightArrowPath(70, 160), fill: green });
+                steps.push({ path: createRightArrowPath(50, 160), fill: gray });
+
+                acceptedSteps.push({ path: createRightArrowPath(50, 80), fill: gray });
+                acceptedSteps.push({ path: createRightArrowPath(70, 80), fill: green });
+
+                spinner(paper, 170, 70);
+                spinnerElement = document.querySelector("#node svg g");
+
+                setInterval(function() {
+                  var object = steps[+(which = !which)]
+
+                  object.callback = function() {
+                    if (+which === 0) {
+                      spinnerElement.classList.remove("notDisplayed");
+                    }
+                  };
+
+                  if (+acceptedWhich === 0) {
+                    spinnerElement.classList.add("notDisplayed");
+                  }
+
+                  rejectedArrow.stop().animate(object, 500);
+                }, 590);
+
+                setInterval(function() {
+                  var object = acceptedSteps[+(acceptedWhich = !acceptedWhich)];
+
+                  object.callback = function() {
+                    if (+acceptedWhich !== 0) {
+                      spinnerElement.classList.remove("notDisplayed");
+                    }
+                  };
+
+                  if (+which !== 0) {
+                    spinnerElement.classList.add("notDisplayed");
+                  }
+
+                  acceptedArrow.stop().animate(object, 500);
+                }, 2000);
+              } ());
+            </script>
+          </section>
+
+          <section class="theory">
+            <h1>Event Loop</h1>
+            <h2>Reactor Pattern</h2>
+
+            <div id="event-loop"></div>
 
             <aside class="notes">
               <ul>
                 <li>
+                  MENTION: It is a continuous cycle of transforming events to requests which are made to I/O resources. Response from resource will processed when resource will finish and release it, but in the meantime we can dispatch another events to the resources.
                 </li>
+                <li>MENTION: Reactor pattern is another name for Event Loop.</li>
+                <li>
+                  MENTION: Event Loop (Reactor) is single-threaded by definition! Do not confuse them with multithreaded environments. There are approaches for providing this pattern to the multithreaded environments but there are much more complicated, and inefficient when it comes to the resource switching on classical architectures.
+                </li>
+              </ul>
+            </aside>
+
+            <script>
+              (function() {
+                var node = { stroke: nodeGreen, "stroke-width": 4 },
+                    nodeDashed = { stroke: nodeGreen, "stroke-width": 2, "stroke-dasharray": "-" },
+                    paper = Raphael("event-loop", 800, 400);
+
+                function randomFromArray(array) {
+                  return array[~~getRandomArbitary(0, array.length)];
+                }
+
+                paper.circle(400, 200, 120).attr(node);
+                paper.path(createTrianglePath(280, 180, 30)).attr({ fill: nodeGreen, stroke: "none" });
+
+                paper.text(400, 100, "Event\nloop").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": nodeGreen
+                });
+
+                paper.text(170, 67, "Queue").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 20, "Resources").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 50, "Database").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 82, "Disk").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 115, "Network").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 148, "Other").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.rect(110, 150, 120, 20).attr(node);
+                paper.rect(110, 175, 120, 20).attr(node);
+                paper.rect(110, 200, 120, 20).attr(node);
+                paper.rect(110, 225, 120, 20).attr(node);
+                paper.rect(110, 250, 120, 20).attr(node);
+
+                paper.rect(560, 60, 120, 265).attr(node);
+
+                paper.rect(570, 70, 100, 50).attr(nodeDashed);
+                paper.rect(570, 135, 100, 50).attr(nodeDashed);
+                paper.rect(570, 200, 100, 50).attr(nodeDashed);
+                paper.rect(570, 265, 100, 50).attr(nodeDashed);
+
+                event = paper.rect(110, 150, 120, 20).attr(nodeDashed);
+
+                function animation() {
+                  event = paper.rect(110, 150, 120, 20).attr(nodeDashed);
+
+                  event.stop().animate({
+                    x: 340, y: 45,
+                    callback: function() {
+                      event.stop().animate({
+                        x: 570, y: randomFromArray([ 70, 135, 200, 265 ]), width: 100, height: 50,
+                        callback: function() {
+                          event.stop().animate({
+                            x: 340, y: 340,
+                            callback: function() {
+                              event.stop().animate({
+                                x: 110, y: 250, width: 120, height: 20
+                              }, 2000);
+                            }
+                          }, 2000);
+                        }
+                      }, 2000);
+                    }
+                  }, 2000);
+                }
+
+                animation();
+                setInterval(animation, 9000);
+              } ());
+            </script>
+          </section>
+
+          <section class="theory">
+            <h3>Deleting entries from storage</h3>
+            <h4>Requirements</h4>
+
+            <ul class="fixed">
+              <li>Remove value from storage by provided <em>key</em>.</li>
+              <li>Use asynchronous API provided by LevelDB module.</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>In our task we need to delete key with value from database.</li>
+                <li>If module API is asynchronous, we should provide also asynchronous API.</li>
+                <li>HINT: Read documentation of node-levelup.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 2</h1>
+            <h3>Deleting entries from storage</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_2
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Task 2</h1>
+            <h3>Deleting entries from storage</h3>
+
+            <pre><code class="javascript">
+  // 1. First invoke an action.
+  asynchronousAction(parameters, function continuation(error, result) {
+      // 3. After a while, results will arrive.
+  });
+  // 2. Return from function.
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Node.js convention - "First possible error, then results".</li>
+                <li>MENTION: Non-sequential flow.</li>
+                <li>MENTION: Non-return Oriented Programming ;).</li>
               </ul>
             </aside>
           </section>
@@ -654,14 +963,53 @@ $ git checkout tags/TASK_1
         </section>
 
         <section>
+
+          <section class="theory">
+            <h1>Buffer</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Caching</h1>
+            <h2>Requirements</h2>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
 
           <section class="task">
             <h1>Task 3</h1>
+            <h3>Caching and Buffers</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_3
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
 
             <aside class="notes">
               <ul>
-                <li>
-                </li>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Task 3</h1>
+            <h3>Caching and Buffers</h3>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
               </ul>
             </aside>
           </section>
@@ -669,9 +1017,48 @@ $ git checkout tags/TASK_1
         </section>
 
         <section>
+
+          <section class="theory">
+            <h1>Stream</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Stream</h1>
+            <h2>Backpressure</h2>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>REST and HTTP headers</h2>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
 
           <section class="task">
             <h1>Task 4</h1>
+            <h3>Streams and HTTP</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_4
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
 
             <aside class="notes">
               <ul>
@@ -681,17 +1068,57 @@ $ git checkout tags/TASK_1
             </aside>
           </section>
 
+          <section class="explanation">
+            <h1>Task 4</h1>
+            <h3>Streams and HTTP</h3>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
         </section>
 
         <section>
 
+          <section class="theory">
+            <h3>Domains and Errors Handling</h3>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
           <section class="task">
             <h1>Task 5</h1>
+            <h3>Domains</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_5
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
 
             <aside class="notes">
               <ul>
                 <li>
                 </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Task 5</h1>
+            <h3>Domains</h3>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
               </ul>
             </aside>
           </section>
@@ -732,6 +1159,21 @@ $ git checkout tags/TASK_1
 
           <section class="task">
             <h1>Task 8</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="task">
+            <h1>Task 9</h1>
 
             <aside class="notes">
               <ul>
