@@ -967,20 +967,45 @@ $ git checkout tags/TASK_2
           <section class="theory">
             <h1>Buffer</h1>
 
+            <p><em>Pure JavaScript is Unicode friendly but not nice to binary data.</em></p>
+
+            <pre><code data-trim class="javascript">
+var buffer = new Buffer(256),
+    length = buffer.write("\u00bd + \u00bc = \u00be", 0);
+
+console.log(length + " bytes: " + buffer.toString("utf8", 0, length));
+Buffer.byteLength("JS string length returns characters count.", "utf8");
+            </code></pre>
+
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  MENTION: When dealing with TCP streams or the file system, it's necessary to handle octet streams.
+                </li>
+                <li>MENTION: Buffer is fixed-size and cannot be resized.</li>
+                <li>MENTION: Easy conversion to String - back and forth.</li>
+                <li>MENTION: Fixing JavaScript semantics (length for string returns characters count).</li>
+                <li>
+                  MENTION: All operations in Node.js, if they are dealing with networking, are returning instances of buffers.
+                </li>
               </ul>
             </aside>
           </section>
 
           <section class="theory">
             <h1>Caching</h1>
-            <h2>Requirements</h2>
+            <h3>Requirements</h3>
+
+            <ul class="fixed">
+              <li>Read all files collected from directory with provided pattern.</li>
+              <li>Cache in memory storage the received buffer with content.</li>
+            </ul>
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>MENTION: Reading all files asynchronously and wait for all to read.</li>
+                <li>MENTION: Receive a buffer (not a string) as a result when reading.</li>
+                <li>MENTION: Memory storage is just a JavaScript object hold in memory.</li>
               </ul>
             </aside>
           </section>
@@ -998,7 +1023,8 @@ $ git checkout tags/TASK_3
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
               </ul>
             </aside>
           </section>
@@ -1007,9 +1033,22 @@ $ git checkout tags/TASK_3
             <h1>Task 3</h1>
             <h3>Caching and Buffers</h3>
 
+            <pre><code data-trim class="javascript">
+fs.readFile("/path/to/file", function (error, buffer) {
+    /*...*/
+});
+
+fs.readFile("/path/to/file", "utf8", function (error, string) {
+    /*...*/
+});
+            </code></pre>
+
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>MENTION: In 'fs' module you can also receive a Buffer, instead of UTF8 string.</li>
+                <li>
+                  MENTION: Buffers and bitwise operations are properly explained by 'bytewiser' workshopper from page http://nodeschool.io which contains all workshops related with Note.js.
+                </li>
               </ul>
             </aside>
           </section>
@@ -1254,7 +1293,13 @@ $ git checkout tags/TASK_5
           <h4><em>References </em>:</h4>
           <ul class="links">
             <li>
-              <a href="http://jawsjs.com/">Jaws</a> - a 2D game library powered by HTML5.
+              <a href="http://nodejs.org">Node.js</a> - official Node.js page.
+            </li>
+            <li>
+              <a href="http://jawsjs.com/">Jaws</a> - the game library powered by HTML5.
+            </li>
+            <li>
+              <a href="http://nodeschool.io">nodeschool.io</a> - learn Node.js with interactive lessons.
             </li>
           </ul>
         </section>
