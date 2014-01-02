@@ -1058,28 +1058,99 @@ fs.readFile("/path/to/file", "utf8", function (error, string) {
         <section>
 
           <section class="theory">
-            <h1>Stream</h1>
+            <h1>Streams</h1>
+
+            <pre><code data-trim class="bash">
+$ cat file.txt | grep "CONTENT" | wc -l
+$ ./script 2>&amp;1 >/dev/null | tee DIFFERENT_FILE.txt
+            </code></pre>
+
+            <p>
+              <pre>We should have some ways of connecting programs like garden hose--screw in another segment when it becomes necessary to massage data in another way.</pre>
+            </p>
+            <em>Doug McIlroy, 1964</em>
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>MENTION: UNIX philosophy is an inspiration for Streams API in Node.js.</li>
+                <li>MENTION: In UNIX ecosystem we can deal on daily basis with streams.</li>
               </ul>
             </aside>
           </section>
 
           <section class="theory">
-            <h1>Stream</h1>
-            <h2>Backpressure</h2>
+            <h1>Streams</h1>
+            <h2>API</h2>
+
+            <img src="img/StreamsFirstTime.gif" alt="Reaction for first time with streams ;)"
+                 class="fragment image-over-slide-content" />
+
+            <pre><code data-trim class="javascript">
+// Different types of streams:
+// - Readable and Writable
+// - Transform and PassThrough
+// - Duplex
+
+stream.on("data", function(chunk) { /*...*/ });
+stream.on("end", function() { /*...*/ });
+stream.on("error", function() { /*...*/ });
+
+from.pipe(to);
+readable.pipe(writable);
+            </code></pre>
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  MENTION: We have got various types in API for use as an object and for a prototype for custom implementations.
+                </li>
+                <li>
+                  MENTION: Three events (data, end, error) are most important for consuming stream. Pattern of gathering whole content and pushing it somewhere else is so common, that it is provided as a method called 'pipe'.
+                </li>
+                <li>
+                  MENTION: 'stream-adventure' is an excellent way to learn 'stream oriented' way of programming. All associations related with functional programming are also correct. In order to avoid confusion and situation from the GIF file, I strongly recommend to finish these assignments.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Streams</h1>
+            <h2>Under the hood</h2>
+
+            <ul>
+              <li class="fragment">Buffering</li>
+              <li class="fragment">Compatibility</li>
+              <li class="fragment">Buffers and Objects</li>
+              <li class="fragment">State</li>
+              <li class="fragment">Backpressure</li>
+            </ul>
+
+            <img src="img/Backpressure.gif" alt="Backpressure ;)" class="fragment image-over-slide-content" />
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Stream abstraction hides complexity under the hood.</li>
+                <li>MENTION: Buffering and incremental changes.</li>
+                <li>MENTION: Compatibility with older versions of Node.js.</li>
+                <li>
+                  MENTION: Providing incremental changes as buffers and bytes, but also as first-class values in JavaScript.
+                </li>
+                <li>
+                  MENTION: All streams have state and manage them without our knowledge, but we can access it.
+                </li>
+                <li>
+                  MENTION: Streams are dealing with backpressure (different velocities for producing and consuming). Very funny "visualization" of backpressure on the GIF.
+                </li>
               </ul>
             </aside>
           </section>
 
           <section class="theory">
             <h2>REST and HTTP headers</h2>
+            <h3>Requirement</h3>
+
+            <p>Push as a <code>HTTP</code> response previously cached file from memory</p>
 
             <aside class="notes">
               <ul>
@@ -1101,8 +1172,8 @@ $ git checkout tags/TASK_4
 
             <aside class="notes">
               <ul>
-                <li>
-                </li>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
               </ul>
             </aside>
           </section>
@@ -1111,9 +1182,18 @@ $ git checkout tags/TASK_4
             <h1>Task 4</h1>
             <h3>Streams and HTTP</h3>
 
+            <pre><code data-trim class="javascript">
+cache.exposeStream(file).pipe(response);
+            </code></pre>
+
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  MENTION: Task was easy, if you know that response is a Writable stream and our API provide a way to expose cached file as a stream.
+                </li>
+                <li>
+                  MENTION: Requests and responses in any kind of servers and communication channels are standard streams with standard Node.js API.
+                </li>
               </ul>
             </aside>
           </section>
@@ -1293,6 +1373,9 @@ $ git checkout tags/TASK_5
           <h4><em>References </em>:</h4>
           <ul class="links">
             <li>
+              <a href="http://nodejsreactions.tumblr.com/">Node.js Reactions Tumblr</a>
+            </li>
+            <li>
               <a href="http://nodejs.org">Node.js</a> - official Node.js page.
             </li>
             <li>
@@ -1300,6 +1383,12 @@ $ git checkout tags/TASK_5
             </li>
             <li>
               <a href="http://nodeschool.io">nodeschool.io</a> - learn Node.js with interactive lessons.
+            </li>
+            <li>
+              <a href="http://ejohn.org/blog/node-js-stream-playground/">Stream Playground</a>
+            </li>
+            <li>
+              <a href="https://github.com/substack/stream-handbook">Stream Handbook</a>
             </li>
           </ul>
         </section>
