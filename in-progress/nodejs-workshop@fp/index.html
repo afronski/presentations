@@ -1466,12 +1466,51 @@ $ npm install
 
           <section class="theory">
             <h1>WebSockets</h1>
-            TODO
+
+            <p class="left-alignment">
+               A protocol providing <span class="bolded">full-duplex</span> communications channels over a single TCP connection. The WebSocket protocol was standardized by the IETF as RFC 6455 in 2011, and the WebSocket API in Web IDL is being standardized by the W3C.
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: Numerous possibilities opened for web developers. Server push is so easy, but also it opens up possibility to creating bidirectional channels between client-server and other clients.
+                </li>
+                <li>MENTION: Right now WebSocket RFC is stable, API in browser also.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>socket.io</h1>
+
+            <pre><code data-trim class="javascript">
+socket.join("room");
+socket.leave("room");
+
+socket.set("property", /*...*/);
+socket.get("property", /*...*/);
+
+socketIO.of("/rooms").on("event-name", function handler() { /*...*/ });
+
+socket.broadcast.to("room").emit("event-name", /*...*/);
+socket.broadcast.emit("event-name", /*...*/);
+socket.emit("event-name", /*...*/);
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: Socket.io is very nice abstraction over WebSockets, for both - client and server sides. It supports various fall-backs and almost every browser.
+                </li>
+                <li>DESCRIBE: Describe API, mention similarities between this and Event Emitter API.</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="task">
             <h1>Task 7</h1>
-            <h3>TODO</h3>
+            <h3>Broadcasting Game State</h3>
 
             <pre><code data-trim class="bash">
 $ cd mighty-penguins-revenge
@@ -1494,7 +1533,7 @@ $ npm install
         <section>
 
           <section class="theory">
-            <h2>Patterns</h2>
+            <h1>Patterns</h1>
             TODO
             <aside class="notes">
               <ul>
@@ -1509,7 +1548,7 @@ $ npm install
 
           <section class="task">
             <h1>Task 8</h1>
-            <h3>TODO</h3>
+            <h3>Updating score and ending the game</h3>
 
             <pre><code data-trim class="bash">
 $ cd mighty-penguins-revenge
