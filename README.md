@@ -6,6 +6,7 @@ Presentations which were presented internally in my current workplace:
 - *Why do we need node.js?* (2011)
 - *Performance analysis for web applications* (2012, 2013)
 - *Node.js - hype or hope?* (2013)
+- *Workshop - Node.js - hype or hope?* (2014)
 
 Presentation which were presented on conference IT Academic Days 2012 (at Poland, Sosnowiec):
 - *.NET 4.5 – new things waiting in Windows 8* (2012)
