@@ -20,7 +20,12 @@ body {
   text-align: justify;
 }
 
-.reveal .left-alignment .bolded {
+.reveal .center-alignment {
+  margin-left: 320px;
+  text-align: left;
+}
+
+.reveal .bolded {
   font-weight: bold;
   color: #8CC84B;
 }

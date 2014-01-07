@@ -799,7 +799,7 @@ $ npm install
                 </li>
                 <li>MENTION: Reactor pattern is another name for Event Loop.</li>
                 <li>
-                  MENTION: Event Loop (Reactor) is single-threaded by definition! Do not confuse them with multithreaded environments. There are approaches for providing this pattern to the multithreaded environments but there are much more complicated, and inefficient when it comes to the resource switching on classical architectures.
+                  MENTION: Event Loop (Reactor) is single-threaded by definition! Do not confuse them with multi-threaded environments. There are approaches for providing this pattern to the multi-threaded environments but there are much more complicated, and inefficient when it comes to the resource switching on classical architectures.
                 </li>
               </ul>
             </aside>
@@ -1143,7 +1143,7 @@ readable.pipe(writable);
                   MENTION: All streams have state and manage them without our knowledge, but we can access it.
                 </li>
                 <li>
-                  MENTION: Streams are dealing with backpressure (different velocities for producing and consuming). Very funny "visualization" of backpressure on the GIF.
+                  MENTION: Streams are dealing with back-pressure (different velocities for producing and consuming). Very funny "visualization" of back-pressure on the GIF.
                 </li>
               </ul>
             </aside>
@@ -1266,7 +1266,7 @@ asynchronousAction(parameters, function (error, results) {
                   MENTION: We can "centralize" our error handling approach for group of I/O calls. We can automatically capture certain resources like Timers or Event Emitters and clean-up them when they were used somewhere inside domain.
                 </li>
                 <li>
-                  MENTION: We can easily capture and wrap each asynchronous callback in order to process the errornous state in the same way.
+                  MENTION: We can easily capture and wrap each asynchronous callback in order to process the erroneous state in the same way.
                 </li>
                 <li>
                   MENTION: Connections with the C++ idiom called RAII (Resource-Acquisition-Is-Initialization) are correct and proper!
@@ -1534,14 +1534,134 @@ $ npm install
 
           <section class="theory">
             <h1>Patterns</h1>
-            TODO
+
             <aside class="notes">
               <ul>
-                <li>Ask pattern.</li>
-                <li>Bulkheading.</li>
-                <li>Risk delegation.</li>
-                <li>Promises (mention Q from kkowal).</li>
-                <li>Managing complicated workflow (async).</li>
+                <li>
+                  MENTION: I would like to describe some patterns which are helpful in asynchronous and reactive environments.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - "Bulkheading"</h3>
+
+            <p>
+              <span class="bolded">Separate</span> compute intensive parts from client-facing parts.
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: We delegate all compute intensive tasks from server which handles user requests and responses to the more volatile worker for handling them, compute and return results via message.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - Risk Delegation</h3>
+
+            <p>
+              <span class="bolded">Separate</span> potentially dangerous parts from client-facing parts.
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: As in the previous example, we're splitting responsibilities between worker and client-facing server, but this time we need to delegate dangerous task to the other worker.
+                </li>
+                <li>
+                  MENTION: We will talk about supervisors, which should not deal with ANY dangerous task, which can break their responsibilities.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - Promises</h3>
+
+            <pre><code data-trim class="javascript">
+promise
+    .then(function onSuccess() { /*...*/ })
+    .error(function onFailure() { /*...*/ });
+
+var fs = require("q-io/fs"),
+
+    readJsonPromise = Q.async(function *(path) {
+        return JSON.parse(yield fs.read(path));
+    });
+            </code></pre>
+
+            <a href="http://documentup.com/kriskowal/q/" class="fragment">Q</a>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: Promise is a ... promise of fulfilling some requirements by response. It can be resolved successfully or with failure, both resolutions can be caught by handlers.
+                </li>
+                <li>
+                  DESCRIBE: Promise changes asynchronous code, non-sequential from nature to the sequential, linear flow.
+                </li>
+                <li>
+                  MENTION: Sample presents a small taste of ECMAScript 6 (Node.js v 0.11) function with star is a generator, which can yield a multiple results. It can be transformed to the promise via external library called Q.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - Ask Pattern</h3>
+
+            <p>
+              It models just <span class="bolded">one question</span> and <span class="bolded">one answer</span>.
+            </p>
+
+            <pre><code data-trim class="javascript">
+userService.getUsers(/*...*/)
+    .then(function onSuccess() { /*...*/ })
+    .error(function onFailure() { /*...*/ });
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: It is a specific use case for promise, because Ask pattern models one question / answer (or one request / response) round trip and it returns a promise which will be fulfilled.
+                </li>
+                <li>MENTION: It doesn't matter is it successful or not - answer is an answer.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - Workflows</h3>
+
+            <pre><code data-trim class="javascript">
+function wait(ms, value callback) {
+    setTimeout(function () {
+        callback(null, value);
+    }, ms);
+}
+
+async.parallel([
+      wait.bind(null, 200, "one"),
+      wait.bind(null, 100, "two")
+  ],
+
+  function (error, results) {
+      // The results array will equal [ "one", "two" ] even though
+      // the second function had a shorter timeout.
+  });
+            </code></pre>
+
+            <a href="https://github.com/caolan/async" class="fragment">async</a>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: Workflow management is something that shouldn't be done from scratch every time. Very nice library for managing multiple situations is called `async` and it's provided as a Node.js module. However it can be abused easily, before we use some construction we have to be sure that we know what we're doing and we will cover all exits, successful or not.
+                </li>
               </ul>
             </aside>
           </section>
@@ -1684,6 +1804,22 @@ $ npm install
             <ul>
               <li>Now we can play together.</li>
               <li>Let's get ready to rumble!</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h1>Thank you</h1>
+
+          <div class="center-alignment">
+            <div>... for 110 commits !</div>
+            <div>... for 10 tags !</div>
+            <div>... for <span class="bolded">huge fun ;)</span> !</div>
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li>MENTION: Huge fun </li>
             </ul>
           </aside>
         </section>
