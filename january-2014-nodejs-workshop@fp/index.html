@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>FDD Workshop - Node.js - 2014</title>
+
+    <meta name="description" content="FDD workshop - 2014 - Made after presentation 'Node.js - hype or hope?'" />
+    <meta name="author" content="Wojciech Gawroński" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto&subset=latin,latin-ext"
+          rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/TangleKit.css" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+
+    <link rel="stylesheet" href="lib/css/github.css" />
+
+    <script src="js/raphael.js"></script>
+    <script src="js/raphael.group.js"></script>
+    <script src="js/raphael.tachometer.min.js"></script>
+
+    <script src="js/popup.js"></script>
+    <script src="js/Tangle.js"></script>
+    <script src="js/mootools.js"></script>
+    <script src="js/sprintf.js"></script>
+    <script src="js/BVTouchable.js"></script>
+    <script src="js/TangleKit.js"></script>
+    <script>
+      var RAD = Math.PI / 180;
+
+      function getRandomArbitary(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function createRectPath(x, y, a) {
+        return "M" + x + "," + y + "l" + a + ",0 0," + a + "-" + a + ",0z";
+      }
+
+      function createTrianglePath(x, y, a) {
+        return "M" + x + "," + y + "l" + a / 2 + "," + a + " -" + a + ",0z";
+      }
+
+      function createRightArrowPath(x, y) {
+        return "M" + x + "," + y + "m-10-10l40,0 0-6 20,16 -20,16 0-6 -40,0 -0-16z"
+      }
+
+      function createGearboxPath() {
+        return "M295.186,122.908c12.434,18.149,32.781,18.149,45.215,0l12.152-17.736c12.434-18.149,22.109-15.005,21.5,6.986l-0.596,21.49c-0.609,21.992,15.852,33.952,36.579,26.578l20.257-7.207c20.728-7.375,26.707,0.856,13.288,18.29l-13.113,17.037c-13.419,17.434-7.132,36.784,13.971,43.001l20.624,6.076c21.103,6.217,21.103,16.391,0,22.608l-20.624,6.076c-21.103,6.217-27.39,25.567-13.971,43.001l13.113,17.037c13.419,17.434,7.439,25.664-13.287,18.289l-20.259-7.207c-20.727-7.375-37.188,4.585-36.578,26.576l0.596,21.492c0.609,21.991-9.066,25.135-21.5,6.986L340.4,374.543c-12.434-18.148-32.781-18.148-45.215,0.001l-12.152,17.736c-12.434,18.149-22.109,15.006-21.5-6.985l0.595-21.492c0.609-21.991-15.851-33.951-36.578-26.576l-20.257,7.207c-20.727,7.375-26.707-0.855-13.288-18.29l13.112-17.035c13.419-17.435,7.132-36.785-13.972-43.002l-20.623-6.076c-21.104-6.217-21.104-16.391,0-22.608l20.623-6.076c21.104-6.217,27.391-25.568,13.972-43.002l-13.112-17.036c-13.419-17.434-7.439-25.664,13.288-18.29l20.256,7.207c20.728,7.374,37.188-4.585,36.579-26.577l-0.595-21.49c-0.609-21.992,9.066-25.136,21.5-6.986L295.186,122.908z";
+      }
+
+      function font(color) {
+        return {
+          "font": "18px 'Helvetica Neue', Arial",
+          "font-weight": "bold",
+          "fill": color
+        };
+      }
+
+      function createArcPath(cx, cy, r, startAngle, endAngle) {
+        var x1 = cx + r * Math.cos(-startAngle * RAD),
+            x2 = cx + r * Math.cos(-endAngle * RAD),
+            y1 = cy + r * Math.sin(-startAngle * RAD),
+            y2 = cy + r * Math.sin(-endAngle * RAD);
+
+        return ["M", cx, cy, "L", x1, y1, "A", r, r, 0, +(endAngle - startAngle > 180), 0, x2, y2, "z"];
+      }
+
+      function spinner(r, centerx, centery, spinnerId, R1, R2, count, stroke_width, colour) {
+        var sectorsCount = count || 12,
+            color = colour || "#888",
+            group = r.group(),
+            width = stroke_width || 5,
+            r1 = Math.min(R1, R2) || 10,
+            r2 = Math.max(R1, R2) || 25,
+            cx = centerx + r2 + width,
+            cy = centery + r2 + width,
+
+            sectors = [],
+            opacity = [],
+            beta = 2 * Math.PI / sectorsCount,
+
+            pathParams = { stroke: color, "stroke-width": width, "stroke-linecap": "round" };
+
+        Raphael.getColor.reset();
+
+        if (spinnerId) {
+          group.id(spinnerId);
+        }
+
+        for (var i = 0; i < sectorsCount; i++) {
+          var alpha = beta * i - Math.PI / 2,
+              cos = Math.cos(alpha),
+              sin = Math.sin(alpha);
+
+          opacity[i] = 1 / sectorsCount * i;
+          sectors[i] = r.path([["M", cx + r1 * cos, cy + r1 * sin], ["L", cx + r2 * cos, cy + r2 * sin]])
+                        .attr(pathParams);
+
+          group.push(sectors[i]);
+
+          sectors[i].attr("data-name", "sectors");
+
+          if (color == "rainbow") {
+            sectors[i].attr("stroke", Raphael.getColor());
+          }
+        }
+
+        var tick;
+
+        (function ticker() {
+          opacity.unshift(opacity.pop());
+
+          for (var i = 0; i < sectorsCount; i++) {
+            sectors[i].attr("opacity", opacity[i]);
+          }
+
+          r.safari();
+          tick = setTimeout(ticker, 1000 / sectorsCount);
+        } ());
+
+        return function () {
+          clearTimeout(tick);
+
+          for (var i = 0; i < sectorsCount; i++) {
+            sectors[i].remove();
+          }
+        };
+      }
+
+      Raphael.fn.arrow = function (x, y) {
+          return this.path(["M", x, y ] + "m-10-10l20,0 0-6 10,16 -10,16 0-6 -20,0 0,6 -10-16 10-16z")
+                     .attr({ fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.2 });
+      };
+
+      Raphael.fn.rightArrow = function (x, y) {
+          return this.path(createRightArrowPath(x, y))
+                     .attr({ fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.5 });
+      };
+
+      Raphael.fn.gearBox = function() {
+          return this.path(createGearboxPath())
+                     .attr({ stroke: "#666", opacity: 0.9, "stroke-width": 10 });
+      };
+
+      Raphael.fn.thinArrow = function(x1, y1, x2, y2, size) {
+        var angle = Raphael.angle(x1, y1, x2, y2);
+            a45   = Raphael.rad(angle - 45),
+            a45m  = Raphael.rad(angle + 45),
+            a135  = Raphael.rad(angle - 135),
+            a135m = Raphael.rad(angle + 135),
+            x1a = x1 + Math.cos(a135) * size,
+            y1a = y1 + Math.sin(a135) * size,
+            x1b = x1 + Math.cos(a135m) * size,
+            y1b = y1 + Math.sin(a135m) * size,
+            x2a = x2 + Math.cos(a45) * size,
+            y2a = y2 + Math.sin(a45) * size,
+            x2b = x2 + Math.cos(a45m) * size,
+            y2b = y2 + Math.sin(a45m) * size;
+
+        return this.path("M" + x1 + " " + y1 + "L" + x1a + " " + y1a + "M" + x1 + " " + y1 + "L" + x1b + " " + y1b +
+                         "M" + x1 + " " + y1 + "L" + x2 +  " " + y2 +
+                         "M" + x2 + " " + y2 + "L" + x2a + " " + y2a + "M" + x2 + " " + y2 + "L" + x2b + " " + y2b);
+      };
+
+      Raphael.fn.drawAnnotatedSlice = function(x, y, size, text, color, width, yOffset) {
+        var height = 20;
+
+        width = width || 1;
+        yOffset = yOffset || 0;
+
+        this.text(x + (size / 2), y - 65 - yOffset, text).attr(font(white));
+
+        this.path("M" + x + " " + y + "L" + (x + size) + " " + y).attr({ "stroke": color, "stroke-width": 10 });
+
+        this.path("M" + (x + size) + " " + (y - height) + "L" + (x + size) + " " + (y + height))
+            .attr({ "stroke": color, "stroke-width": width });
+
+        this.path("M" + x + " " + (y - height) + "L" + x + " " + (y + height))
+            .attr({ "stroke": color, "stroke-width": width });
+      };
+
+      var dashed = { fill: "none", stroke: "#666", "stroke-dasharray": "- " },
+          black = "#333",
+          gray = "#888",
+          white = "#ffffff",
+          red = "#ff0000",
+          green = "#00ff00",
+          yellow = "#ffff00",
+          lightBlue = "#00ffff",
+          nodeGreen = "#8CC84B";
+    </script>
+    <script>
+      document.write("<link rel='stylesheet' href='css/print/" +
+                     (window.location.search.match(/print-pdf/gi) ? "pdf" : "paper") +
+                    ".css' type='text/css' media='print'>");
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h2>FDD 2013 - Workshop</h2>
+          <h3>"Node.js - hype or hope?" <span class="fragment"><b class="green-text">Fun ;)</b></span></h3>
+
+          <img src="img/NodeJsLogo.png" alt="Node.js logo" />
+
+          <span class="license">
+            Wojciech Gawroński - 2014 &copy; License : <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+          </span>
+          <aside class="notes">
+            <ul>
+              <li>Welcome to the Node.js workshop at Future-Processing!</li>
+              <li>
+                Today we will create server side code for multi-player arcade / action, real-time game. We will discover best practices, patterns and characteristic behaviors for this platform. After all exercises and building complete game, which I hope will be entertaining, we will play together!
+              </li>
+              <li>
+                If you have any questions - do not hesitate to interrupt me anytime.</li>
+              <li>
+                So - let's start!
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>Organization and Theory</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Before we start, I would like to describe how workshop is organized.
+                </li>
+                <li>
+                  White color is associated with technical details, theory and introductory informations.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <pre><code data-trim class="javascript">
+function sampleCode(request, response) {
+  if (request.path.indexOf("Is it readable?") !== -1) {
+    usersService.getAnswer(request.path, function(error, answer) {
+      if (answer === "YES") {
+        response.setStatusCode(200);
+        response.send("Move forward.");
+      } else {
+        //
+        // It is not acceptable!
+        //
+        response.setStatusCode(406);
+        response.send("Increase font size.");
+      }
+    });
+  }
+}
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Is it readable?</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Tasks<h1>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  On yellow slides we will have actual task with detailed description, sometimes with useful tips.
+                </li>
+                <li>
+                  Do not hesitate to write new unit tests for any task.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Solutions</h1>
+
+            <aside class="notes">
+              <li>
+                On green background I posted solutions, best practices, answers and explanations.
+              </li>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h2>UNIX-crash-course</h2>
+
+            <pre><code data-trim class="bash fragment">
+$ touch NEW_FILE
+$ mv SOURCE DESTINATION
+$ cp SOURCE DESTINATION
+$ rm -ri FILES_FOR_DELETING
+
+$ cp /path/{1,2,3}.txt DESTINATION
+$ mv /path/*.tar.gz DESTINATION
+
+$ cat BIG_FILE | grep -i CASE_INSENSITIVE_TEXT
+$ find DIRECTORY -iname *CASE_INSENSITIVE_PART_OF_NAME"
+
+$ nohup ./run-in-background &amp;
+$ ./run-script.sh > /dev/null
+
+$ curl -X POST -d "DATA" "http://localhost:8080/my/rest/api"
+$ netcat sql-server-hostname 1433
+$ wget -O OUTPUT_FILE http://http/address/to/file
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>QUESTION: How many people are familiar with UNIX ?</li>
+                <li>PROCEED: Quick crash course on simplest commands.</li>
+                <li>
+                  PROCEED: Quick crash course on simple and useful tools.
+                  <ul>
+                    <li>curl</li>
+                    <li>netcat</li>
+                    <li>wget</li>
+                  </ul>
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Prerequisites</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Quick checklist verification that we are on the same ground.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Git</h2>
+
+            <pre><code data-trim class="bash">
+$ git --version
+
+$ git config --global user.name "Jasiu Nowak"
+$ git config --global user.email "jnowak@company.com"
+            </code></pre>
+
+            <aside class="notes">
+              <li>CHECK: Git command availability</li>
+              <li>PROCEED: Git configuration</li>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Node.js</h2>
+
+            <pre><code data-trim class="bash">
+$ node --version
+$ npm --version
+$ nvm
+            </code></pre>
+
+            <aside class="notes">
+              <li>CHECK: Node.js version - 0.10.24</li>
+              <li>CHECK: NPM availability</li>
+              <li>CHECK: NVM availability</li>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Sources and "Workshopper"</h2>
+
+            <pre><code data-trim class="bash">
+$ npm install -g jshint grunt-cli istanbul
+
+$ git clone git@github.com:afronski/mighty-penguins-revenge.git
+
+$ git clone git@github.com:afronski/node-js-greenhorn-workshopper.git
+$ cd node-js-greenhorn-workshopper
+$ npm install -g
+            </code></pre>
+
+            <aside class="notes">
+              <li>PROCEED: Install jshint, grunt-cli and istanbul</li>
+              <li>PROCEED: Clone mighty-penguins-revenge repository</li>
+              <li>PROCEED: Clone and install "Workshopper" module</li>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="task">
+            <h1>Task 0</h1>
+
+            <article class="fragment">
+              <pre><code data-trim class="bash">
+$ node-js-greenhorn-workshopper
+              </code></pre>
+
+              <h3>4 assignments = 20 minutes</h3>
+            </article>
+
+            <aside class="notes">
+              <ul>
+                <li>PROCEED: 4 assignments in 20 minutes.</li>
+                <li>We will go interactively by first task - look at my screen.</li>
+                <li>Do not hesitate to ask anytime!</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h3>"JavaScript 2.0"</h3>
+
+            <pre><code data-trim class="javascript">
+"use strict";
+
+const PI = 3.14;
+
+var util = require("util");
+
+function Animal(options) {}
+
+function Dog(options) {
+    Animal.call(this, options);
+}
+
+util.inherits(Dog, Animal);
+
+var doge = Object.create(Dog.prototype),
+    doggyDoge = new Dog();
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: In Node.js we have got full power of language, we have to stick to the one JavaScript engine, you can use the newest language features like Generators, Proxies, Object.observe etc.
+                </li>
+                <li>MENTION: "use strict";</li>
+                <li>MENTION: Wrappers for prototypical inheritance.</li>
+                <li>MENTION: ECMAScript 5 and higher versions (Object.create, const).</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>"JavaScript 2.0"</h3>
+
+            <pre><code data-trim class="javascript">
+"use strict";
+
+var http = require("http"),
+    links = [ "http://first-link.com", "http://second-link.com" ],
+    loaded;
+
+function isTrue(element) { return element === true; }
+
+function loaded(index, response) {
+    loaded[index] = (response.statusCode === 200);
+
+    if (loaded.every(isTrue)) {
+        console.log("All links downloaded successfully!");
+    }
+}
+
+loaded = links.map(function (link, index) {
+                       http.get(link, loaded.bind(null, index));
+                       return false;
+                   });
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Modules and Common JS.</li>
+                <li>
+                  MENTION: Full support for higher order functions and helpers. No more poly fills and uncertainty when using very useful helpers like Function.prototype.bind or Array.isArray etc.
+                </li>
+                <li>DISCUSS: You can benefit from purely functional programming style.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Tools</h1>
+
+            <ul>
+              <li><a href="http://npmjs.org">NPM</a></li>
+              <li class="fragment"><a href="https://github.com/creationix/nvm">NVM</a></li>
+              <li class="fragment"><a href="http://www.jshint.com/">jsHint</a></li>
+              <li class="fragment"><a href="http://gruntjs.com/">grunt</a></li>
+              <li class="fragment"><a href="https://github.com/trentm/json">jsontool</a></li>
+              <li class="fragment"><a href="https://github.com/nodejitsu/forever">forever</a></li>
+              <li class="fragment"><a href="http://yeoman.io/">yeoman</a></li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: Amazing tool chain created by skilled developers, based on Node.js and also useful when developing stuff with this platform.
+                </li>
+                <li>
+                  MENTION: Node Packaged Modules - tool for managing dependencies. It is a kind of 'gem' / 'NuGet' / 'maven' for Node.js.
+                </li>
+                <li>
+                  MENTION: Node Version Manager - Useful tool for using the same versions of Node.js at one machine. Similar to the RVM (Ruby Version Manager).
+                </li>
+                <li>MENTION: jsHint - which helps increasing and keeping quality of JavaScript code.</li>
+                <li>MENTION: grunt - which is incredibly useful and well-maintained task automation tool.</li>
+                <li>MENTION: jsontool - UNIX-way compatible tool for validating, pretty-printing JSON.</li>
+                <li>MENTION: forever - which is battle-proofed process monitor created by Nodejitsu.</li>
+                <li>
+                  MENTION: yeoman - which is tool for bootstrapping and extending existing projects, by automating repeatable stuff related with e.g. module creation, creating new tests etc. Depending on used generators, it can be similar to the 'rails' command for Ruby on Rails ;).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Dependencies</h1>
+
+            <h3><a href="http://semver.org">Semantic Versioning</a></h3>
+            <h3>package.json</h3>
+
+            <pre><code class="javascript">
+"dependencies": {
+  "underscore": "~1.3.0"
+},
+
+"devDependencies": {
+  "mocking-framework": "1.x.x"
+}
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>There are two important concepts when it comes to the Dependency Management.</li>
+                <li>'Semantic Versioning' for internal and external dependencies.</li>
+                <li>File 'package.json' for managing dependencies for production and development.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Useful Modules</h2>
+
+            <ul>
+              <li class="fragment"><a href="https://github.com/substack/node-optimist">optimist</a></li>
+              <li class="fragment"><a href="https://github.com/isaacs/readable-stream">readable-stream</a></li>
+              <li class="fragment"><a href="https://github.com/visionmedia/express">express</a></li>
+              <li class="fragment"><a href="https://github.com/mikeal/request">request</a></li>
+              <li class="fragment"><a href="https://github.com/visionmedia/should.js/">should.js</a></li>
+              <li class="fragment"><a href="https://github.com/visionmedia/mocha">mocha</a></li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: optimist - module for managing command line arguments.</li>
+                <li>MENTION: readable-stream - wrapper and polyfill for older Node.js version for Streams API.</li>
+                <li>MENTION: express - Sinatra inspired web development framework for Node.js.</li>
+                <li>MENTION: request - API for making HTTP calls.</li>
+                <li>MENTION: should.js - Library for providing fluent API to the assertions.</li>
+                <li>MENTION: mocha - Test framework and runner for Node.js.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Serving static content</h2>
+            <h3>Requirements</h3>
+
+            <ul class="fixed">
+              <li><span><code>src</code>, <code>libraries</code></span> JavaScript files</li>
+              <li><span><code>images</code></span> Images</li>
+              <li><span><code>sounds</code>, <code>music</code></span> Sound and music files</li>
+              <li><span><code>stylesheets</code></span> CSS and Fonts</li>
+              <li><span><code>client</code></span> HTML files</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>In our task we need to serve various static assets from specified directories.</li>
+                <li>HINT: Read documentation of express.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 1</h1>
+            <h3>Serving static content</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_1
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Task 1</h1>
+            <h3>Serving static content</h3>
+
+            <img src="img/DuctTape.jpg" alt="Apollo 13 - 'Duct Tape' Solution" />
+
+            <aside class="notes">
+              <ul>
+                <li>QUESTION: How many of you know history related with Apollo 13?</li>
+                <li>MENTION: Programming in Node.js should look like this!</li>
+                <li>MENTION: Search and look for modules, download, "glue it" and it's working!</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>Storage</h1>
+
+            <div class="fragment">
+              <img src="img/LevelDbLogo.png" alt="LevelDB Logo" class="logo-image" />
+              <p>
+                <em>
+                  An open source, on-disk, key-value store<br/> written and maintained by Google
+                </em>
+              </p>
+              <pre class="fragment"><code data-trim class="javascript fixed-width">
+{
+          "key1": "value1",
+          "key2": "value2"
+}
+              </code></pre>
+            </div>
+
+            <aside class="notes">
+              <ul>
+                <li>DESCRIBE: LevelDB is a Key-Value store provided and developed by Google.</li>
+                <li>DESCRIBE: Key-Value store can be easily visualized as JavaScript Object.</li>
+                <li>MENTION: Association to JSON is right and valid.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>Asynchronous I/O</h2>
+
+            <div id="apache"></div>
+            <div id="node"></div>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Asynchronous means "Non-blocking".</li>
+                <li>MENTION: Means also "Call me when it is done".</li>
+                <li>MENTION: It is difficult because it is not a normal flow.</li>
+              </ul>
+            </aside>
+
+            <script>
+              (function() {
+                var paper = Raphael("apache", 300, 300),
+                    font = function(color) {
+                      return {
+                        "font": "14px 'Roboto'",
+                        "font-weight": "bold",
+                        "fill": color
+                      };
+                    },
+                    which = 1,
+                    steps = [],
+                    rejectedArrow;
+
+                paper.rect(120, 40, 160, 160).attr({ fill: white });
+
+                paper.text(200, 87, "Apache").attr(font(black));
+                paper.text(70, 62, "Requests").attr(font(black));
+
+                paper.rightArrow(70, 80).attr({ fill: green });
+                rejectedArrow = paper.rightArrow(50, 160).attr({ fill: red });
+
+                steps.push({ path: createRightArrowPath(50, 160), fill: red });
+                steps.push({ path: createRightArrowPath(70, 160), fill: gray });
+
+                spinner(paper, 170, 70);
+
+                setInterval(function() {
+                  rejectedArrow.stop().animate(steps[+(which = !which)], 200);
+                }, 1000);
+              } ());
+
+              (function() {
+                var paper = Raphael("node", 300, 300),
+                    font = function(color) {
+                      return {
+                        "font": "14px 'Roboto'",
+                        "font-weight": "bold",
+                        "fill": color
+                      };
+                    },
+                    which = 1,
+                    acceptedWhich = 1,
+                    steps = [],
+                    acceptedSteps = [],
+                    clear,
+                    spinnerElement,
+                    acceptedArrow,
+                    rejectedArrow;
+
+                paper.rect(120, 40, 160, 160).attr({ fill: white });
+
+                paper.text(200, 87, "Node.js").attr(font(black));
+                paper.text(70, 62, "Requests").attr(font(black));
+
+                acceptedArrow = paper.rightArrow(70, 80).attr({ fill: green });
+                rejectedArrow = paper.rightArrow(50, 160).attr({ fill: gray });
+
+                steps.push({ path: createRightArrowPath(70, 160), fill: green });
+                steps.push({ path: createRightArrowPath(50, 160), fill: gray });
+
+                acceptedSteps.push({ path: createRightArrowPath(50, 80), fill: gray });
+                acceptedSteps.push({ path: createRightArrowPath(70, 80), fill: green });
+
+                spinner(paper, 170, 70);
+                spinnerElement = document.querySelector("#node svg g");
+
+                setInterval(function() {
+                  var object = steps[+(which = !which)]
+
+                  object.callback = function() {
+                    if (+which === 0) {
+                      spinnerElement.classList.remove("notDisplayed");
+                    }
+                  };
+
+                  if (+acceptedWhich === 0) {
+                    spinnerElement.classList.add("notDisplayed");
+                  }
+
+                  rejectedArrow.stop().animate(object, 500);
+                }, 590);
+
+                setInterval(function() {
+                  var object = acceptedSteps[+(acceptedWhich = !acceptedWhich)];
+
+                  object.callback = function() {
+                    if (+acceptedWhich !== 0) {
+                      spinnerElement.classList.remove("notDisplayed");
+                    }
+                  };
+
+                  if (+which !== 0) {
+                    spinnerElement.classList.add("notDisplayed");
+                  }
+
+                  acceptedArrow.stop().animate(object, 500);
+                }, 2000);
+              } ());
+            </script>
+          </section>
+
+          <section class="theory">
+            <h1>Event Loop</h1>
+            <h2>Reactor Pattern</h2>
+
+            <div id="event-loop"></div>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: It is a continuous cycle of transforming events to requests which are made to I/O resources. Response from resource will processed when resource will finish and release it, but in the meantime we can dispatch another events to the resources.
+                </li>
+                <li>MENTION: Reactor pattern is another name for Event Loop.</li>
+                <li>
+                  MENTION: Event Loop (Reactor) is single-threaded by definition! Do not confuse them with multi-threaded environments. There are approaches for providing this pattern to the multi-threaded environments but there are much more complicated, and inefficient when it comes to the resource switching on classical architectures.
+                </li>
+              </ul>
+            </aside>
+
+            <script>
+              (function() {
+                var node = { stroke: nodeGreen, "stroke-width": 4 },
+                    nodeDashed = { stroke: nodeGreen, "stroke-width": 2, "stroke-dasharray": "-" },
+                    paper = Raphael("event-loop", 800, 400);
+
+                function randomFromArray(array) {
+                  return array[~~getRandomArbitary(0, array.length)];
+                }
+
+                paper.circle(400, 200, 120).attr(node);
+                paper.path(createTrianglePath(280, 180, 30)).attr({ fill: nodeGreen, stroke: "none" });
+
+                paper.text(400, 100, "Event\nloop").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": nodeGreen
+                });
+
+                paper.text(170, 67, "Queue").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 20, "Resources").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 50, "Database").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 82, "Disk").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 115, "Network").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.text(620, 148, "Other").attr({
+                  "font": "18px 'Roboto'",
+                  "font-weight": "bold",
+                  "fill": black
+                });
+
+                paper.rect(110, 150, 120, 20).attr(node);
+                paper.rect(110, 175, 120, 20).attr(node);
+                paper.rect(110, 200, 120, 20).attr(node);
+                paper.rect(110, 225, 120, 20).attr(node);
+                paper.rect(110, 250, 120, 20).attr(node);
+
+                paper.rect(560, 60, 120, 265).attr(node);
+
+                paper.rect(570, 70, 100, 50).attr(nodeDashed);
+                paper.rect(570, 135, 100, 50).attr(nodeDashed);
+                paper.rect(570, 200, 100, 50).attr(nodeDashed);
+                paper.rect(570, 265, 100, 50).attr(nodeDashed);
+
+                event = paper.rect(110, 150, 120, 20).attr(nodeDashed);
+
+                function animation() {
+                  event = paper.rect(110, 150, 120, 20).attr(nodeDashed);
+
+                  event.stop().animate({
+                    x: 340, y: 45,
+                    callback: function() {
+                      event.stop().animate({
+                        x: 570, y: randomFromArray([ 70, 135, 200, 265 ]), width: 100, height: 50,
+                        callback: function() {
+                          event.stop().animate({
+                            x: 340, y: 340,
+                            callback: function() {
+                              event.stop().animate({
+                                x: 110, y: 250, width: 120, height: 20
+                              }, 2000);
+                            }
+                          }, 2000);
+                        }
+                      }, 2000);
+                    }
+                  }, 2000);
+                }
+
+                animation();
+                setInterval(animation, 9000);
+              } ());
+            </script>
+          </section>
+
+          <section class="theory">
+            <h3>Deleting entries from storage</h3>
+            <h4>Requirements</h4>
+
+            <ul class="fixed">
+              <li>Remove value from storage by provided <em>key</em>.</li>
+              <li>Use asynchronous API provided by LevelDB module.</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>In our task we need to delete key with value from database.</li>
+                <li>If module API is asynchronous, we should provide also asynchronous API.</li>
+                <li>HINT: Read documentation of node-levelup.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 2</h1>
+            <h3>Deleting entries from storage</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_2
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Task 2</h1>
+            <h3>Deleting entries from storage</h3>
+
+            <pre><code class="javascript">
+  // 1. First invoke an action.
+  asynchronousAction(parameters, function continuation(error, result) {
+      // 3. After a while, results will arrive.
+  });
+  // 2. Return from function.
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Node.js convention - "First possible error, then results".</li>
+                <li>MENTION: Non-sequential flow.</li>
+                <li>MENTION: Non-return Oriented Programming ;).</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>Buffer</h1>
+
+            <p><em>Pure JavaScript is Unicode friendly but not nice to binary data.</em></p>
+
+            <pre><code data-trim class="javascript">
+var buffer = new Buffer(256),
+    length = buffer.write("\u00bd + \u00bc = \u00be", 0);
+
+console.log(length + " bytes: " + buffer.toString("utf8", 0, length));
+Buffer.byteLength("JS string length returns characters count.", "utf8");
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: When dealing with TCP streams or the file system, it's necessary to handle octet streams.
+                </li>
+                <li>MENTION: Buffer is fixed-size and cannot be resized.</li>
+                <li>MENTION: Easy conversion to String - back and forth.</li>
+                <li>MENTION: Fixing JavaScript semantics (length for string returns characters count).</li>
+                <li>
+                  MENTION: All operations in Node.js, if they are dealing with networking, are returning instances of buffers.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Caching</h1>
+            <h3>Requirements</h3>
+
+            <ul class="fixed">
+              <li>Read all files collected from directory with provided pattern.</li>
+              <li>Cache in memory storage the received buffer with content.</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Reading all files asynchronously and wait for all to read.</li>
+                <li>MENTION: Receive a buffer (not a string) as a result when reading.</li>
+                <li>MENTION: Memory storage is just a JavaScript object hold in memory.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 3</h1>
+            <h3>Caching and Buffers</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_3
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Task 3</h1>
+            <h3>Caching and Buffers</h3>
+
+            <pre><code data-trim class="javascript">
+fs.readFile("/path/to/file", function (error, buffer) {
+    /*...*/
+});
+
+fs.readFile("/path/to/file", "utf8", function (error, string) {
+    /*...*/
+});
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: In 'fs' module you can also receive a Buffer, instead of UTF8 string.</li>
+                <li>
+                  MENTION: Buffers and bitwise operations are properly explained by 'bytewiser' workshopper from page http://nodeschool.io which contains all workshops related with Note.js.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>Streams</h1>
+
+            <pre><code data-trim class="bash">
+$ cat file.txt | grep "CONTENT" | wc -l
+$ ./script 2>&amp;1 >/dev/null | tee DIFFERENT_FILE.txt
+            </code></pre>
+
+            <p>
+              <pre>We should have some ways of connecting programs like garden hose--screw in another segment when it becomes necessary to massage data in another way.</pre>
+            </p>
+            <em>Doug McIlroy, 1964</em>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: UNIX philosophy is an inspiration for Streams API in Node.js.</li>
+                <li>MENTION: In UNIX ecosystem we can deal on daily basis with streams.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Streams</h1>
+            <h2>API</h2>
+
+            <img src="img/StreamsFirstTime.gif" alt="Reaction for first time with streams ;)"
+                 class="fragment image-over-slide-content" />
+
+            <pre><code data-trim class="javascript">
+// Different types of streams:
+// - Readable and Writable
+// - Transform and PassThrough
+// - Duplex
+
+stream.on("data", function(chunk) { /*...*/ });
+stream.on("end", function() { /*...*/ });
+stream.on("error", function() { /*...*/ });
+
+from.pipe(to);
+readable.pipe(writable);
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: We have got various types in API for use as an object and for a prototype for custom implementations.
+                </li>
+                <li>
+                  MENTION: Three events (data, end, error) are most important for consuming stream. Pattern of gathering whole content and pushing it somewhere else is so common, that it is provided as a method called 'pipe'.
+                </li>
+                <li>
+                  MENTION: 'stream-adventure' is an excellent way to learn 'stream oriented' way of programming. All associations related with functional programming are also correct. In order to avoid confusion and situation from the GIF file, I strongly recommend to finish these assignments.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Streams</h1>
+            <h2>Under the hood</h2>
+
+            <ul>
+              <li class="fragment">Buffering</li>
+              <li class="fragment">Compatibility</li>
+              <li class="fragment">Buffers and Objects</li>
+              <li class="fragment">State</li>
+              <li class="fragment">Backpressure</li>
+            </ul>
+
+            <img src="img/Backpressure.gif" alt="Backpressure ;)" class="fragment image-over-slide-content" />
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Stream abstraction hides complexity under the hood.</li>
+                <li>MENTION: Buffering and incremental changes.</li>
+                <li>MENTION: Compatibility with older versions of Node.js.</li>
+                <li>
+                  MENTION: Providing incremental changes as buffers and bytes, but also as first-class values in JavaScript.
+                </li>
+                <li>
+                  MENTION: All streams have state and manage them without our knowledge, but we can access it.
+                </li>
+                <li>
+                  MENTION: Streams are dealing with back-pressure (different velocities for producing and consuming). Very funny "visualization" of back-pressure on the GIF.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h2>REST and HTTP headers</h2>
+            <h3>Requirement</h3>
+
+            <p>Push as a <code>HTTP</code> response previously cached file<br/> from memory storage.</p>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 4</h1>
+            <h3>Streams and HTTP</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_4
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Task 4</h1>
+            <h3>Streams and HTTP</h3>
+
+            <pre><code data-trim class="javascript">
+cache.exposeStream(file).pipe(response);
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: Task was easy, if you know that response is a Writable stream and our API provide a way to expose cached file as a stream.
+                </li>
+                <li>
+                  MENTION: Requests and responses in any kind of servers and communication channels are standard streams with standard Node.js API.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h2>Error Handling</h2>
+
+            <pre><code data-trim class="javascript">
+asynchronousAction(parameters, function (error, results) {
+    if (error) {
+        continuation(error);
+        return;
+    }
+
+    asynchronousAction(parameters, function (error) {
+        if (error) {
+            continuation(error);
+            return;
+        }
+
+        asynchronousAction(function (error, results) {
+            if (error) {
+                continuation(error);
+                return;
+            }
+
+            // WTF ???
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: Error in asynchronous operations can be exceptionally painful. Execution flow is not sequential so for error, continuation callback should be notified each time at different phase, that something went wrong.
+                </li>
+                <li>MENTION: Callback hell.</li>
+                <li>
+                  MENTION: What is more dangerous and nasty - throwing an exception (synchronously) will explode the flow and do not invoke continuation until we catch this deliberately.
+                </li>
+                <li>
+                  MENTION: Enough? There is more! How we will manage resources (connections, timers etc.) in such situations? It is a nightmare and this provides big flame to this platform because of people which are not aware of that situation (called further "Ruby programmers").
+                </li>
+                <li>
+                  MENTION: People are abusing "uncaughtException" handler like in the C++ community in order to prevent applications from crashing instead of properly manage the error flow or letting application crash and reboot by external service with new, clean and valid state.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>Domains</h1>
+
+            <p class="left-alignment">
+              <span class="bolded">Domains</span> provide a way to handle multiple different I/O operations as a single group.
+            </p>
+
+            <h2 class="spaced-from-top fragment">Resources? RAII</h2>
+
+            <aside class="notes">
+              <ul>
+                <li>MENTION: Simplest definition for domain concept is on the slide.</li>
+                <li>
+                  MENTION: We can "centralize" our error handling approach for group of I/O calls. We can automatically capture certain resources like Timers or Event Emitters and clean-up them when they were used somewhere inside domain.
+                </li>
+                <li>
+                  MENTION: We can easily capture and wrap each asynchronous callback in order to process the erroneous state in the same way.
+                </li>
+                <li>
+                  MENTION: Connections with the C++ idiom called RAII (Resource-Acquisition-Is-Initialization) are correct and proper!
+                </li>
+                <li>
+                  MENTION: No more abusing "uncaughtException" handler! It leaves application in unstable and undetermined state.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 5</h1>
+            <h3>Domains</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_5
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="explanation">
+            <h1>Task 5</h1>
+            <h3>Domains</h3>
+
+            <pre><code data-trim class="javascript">
+var domain = require("domain"),
+    handler = domain.create();
+
+handler.on("error", function(error) { /*...*/ });
+
+asynchronousAction(parameters, handler.intercept(function (results) {
+    asynchronousAction(parameters, handler.intercept(function () {
+        asynchronousAction(handler.intercept(function (results) {
+            /*...*/
+        }));
+    }));
+}));
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: Domain allows to centralize error handling and count up whole usage for resources and properly deal with them when it comes to unwind the stack for asynchronous and synchronous exceptions and errors.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h2>Event-Driven Model</h2>
+
+            <button id="sendEvents">Trigger</button>
+            <div id="edd"></div>
+
+            <a href="https://github.com/joyent/node/blob/master/lib/fs.js#L1020" class="fragment">
+              EventEmitter in action
+            </a>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: Now it is time for another abstraction from Node.js, which was used couple times before but nicely hidden from our sight - Event Emitters.
+                </li>
+                <li>
+                  MENTION: This abstraction is made as a prototype inside Node.js and it is used widely by others. In our example we will use it inside socket.io.
+                </li>
+                <li>DESCRIBE: Talk more about publishing and subscribing mechanism drawn on diagram.</li>
+                <li>MENTION: It's main building block of whole platform (eg. link posted above).</li>
+              </ul>
+            </aside>
+            <script>
+              (function() {
+                var paper = Raphael("edd", 400, 400),
+                    opacity = 0.5,
+                    set,
+                    events,
+                    fade = function (id) {
+                      return function () {
+                        set[id].attr({ fill: white, r: 12 }).animate({ fill: gray, r: 8 }, 500);
+                      };
+                    },
+                    duration = 1000,
+                    i;
+
+                function reset() {
+                  set = paper.set(paper.circle(300, 200, 8).attr({ fill: nodeGreen }),
+                                  paper.circle(200, 100, 8).attr({ fill: nodeGreen }),
+                                  paper.circle(100, 200, 8).attr({ fill: nodeGreen }),
+                                  paper.circle(200, 300, 8).attr({ fill: nodeGreen }),
+                                  paper.circle(200, 200, 12).attr({ fill: red }));
+                }
+
+                paper.text(200, 120, "Sender")
+                     .attr({ font: "14px 'Helvetica Neue', Arial", "font-weight": "bold", fill: red });
+
+                paper.text(200, 40, "Receivers")
+                     .attr({ font: "14px 'Helvetica Neue', Arial", "font-weight": "bold", fill: nodeGreen });
+
+                reset();
+
+                document.querySelector("#sendEvents").addEventListener("click", function() {
+                  reset();
+
+                  events = paper.set(paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }));
+
+                  events[0].stop().animate({ cy: 100, easing: "linear", callback: fade(1) }, duration)
+                                  .animate({ cx: 200, easing: "linear" }, duration);
+
+                  events[1].stop().animate({ cy: 200, easing: "linear", callback: fade(2) }, duration)
+                                  .animate({ cx: 100, easing: "linear" }, duration);
+
+                  events[2].stop().animate({ cy: 300, easing: "linear", callback: fade(3) }, duration)
+                                  .animate({ cx: 200, easing: "linear" }, duration);
+
+                  events[3].stop().animate({ cy: 200, easing: "linear", callback: fade(0) }, duration)
+                                  .animate({ cx: 300, easing: "linear" }, duration);
+                });
+              } ());
+            </script>
+          </section>
+
+          <section class="theory">
+            <h3>Event Emitter API</h3>
+
+            <pre><code data-trim class="javascript">
+var util = require("util"),
+    EventEmitter = require("events").EventEmitter,
+    sender;
+
+function Sender() {
+  EventEmitter.call(this);
+}
+
+util.inherits(Sender, EventEmitter);
+
+sender = new Sender();
+
+sender.on("eventName", function handler() { /*...*/ });
+sender.addListener("eventName", function handler() { /*...*/ });
+sender.once("eventName", function handler() { /*...*/ });
+
+sender.removeAllListeners();
+sender.removeListener("eventName", handler);
+
+sender.emit("eventName", argument1 /* ... */);
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>DESCRIBE: Talk about whole API and inheritance model.</li>
+                <li>MENTION: Talk about .once and number of MaxListenersCount.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 6</h1>
+            <h3>Handle Game Start</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_6
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>WebSockets</h1>
+
+            <p class="left-alignment">
+               A protocol providing <span class="bolded">full-duplex</span> communications channels over a single TCP connection. The WebSocket protocol was standardized by the IETF as RFC 6455 in 2011, and the WebSocket API in Web IDL is being standardized by the W3C.
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: Numerous possibilities opened for web developers. Server push is so easy, but also it opens up possibility to creating bidirectional channels between client-server and other clients.
+                </li>
+                <li>MENTION: Right now WebSocket RFC is stable, API in browser also.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h1>socket.io</h1>
+
+            <pre><code data-trim class="javascript">
+socket.join("room");
+socket.leave("room");
+
+socket.set("property", /*...*/);
+socket.get("property", /*...*/);
+
+socketIO.of("/rooms").on("event-name", function handler() { /*...*/ });
+
+socket.broadcast.to("room").emit("event-name", /*...*/);
+socket.broadcast.emit("event-name", /*...*/);
+socket.emit("event-name", /*...*/);
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: Socket.io is very nice abstraction over WebSockets, for both - client and server sides. It supports various fall-backs and almost every browser.
+                </li>
+                <li>DESCRIBE: Describe API, mention similarities between this and Event Emitter API.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 7</h1>
+            <h3>Broadcasting Game State</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_7
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>Patterns</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  MENTION: I would like to describe some patterns which are helpful in asynchronous and reactive environments.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - "Bulkheading"</h3>
+
+            <p>
+              <span class="bolded">Separate</span> compute intensive parts from client-facing parts.
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: We delegate all compute intensive tasks from server which handles user requests and responses to the more volatile worker for handling them, compute and return results via message.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - Risk Delegation</h3>
+
+            <p>
+              <span class="bolded">Separate</span> potentially dangerous parts from client-facing parts.
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: As in the previous example, we're splitting responsibilities between worker and client-facing server, but this time we need to delegate dangerous task to the other worker.
+                </li>
+                <li>
+                  MENTION: We will talk about supervisors, which should not deal with ANY dangerous task, which can break their responsibilities.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - Promises</h3>
+
+            <pre><code data-trim class="javascript">
+promise
+    .then(function onSuccess() { /*...*/ })
+    .error(function onFailure() { /*...*/ });
+
+var fs = require("q-io/fs"),
+
+    readJsonPromise = Q.async(function *(path) {
+        return JSON.parse(yield fs.read(path));
+    });
+            </code></pre>
+
+            <a href="http://documentup.com/kriskowal/q/" class="fragment">Q</a>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: Promise is a ... promise of fulfilling some requirements by response. It can be resolved successfully or with failure, both resolutions can be caught by handlers.
+                </li>
+                <li>
+                  DESCRIBE: Promise changes asynchronous code, non-sequential from nature to the sequential, linear flow.
+                </li>
+                <li>
+                  MENTION: Sample presents a small taste of ECMAScript 6 (Node.js v 0.11) function with star is a generator, which can yield a multiple results. It can be transformed to the promise via external library called Q.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - Ask Pattern</h3>
+
+            <p>
+              It models just <span class="bolded">one question</span> and <span class="bolded">one answer</span>.
+            </p>
+
+            <pre><code data-trim class="javascript">
+userService.getUsers(/*...*/)
+    .then(function onSuccess() { /*...*/ })
+    .error(function onFailure() { /*...*/ });
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: It is a specific use case for promise, because Ask pattern models one question / answer (or one request / response) round trip and it returns a promise which will be fulfilled.
+                </li>
+                <li>MENTION: It doesn't matter is it successful or not - answer is an answer.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="theory">
+            <h3>Patterns - Workflows</h3>
+
+            <pre><code data-trim class="javascript">
+function wait(ms, value callback) {
+    setTimeout(function () {
+        callback(null, value);
+    }, ms);
+}
+
+async.parallel([
+      wait.bind(null, 200, "one"),
+      wait.bind(null, 100, "two")
+  ],
+
+  function (error, results) {
+      // The results array will equal [ "one", "two" ] even though
+      // the second function had a shorter timeout.
+  });
+            </code></pre>
+
+            <a href="https://github.com/caolan/async" class="fragment">async</a>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  DESCRIBE: Workflow management is something that shouldn't be done from scratch every time. Very nice library for managing multiple situations is called `async` and it's provided as a Node.js module. However it can be abused easily, before we use some construction we have to be sure that we know what we're doing and we will cover all exits, successful or not.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 8</h1>
+            <h3>Updating score and ending the game</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_8
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>Supervision</h1>
+
+            <p class="left-alignment">
+              A <span class="bolded">supervisor</span> is responsible for starting, stopping and monitoring its child processes.
+            </p>
+            <p class="left-alignment">
+              The basic idea of a supervisor is that it should keep its child processes alive by restarting them when necessary.
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>DESCRIBE: Whole concept of supervision.</li>
+                <li>
+                  MENTION: "Let it crash" as a tactic for recovering from errors. You cannot prepare to all kind of errors, but you can always start with a clean slate, and put on hold rest of the world when restarting.
+                </li>
+                <li>MENTION: Talk about forever (process monitor) and Nodejitsu.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 9</h1>
+            <h3>Forever</h3>
+
+            <pre><code data-trim class="bash">
+$ npm install -g forever
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_9
+$ npm install
+$ forever --help
+            </code></pre>
+
+            <h3>1 assignment = 5 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 5 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="theory">
+            <h1>Fun!</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>PROCEED: Now we will begin with fun stuff.</li>
+                <li>After doing last assignment we will play together on one server.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task F1</h1>
+
+            <h2>Destructible terrain!</h2>
+            <h3><em>Client-Side</em></h3>
+          </section>
+
+          <section class="task">
+            <h1>Task F2</h1>
+
+            <h2>More weapons!</h2>
+            <h3><em>Architecture</em></h3>
+          </section>
+
+          <section class="task">
+            <h1>Task F3</h1>
+
+            <h2>Streaming game events!</h2>
+            <h3><em>Architecture</em></h3>
+          </section>
+
+          <section class="task">
+            <h1>Task F4</h1>
+
+            <h2>Generated terrain!</h2>
+            <h3><em>Algorithms</em></h3>
+          </section>
+
+          <section class="task">
+            <h1>Task F*</h1>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout master
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 20 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 20 minutes.</li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+          <h1>Play!</h1>
+
+          <aside class="notes">
+            <ul>
+              <li>Now we can play together.</li>
+              <li>Let's get ready to rumble!</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h1>Thank you</h1>
+
+          <div class="center-alignment">
+            <div>... for 110 commits !</div>
+            <div>... for 10 tags !</div>
+            <div>... for <span class="bolded">huge fun ;)</span> !</div>
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li>MENTION: Huge fun </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Remember about survey!</h2>
+          <h3>Feedback? Send me <a href="mailto:wgawronski@future-processing.com">an email</a>.</h3>
+          <h4>Stars, pull requests and issues are welcome!</h4>
+        </section>
+
+        <section>
+          <h2>Thank you!</h2>
+          <h4><em>References </em>:</h4>
+          <ul class="links">
+            <li>
+              <a href="http://nodejsreactions.tumblr.com/">Node.js Reactions Tumblr</a>
+            </li>
+            <li>
+              <a href="http://nodejs.org">Node.js</a> - official Node.js page.
+            </li>
+            <li>
+              <a href="http://jawsjs.com/">Jaws</a> - the game library powered by HTML5.
+            </li>
+            <li>
+              <a href="http://nodeschool.io">nodeschool.io</a> - learn Node.js with interactive lessons.
+            </li>
+            <li>
+              <a href="http://ejohn.org/blog/node-js-stream-playground/">Stream Playground</a>
+            </li>
+            <li>
+              <a href="https://github.com/substack/stream-handbook">Stream Handbook</a>
+            </li>
+            <li>
+              <a href="http://nodejs.org/api/">Node.js Documentation</a>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      var WHITE = "#EFEFEF",
+          GREEN = "#52A617",
+          YELLOW = "#FFC03C";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        element.setAttribute("data-background", color);
+      }
+
+      getArrayOfDomElements(".theory").forEach(applyColor.curry(WHITE));
+      getArrayOfDomElements(".explanation").forEach(applyColor.curry(GREEN));
+      getArrayOfDomElements(".task").forEach(applyColor.curry(YELLOW));
+
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: "default",
+        transition: "linear",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js",condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
