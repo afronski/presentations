@@ -1330,13 +1330,132 @@ asynchronousAction(parameters, handler.intercept(function (results) {
 
         <section>
 
-          <section class="task">
-            <h1>Task 6</h1>
+          <section class="theory">
+            <h2>Event-Driven Model</h2>
+
+            <button id="sendEvents">Trigger</button>
+            <div id="edd"></div>
+
+            <a href="https://github.com/joyent/node/blob/master/lib/fs.js#L1020" class="fragment">
+              EventEmitter in action
+            </a>
 
             <aside class="notes">
               <ul>
                 <li>
+                  MENTION: Now it is time for another abstraction from Node.js, which was used couple times before but nicely hidden from our sight - Event Emitters.
                 </li>
+                <li>
+                  MENTION: This abstraction is made as a prototype inside Node.js and it is used widely by others. In our example we will use it inside socket.io.
+                </li>
+                <li>DESCRIBE: Talk more about publishing and subscribing mechanism drawn on diagram.</li>
+                <li>MENTION: It's main building block of whole platform (eg. link posted above).</li>
+              </ul>
+            </aside>
+            <script>
+              (function() {
+                var paper = Raphael("edd", 400, 400),
+                    opacity = 0.5,
+                    set,
+                    events,
+                    fade = function (id) {
+                      return function () {
+                        set[id].attr({ fill: white, r: 12 }).animate({ fill: gray, r: 8 }, 500);
+                      };
+                    },
+                    duration = 1000,
+                    i;
+
+                function reset() {
+                  set = paper.set(paper.circle(300, 200, 8).attr({ fill: nodeGreen }),
+                                  paper.circle(200, 100, 8).attr({ fill: nodeGreen }),
+                                  paper.circle(100, 200, 8).attr({ fill: nodeGreen }),
+                                  paper.circle(200, 300, 8).attr({ fill: nodeGreen }),
+                                  paper.circle(200, 200, 12).attr({ fill: red }));
+                }
+
+                paper.text(200, 120, "Sender")
+                     .attr({ font: "14px 'Helvetica Neue', Arial", "font-weight": "bold", fill: red });
+
+                paper.text(200, 40, "Receivers")
+                     .attr({ font: "14px 'Helvetica Neue', Arial", "font-weight": "bold", fill: nodeGreen });
+
+                reset();
+
+                document.querySelector("#sendEvents").addEventListener("click", function() {
+                  reset();
+
+                  events = paper.set(paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }),
+                                     paper.circle(200, 200, 10).attr({ stroke: white, "stroke-width": 4 }));
+
+                  events[0].stop().animate({ cy: 100, easing: "linear", callback: fade(1) }, duration)
+                                  .animate({ cx: 200, easing: "linear" }, duration);
+
+                  events[1].stop().animate({ cy: 200, easing: "linear", callback: fade(2) }, duration)
+                                  .animate({ cx: 100, easing: "linear" }, duration);
+
+                  events[2].stop().animate({ cy: 300, easing: "linear", callback: fade(3) }, duration)
+                                  .animate({ cx: 200, easing: "linear" }, duration);
+
+                  events[3].stop().animate({ cy: 200, easing: "linear", callback: fade(0) }, duration)
+                                  .animate({ cx: 300, easing: "linear" }, duration);
+                });
+              } ());
+            </script>
+          </section>
+
+          <section class="theory">
+            <h3>Event Emitter API</h3>
+
+            <pre><code data-trim class="javascript">
+var util = require("util"),
+    EventEmitter = require("events").EventEmitter,
+    sender;
+
+function Sender() {
+  EventEmitter.call(this);
+}
+
+util.inherits(Sender, EventEmitter);
+
+sender = new Sender();
+
+sender.on("eventName", function handler() { /*...*/ });
+sender.addListener("eventName", function handler() { /*...*/ });
+sender.once("eventName", function handler() { /*...*/ });
+
+sender.removeAllListeners();
+sender.removeListener("eventName", handler);
+
+sender.emit("eventName", argument1 /* ... */);
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>DESCRIBE: Talk about whole API and inheritance model.</li>
+                <li>MENTION: Talk about .once and number of MaxListenersCount.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 6</h1>
+            <h3>Handle Game Start</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_6
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
               </ul>
             </aside>
           </section>
@@ -1344,14 +1463,28 @@ asynchronousAction(parameters, handler.intercept(function (results) {
         </section>
 
         <section>
+
+          <section class="theory">
+            <h1>WebSockets</h1>
+            TODO
+          </section>
 
           <section class="task">
             <h1>Task 7</h1>
+            <h3>TODO</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_7
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
 
             <aside class="notes">
               <ul>
-                <li>
-                </li>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
               </ul>
             </aside>
           </section>
@@ -1359,14 +1492,37 @@ asynchronousAction(parameters, handler.intercept(function (results) {
         </section>
 
         <section>
+
+          <section class="theory">
+            <h2>Patterns</h2>
+            TODO
+            <aside class="notes">
+              <ul>
+                <li>Ask pattern.</li>
+                <li>Bulkheading.</li>
+                <li>Risk delegation.</li>
+                <li>Promises (mention Q from kkowal).</li>
+                <li>Managing complicated workflow (async).</li>
+              </ul>
+            </aside>
+          </section>
 
           <section class="task">
             <h1>Task 8</h1>
+            <h3>TODO</h3>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_8
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 10 minutes</h3>
 
             <aside class="notes">
               <ul>
-                <li>
-                </li>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 10 minutes.</li>
               </ul>
             </aside>
           </section>
@@ -1375,13 +1531,45 @@ asynchronousAction(parameters, handler.intercept(function (results) {
 
         <section>
 
-          <section class="task">
-            <h1>Task 9</h1>
+          <section class="theory">
+            <h1>Supervision</h1>
+
+            <p class="left-alignment">
+              A <span class="bolded">supervisor</span> is responsible for starting, stopping and monitoring its child processes.
+            </p>
+            <p class="left-alignment">
+              The basic idea of a supervisor is that it should keep its child processes alive by restarting them when necessary.
+            </p>
 
             <aside class="notes">
               <ul>
+                <li>DESCRIBE: Whole concept of supervision.</li>
                 <li>
+                  MENTION: "Let it crash" as a tactic for recovering from errors. You cannot prepare to all kind of errors, but you can always start with a clean slate, and put on hold rest of the world when restarting.
                 </li>
+                <li>MENTION: Talk about forever (process monitor) and Nodejitsu.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="task">
+            <h1>Task 9</h1>
+            <h3>Forever</h3>
+
+            <pre><code data-trim class="bash">
+$ npm install -g forever
+$ cd mighty-penguins-revenge
+$ git checkout tags/TASK_9
+$ npm install
+$ forever --help
+            </code></pre>
+
+            <h3>1 assignment = 5 minutes</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 5 minutes.</li>
               </ul>
             </aside>
           </section>
@@ -1404,32 +1592,46 @@ asynchronousAction(parameters, handler.intercept(function (results) {
           <section class="task">
             <h1>Task F1</h1>
 
-            <aside class="notes">
-              <ul>
-                <li>
-                </li>
-              </ul>
-            </aside>
+            <h2>Destructible terrain!</h2>
+            <h3><em>Client-Side</em></h3>
           </section>
 
           <section class="task">
             <h1>Task F2</h1>
 
-            <aside class="notes">
-              <ul>
-                <li>
-                </li>
-              </ul>
-            </aside>
+            <h2>More weapons!</h2>
+            <h3><em>Architecture</em></h3>
           </section>
 
           <section class="task">
             <h1>Task F3</h1>
 
+            <h2>Streaming game events!</h2>
+            <h3><em>Architecture</em></h3>
+          </section>
+
+          <section class="task">
+            <h1>Task F4</h1>
+
+            <h2>Generated terrain!</h2>
+            <h3><em>Algorithms</em></h3>
+          </section>
+
+          <section class="task">
+            <h1>Task F*</h1>
+
+            <pre><code data-trim class="bash">
+$ cd mighty-penguins-revenge
+$ git checkout master
+$ npm install
+            </code></pre>
+
+            <h3>1 assignment = 20 minutes</h3>
+
             <aside class="notes">
               <ul>
-                <li>
-                </li>
+                <li>Basing on the theory that I said we can move to the next assignment.</li>
+                <li>PROCEED: 1 assignment in 20 minutes.</li>
               </ul>
             </aside>
           </section>
@@ -1450,6 +1652,7 @@ asynchronousAction(parameters, handler.intercept(function (results) {
         <section>
           <h2>Remember about survey!</h2>
           <h3>Feedback? Send me <a href="mailto:wgawronski@future-processing.com">an email</a>.</h3>
+          <h4>Stars, pull requests and issues are welcome!</h4>
         </section>
 
         <section>
@@ -1473,6 +1676,9 @@ asynchronousAction(parameters, handler.intercept(function (results) {
             </li>
             <li>
               <a href="https://github.com/substack/stream-handbook">Stream Handbook</a>
+            </li>
+            <li>
+              <a href="http://nodejs.org/api/">Node.js Documentation</a>
             </li>
           </ul>
         </section>
