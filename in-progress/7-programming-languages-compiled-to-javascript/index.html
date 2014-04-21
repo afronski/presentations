@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>7 languages compiled to JavaScript in less than 20 minutes</title>
+
+    <meta name="description" content="How to enhance your programming skills with other languages." />
+    <meta name="author" content="Wojtek Gawroński" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto&amp;subset=latin,latin-ext"
+          rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="css/reveal.css" id="theme" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+    <link rel="stylesheet" href="lib/css/github.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h2>Seven languages<br/>compiled to JavaScript</h2>
+          <h4><em>in less than 20 minutes ;)</em></h4>
+
+          <span class="license">
+            Wojtek Gawroński, 2014 &copy;
+            License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+          </span>
+
+          <aside class="notes">
+            <ul>
+              <li></li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Inspiration</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>CoffeScript</h1>
+            <pre><code data-trim class="coffescript">
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Opal</h1>
+            <pre><code data-trim class="ruby">
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Dart</h1>
+            <pre><code data-trim class="java">
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>TypeScript</h1>
+            <pre><code data-trim class="csharp">
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>ClojureScript</h1>
+            <pre><code data-trim class="clojure">
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>LiveScript</h1>
+            <pre><code data-trim class="haskell">
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Elm</h1>
+            <pre><code data-trim class="haskell">
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+          <h2>Thanks!</h2>
+
+          <h4>References:</h4>
+          <ul class="links">
+            <li></li>
+          </ul>
+
+          <h4>Photo credits:</h4>
+          <ul class="links">
+            <li></li>
+          </ul>
+
+          <aside class="notes">
+            <ul>
+              <li></li>
+            </ul>
+          </aside>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      var BLUE = "#63ABF0",
+          RED = "#FA5F0C",
+          GREEN = "#52A617",
+          YELLOW = "#FFC03C";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        element.setAttribute("data-background", color);
+      }
+
+      getArrayOfDomElements(".section-header").forEach(applyColor.curry(BLUE));
+      getArrayOfDomElements(".good").forEach(applyColor.curry(GREEN));
+      getArrayOfDomElements(".bad").forEach(applyColor.curry(RED));
+      getArrayOfDomElements(".warning").forEach(applyColor.curry(YELLOW));
+
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: "slide",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js",condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
