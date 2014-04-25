@@ -1553,7 +1553,7 @@ body {
   color: black;
 
   position: absolute;
-  width: 300px;
+  width: 400px;
 
   -webkit-transform: rotate(-25deg);
   -moz-transform: rotate(-25deg);
@@ -1563,6 +1563,15 @@ body {
 .reveal .opal-stamp {
   bottom: 150px;
   right: -10px;
+}
+
+.reveal .coffee-script-stamp {
+  bottom: 200px;
+  right: 20px;
+
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 
 .reveal .section-header a:not(.image) {

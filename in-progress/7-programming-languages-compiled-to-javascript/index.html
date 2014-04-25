@@ -89,7 +89,7 @@
                   I would like to present briefly presentation layout.
                 </li>
                 <li>
-                  For each language I will describe reason why I chosen this language and explain one of cool feature which we have in it. It will be unique across all languages mentioned in presentation.
+                  For each language I will describe reason why I chose this language and explain one of cool feature which we have in it. It will be unique across all languages mentioned in presentation.
                 </li>
                 <li>
                   I will show and explain a little a cool project and idea behind it, because sometimes it introduces very interesting concepts.
@@ -144,10 +144,10 @@ hole.test
                   Why I called Opal an ugly child? Because in comparison to other languages it does not add any value to the client-side development.
                 </li>
                 <li>
-                  What Opal brings to the table? It is a 'method_missing' mechanism. Fortunately, in near distant future we can natively implement such behavior with use of ECMAScript 6 proxies.
+                  What Opal brings to the table? It is a 'method_missing' mechanism - it is a way for catch all unknown method invocations in one place, it opens many possibilities with a main one - possibility of creating a DSL. Fortunately, in near distant future we can natively implement such behavior with use of ECMAScript 6 proxies, and we can implement DSLs with Template Strings.
                 </li>
                 <li>
-                  Any cool project came into your mind? I suppose there will be one, because Ruby community have many very nice projects. I would like to port any tool related with devops like
+                  Regarding the project, I suppose it could be a different one for everybody, because Ruby community have many very nice projects. I am not a Rails developer but it can be a nice idea to integrate with framework via Opal much closer than the CoffeeScript already does it.
                 </li>
               </ul>
             </aside>
@@ -158,13 +158,44 @@ hole.test
         <section>
 
           <section class="section-header">
-            <h1>CoffeScript</h1>
+            <h1><a href="https://github.com/jashkenas/coffee-script">CoffeeScript</a></h1>
+
             <pre><code data-trim class="coffescript">
+square = (x) -> x * x
+
+muppet = "Beeker"
+
+square_message = "The square of 10 is #{square 10}."
+muppet_message = "And your favorite muppet is #{muppet}."
+
             </code></pre>
+
+            <h2>
+              Project: <a href="https://github.com/jashkenas/coffee-script">Compiler</a>
+            </h2>
+
+            <h3 class="fragment stamp coffee-script-stamp">ECMAScript&nbsp;6 Template Strings</h3>
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  Any front-end developer at some point met with this language. Some people hate it, some love it. It is a little strange for me that so many people are in the middle between these two camps.
+                </li>
+                <li>
+                  It is much better approach than Opal, because it gives value - by reducing syntax, erroneous cases adding small, but expected features to the language we again eases the development for the newcomers and people outside the front-end world.
+                </li>
+                <li>
+                  I chose string interpolation feature because we all miss it in plain JavaScript. Almost everybody shims it with one way or another, but it is so expected and important thing in the language.
+                </li>
+                <li>
+                  Fortunately again, ECMAScript 6 will bring Template Strings and without any hesitation we will have not only the interpolation but more powerful features as well.
+                </li>
+                <li>
+                  CoffeeScript is definitely a mature choice. It is widely used, tested in battle, hardened and what is even more important - compiler authors are 'eating their own dog food'. It means that the whole compiler is written in CoffeScript.
+                </li>
+                <li>
+                  Now, with next languages I would like to push you from the comfort zone. For now just a little.
+                </li>
               </ul>
             </aside>
           </section>
@@ -175,12 +206,15 @@ hole.test
 
           <section class="section-header">
             <h1>Dart</h1>
+
             <pre><code data-trim class="java">
             </code></pre>
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  With Dart I would like to introduce two object oriented languages.
+                </li>
               </ul>
             </aside>
           </section>
@@ -191,12 +225,15 @@ hole.test
 
           <section class="section-header">
             <h1>TypeScript</h1>
+
             <pre><code data-trim class="csharp">
             </code></pre>
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  Next languages, for at least some of you, will be an adventure. It can be a very unpleasant jump outside the comfort zone. But believe me, after a while and just a little of training you will get used to it and it will expand your mindset.
+                </li>
               </ul>
             </aside>
           </section>
@@ -207,6 +244,7 @@ hole.test
 
           <section class="section-header">
             <h1>ClojureScript</h1>
+
             <pre><code data-trim class="clojure">
             </code></pre>
 
@@ -223,6 +261,7 @@ hole.test
 
           <section class="section-header">
             <h1>LiveScript</h1>
+
             <pre><code data-trim class="haskell">
             </code></pre>
 
@@ -239,6 +278,7 @@ hole.test
 
           <section class="section-header">
             <h1>Elm</h1>
+
             <pre><code data-trim class="haskell">
             </code></pre>
 
@@ -256,7 +296,16 @@ hole.test
 
           <h2>References:</h2>
           <ul class="links">
-            <li></li>
+            <li>
+              <a href="http://opalrb.org/try">
+                Try Opal in your browser
+              </a>
+            </li>
+            <li>
+              <a href="http://coffeescriptcookbook.com/chapters/strings/interpolation">
+                CoffeeScript Cookbook
+              </a>
+            </li>
           </ul>
 
           <h2>Photo credits:</h2>
