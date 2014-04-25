@@ -12,9 +12,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <link href="http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto&amp;subset=latin,latin-ext"
-          rel="stylesheet" type="text/css" />
-
     <link rel="stylesheet" href="css/reveal.css" id="theme" />
     <link rel="stylesheet" href="css/theme/default.css" id="theme" />
     <link rel="stylesheet" href="lib/css/github.css" />
@@ -28,13 +25,25 @@
           <h4><em>in less than 20 minutes ;)</em></h4>
 
           <span class="license">
-            Wojtek Gawroński, 2014 &copy;
-            License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+            Wojtek Gawronski (<a href="https://twitter.com/afronski">@afronski</a>, <a href="afronski.pl">afronski.pl</a>) - 2014 &copy; License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
           </span>
 
           <aside class="notes">
             <ul>
-              <li></li>
+              <li>Welcome to my presentation about different perspective on JavaScript.</li>
+              <li>I would like to encourage you to playing with different concepts, paradigms.</li>
+              <li>
+                This is the straight way to expanding your horizons, stretching your mind and in the consequence be a better, smarter programmer.
+              </li>
+              <li>
+                Quick Round: How many of you are using language compiled to JavaScript in your daily work?
+                <p>
+                  A: Pretty significant amount, nice. Nevertheless, I hope that I would not preach to the choir today because I have prepared some interesting things.
+                </p>
+                <p>
+                  B: Not so much as I thought - that is even better, because in that case many things can enhance your toolbox.
+                </p>
+              </li>
             </ul>
           </aside>
         </section>
@@ -42,11 +51,104 @@
         <section>
 
           <section class="section-header">
-            <h1>Inspiration</h1>
+            <p>
+              <a href="http://pragprog.com/book/btlang/seven-languages-in-seven-weeks">
+                <img src="img/7langs.jpg" alt="Cover of book '7 programming languages in 7 weeks'." />
+              </a>
+            </p>
+
+            <h1 class="transformed-header">Inspiration</h1>
 
             <aside class="notes">
               <ul>
-                <li></li>
+                <li>
+                  My talk is a shameless inspiration delivered from Bruce Tate's book.
+                </li>
+                <li>
+                  The major difference is that I have less than 20 minutes to present 7 languages.
+                </li>
+                <li>
+                  I strongly recommend this book. Go grab a copy and read it - it will make you a better, wiser and more comprehensive programmer.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Organization</h1>
+
+            <ol class="organization-list">
+              <li><h3>Reason</h3></li>
+              <li><h3>One feature (<em>code</em>)</h3></li>
+              <li><h3>Interesting project</h3></li>
+            </ol>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  I would like to present briefly presentation layout.
+                </li>
+                <li>
+                  For each language I will describe reason why I chosen this language and explain one of cool feature which we have in it. It will be unique across all languages mentioned in presentation.
+                </li>
+                <li>
+                  I will show and explain a little a cool project and idea behind it, because sometimes it introduces very interesting concepts.
+                </li>
+              </ul>
+            </aside>
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1><a href="https://github.com/opal/opal">Opal</a></h1>
+
+            <pre><code data-trim class="ruby">
+class BlackHole
+  def method_missing(method_name, *args)
+    puts "I'm sucking the universe!"
+    puts "Method: #{method_name}"
+    puts "Call (#{args.size}): #{args.inspect}"
+  end
+
+  def hello()
+    puts "Hello universe!"
+  end
+end
+
+hole = BlackHole.new
+hole.test
+            </code></pre>
+
+            <h2>
+              Project: <a href="https://github.com/opal/opal-rails">any Ruby project</a>
+            </h2>
+
+            <h3 class="fragment stamp opal-stamp">ECMAScript&nbsp;6 Proxies</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  As in the Mr Tate's book we should have an "ugly child".
+                </li>
+                <li>
+                  Opal is a cross-compiler from Ruby to JavaScript. It represents whole range of projects which only transforms language which is not designed to work with client-side to JavaScript.
+                </li>
+                <li>
+                  We can say that is eases pain and lowers the bar for newcomers. This is of course, not the only advantage of such approach, but for more experienced front-end developers having such language is such a relief.
+                </li>
+                <li>
+                  Why I called Opal an ugly child? Because in comparison to other languages it does not add any value to the client-side development.
+                </li>
+                <li>
+                  What Opal brings to the table? It is a 'method_missing' mechanism. Fortunately, in near distant future we can natively implement such behavior with use of ECMAScript 6 proxies.
+                </li>
+                <li>
+                  Any cool project came into your mind? I suppose there will be one, because Ruby community have many very nice projects. I would like to port any tool related with devops like
+                </li>
               </ul>
             </aside>
           </section>
@@ -58,22 +160,6 @@
           <section class="section-header">
             <h1>CoffeScript</h1>
             <pre><code data-trim class="coffescript">
-            </code></pre>
-
-            <aside class="notes">
-              <ul>
-                <li></li>
-              </ul>
-            </aside>
-          </section>
-
-        </section>
-
-        <section>
-
-          <section class="section-header">
-            <h1>Opal</h1>
-            <pre><code data-trim class="ruby">
             </code></pre>
 
             <aside class="notes">
@@ -166,16 +252,18 @@
         </section>
 
         <section>
-          <h2>Thanks!</h2>
+          <h1>Thanks!</h1>
 
-          <h4>References:</h4>
+          <h2>References:</h2>
           <ul class="links">
             <li></li>
           </ul>
 
-          <h4>Photo credits:</h4>
+          <h2>Photo credits:</h2>
           <ul class="links">
-            <li></li>
+            <li>
+              <a class="on-dark-background" href="pragprog.com">'Seven languages in seven weeks' cover</a>
+            </li>
           </ul>
 
           <aside class="notes">
@@ -192,10 +280,8 @@
     <script src="js/reveal.min.js"></script>
 
     <script>
-      var BLUE = "#63ABF0",
-          RED = "#FA5F0C",
-          GREEN = "#52A617",
-          YELLOW = "#FFC03C";
+      var PISTACHIO_ICE_CREAM = "#19BC9C",
+          STROMY_SKY = "#2C3E50";
 
       Function.prototype.curry = function() {
         var fn = this,
@@ -214,10 +300,7 @@
         element.setAttribute("data-background", color);
       }
 
-      getArrayOfDomElements(".section-header").forEach(applyColor.curry(BLUE));
-      getArrayOfDomElements(".good").forEach(applyColor.curry(GREEN));
-      getArrayOfDomElements(".bad").forEach(applyColor.curry(RED));
-      getArrayOfDomElements(".warning").forEach(applyColor.curry(YELLOW));
+      getArrayOfDomElements(".section-header").forEach(applyColor.curry(PISTACHIO_ICE_CREAM));
 
       Reveal.initialize({
         controls: true,
@@ -225,7 +308,7 @@
         history: true,
         center: true,
 
-        transition: "slide",
+        transition: "linear",
         transitionSpeed: "fast",
         backgroundTransition: "linear",
 

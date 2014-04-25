@@ -1,10 +1,31 @@
 @font-face {
-  font-family: UbuntuMono;
-  src: url("fonts/UbuntuMono.ttf");
+  font-family: Monaco;
+  src: url(fonts/Monaco.ttf);
+}
+
+@font-face {
+  font-family: 'Special Elite';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Special Elite'), local('SpecialElite-Regular'), url(fonts/SpecialElite.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Josefin Sans Thin'), local('JosefinSans-Thin'), url(fonts/JosefinSansThin.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Josefin Sans'), local('JosefinSans'), url(fonts/JosefinSans.woff) format('woff');
 }
 
 body {
-  background-color: #39576C; }
+  background-color: #2C3E50; }
 
 .reveal .hidden {
   position: absolute;
@@ -223,8 +244,15 @@ body {
   margin-left: 200px;
 }
 
+.reveal .links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .reveal .links li {
   line-height: 1em;
+  font-size: 0.8em;
 }
 
 .reveal .justified-to-left {
@@ -233,7 +261,7 @@ body {
 }
 
 .reveal {
-  font-family: "Roboto", sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 36px;
   font-weight: 200;
   letter-spacing: -0.02em;
@@ -257,14 +285,14 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #eeeeee;
-  font-family: "Roboto Slab", Impact, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   line-height: 1.1em;
   letter-spacing: 0.02em;
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
 }
 
 .reveal pre code {
-  font-family: UbuntuMono;
+  font-family: Monaco;
   padding: 15px;
   border-radius: 5px;
   box-shadow: 2px 2px 10px #333;
@@ -361,7 +389,7 @@ body {
 }
 
 .reveal .license {
-  font-size: 40%;
+  font-size: 60%;
 
   position: absolute;
 
@@ -371,7 +399,6 @@ body {
 
 .reveal .license a {
   vertical-align: middle;
-  bottom: 1px;
 }
 
 .reveal #random {
@@ -429,21 +456,22 @@ body {
  *********************************************/
 .reveal a:not(.image) {
   color: #13ECD2;
-  text-decoration: none;
-  -webkit-transition: color .15s ease;
-  -moz-transition: color .15s ease;
-  -ms-transition: color .15s ease;
-  -o-transition: color .15s ease;
-  transition: color .15s ease; }
+  text-decoration: underline;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease; }
 
 .reveal a:not(.image):hover {
-  color: #71e9f4;
+  color: #EAEAEA;
   text-shadow: none;
+  text-decoration: none;
   border: none; }
 
 .reveal .roll span:after {
-  color: #fff;
-  background: #0d99a5; }
+  color: #FFFFFF;
+  background: #0D99A5; }
 
 /*********************************************
  * IMAGES

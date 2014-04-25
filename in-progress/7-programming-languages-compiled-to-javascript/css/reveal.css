@@ -1533,3 +1533,39 @@ body {
   z-index: 50;
   visibility: hidden;
 }
+
+/*********************************************
+ * CUSTOM STUFF
+ *********************************************/
+
+.reveal .transformed-header {
+  -webkit-transform: rotate(270deg) translate(430px, -400px) skewY(4deg);
+  -moz-transform: rotate(270deg) translate(430px, -400px) skewY(4deg);
+  transform: rotate(270deg) translate(430px, -400px) skewY(4deg);
+}
+
+.reveal .organization-list li {
+  width: 360px;
+}
+
+.reveal .stamp {
+  font-family: 'Special Elite';
+  color: black;
+
+  position: absolute;
+  width: 300px;
+
+  -webkit-transform: rotate(-25deg);
+  -moz-transform: rotate(-25deg);
+  transform: rotate(-25deg);
+}
+
+.reveal .opal-stamp {
+  bottom: 150px;
+  right: -10px;
+}
+
+.reveal .section-header a:not(.image) {
+  color: #2C3E50;
+  text-decoration: none;
+}
