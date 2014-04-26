@@ -14,3 +14,6 @@ Presentation which were presented on conference IT Academic Days 2012 (at Poland
 Presentations for school:
 - *Python TDD* (2013)
 - *Accounting and Authorisation* (2013)
+
+Next presentations:
+- *7 languages compiled to JavaScript* (2014)
