@@ -20,3 +20,4 @@ Presentations for school:
 
 Ideas:
 - *7 languages compiled to JavaScript* (2014)
+- *Error handling in Node.js* (2014)
