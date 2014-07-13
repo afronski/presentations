@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Storm + Jepsen</title>
+
+    <meta name="description" content="Talk about Storm and testing it's features by Jepsen." />
+    <meta name="author" content="Wojtek Gawroński" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="css/reveal.css" id="theme" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+    <link rel="stylesheet" href="lib/css/github.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h2>Storm + Jepsen</h2>
+
+          <span class="license">
+            Wojtek Gawronski (<a href="https://twitter.com/afronski">@afronski</a>, <a href="afronski.pl">afronski.pl</a>) - 2014 &copy; License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+          </span>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Witam na prezentacji, na której chciałbym skupić się na budowie i przeznaczeniu projektu Storm.
+              </li>
+              <li>
+                Niemniej, prezentacja może być rozpatrywana w dwóch płaszczyznach, ponieważ zaprezentuję jedno bardzo ciekawe narzędzie, zwłaszcza z punktu widzenia ludzi zainteresowanych tematyką i budową aplikacji rozproszonych.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Tools</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Zacznijmy od narzędzi.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Storm</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Topology</h2>
+
+            <img src="img/storm.png" alt="Storm - Visual representation." />
+
+            <aside class="notes">
+              <ul>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Stream</h2>
+
+            <aside class="notes">
+              <ul>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Spout</h2>
+
+            <img src="img/spout.png" alt="Spout symbol." />
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Pipe</h2>
+
+            <aside class="notes">
+              <ul>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Bolt</h2>
+
+            <img src="img/bolt.png" alt="Bolt symbol." />
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <img src="img/ha.png" class="zoomed" alt="High Availability and process hierarchy." />
+
+            <aside class="notes">
+              <ul>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <img src="img/reliability.jpg" alt="Reliability explanation." />
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Jepsen</h1>
+
+            <aside class="notes">
+              <ul>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Why <em>Jepsen</em>?</h2>
+
+            <iframe width="900" height="506" src="https://www.youtube.com/embed/fWNaR-rxAic"
+                    frameborder="0" allowfullscreen></iframe>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Dlaczego "Jepsen"?
+                </li>
+                <li>
+                  Bo autor ma niezłe poczucie humoru ;).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section class="section-header">
+          <h1>Demo</h1>
+
+          <aside class="notes">
+            <ul>
+              <li>Przejdźmy do prezentacji omawianych zagadnień.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h1>Thanks!</h1>
+
+          <h2>References:</h2>
+          <ul class="links">
+            <li><a href="http://storm.incubator.apache.org/">Storm</a></li>
+            <li><a href="https://github.com/aphyr/jepsen">Jepsen</a></li>
+            <li><a href="https://github.com/aphyr/salticid">Salticid</a></li>
+          </ul>
+
+          <h3 class="separated-header">Photo credits:</h3>
+          <ul class="links">
+            <li><a href="http://storm.incubator.apache.org/documentation/Home.html">Storm documentation</a></li>
+          </ul>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Na koniec odnośniki do wykorzystanych narzędzi oraz odniesienia do wykorzystanych obrazków.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      var PISTACHIO_ICE_CREAM = "#19BC9C",
+          STROMY_SKY = "#2C3E50";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        element.setAttribute("data-background", color);
+      }
+
+      getArrayOfDomElements(".section-header").forEach(applyColor.curry(PISTACHIO_ICE_CREAM));
+
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: "linear",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js",condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
