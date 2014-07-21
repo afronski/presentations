@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Storm + Jepsen</title>
+
+    <meta name="description" content="Talk about Storm and testing it's features by Jepsen." />
+    <meta name="author" content="Wojtek Gawroński" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="css/reveal.css" id="theme" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+    <link rel="stylesheet" href="lib/css/github.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h2>Storm + Jepsen</h2>
+          <h3>Introduction</h3>
+
+          <span class="license">
+            Wojtek Gawronski (<a href="https://twitter.com/afronski">@afronski</a>, <a href="afronski.pl">afronski.pl</a>) - 2014 &copy; License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+          </span>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Witam na prezentacji, na której chciałbym skupić się na budowie i przeznaczeniu projektu Storm.
+              </li>
+              <li>
+                Niemniej, prezentacja może być rozpatrywana w dwóch płaszczyznach, ponieważ zaprezentuję jedno bardzo ciekawe narzędzie, zwłaszcza z punktu widzenia ludzi zainteresowanych tematyką i budową aplikacji rozproszonych.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+
+          <section class="section-header">
+            <h1>Tools</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Zacznijmy od narzędzi.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="section-header">
+            <h1>Storm</h1>
+
+            <p>
+              <em>
+                Storm makes it easy to reliably process unbounded streams of data, doing for realtime processing what Hadoop did for batch processing.
+              </em>
+            </p>
+            <p>
+              <em>
+                [...] a million tuples processed per second per node
+              </em>
+            </p>
+            <p>
+              <em>
+                It is scalable, fault-tolerant, guarantees your data will be processed, and is easy to set up and operate.
+              </em>
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Kilka cytatów ze strony głównej - dużo marketingu, ale spróbujemy go rozszyfrować.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Use Cases</h1>
+
+            <ul class="bigger">
+              <li>realtime analytics</li>
+              <li>online machine learning</li>
+              <li>continuous computation</li>
+              <li>distributed RPC</li>
+              <li>ETL</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Topology</h2>
+
+            <img src="img/storm.png" alt="Storm - Visual representation." />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Jak można się domyślać, topologia to sposób opisu tworzonego systemu - dzięki niemu jesteśmy w stanie wydzielić odpowiednie komponenty. Wyznaczamy też podstawowe jednostki pracy, korzystając ze standardowych prymitywów udostępnianych przez Storm.
+                </li>
+                <li>
+                  Innymi słowy topologia to graf powiązań dot. naszych obliczeń.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Stream</h2>
+
+            <img src="img/tuples.png" alt="Stream - Visual representation." />
+
+            <aside class="notes">
+              <ul>
+                <li>Nieograniczona i nieskończona lista krotek.</li>
+                <li>Podstawowy element będący źródłem, wejściem i ujściem całej topologii.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Spout</h2>
+
+            <img src="img/spout.png" alt="Spout symbol." />
+
+            <aside class="notes">
+              <ul>
+                <li>Inaczej: rynna danych.</li>
+                <li>Można użyć analogii do batch processing - jest to odpowiednik "map".</li>
+                <li>Wytwarza omawiany wcześniej strumień na podstawie danych wejściowych.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Bolt</h2>
+
+            <img src="img/bolt.png" alt="Bolt symbol." />
+
+            <aside class="notes">
+              <ul>
+                <li>Inaczej: rygiel.</li>
+                <li>Można użyć analogii do batch processing - jest to odpowiednik "reduce".</li>
+                <li>Przetwarza wcześniej przygotowane strumienie krotek wykonując na nich transformacje.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <img src="img/results.png" class="zoomed" alt="Intermediate effects of created topology." />
+
+            <aside class="notes">
+              <ul>
+                <li>Oto jak wyglądają wyniki z poszczególnych poziomów stworzonej topologii.</li>
+                <li>Nieśmiertelny "word count".</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="section-header">
+            <h1>Internals</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Zobaczmy jak Storm wygląda od środka.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <img src="img/ha.png" class="zoomed" alt="High Availability and process hierarchy." />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Storm korzysta z hierarchicznej struktury aby samodzielnie się organizować wewnątrz klastra.
+                </li>
+                <li>
+                  Nimbus jest odpowiedzialny za dystrubucję kodu w klastrze, przypisywanie zadań do określonych fizycznych maszyn oraz monitoringu i śledzenia zadań. Jego odpowiednikiem wewnątrz Hadoopa jest JobTracker.
+                </li>
+                <li>
+                  To Supervisor na każdej z maszyn jest odpowiedzialny za nasłuchiwanie i wykonywanie otrzymywanych zadań.
+                </li>
+                <li>
+                  To właśnie tutaj odbywa się fizyczna praca, a Nimbus odpowiedzialny jest za składanie żądań dot. zasobów. Na jego poziomie zadania są rozdzielane i właśnie tam zachodzi fizyczna delegacja do maszyn podziału przygotowanego na podstawie topologii.
+                </li>
+                <li>
+                  Zookeeper używany jest tylko do koordynacji elementów klastra.
+                </li>
+                <li>
+                  Message passing z Zookeepera nie jest w ogóle wykorzystywany.
+                </li>
+                <li>
+                  Każdy z poziomów (Nimbus, Zookeeper, Supervisor) jest zaprojektowany ze świadomością błędów i tzw. "fail-fast". Możemy w dowolnym momencie ubić każdy z nich i automatycznie zostanie on podniesiony.
+                </li>
+                <li>
+                  Największym mankamentem tej architektury jest single-point-of-failure jeśli chodzi o Nimbus. To tutaj występuje największe ryzyko w kontekście np. awarii maszyny i obecnie trwają prace nad tym, aby Nimbus mógł zostać w łatwy sposób zwielokrotniony, co znacząco zwiększy odporność całego klastra.
+                </li>
+                <li>
+                  Pod spodem Nimbus komunikuje się z Supervisorami i Zookeeperem za pomocą Thrift. Oznacza to, że topologie, definicje spouts oraz bolts muszą być serializowalne.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <img src="img/reliability.jpg" alt="Reliability explanation." />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Dużo mówiliśmy sobie o stabilności i niezawodności, i nie wiem czy i Wy tak macie ale tak naprawdę bardzo często nie dowierzam temu co pisze na marketingowych stronach.
+                </li>
+                <li>
+                  To dość złożony system, nie bawimy się deployment na kilku małych maszynkach, sensowny klaster wymaga co najmniej 5 maszyn a przy takiej ilości maszyn, wiele rzeczy zaczyna być problemem.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="section-header">
+            <h1>Jepsen</h1>
+
+            <p>
+              <em>
+                Breaking distributed systems so you don't have to.
+              </em>
+            </p>
+
+            <img src="img/breaking.jpg" class="zoomed-out" alt="Braking distributed system." />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Dlatego warto wznieść się odrobinę wyżej i pomyśleć nad każdym z przypadków, które mogą być interesujące w kontekście niezawodności tworzonego systemu.
+                </li>
+                <li>
+                  Jepsen, mimo młodego wieku i niestabilności w developmencie daje kilka bardzo ważnych elementów dzięki którym możemy półautomatycznie (a przy odrobinie wysiłku także automatycznie) przeprowadzić testy niezawodności.
+                </li>
+                <li>
+                  Operuje on na poziomie "fizycznym" (wirtualizacja i komunikacji pomiędzy maszynami/kontenerami) więc symulacja jest naprawdę bardzo bliska rzeczywistym zaburzeniom.
+                </li>
+                <li>
+                  Dla bardziej wtajemniczonych - umożliwia on także weryfikację porządku częściowego i sprawdzenie linearności (dot. tzw. ang. causality).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Why <em>Jepsen</em>?</h2>
+
+            <iframe width="900" height="506" src="https://www.youtube.com/embed/fWNaR-rxAic" frameborder="0"></iframe>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Dlaczego "Jepsen"?
+                </li>
+                <li>
+                  Bo autor ma niezłe poczucie humoru ;).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section class="section-header">
+          <h1>Demo</h1>
+
+          <aside class="notes">
+            <ul>
+              <li>Przejdźmy do prezentacji omawianych zagadnień.</li>
+              <li>1. Vagrantfile oraz widok w VirtualBox.</li>
+              <li>2. Storm.yaml oraz Storm Dashboard.</li>
+              <li>3. Implementacja w Clojure - kod źródłowy.</li>
+              <li>4. Uruchomienie Storma.</li>
+              <li>5. Implementacja fragmentacji sieci w Jepsen - kod źródłowy.</li>
+              <li>6. Uruchomienie fragmentacji sieci - Jepsen.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h1>Thanks!</h1>
+
+          <h2>References:</h2>
+          <ul class="links">
+            <li><a href="http://storm.incubator.apache.org/">Storm</a></li>
+            <li><a href="https://github.com/aphyr/jepsen">Jepsen</a></li>
+            <li><a href="https://github.com/aphyr/salticid">Salticid</a></li>
+          </ul>
+
+          <h3 class="separated-header">Photo credits:</h3>
+          <ul class="links">
+            <li><a href="http://storm.incubator.apache.org/documentation/Home.html">Storm documentation</a></li>
+            <li><a href="http://aphyr.com/posts">Aphyr blog</a></li>
+          </ul>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Na koniec odnośniki do wykorzystanych narzędzi oraz odniesienia do wykorzystanych obrazków.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      var PISTACHIO_ICE_CREAM = "#19BC9C",
+          STROMY_SKY = "#2C3E50";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        element.setAttribute("data-background", color);
+      }
+
+      getArrayOfDomElements(".section-header").forEach(applyColor.curry(PISTACHIO_ICE_CREAM));
+
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: "linear",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js",condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
