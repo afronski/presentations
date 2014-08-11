@@ -31,12 +31,204 @@
 
           <aside class="notes">
             <ul>
-              <li>TODO: Difference between synchronous and asynchronous flow.</li>
-              <li>TODO: Difference between HTTP status code errors and response errors.</li>
-              <li>TODO: Difference between classic error and verror.</li>
+              <li>
+                ASK: Ile osób programuje lub miało styczność z Node.js - prywatnie / komercyjnie?
+              </li>
+              <li>
+                AIM: Zaczniemy od wiedzy i odpowiedniego nastawienia (tzw. mindsetu) niezbędnego żeby zaatakować problem od dobrej strony. Potem przejdziemy przez "case studies" i dla każdego opowiemy sobie jak poradzić sobie z nimi.
+              </li>
             </ul>
           </aside>
         </section>
+
+        <!-- Theory -->
+        <section>
+
+          <section>
+            <h1><em>Let it Crash</em></h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Supervision</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>UNIX philosophy</h1>
+            <h2><em>"Worse is better"</em></h2>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Types of Errors</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Exception</h1>
+            <h2><em>What is this?</em></h2>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Operational Errors</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Programmer Errors</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>How to provide an error?</h2>
+
+            <ul class="follow-up-list">
+              <li class="fragment">Synchronously</li>
+              <li class="fragment">Asynchronously</li>
+            </ul>
+
+            <h3 class="fragment"><strong>You should not do both!</strong></h3>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Error Kernel</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+        <!-- Theory -->
+
+        <!-- Case Studies -->
+        <section>
+
+          <section>
+            <h1>Case Studies</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  AIM: Uzbrojeni w wiedzę przejrzymy sobie teraz autentyczne przykłady, jak nie powinniśmy sobie radzić lub nie radzi z błędami w Node.js - każdy anty-przykład ma propozycję lepszego rozwiązania.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>catch-all</h1>
+            <pre><code data-trim class="javascript">
+process.on("uncaughtException", function() {
+  // ALL YOUR ERRORS ARE BELONG TO US
+});
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>asynchronous-<em>throw</em></h2>
+
+            <pre class="fragment"><code data-trim class="javascript">
+http.get("http://ipinfo.io/8.8.8.8", function (response) {
+  response.pipe(concat(function (content) {
+    var object = JSON.parse(content);
+    console.log(object.loc);
+  }));
+});
+            </code></pre>
+          </section>
+
+          <section>
+            <h1>ignoring-errors</h1>
+            TODO: error in EventEmitter, Streams
+          </section>
+
+          <section>
+            <h1>sound-of-silence</h1>
+            TODO: Siliencing errors
+          </section>
+
+          <section>
+            <h1>if-err-antipattern</h1>
+            TODO: Domains, future - Zones.
+          </section>
+
+          <section>
+            <h1>wrong-abstraction</h1>
+            TODO: using wrong abstraction and mechanism in wrong place.
+          </section>
+
+          <section>
+            <h1>f***-my-resources</h1>
+          </section>
+
+          <section>
+            <h2>design-hijacked-by-a-library</h2>
+            TODO: Async antipatterns
+          </section>
+
+          <section>
+            <h2>meh-i-have-<em>promises</em></h2>
+          </section>
+
+          <section>
+            <h1>vapourous-details</h1>
+          </section>
+
+          <section>
+            <h1>the-ultimate-stack</h1>
+            TODO: relying only on stack trace is short sighted.
+            TODO: https://github.com/Pita/async-stacktrace
+            TODO: Zone - https://github.com/strongloop/zone
+          </section>
+
+        </section>
+        <!-- Case Studies -->
 
         <section>
           <h1>Thanks!</h1>
@@ -49,18 +241,34 @@
             <li>
               <a href="https://github.com/davepacheco/node-verror">verror</a>
             </li>
-          </ul>
-
-          <h2>Photo credits:</h2>
-          <ul class="links">
             <li>
-              <a class="on-dark-background" href=""></a>
+              <a href="http://nodejs.org/api/domain.html">domain</a>
+            </li>
+            <li>
+              <a href="https://github.com/trentm/node-bunyan">bunyan</a>
+            </li>
+            <li>
+              <a href="https://github.com/nodejitsu/forever">forever</a>
+            </li>
+            <li>
+              <a href="https://medium.com/@jlouis666/error-kernels-9ad991200abd">Error Kernels</a>
+            </li>
+            <li>
+              <a href="http://pl.wikipedia.org/wiki/Worse_is_Better"><em>Worse is better</em></a>
+            </li>
+            <li>
+              <a href="http://blogs.teamb.com/craigstuntz/2008/05/19/37819/"><em>Let it crash</em></a>
+            </li>
+            <li>
+              <a href="https://github.com/strongloop/zone">zone</a>,
+              <a href="http://strongloop.com/node-js-zone/">detailed explanations</a>
             </li>
           </ul>
 
           <aside class="notes">
             <ul>
-              <li></li>
+              <li>AIM: Materiały zamieszczone specjalnie dla ciekawskich i zainteresowanych tematem.</li>
+              <li>RECOMMENDATION: Szczególnie polecam artykuł o "Error Kernels".</li>
             </ul>
           </aside>
         </section>
