@@ -1,10 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Error handling in Node.js</title>
 
-    <meta name="description" content="Presentation with an overview, techniques and best practices." />
+    <meta name="description"
+          content="Presentation with error handling theory, with best practices focused on Node.js." />
     <meta name="author" content="Wojtek Gawroński" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -76,7 +77,8 @@
           </section>
 
           <section>
-            <h1>Types of Errors</h1>
+            <h1>Exception</h1>
+            <h2><em>What is this?</em></h2>
 
             <aside class="notes">
               <ul>
@@ -86,8 +88,7 @@
           </section>
 
           <section>
-            <h1>Exception</h1>
-            <h2><em>What is this?</em></h2>
+            <h1>Types of Errors</h1>
 
             <aside class="notes">
               <ul>
@@ -168,6 +169,9 @@ process.on("uncaughtException", function() {
   // ALL YOUR ERRORS ARE BELONG TO US
 });
             </code></pre>
+
+            TODO: Abort, exit.
+            TODO: Core dump on exit.
           </section>
 
           <section>
@@ -201,6 +205,8 @@ http.get("http://ipinfo.io/8.8.8.8", function (response) {
           <section>
             <h1>wrong-abstraction</h1>
             TODO: using wrong abstraction and mechanism in wrong place.
+            TODO: Domain instead plain throw and abort.
+            TODO: EventEmitter instead callback.
           </section>
 
           <section>
@@ -225,6 +231,11 @@ http.get("http://ipinfo.io/8.8.8.8", function (response) {
             TODO: relying only on stack trace is short sighted.
             TODO: https://github.com/Pita/async-stacktrace
             TODO: Zone - https://github.com/strongloop/zone
+          </section>
+
+          <section>
+            <h1>error-handling-in-streams</h1>
+            TODO: Piping, passthrough example.
           </section>
 
         </section>
@@ -261,7 +272,7 @@ http.get("http://ipinfo.io/8.8.8.8", function (response) {
             </li>
             <li>
               <a href="https://github.com/strongloop/zone">zone</a>,
-              <a href="http://strongloop.com/node-js-zone/">detailed explanations</a>
+              <a href="http://strongloop.com/node-js-zone/">detailed explanation</a>
             </li>
           </ul>
 
