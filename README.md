@@ -18,6 +18,5 @@ Presentations for school:
 - *Python TDD* (2013)
 - *Accounting and Authorisation* (2013)
 
-Ideas:
-- *7 languages compiled to JavaScript* (2014)
+Meet.js Katowice:
 - *Error handling in Node.js* (2014)
