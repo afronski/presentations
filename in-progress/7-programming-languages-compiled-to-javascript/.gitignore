@@ -1,7 +1,0 @@
-# Trashes.
-log/*.log
-tmp/**
-
-# Not necessary deliverables.
-node_modules/
-.sass-cache

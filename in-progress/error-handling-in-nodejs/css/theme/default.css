@@ -540,3 +540,17 @@ body {
 .reveal .follow-up-list {
   margin: 10px 0 20px;
 }
+
+.reveal .middle-header {
+  margin: 25px 0 0;
+  font-weight: bold;
+}
+
+.reveal .fit-slide {
+  max-width: 100%;
+  width: 50%;
+}
+
+.reveal .bigger {
+  width: 80%;
+}
