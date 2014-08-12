@@ -601,16 +601,15 @@ for (i = 0; i &lt; N; ++i) {
             <h2>design-hijacked-by-a-library</h2>
 
             <pre><code data-trim class="javascript">
-TODO
+asynchronousOperationFromLibrary(arg, function(result, err) {
+  // IT'S NOT AN ERROR, IT'S BROKEN CONVENTION
+});
             </code></pre>
 
             <aside class="notes">
               <ul>
                 <li>
-                  Tak jak można nadużyć standardowego mechanizmu wbudowanego w język, tak samo spotyka się rozwiązania których design jest ewidentnie sterowany określoną biblioteką.
-                </li>
-                <li>
-                  TODO
+                  Tak jak można nadużyć standardowego mechanizmu wbudowanego w język, tak samo spotyka się rozwiązania których design jest ewidentnie sterowany określoną biblioteką. W najprostszym przypadku mamy do czynienia tylko ze złamaniem konwencji - w gorszej sytuacji mamy masę kodu spaghetti, który wykorzystuje bibliotekę i to jej konwencje oraz design wdarły się do faktycznego kodu (vide nadużywanie async.js jako biblioteki do sterowania logiką i przepływem informacji).
                 </li>
                 <li>
                   GOOD: Należy tak zaprojektować logikę, aby takie akrobacje rodem z cyrku nie były potrzebne.
@@ -627,6 +626,7 @@ throw "My Error Happened!"
             </code></pre>
 
             <pre class="fragment"><code data-trim class="javascript">
+throw new VError(original_err, 'Domain error: %s', argument);
             </code></pre>
 
             <aside class="notes">
@@ -732,7 +732,9 @@ Error: Fatal Error! Oh no, now what? :(
               Frederic Trottier-Hebert and his amazing <a href="http://learnyousomeerlang.com/content">book</a>
             </li>
             <li>
-              <a href="http://devopsreactions.tumblr.com/post/71190963508/senior-vs-junior-sysadmin-during-an-outage">Let it Crash</a>
+              <a href="http://devopsreactions.tumblr.com/post/71190963508/senior-vs-junior-sysadmin-during-an-outage">
+                Let it Crash
+              </a>
             </li>
           </ul>
 
