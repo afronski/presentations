@@ -534,11 +534,12 @@ fs.stat(path, handler.intercept(function (stat) {
           </section>
 
           <section>
-            <h1>f***-my-resources</h1>
+            <h1>discard-my-resources</h1>
 
             <pre><code data-trim class="javascript">
 try {
   setInterval(importantLogic, 1000);
+  itWillThrow();
 } catch(e) {
   syslog.error(e);
 
@@ -551,6 +552,7 @@ var timer;
 
 try {
   timer = setInterval(importantLogic, 1000);
+  itWillThrow();
 } catch(e) {
   syslog.error(e);
   clearInterval(timer);
