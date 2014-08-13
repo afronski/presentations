@@ -104,7 +104,7 @@
                   Pierwsza zasada zaufania mówi: śledź i monitoruj - innymi słowy: patrz na ręce swoim procesom.
                 </li>
                 <li>
-                  Monitorowanie służy do określenia kiedy i dlaczego proces został zatrzymany. A jeśli już został zatrzymany, obowiązkiem monitorującego jest wystartowanie go ponownie. Jak widzimy na obrazku, w Naszym systemi tworzy się określone drzewo obserwatorów i obserwowanych.
+                  Monitorowanie służy do określenia kiedy i dlaczego proces został zatrzymany. A jeśli już został zatrzymany, obowiązkiem monitorującego jest wystartowanie go ponownie. Jak widzimy na obrazku, w Naszym systemie tworzy się określone drzewo obserwatorów i obserwowanych.
                 </li>
                 <li>
                   Przykładem takiego narzędzia w Node.js jest 'forever', ale takich rozwiązań jest mnóstwo choćby bardzo popularny i potężny 'supervisord'. Nic jednak nie stoi na przeszkodzie aby stworzyć bardzo prosty i dedykowany własny element do tego celu - ważne aby skupiał się tylko na jednej czynności jaką jest monitorowanie i ważne aby był sprawdzony w boju, dlatego nie zalecałbym tego pisania samemu jeśli zależy nam na stabilności a dopiero zdobywamy doświadczenie.
@@ -322,7 +322,7 @@ process.on("uncaughtException", function(err) {
 });
             </code></pre>
 
-           <aside class="notes">
+            <aside class="notes">
               <ul>
                 <li>
                   Oprócz tego, że łapanie wszystkich wyjątków w jednym miejscu jest z gruntu złe, taki mechanizm służy raczej jako zabezpieczenie, żeby aplikacja nie została zatrzymana.
@@ -343,6 +343,7 @@ process.on("uncaughtException", function(err) {
                   Dodatkowo ludzie związani z C++ i C, posiadający dostęp do podobnych mechanizmów (np. std::uncaught_exception itp.) uważają ich wykorzystanie za antipattern.
                 </li>
               </ul>
+            </aside>
           </section>
 
           <section>
@@ -389,9 +390,11 @@ response.pipe(saveToS3).pipe(temporarySaveToDisk);
 // Better, but still bad:
 response.pipe(saveToS3);
 response.pipe(temporarySaveToDisk);
+            </code></pre>
 
+            <pre class="fragment"><code data-trim class="javascript">
 // Best:
-response.pipe(errorHandler)
+response.pipe(checkAvailabilityOfS3)
         .pipe(saveToS3);
 
 response.pipe(temporarySaveToDisk)
@@ -570,13 +573,23 @@ try {
           </section>
 
           <section>
-            <h2>execption-as-a-logic-flow</h2>
+            <h2>exception-as-a-logic-flow</h2>
 
             <pre><code data-trim class="javascript">
 for (i = 0; i &lt; N; ++i) {
   for (j = i + 1; j &lt; N; ++j) {
     if (specialCondition()) {
       throw "CONTINUE-WITH-FLOW";
+    }
+  }
+}
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+for (i = 0; i &lt; N; ++i) {
+  for (j = i + 1; j &lt; N; ++j) {
+    if (specialCondition()) {
+      return true;
     }
   }
 }
@@ -606,6 +619,12 @@ asynchronousOperationFromLibrary(arg, function(result, err) {
 });
             </code></pre>
 
+            <pre class="fragment"><code data-trim class="javascript">
+asynchronousOperationFromLibrary(arg, function(err, result) {
+  // NOW IT'S BETTER
+});
+            </code></pre>
+
             <aside class="notes">
               <ul>
                 <li>
@@ -622,11 +641,19 @@ asynchronousOperationFromLibrary(arg, function(result, err) {
             <h1>vapourous-details</h1>
 
             <pre><code data-trim class="javascript">
-throw "My Error Happened!"
+try {
+  /*...*/
+} catch(original_err) {
+  throw "My Error Happened!"
+}
             </code></pre>
 
             <pre class="fragment"><code data-trim class="javascript">
-throw new VError(original_err, 'Domain error: %s', argument);
+try {
+  /*...*/
+} catch(original_err) {
+  throw new VError(original_err, 'Domain error: %s', argument);
+}
             </code></pre>
 
             <aside class="notes">
@@ -647,6 +674,15 @@ throw new VError(original_err, 'Domain error: %s', argument);
             <p>
               <em>using wrong abstraction in wrong place</em>
             </p>
+
+            <pre><code data-trim class="javascript">
+var domain = require("domain");
+
+domain.create().run(function () {
+  // WHY SO DOMAIN?
+  JSON.parse("")
+});
+            </code></pre>
 
             <aside class="notes">
               <ul>
@@ -703,6 +739,21 @@ readFilePromise("config.json")
 Error: Fatal Error! Oh no, now what? :(
   at Error (&lt;anonymous&gt;)
   at node.js:902:3
+            </code></pre>
+
+            <pre class="fragment"><code data-trim>
+# And logs collected in one place e.g. rsyslog:
+2014-08-13T11:59:59.000Z APP2 as2.app.com
+[FATAL] Syntax error in configuration: unexpected empty string.
+
+2014-08-13T12:00:02.000Z APP1 as1.app.com
+[WARN] Invalid attributes passed to important service: "null"
+
+2014-08-13T12:00:02.000Z APP1 as1.app.com
+[ERROR] Remote peer unavailable:
+        URL: app2.app.com:8080/get_important_data?q=null
+        Status code: 500
+        Body: Fatal Error! Oh no, now what? :(
             </code></pre>
 
             <aside class="notes">
