@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Error handling in Node.js</title>
+
+    <meta name="description"
+          content="Presentation with error handling theory, with best practices focused on Node.js." />
+    <meta name="author" content="Wojtek Gawroński" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="css/reveal.css" id="theme" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+    <link rel="stylesheet" href="lib/css/github.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h2>Error handling in Node.js</h2>
+
+          <span class="license">
+            Wojtek Gawronski
+            (<a href="https://twitter.com/afronski">@afronski</a>, <a href="afronski.pl">afronski.pl</a>) - 2014
+            &copy; License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+          </span>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                ASK: Ile osób programuje lub miało styczność z Node.js - prywatnie / komercyjnie?
+              </li>
+              <li>
+                AIM: Zaczniemy od wiedzy i odpowiedniego nastawienia (tzw. mindsetu) niezbędnego żeby zaatakować problem od dobrej strony. Potem przejdziemy przez "case studies" i dla każdego opowiemy sobie jak poradzić sobie z nimi.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <!-- Theory -->
+        <section>
+
+          <section>
+            <h1><em>Let it Crash</em></h1>
+
+            <img src="img/let-it-crash.gif" alt="Let it Crash" />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Zaczniemy od bardzo podstawowego podejścia - sprzecznego z większością języków programowania i stosowanych koncepcji.
+                </li>
+                <li>
+                  Większość aplikacji, zwłaszcza tych produkcyjnych, posiada bardzo rozbudowane (czasem aż do przesady) mechanizmy obsługi błędów. Jeśli ktoś programował w C lub w C++ wie jak potrafi wyglądać program upstrzony asercjami, sekwencjami try..catch i przeplatany kodem przywracającym stan, ponawiającym operacje lub naprawiającym otoczenie.
+                </li>
+                <li>
+                  W pewnym momencie złożoność esencjonalna problemu zostaje przygnieciona przez złożoność przypadkową, wprowadzoną do logiki obsługi błędów. W kodzie uwidoczni się to poprzez ukrycie jednego wywołania pod tymi wszystkimi warstwami "kodu spaghetti" który służy do obsługi błędów. Dochodzi nawet do tak patologicznych sytuacji, że pewne sekwencje i układy kodu nazywa się "wzorcem obsługi błędów".
+                </li>
+                <li>
+                  Kto wie czym jest "prawo nieskończoności Lubarskiego"? Mówi ono "Zawsze jest jeszcze jeden błąd". To dość żartobliwe podejście do tematu, jednak wcale nie pozbawione sensu - nie wychwycimy każdej błędnej sytuacji, nie przygotujemy się odpowiednio do jej obsługi przed, dopiero "post-factum".
+                </li>
+                <li>
+                  A gdyby tak pozwolić aplikacji się "wywalić"?
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Let it Crash?</h1>
+
+            <img src="img/fail.png" class="bigger" alt="Let it crash? Really?" />
+
+            <h3><em>let-it-crash</em> !== <em>let-it-fail-randomly</em></h3>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  No właśnie, o czym ja tu opowiadam - mamy obsługiwać błędy, nie olewać się. Aplikacje maja działać i tak powinniśmy tworzyć oprogramowanie.
+                </li>
+                <li>
+                  Problem w tym, że "let it crash" wcale nie znaczy, że mamy aplikacji się ordynarnie i prostacko wywalić, tylko pozwolić odejść konkretnej instancji procesu, oddać sterowanie do systemu operacyjnego aby posprzątał po Nas i wrócić jak feniks z popiołów wraz z nową instacją Naszej aplikacji.
+                </li>
+                <li>
+                  Paradoksalnie, jak zobaczymy za chwilę to znaczy że Nasz system będzie bardziej odporny na błędy jeśli chodzi o swój rdzeń.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Supervision</h1>
+
+            <img src="img/sup-tree.png" class="fit-slide" alt="Supervision Trees and Concept of Supervision" />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Pierwsza zasada zaufania mówi: śledź i monitoruj - innymi słowy: patrz na ręce swoim procesom.
+                </li>
+                <li>
+                  Monitorowanie służy do określenia kiedy i dlaczego proces został zatrzymany. A jeśli już został zatrzymany, obowiązkiem monitorującego jest wystartowanie go ponownie. Jak widzimy na obrazku, w Naszym systemie tworzy się określone drzewo obserwatorów i obserwowanych.
+                </li>
+                <li>
+                  Przykładem takiego narzędzia w Node.js jest 'forever', ale takich rozwiązań jest mnóstwo choćby bardzo popularny i potężny 'supervisord'. Nic jednak nie stoi na przeszkodzie aby stworzyć bardzo prosty i dedykowany własny element do tego celu - ważne aby skupiał się tylko na jednej czynności jaką jest monitorowanie i ważne aby był sprawdzony w boju, dlatego nie zalecałbym tego pisania samemu jeśli zależy nam na stabilności a dopiero zdobywamy doświadczenie.
+                </li>
+                <li>
+                  Dwa kolory w drzewie bardzo ładnie pokazują hierarchię. Wyznacz granice w swoim systemie, rozdziel odpowiedzialność i zgodnie z filozofią UNIXową - rób jedną, małą i zamkniętą rzecz dobrze. Znając swoją domenę wystaw odpowiednie elementy, wystawione na ryzyko do zewnętrznych procesów - tzw. workerów i nadzoruj je, za pomocą zarządców lub nawet specjalnych mechanizmów przeznaczonych tylko do nadzorowania.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>UNIX philosophy</h1>
+            <h2><em>"Worse is better"</em></h2>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Wprowadzając taki podział, zamykając fragmenty domeny w pewnego rodzaju ograniczone pudełka (konteksty) redukujemy złożoność esencjonalną (tą faktyczną dot. problemu). Im prościej, tym lepiej - nie bez powodu KISS jest tak popularnym akronimem przywoływanym przez programistów.
+                </li>
+                <li>
+                  W pewnym momencie dojdziemy do takich fragmentów naszej aplikacji, gdzie obsługa problemów staje się częścią złożoności esencjonalnej całego problemu.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Error Kernel</h1>
+
+            <ul class="fragment">
+              <li>Static Data</li>
+              <li>Recomputable Dynamic State</li>
+              <li><strong>Non-computable Dynamic State</strong></li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Oznacza to, że znaleźliśmy "error kernel" Naszego systemu / aplikacji. To odpowiednio mały, zamknięty fragment całego systemu, dla którego dążymy aby był 100% odporny na błędy. Nie jest to łatwe zadanie, dlatego dekompozycja całego problemu jest niezbędna do tego, aby ten problem stał się osiągalny.
+                </li>
+                <li>
+                  Odnalezienie i zarządzanie takim fragmentem również nie należy do łatwych zadań, ponieważ wymaga wysokiej znajomości domeny oraz środowiska w jakim będziemy się poruszać. Jeśli z jądrem intensywnie komunikują się zewnętrzne systemy, dodatkowym wymaganiem jest poznanie ich specyfiki oraz działania praktycznie na wylot.
+                </li>
+                <li>
+                  To tu znajdzie się najwięcej klauzul try..catch, tu poświęcimy najwięcej czasu na testowanie, testy automatyczne i bardzo drobiazgowe przypadki testowe.
+                </li>
+                <li>
+                  Z obsługą błędów i z takim sposobem ich obsługi nierozłącznie związane jest pojęcie stanu aplikacji. Jakoś musimy do stanu powrócić, pewnych danych nie możemy stracić (trzeci typ).
+                </li>
+                <li>
+                  I tu również wspominana dekompozycja przychodzi z pomocą. Jeśli wyobrazimy sobie system za pomocą warstw i wyobrazimy, że zbudowany jest jak cebula (nie jak ogry) to "error kernel" znajdujący się w środku chroni najcenniejszy "stan aplikacji", reszta warstw (kolejne warstwy płaszcza otaczającego jądro) może zostać odrzucone i zastąpiona nową, zgodnie z podejściem "let it crash". Te odrzucalne warstwy chronią stan, który jesteśmy w stanie odtworzyć (pierwsze dwa punkty).
+                </li>
+                <li>
+                  QUESTION: Wszystko jasne jak na razie? Pytania?
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Exception</h1>
+            <h2><em>What is this?</em></h2>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Po cichu wspomnieliśmy sobie o try..catch, zanim jednak przejdziemy do rozwiązań chciałbym zwrócić uwagę na ważną sprawę jaką jest klasyfikacja błędów i definicja słowa "sytuacja wyjątkowa".
+                </li>
+                <li>
+                  QUESTION: Co to jest "exception"?
+                </li>
+                <li>
+                  QUESTION: Co to znaczy, że sytuacja jest "wyjątkowa"?
+                </li>
+                <li>
+                  Od strony semantycznej (mówiąc tutaj o JS) błąd to instancja stworzona za pomocą konstruktora 'Error', wyjątkiem staje się dopiero po wykorzystaniu z użyciem słowa kluczowego 'throw'.
+                </li>
+                <li>
+                  Od strony znaczeniowej - sytuacja wyjątkowa jak sama nazwa wskazuje jest nietypowa, prowadzą do niej nietypowe okoliczności, do Nas należy decyzja czy chcemy się na akurat ten typ sytuacji przygotować i obsługiwać błędy z nią związane.
+                </li>
+                <li>
+                  Generalnie jednak możemy powiedzieć, że pewnego rodzaju błędy powodują sytuacje wyjątkowe.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Types of Errors</h1>
+
+            <ul>
+              <li>Operational Errors</li>
+              <li>Programmer Errors</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Podzielmy sobie zatem błędy.
+                </li>
+                <li>
+                  Ten podział nie został wcale wyznaczony przez środowisko JS/Node.js - już w C mamy obsługę błędów i asercje, w Javie checked/unchecked expections itd.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Operational Errors</h1>
+
+            <p>
+              <em>run-time problems experienced by correctly-written programs</em>
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Błędem operacyjnym nazywamy coś co wydarzyło się w poprawnym programie z powodu zmiennych czynników w zewnętrznym środowisku.
+                </li>
+                <li>
+                  Przykłady: 500 z zewnętrznego serwisu do którego się łączymy, rozłączenie interfejsu sieciowego, brak miejsca na dysku, brak pamięci, przekroczony limit otwartych "file descriptors".
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>Programmer Errors</h1>
+
+            <p>
+              <em>bugs in the program</em>
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Są to typowe błędy spowodowane nieprawidłową implementacją, błędną logiką zaimplementowaną w programie.
+                </li>
+                <li>
+                  Przykłady: błędne wykorzystanie biblioteki, API, niezgodność typów, błędy składniowe, odczytywanie property niezdefiniowanego obiektu, błąd logiki powstały po sparsowaniu danych poprawnych od strony składniowej, ale nie od strony semantycznej (np. podwójne pole / atrybut w XML).
+                </li>
+                <li>
+                  QUESTION: Czy wszystko jasne? Są pytania?
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>How to provide an error?</h2>
+
+            <ul class="follow-up-list">
+              <li class="fragment">Synchronously</li>
+              <li class="fragment">Asynchronously</li>
+            </ul>
+
+            <h3 class="fragment"><strong>You should not do both!</strong></h3>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Omówiliśmy teorię, definicje sytuacji wyjatkowych i typy błędów - porozmawiajmy jeszcze krótko o tym jak możemy dostarczyć błąd od strony programistycznej w JS.
+                </li>
+                <li>
+                  Możemy zrobić to synchronicznie za pomocą mechanizmu wyjątków i klauzuli 'throw'.
+                </li>
+                <li>
+                  Możemy to zrobić asynchronicznie zwracając błąd jako pierwszy parametr wywołania zwrotnego.
+                </li>
+                <li>
+                  Nie powinniśmy natomiast mieszać obu sposobów, a szczególnie wykorzystać drogi synchronicznej jeśli aktualnie wykonywana logika aplikacji jest wybitnie asynchroniczna (np. jest to obsługa I/O).
+                </li>
+                <li>
+                  Sytuacja w drugą stronę jest nieszkodliwa od strony wykonania, natomiast jest niespójna i wprowadza niepotrzebne zamieszanie i przypadkową złożoność do Naszego problemu.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+        <!-- Theory -->
+
+        <!-- Case Studies -->
+        <section>
+
+          <section>
+            <h1>Case Studies</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  AIM: Uzbrojeni w wiedzę przejrzymy sobie teraz autentyczne przykłady, jak nie powinniśmy sobie radzić z błędami w Node.js - każdy anty-przykład ma propozycję lepszego rozwiązania.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>catch-all</h1>
+
+            <pre><code data-trim class="javascript">
+process.on("uncaughtException", function(err) {
+  // ALL YOUR ERRORS ARE BELONG TO US
+  // YOU CANNOT STOP ME NOW!
+});
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+process.on("uncaughtException", function(err) {
+  syslog.serializeError(err);
+
+  // ANOTHER ONE BITES THE DUST!
+  process.exit(1);
+});
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Oprócz tego, że łapanie wszystkich wyjątków w jednym miejscu jest z gruntu złe, taki mechanizm służy raczej jako zabezpieczenie, żeby aplikacja nie została zatrzymana.
+                </li>
+                <li>
+                  W dokumentacji znajduje się wyjaśnienie dlaczego wykorzystanie tego zdarzenia jest antywzorcem, prowadzi do niestabilności i tak naprawdę pozostawia środowisko uruchomieniowe w stanie nieustalonym, nie gwarantując niczego.
+                </li>
+                <li>
+                  To tak naprawdę ostateczny środek do zalogowania błędu, próby zapisania stanu aplikacji, być może wykonania operacji odwrotnych do wykonywanej logiki (tzw. rollback) i wyjścia.
+                </li>
+                <li>
+                  GOOD: Powinniśmy mieć tu process.exit z odpowiednim kodem wyjścia (zgodny z Naszymi ustaleniami). Z własnego doświadczenia mogę powiedzieć, że np. można śmiało wykonać tzw. "last log" i wyjść - należy tylko pamiętać, że przy zapisie logów należy wykonać 'flush to disk', dla pewnych interfejsów wejścia / wyjścia może to być wymagane.
+                </li>
+                <li>
+                  GOOD: Dodatkowo dobrą praktyką jest skonfigurowanie Node.js tak aby wykonywany był zrzut pamięci (core dump) przy każdym błędnym wyjściu, posiadanie takich informacji znacznie ułatwia analizę post-mortem - należy tylko pamiętać, że taki zrzut trochę waży i nie warto zapychać głównej partycji a np. tylko '/tmp'.
+                </li>
+                <li>
+                  Dodatkowo ludzie związani z C++ i C, posiadający dostęp do podobnych mechanizmów (np. std::uncaught_exception itp.) uważają ich wykorzystanie za antipattern.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>asynchronous-<em>throw</em></h2>
+
+            <pre class="fragment"><code data-trim class="javascript">
+http.get("http://ipinfo.io/8.8.8.8", function (response) {
+  response.pipe(concat(function (content) {
+    var object = JSON.parse(content);
+    console.log(object.loc);
+  }));
+});
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Tak jak wspominałem, błędy możemy dostarczać asynchronicznie lub synchronicznie, ale nigdy nie powinniśmy mieszać obu mechanizmów. Czy zakładając, że tego nie robimy jesteśmy bezpieczni?
+                </li>
+                <li>
+                  Niekoniecznie, bo często nie robimy jednak tego świadomie - jak w zamieszczonym przypadku?
+                </li>
+                <li>
+                  QUESTION: Co jest tutaj źle (brak obsługi zdarzenia 'error' ale ważniejszy jest JSON.parse który wyrzuci wyjątek dla nieprawidłowej składni JSON ale też i dla pustego łańcucha znaków lub 'undefined')?
+                </li>
+                <li>
+                  Oczywiście mógłbym tutaj zaznaczyć dużo prostszy przypadek, z bezpośrednim 'throw' wewnątrz wywołania zwrotnego ale nie byłoby zabawy ;).
+                </li>
+                <li>
+                  GOOD: Wystarczy złapać wyjątek w klauzulę try..catch i odpowiednio go obsłużyć np. porzez asynchroniczną propagację. Tutaj rodzi się też pytanie, że może warto pozwolić mu ubić konkretny proces bo jesteśmy na to przygotowani i ten worker akurat posiada supervisora. Mimo wszystko propagowałbym ten wyjątek wyżej i dopiero wtedy wyrzucił powodując ubicie procesu - ze względu na spójność mechanizmów obsługi błędów (czytelność i spójność rozwiązań w całym systemie).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>error-handling-in-streams</h2>
+
+            <pre><code data-trim class="javascript">
+response.pipe(saveToS3).pipe(temporarySaveToDisk);
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+// Better, but still bad:
+response.pipe(saveToS3);
+response.pipe(temporarySaveToDisk);
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+// Best:
+response.pipe(checkAvailabilityOfS3)
+        .pipe(saveToS3);
+
+response.pipe(temporarySaveToDisk)
+        .on("error", function () { /*...*/ })
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Na poprzednim slajdzie znajduje się jeszcze jeden błąd (o którym powiedzieliśmy lub nie) - nie obsługujemy zdarzenia 'error' dla strumienia (konkretnie jest konwencja wprowadzona przez prototyp EventEmitter dostępny w Node.js, z której strumień korzysta bo sam jest emiterem zdarzeń). Tam aby to poprawić wystarczy obsłużyć to zdarzenie i wykonać odpowiednią akcję.
+                </li>
+                <li>
+                  Tutaj mamy trochę bardziej skomplikowany przypadek. Wyobraźmy sobie, że mamy endpoint który przyjmuje upload plików - omawiany plik chcemy zapisać w Amazon S3, ale od czasu do czasu Amazon jest niedostępny więc zapiszemy sobie go też na dysku na wszelki wypadek - jak S3 wróci, zuploadujemy wiszące pliki jeszcze raz.
+                </li>
+                <li>
+                  Jeśli użyjemy chainingu, wszystko pięknie działa tylko jeśli operacja uploadu na S3 nie zwróci błędu. W innym przypadku łańcuch zostanie przerwany. Pomijam na razie fakt, że obsługi błędu w takim przypadku również nie ma, co spowoduje wyrzucenie wyjątku synchronicznie (brak handlera na 'error' === synchroniczne 'throw').
+                </li>
+                <li>
+                  GOOD: Oprócz obsługi zdarzenia 'error', możemy wykorzystać do tego strumień PassThrough, który połknie błąd, przerwie łańcuch nie powodując dalszych błędów. Jednocześnie drugi strumień zapisze plik na dysk.
+                </li>
+                <li>
+                  GOOD: Dwie dodaktowe uwagi: Co jeśli braknie miejsca na dysku? Obsługujemy to własnym error handlerem dla drugiego łańcucha strumieni. Druga uwaga: musimy zapewnić bezbłędną implementację strumienia PassThrough (obiekt 'errorHandler') tak aby błąd w nim nie powodował skutków ubocznych.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>ignoring-errors</h1>
+
+            <pre><code data-trim class="javascript">
+socket.on("connection", function (connection) { /*...*/ });
+socket.on("disconnection", function () { /*...*/ });
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+socket.on("connection", function (connection) { /*...*/ });
+socket.on("disconnection", function () { /*...*/ });
+
+socket.on("error", function (err) { /*...*/ });
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  W tym przypadku brak handlera obsługi błędów skutktuje propagacją błędu wyżej.
+                </li>
+                <li>
+                  Obsłgujmy błędy jak najbliżej miejsca ich wystąpienia (chyba, że świadomie propagujemy go wyżej do obsługi lub w celu zakończenia żywota określonego procesu).
+                </li>
+                <li>
+                  GOOD: Zachowujmy konwencje stosowane w Node.js - praktycznie każda implementacja EventEmitter (na pewno wszystkie w bibliotece standardowej Node-a) wykorzystują zdarzenie 'error' w celu poinformowania konsumenta interfejsu, że zaszła nieoczekiwana sytuacja.
+                </li>
+                <li>
+                  Jeśli macie przeczucie, że to prowadzi do zwiększenia ilości kodu związanego z obsługą błędów i zaciemnienia faktycznej logiki, macie racje. Jak scentralizować obsługę takich błędów, i odpowiednio wysuszyć sobie taki kod (DRY) opowiemy sobie za chwilę.
+                </li>
+              </ul>
+            </aside>
+
+          </section>
+
+          <section>
+            <h1>sound-of-silence</h1>
+
+            <pre><code data-trim class="javascript">
+try {
+  unsafeOperationWhichEventuallyThrow(Math.rand());
+} catch(e) {
+  // Oups!
+}
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+try {
+  unsafeOperationWhichEventuallyThrow(Math.rand());
+} catch(exception) {
+  syslog.reportError(level, exception);
+  business_logic.restore();
+  transaction.rollback();
+}
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  To chyba najczęściej nadużywany mechanim "obsługi błędów" w przypadku programowania. Nie muszę cyba tłumaczyć dlaczego złapanie wyjątku i siedzenie cicho jest złe.
+                </li>
+                <li>
+                  GOOD: Przynajmniej zalogujmy fakt obsługi wyjątku, jeśli jest bardzo źle i ten typ błędu jest nieodwracalny wywalmy aktualny proces i odtwórzmy stan aplikacji po restarcie. Jeśli błąd powstał po żądaniu pochodzącym od klienta - zaraportujmy odpowiedni kod błędu, zrestartujmy proces i pozwólmy klientowi wykonać żądanie ponownie, wraz z jego wersją obsługi tego typu sytuacji.
+                </li>
+              </ul>
+            </aside>
+
+          </section>
+
+          <section>
+            <h1>if-err-antipattern</h1>
+
+            <pre><code data-trim class="javascript">
+fs.stat(path, function (err, stat) {
+  if (err) {
+    return done(err);
+  }
+
+  fs.open(path, "r+", function (err, fd) { /* DEEPER... */ });
+});
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+var handler = require("domain").create();
+
+handler.on("error", done);
+
+fs.stat(path, handler.intercept(function (stat) {
+  fs.open(path, "r+", handler.intercept(function (fd) {
+      // ...
+  }));
+}));
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  W przypadku zagnieżdżonej asynchronicznej logiki (bardzo często przy pracy z plikami, socketami) obsługa błędów przeradza się w koszmar 'if-err' powtarzany na każdym poziomie, w identyczny sposób. Oprócz duplikacji i złamania zasady DRY, zaciemnia kod i dokłada złożoność przypadkową do problemu
+                </li>
+                <li>
+                  GOOD: wystarczy wykorzystać domeny i metodę '.intercept' która przechwtuje każde wywołanie zwrotne i błąd z niego, do wspólnego, zcentralizowanego error handlera. Jeśli błąd nie wystąpi, sterowanie zostanie przekazane wgłąb do wywołania zwrotnego.
+                </li>
+                <li>
+                  Domeny (za pomocą metod '.add' lub '.run') automatycznie przechwytują timery, zdarzenia 'error' z EventEmitter (więc i błędy ze strumieni) i inne nisko poziomowe detale. Centralizują w ten sposób obsługę zasobów i mechanizm obsługi błędów.
+                </li>
+                <li>
+                  Domeny posiadają swoje wady (np. nie zamykają połączeń TCP, nie zawsze zamkną deskryptory plików, nie potrafią przechwycić wyjątku wyrzuconego z warstwy natywnej) co więcej API i sposób użycia nie przekonał opiekunów Node.js i firmy związane z jego rozwojem oraz nie rozwiązał największej bolączki jaką jest obcięty stos wywołań, dlatego powstają nowe rozwiązania takie jak Zone (wzorowane na Zone.js dostępnym w AngularJS 2.0), które będą propozycją do dołączenia ich do rdzenia Node.js.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>discard-my-resources</h1>
+
+            <pre><code data-trim class="javascript">
+try {
+  setInterval(importantLogic, 1000);
+  itWillThrow();
+} catch(e) {
+  syslog.error(e);
+
+  // OH YOU DIRTY, LITTLE BASTARD...
+}
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+var timer;
+
+try {
+  timer = setInterval(importantLogic, 1000);
+  itWillThrow();
+} catch(e) {
+  syslog.error(e);
+  clearInterval(timer);
+}
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Zadziwiające jest jak bardzo nie dbamy o zewnętrznie zaalokowane zasoby w przypadku obsługi błędów (np. połączenia do bazy, timery, otwarte deskryptory plików). Cały czas pokutuje myślenie, że JS ma GC i to on za Nas posprząta.
+                </li>
+                <li>
+                  O ile w przypadku "let it crash" przy wyjściu z procesu wszystkim zajmie się system operacyjny, o tyle w przypadku obsługi błędów musimy o sprzątanie zadbać sami.
+                </li>
+                <li>
+                  GOOD: Zgodnie z dobrą praktyką "każdy 'new' posiada 'delete'" tak i reszta kodu związana z alokacją zewnętrznych zasobów powinna posiadać odpowiednik go zwalniający. Często zapomina się, że w JS mamy sekcję 'finally' jeśli chodzi o obsługę błędów.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>exception-as-a-logic-flow</h2>
+
+            <pre><code data-trim class="javascript">
+for (i = 0; i &lt; N; ++i) {
+  for (j = i + 1; j &lt; N; ++j) {
+    if (specialCondition()) {
+      throw "CONTINUE-WITH-FLOW";
+    }
+  }
+}
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+for (i = 0; i &lt; N; ++i) {
+  for (j = i + 1; j &lt; N; ++j) {
+    if (specialCondition()) {
+      return true;
+    }
+  }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  To właściwie kolejny klasyk, wbrew pozorom nie taki rzadki jeśli chodzi o występowanie. Sterowanie przepływem i logiką aplikacji za pomocą wyjątków jest po prostu złym wykorzystaniem tego mechanizmu. Nie jest ani mądre, ani czytelniejsze - jest po prostu błędne.
+                </li>
+                <li>
+                  GOOD: Należy tak zaprojektować logikę, aby takie akrobacje rodem z cyrku nie były potrzebne.
+                </li>
+                <li>
+                  Argument o zmniejszonej wydajności już nie jest aktualny. Owszem, w przeszłości V8 dokonywał deoptymalizacji konkretnej funkcji, jeśli zawierała ona try..catch, ale obecnie nie każdy try..catch negatywnie wpływa na wydajność i optymalizację określonych funkcji.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>design-hijacked-by-a-library</h2>
+
+            <pre><code data-trim class="javascript">
+asynchronousOperationFromLibrary(arg, function(result, err) {
+  // IT'S NOT AN ERROR, IT'S BROKEN CONVENTION
+});
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+asynchronousOperationFromLibrary(arg, function(err, result) {
+  // NOW IT'S BETTER
+});
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Tak jak można nadużyć standardowego mechanizmu wbudowanego w język, tak samo spotyka się rozwiązania których design jest ewidentnie sterowany określoną biblioteką. W najprostszym przypadku mamy do czynienia tylko ze złamaniem konwencji - w gorszej sytuacji mamy masę kodu spaghetti, który wykorzystuje bibliotekę i to jej konwencje oraz design wdarły się do faktycznego kodu (vide nadużywanie async.js jako biblioteki do sterowania logiką i przepływem informacji).
+                </li>
+                <li>
+                  GOOD: Należy tak zaprojektować logikę, aby takie akrobacje rodem z cyrku nie były potrzebne.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>vapourous-details</h1>
+
+            <pre><code data-trim class="javascript">
+try {
+  /*...*/
+} catch(original_err) {
+  throw "My Error Happened!"
+}
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+try {
+  /*...*/
+} catch(original_err) {
+  throw new VError(original_err, 'Domain error: %s', argument);
+}
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Przechwytując wyjątek bardzo często wykonujemy pewną akcję i wyrzucamy swój wyjątek, specyficzny dla domeny lub naszych standardów.
+                </li>
+                <li>
+                  GOOD: Po pierwsze zawsze rozszerzajmy standardowy prototyp 'Error' - nie budujmy własnych abstrakcji, korzystajmy z tego co jest. Nic nie stoi na przeszkodzie aby wykorzystywać istniejące pola (message, name, stack) ale również dokładać własne specyficzne. Szczególnie potrzebne jest pole 'name' za pomocą którego możemy rozpoznać typ wyjątku, czego nie zapewnia nam klauzula 'catch'. To co jest równie ważne, to opakowanie oryginalnego wyjątku w Nasz własny, tak aby oryginalne szczegóły nie wyparowały z mechanizmu obsługi błędów. Do tego celu służy świetny moduł 'verror'.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h1>wrong-abstraction</h1>
+
+            <p>
+              <em>using wrong abstraction in wrong place</em>
+            </p>
+
+            <pre><code data-trim class="javascript">
+var domain = require("domain");
+
+domain.create().run(function () {
+  // WHY SO DOMAIN?
+  JSON.parse("")
+});
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  To raczej problem z designem aplikacji i zrozumieniem jak działają poszczególne elementy. Zdarza się, że pewne sytuacje dot. sposobu komunikacji błędu pasują naturalnie w pewnym przypadku. Zdarza się także, sytuacja odwrotna - że nie mamy kompletnie pomysłu jak zaraportować dany błąd, albo nawet mamy problem z rozróżnieniem czy błąd jest typowo operacyjny czy może to błąd typowo programistyczny.
+                </li>
+                <li>
+                  GOOD: Tutaj nie ma złotych rad. Tak jak w przypadku tworzenia API nowego modułu, tak i tutaj potrzeba doświadczenia, zrozumienia domeny i realizowanej funkcjonalności ale przede wszystkim wiedzy jak poszczególne "building blocks" działają i do czego służą. I dlaczego np. komunikowanie błędu za pomocą zdarzenia 'error' w EventEmitterze w jednym przypadku, będzie pożądane a w innym niekoniecznie.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>meh-i-have-<em>promises</em></h2>
+
+            <pre><code data-trim class="javascript">
+readFilePromise("config.json")
+  .then(function (text) {
+    return JSON.parse(text);
+  }, function (err) {
+    // DAMN YOU JSON.parse, NOT AGAIN!
+    return defaultConfig;
+  });
+            </code></pre>
+
+            <pre class="fragment"><code data-trim class="javascript">
+readFilePromise("config.json")
+  .then(function (text) {
+    return JSON.parse(text);
+  })
+  .then(null, function (err) {
+    // Now it's okay.
+    return defaultConfig;
+  });
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Promises to bardzo pomocne narzędzie, niemniej jednak nie zwalnia z myślenia. Dodatkowo praktycznie każda implementacja, nawet zgodna ze standardem Promises/A+ dokłada własną złożoność przypadkową oraz własne API i "smak".
+                </li>
+                <li>
+                  GOOD: Wykorzystanie promises dalej może być niebezpieczne, jeśli dobrze nie poznamy mechanizmu z którego korzystamy. Kod może być ładniejszy i czytelniejszy, niemniej jednak dalej podatny na błędy i nie zabezpieczony odpowienio przed sytuacjami wyjątkowymi.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>the-ultimate-stack-trace</h2>
+
+            <pre><code data-trim>
+Error: Fatal Error! Oh no, now what? :(
+  at Error (&lt;anonymous&gt;)
+  at node.js:902:3
+            </code></pre>
+
+            <pre class="fragment"><code data-trim>
+# And logs collected in one place e.g. rsyslog:
+2014-08-13T11:59:59.000Z APP2 as2.app.com
+[FATAL] Syntax error in configuration: unexpected empty string.
+
+2014-08-13T12:00:02.000Z APP1 as1.app.com
+[WARN] Invalid attributes passed to important service: "null"
+
+2014-08-13T12:00:02.000Z APP1 as1.app.com
+[ERROR] Remote peer unavailable:
+        URL: app2.app.com:8080/get_important_data?q=null
+        Status code: 500
+        Body: Fatal Error! Oh no, now what? :(
+            </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  Przyzwyczajeni z innych języków i środowisk, przykładamy bardzo dużą wagę do stosu wywołań. Tymczasem w Node.js i w każdym asynchronicznym środowisku, (bez specjalnego wsparcia) stack trace nie niesie zbyt wielu cennych informacji ze sobą ze względu na swoją asynchroniczną naturę.
+                </li>
+                <li>
+                  GOOD: Potrzebujemy czegoś więcej - możemy wykorzystywać Zone i gorąco polecam do zapoznania się z tematem, ponieważ dzięki nim uzyskamy pełen, asynchroniczny stack trace. Są do dyspozycji inne moduły np. 'async-stacktrace' ale koniec końców poleganie tylko na stack trace jest krótkowzroczne i na dłuższą metę w dużej rozproszonej, wieloprocesowej aplikacji się nie sprawdzi.
+                </li>
+                <li>
+                  GOOD: Zdecydowanie polecam się uzbroić w dobry mechanizm logów (np. 'bunyan' z zapisem do sysloga), druga sprawa to core dumpy generowane przy wyjściu z aplikacji. Kolejnym elementem jest zaawansowany system monitoringu oraz możliwość introspekcji na środowisku produkcyjnym za pomocą 'dtrace', która jest zdecydowanie cenniejsza od pełnego stack trace - ponieważ daje więcej informacji np. pełen stan, dostep do metryk systemu operacyjnego i łatwy dostęp do wewnętrznych liczników platformy Node.js. Minusem 'dtrace' jest wymaganie dot. deploymentu na SmartOS (Solaris) lub systemach *BSD ze względu na sposób licencjonowania tego narzędzia. Port Linuxowy jest coraz lepszy, nie jest jednak zalecany do zastosowań produkcyjnych.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+        <!-- Case Studies -->
+
+        <section>
+          <h1>Thanks!</h1>
+
+          <h3 class="middle-header">Picture credits:</h3>
+          <ul class="links">
+            <li>
+              Frederic Trottier-Hebert and his amazing <a href="http://learnyousomeerlang.com/content">book</a>
+            </li>
+            <li>
+              <a href="http://devopsreactions.tumblr.com/post/71190963508/senior-vs-junior-sysadmin-during-an-outage">
+                Let it Crash
+              </a>
+            </li>
+          </ul>
+
+          <h3 class="middle-header">References:</h3>
+          <ul class="links">
+            <li>
+              <a href="http://www.joyent.com/developers/node/design/errors">Joyent Guideline</a>
+            </li>
+            <li>
+              <a href="https://github.com/davepacheco/node-verror">verror</a>
+            </li>
+            <li>
+              <a href="http://nodejs.org/api/domain.html">domain</a>
+            </li>
+            <li>
+              <a href="https://github.com/trentm/node-bunyan">bunyan</a>
+            </li>
+            <li>
+              <a href="https://github.com/nodejitsu/forever">forever</a>
+            </li>
+            <li>
+              <a href="https://medium.com/@jlouis666/error-kernels-9ad991200abd">Error Kernels</a>
+            </li>
+            <li>
+              <a href="http://pl.wikipedia.org/wiki/Worse_is_Better"><em>Worse is better</em></a>
+            </li>
+            <li>
+              <a href="http://blogs.teamb.com/craigstuntz/2008/05/19/37819/"><em>Let it crash</em></a>
+            </li>
+            <li>
+              <a href="https://github.com/strongloop/zone">zone</a>,
+              <a href="http://strongloop.com/node-js-zone/">detailed explanation</a>
+            </li>
+          </ul>
+
+          <aside class="notes">
+            <ul>
+              <li>AIM: To był ostatni przykład, a ja dziękuję za uwagę!</li>
+              <li>AIM: Materiały zamieszczone specjalnie dla ciekawskich i zainteresowanych tematem.</li>
+              <li>RECOMMENDATION: Szczególnie polecam artykuł o "Error Kernels".</li>
+            </ul>
+          </aside>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      var PISTACHIO_ICE_CREAM = "#19BC9C",
+          STROMY_SKY = "#2C3E50";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        element.setAttribute("data-background", color);
+      }
+
+      getArrayOfDomElements(".section-header").forEach(applyColor.curry(PISTACHIO_ICE_CREAM));
+
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: "linear",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js",condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
