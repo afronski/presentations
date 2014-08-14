@@ -393,8 +393,8 @@ response.pipe(temporarySaveToDisk);
             </code></pre>
 
             <pre class="fragment"><code data-trim class="javascript">
-// Best:
-response.pipe(checkAvailabilityOfS3)
+// Best (errorHandler is a PassThrough stream implementation):
+response.pipe(errorHandler)
         .pipe(saveToS3);
 
 response.pipe(temporarySaveToDisk)
