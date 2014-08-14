@@ -393,7 +393,7 @@ response.pipe(temporarySaveToDisk);
             </code></pre>
 
             <pre class="fragment"><code data-trim class="javascript">
-// Best:
+// Best (errorHandler is a PassThrough stream implementation):
 response.pipe(errorHandler)
         .pipe(saveToS3);
 
