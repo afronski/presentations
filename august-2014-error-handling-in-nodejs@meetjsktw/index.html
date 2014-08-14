@@ -394,7 +394,7 @@ response.pipe(temporarySaveToDisk);
 
             <pre class="fragment"><code data-trim class="javascript">
 // Best:
-response.pipe(checkAvailabilityOfS3)
+response.pipe(errorHandler)
         .pipe(saveToS3);
 
 response.pipe(temporarySaveToDisk)
