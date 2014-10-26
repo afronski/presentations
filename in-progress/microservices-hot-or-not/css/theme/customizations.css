@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'Sketch Block';
+  src: url("fonts/Sketch_Block.ttf");
+}
+
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url("fonts/BebasNeue.otf");
+}
+
+.reveal .introduction {
+  color: #333333;
+}
+
+.reveal .introduction h1 {
+  color: #333333;
+  font-size: 2.7em;
+  font-family: 'Sketch Block';
+}
+
+.reveal .introduction h2,
+.reveal .introduction h3,
+.reveal .introduction h4,
+.reveal .introduction h5,
+.reveal .introduction h6 {
+  color: #333333;
+  font-family: 'Bebas Neue';
+}
+
+.reveal .content {
+  color: #EAEAEA;
+}
+
+.reveal .content h1 {
+  color: #EAEAEA;
+  font-size: 2.7em;
+  font-family: 'Sketch Block';
+}
+
+.reveal .content h2,
+.reveal .content h3,
+.reveal .content h4,
+.reveal .content h5,
+.reveal .content h6 {
+  color: #EAEAEA;
+  font-family: 'Bebas Neue';
+}
+
+.reveal .important {
+  color: #EAEAEA;
+}
+
+.reveal .important h1 {
+  color: #EAEAEA;
+  font-size: 2.7em;
+  font-family: 'Sketch Block';
+}
+
+.reveal .important h2,
+.reveal .important h3,
+.reveal .important h4,
+.reveal .important h5,
+.reveal .important h6 {
+  color: #EAEAEA;
+  font-family: 'Bebas Neue';
+}
+
+.reveal .links li {
+  font-size: 0.8em;
+  line-height: 1.2em;
+}

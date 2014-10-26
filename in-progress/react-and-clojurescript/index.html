@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Microservices :: Hot or Not?</title>
+
+    <meta name="description" content="Talk about Microservices. Is a hot topic? Or it is not anything new?">
+    <meta name="author" content="Wojciech Gawroński">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+    <link rel="stylesheet" href="css/theme/customizations.css" />
+
+    <link rel="stylesheet" href="lib/css/railscasts.css" />
+
+    <script>
+      document.write("<link rel='stylesheet' href='css/print/" +
+                     (window.location.search.match(/print-pdf/gi) ? "pdf" : "paper") +
+                    ".css' type='text/css' media='print'>");
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section id="entrance">
+
+          <section class="introduction">
+            <h1>Microservices</h1>
+            <h2>Hot or Not?</h2>
+
+            <span class="license">
+              Wojciech Gawroński, 2014 &copy;
+              License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+            </span>
+
+            <aside class="notes"></aside>
+          </section>
+
+        </section>
+
+        <section id="definitions">
+
+          <section class="important">
+            <h1>Definition</h1>
+            <h2>Who? When? What? Where?</h2>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <pre><code data-trim class="javascript">
+process.on("uncaughtException", function(err) {
+  // ALL YOUR ERRORS ARE BELONG TO US
+  // YOU CANNOT STOP ME NOW!
+});
+            </code></pre>
+          </section>
+
+          <section class="content">
+            <pre><code data-trim class="javascript">
+process.on("uncaughtException", function(err) {
+  // ALL YOUR ERRORS ARE BELONG TO US
+  // YOU CANNOT STOP ME NOW!
+});
+            </code></pre>
+          </section>
+
+          <section class="introduction">
+            <pre><code data-trim class="javascript">
+process.on("uncaughtException", function(err) {
+  // ALL YOUR ERRORS ARE BELONG TO US
+  // YOU CANNOT STOP ME NOW!
+});
+            </code></pre>
+          </section>
+
+        </section>
+
+        <section id="closing">
+
+          <section class="content">
+            <h1>Time for Questions</h1>
+          </section>
+
+          <section class="introduction">
+            <h1>Thanks</h1>
+            <h2>References:</h2>
+            <ul class="links">
+              <li>
+                <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">License</a>
+              </li>
+            </ul>
+          </section>
+
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      var LIGHT = "#E8DDCB",
+          MEDIUM = "#036564",
+          DARK = "#033649";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        element.setAttribute("data-background", color);
+      }
+
+      getArrayOfDomElements(".introduction").forEach(applyColor.curry(LIGHT));
+      getArrayOfDomElements(".content").forEach(applyColor.curry(MEDIUM));
+      getArrayOfDomElements(".important").forEach(applyColor.curry(DARK));
+
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: "default",
+        transition: "slide",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js", condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
