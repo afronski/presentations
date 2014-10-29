@@ -60,6 +60,11 @@
 **** Fuzzed Boundaries
 **** Integration through Database
 **** Testing Challenges
+***** Testing by flow control (20% of users to the new back-end)
+***** Enable per user
+***** Feature toggles
+**** Scale
+***** 'One on a million' means once a day on each node.
 *** Patterns
 **** Circuit Breakers
 **** Cross-functional Teams oriented around Business Capabilities
