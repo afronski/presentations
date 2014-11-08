@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ClojureScript + Om = React.js ❤</title>
+    <title>Microservices :: Hot or Not?</title>
 
-    <meta name="description" content="Unique combination of ClojureScript magic with React rendering approach.">
+    <meta name="description" content="Talk about Microservices. Is a hot topic? Or it is not anything new?">
     <meta name="author" content="Wojciech Gawroński">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,8 +31,8 @@
         <section id="entrance">
 
           <section class="introduction">
-            <h1>Immutable React</h1>
-            <h2>ClojureScript and Om</h2>
+            <h1>Microservices</h1>
+            <h2>Hot or Not?</h2>
 
             <span class="license">
               Wojciech Gawroński, 2014 &copy;
@@ -47,37 +47,183 @@
         <section id="definitions">
 
           <section class="important">
-            <h1>Definition</h1>
-            <h2>Who? When? What? Where?</h2>
+            <h1>Nature</h1>
+            <h2>Science</h2>
 
             <aside class="notes"></aside>
           </section>
 
           <section class="important">
-            <pre><code data-trim class="javascript">
-process.on("uncaughtException", function(err) {
-  // ALL YOUR ERRORS ARE BELONG TO US
-  // YOU CANNOT STOP ME NOW!
-});
-            </code></pre>
+            <h1>Industry</h1>
+
+            TODO: Gears inside machine.
+            TODO: 'Lots of moving parts'.
+
+            <aside class="notes"></aside>
           </section>
 
-          <section class="content">
-            <pre><code data-trim class="javascript">
-process.on("uncaughtException", function(err) {
-  // ALL YOUR ERRORS ARE BELONG TO US
-  // YOU CANNOT STOP ME NOW!
-});
-            </code></pre>
+          <section class="important">
+            <h1>IT</h1>
+
+            <aside class="notes"></aside>
           </section>
 
-          <section class="introduction">
-            <pre><code data-trim class="javascript">
-process.on("uncaughtException", function(err) {
-  // ALL YOUR ERRORS ARE BELONG TO US
-  // YOU CANNOT STOP ME NOW!
-});
-            </code></pre>
+          <section class="important">
+            <h1>Definition</h1>
+            <h2>It is not that simple</h2>
+
+            TODO: Gazillion of definitions.
+            TOOD: Each one uses different scale, metric, way of comparison.
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Origin</h1>
+            <h2>Term</h2>
+
+            TODO: Netflix, Adrian Cockroft (?).
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Origin</h1>
+            <h2>Approach</h2>
+
+            TODO: Well understood OOP is a "microservice"-like architecture.
+            TODO: Actor Model (paper), UNIX philosophy, proper DDD.
+            TODO: More samples? Erlang (25 years old language with supervision hierarchies).
+            TODO: More samples? Smalltalk (method invocation is a message passing).
+            TODO: More samples? Multiple hexagons (Hexagonal Architecture).
+            TODO: More samples? Microkernel architecture.
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Evolution</h1>
+
+            TODO: eBay, Spotify, Netflix ...
+            TODO: Each company started from the monolithic approach,
+            TODO: and evolved to the more scalable, decoupled architecture.
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Definition</h1>
+            <h2>Who? When? What? Where?</h2>
+
+            TODO: Definition in terms of amount of work,
+            TODO: Not lines and size measurements.
+            TODO: 'Smart, Isolated and self-sufficient endpoints and dumb pipes' (M. Fowler)
+            TODO: ESB and other 'intelligent' software are an anti-pattern here.
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Deletability</h1>
+
+            TODO: Greg Young's presentation.
+            TODO: Big ball of mud (paper &amp; question).
+            <aside class="notes"></aside>
+          </section>
+
+        </section>
+
+        <section id="case-studies">
+          TODO: JBoss (Monolithic approach, but it depends how it is composed internally).
+          TODO: Erlang (Actor Model).
+          TODO: Node.js (Or any other platform/language/framework which uses multiple processes).
+          TODO: Symfony2 (Or any other platform/language/framework with nice, decomposable internal architecture).
+        </section>
+
+        <section id="problems-and-solutions">
+
+          <section class="important">
+            <h1>Caveats</h1>
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Operations</h1>
+
+            TODO: Backups - multiple storages? Migrations? Monitoring? Updates? Maintenance?
+            TODO: Deployment? Blue-Green Deployment. Feature Toggles.
+            TODO: Security? Support? Conflicts? Dependency Management?
+            TODO: DevOps Mindset.
+            TODO: Incremental approach to build an automated, reproducible infrastructure.
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Service Discovery</h1>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Storage</h1>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Contracts</h1>
+            <h2>Transport</h2>
+
+            TODO: Deliberately 'Contracts' not an API.
+            TODO: API is a most misunderstood thing in IT.
+            TODO: Transport is a huge choice in this type of architecture.
+            TODO: Difficult choice: Schema-less vs. Strict? Schema On or Off the wire?
+            TODO: Difficult choice: Binary vs. Text? TCP oriented or not?
+            TODO: Difficult choice: Versions? Compression? ...
+            TODO: Rich Hickey talk about 'Language of the System'.
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Fuzzy Boundaries</h1>
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Integration through Storage</h1>
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Testing Challenges</h1>
+
+            TODO: Flow control (20% of traffic through new solution).
+            TODO: Test Users on production (at least some of data will go through him).
+            TODO: Enabling feature toggles per user (easily testable new features in isolated group).
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Robustness</h1>
+
+            TODO: Failure propagation? Circuit Breaker etc.
+            TODO: Building Distributed Systems in Presence of Software Errors (paper).
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Scale</h1>
+
+            TODO: 'One on a million' happens every minute or so.
+            TODO: Scaling multiple things is flexible than scaling one.
+            TODO: But sometimes it is easier to introduce edge cases.
+            TODO: e.g. scaling multiple services can introduce increased.
+            TODO: traffic and problems with TCP stack settings.
+            TODO: Cloud should help you, not be a constraint or a problem.
+            <aside class="notes"></aside>
           </section>
 
         </section>
