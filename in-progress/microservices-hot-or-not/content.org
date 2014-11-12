@@ -53,7 +53,7 @@
 *** Problems - It's not a Free Lunch
 **** Deployment
 **** Infrastructure Automation
-**** Other operational challenges (backup, monitoring)
+**** Other operational challenges (backup, migrations, monitoring)
 **** Service Discovery
 **** Decentralised Data Management
 **** Putting pressure on Communication Contracts
