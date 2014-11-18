@@ -26,7 +26,6 @@
   color: #333333;
   font-family: 'Bebas Neue';
 }
-
 .reveal .content {
   color: #EAEAEA;
 }
@@ -34,6 +33,17 @@
 .reveal .content h1 {
   color: #EAEAEA;
   font-size: 2.7em;
+  font-family: 'Sketch Block';
+}
+
+.reveal .full-background h1 {
+  color: #EAEAEA;
+  font-size: 2.7em;
+  font-family: 'Sketch Block';
+}
+
+.reveal .full-background h2 {
+  color: #EAEAEA;
   font-family: 'Sketch Block';
 }
 
@@ -68,4 +78,9 @@
 .reveal .links li {
   font-size: 0.8em;
   line-height: 1.2em;
+}
+
+.reveal h1.for-lighter-background,
+.reveal h2.for-lighter-background {
+  color: #77FFEA;
 }

@@ -39,58 +39,137 @@
               License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
             </span>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>Introduce Concept and Definition.</li>
+                <li>Present Sample Case Studies.</li>
+                <li>Bust some hype about the power of this approach.</li>
+                <li>Bust some negatives about the <em>problems</em> with it.</li>
+                <li>In other words: some doze of healthy and constructive critique about that topic.</li>
+              </ul>
+            </aside>
           </section>
 
         </section>
 
         <section id="definitions">
 
-          <section class="important">
-            <h1>Nature</h1>
-            <h2>Science</h2>
+          <section data-background="img/honeycomb.jpg" class="full-background">
+            <h1 class="for-lighter-background">Nature</h1>
+            <h2 class="for-lighter-background">Science</h2>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>Honeycomb, Wheatear ...</li>
+                <li>Almost everything in nature is composed from smaller parts.</li>
+                <li>Even on the physical level, not visible without very supersensitive.</li>
+              </ul>
+            </aside>
           </section>
 
-          <section class="important">
-            <h1>Industry</h1>
+          <section data-background="img/gears.jpg" class="full-background">
+            <h1 class="for-lighter-background">Industry</h1>
 
-            TODO: Gears inside machine.
-            TODO: 'Lots of moving parts'.
-
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>Gears inside machine.</li>
+                <li>Smaller parts cooperate better, can be interchanged, replaced, repaired.</li>
+                <li>'Lots of moving parts' as a disadvantage.</li>
+                <li>Friction reduces the performance.</li>
+              </ul>
+            </aside>
           </section>
 
-          <section class="important">
+          <section data-background="img/server-room.jpg" class="full-background">
             <h1>IT</h1>
 
-            <aside class="notes"></aside>
+            <img src="img/server-room-with-mess.jpg" class="fragment" alt="Server Room with Mess" />
+
+            <aside class="notes">
+              <ul>
+                <li>In IT we should learn from the best examples.</li>
+                <li>But sometimes even if we would like to be the best, we did this.</li>
+                <li><em>The road to hell is paved with good intentions.</em></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Etymology</h1>
+
+            <ul>
+              <li class="fragment">
+                <strong>2011</strong> - Software Architects Workshop, Venice
+              </li>
+
+              <li class="fragment">
+                <strong>2012</strong> - James Lewis, 33rd Degree, Kraków
+              </li>
+
+              <li class="fragment">
+                <strong>Rest of the World</strong> - Dan North, Adrian Cockroft ...
+              </li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>We know how world is constructed, we are seeing the analogies.</li>
+                <li>Now, lets focus exactly on the word <strong>Microservice</strong>.</li>
+                <li>First usage of term "microservice" is attached to the workshops near Venice in 2011.</li>
+                <li>Than James Lewis presents "The Microservices - Java, The Unix Way" at 33rd Degree in Kraków.</li>
+                <li>
+                  After that the most important and influential person oriented around this topic is Adrian Cockroft.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
             <h1>Definition</h1>
             <h2>It is not that simple</h2>
 
-            TODO: Gazillion of definitions.
-            TODO: Each one uses different scale, metric, way of comparison.
-            TODO: Minimum Viable Architecture.
+            <blockquote>
+              [...] an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms [...]
+            </blockquote>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>But citing exact definition is almost impossible.</li>
+                <li>Gazillion of definitions.</li>
+                <li>Each one uses different scale, metric, way of comparison.</li>
+                <li>Almost everyone is defining it in his own unique way.</li>
+                <li>Even this one is very technical and suggests actual solution.</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
-            <h1>Origin</h1>
-            <h2>Term</h2>
+            <h1>Definition</h1>
+            <h2>Who? When? What? Where?</h2>
 
-            TODO: Netflix, Adrian Cockroft (?).
+            <blockquote>
+              Smart, isolated and self-sufficient endpoints and dumb pipes.
+            </blockquote>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>Different definition can be built around <em>Who? When? What? Where?</em></li>
+                <li>Martin Fowler is an author of that quote.</li>
+                <li>It is about the intent, responsibilities. Not about lines and size.</li>
+                <li>
+                  What is sometimes even more important (and we see it after a while), it is a definition in terms of amount of work.
+                </li>
+                <li>Who is using ESB or other <em>enterprise service bus</em>?</li>
+                <li>ESB and other 'intelligent' software are an anti-pattern here.</li>
+                <li>
+                  I'm not saying that ESB are bad (yes they are, but it is not a topic here) but it is not that type of architecture.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
-            <h1>Origin</h1>
-            <h2>Approach</h2>
+            <h1>Approach</h1>
 
             TODO: Well understood OOP is a "microservice"-like architecture.
             TODO: Actor Model (paper), UNIX philosophy, proper DDD.
@@ -112,26 +191,6 @@
             <aside class="notes"></aside>
           </section>
 
-          <section class="important">
-            <h1>Definition</h1>
-            <h2>Who? When? What? Where?</h2>
-
-            TODO: Definition in terms of amount of work,
-            TODO: Not lines and size measurements.
-            TODO: 'Smart, Isolated and self-sufficient endpoints and dumb pipes' (M. Fowler)
-            TODO: ESB and other 'intelligent' software are an anti-pattern here.
-
-            <aside class="notes"></aside>
-          </section>
-
-          <section class="important">
-            <h1>Deletability</h1>
-
-            TODO: Greg Young's presentation.
-            TODO: Big ball of mud (paper &amp; question).
-            <aside class="notes"></aside>
-          </section>
-
         </section>
 
         <section id="case-studies">
@@ -142,6 +201,18 @@
             TODO: Node.js (Multiple processes).
             TODO: Symfony2 (Decomposable internal architecture).
             TODO: UNIX tools and environment (UNIX philosophy).
+          </section>
+
+          <section class="important">
+            <h1>Deletability</h1>
+
+            TODO: Greg Young's presentation.
+            TODO: Big ball of mud (paper &amp; question).
+            <aside class="notes"></aside>
+          </section>
+
+          <section class="important">
+            <h1>Minimum Viable Architecture.</h1>
           </section>
 
         </section>
@@ -249,8 +320,21 @@
             <h2>References:</h2>
             <ul class="links">
               <li>
-                <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">License</a>
+                <a href="http://martinfowler.com/articles/microservices.html#footnote-etymology">
+                  <em>Microservice</em> etymology
+                </a>
               </li>
+            </ul>
+          </section>
+
+          <section class="introduction">
+            <h1>Images</h1>
+            <h2>Credits:</h2>
+            <ul class="links">
+              <li><a href="https://www.flickr.com/photos/if-by-whiskey/3349918096">Honeycomb</a></li>
+              <li><a href="https://www.flickr.com/photos/e_tavares/3499009813">Gears</a></li>
+              <li><a href="http://upload.wikimedia.org/wikipedia/commons/1/11/PDC_server_room.jpg">Server Room</a></li>
+              <li><a href="https://www.flickr.com/photos/caseorganic/4476353959/">Messy Cables</a></li>
             </ul>
           </section>
 

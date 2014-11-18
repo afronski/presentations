@@ -93,6 +93,7 @@ It is a definition in terms of Actor Model.
 ** http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html
 ** http://www.infoq.com/presentations/migration-cloud-native
 ** http://blog.cleancoder.com/uncle-bob/2014/10/01/CleanMicroserviceArchitecture.html
+** https://www.innoq.com/blog/st/2014/11/how-small-should-your-microservice-be
 ** Videos related with topic:
 *** https://www.youtube.com/watch?v=Mn0_Xmw4rQs
 *** https://www.youtube.com/watch?v=1wiMLkXz26M
