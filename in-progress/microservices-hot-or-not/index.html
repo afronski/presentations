@@ -55,8 +55,8 @@
         <section id="definitions">
 
           <section data-background="img/honeycomb.jpg" class="full-background">
-            <h1 class="for-lighter-background">Nature</h1>
-            <h2 class="for-lighter-background">Science</h2>
+            <h1 class="wheat">Nature</h1>
+            <h2 class="wheat">Science</h2>
 
             <aside class="notes">
               <ul>
@@ -68,7 +68,7 @@
           </section>
 
           <section data-background="img/gears.jpg" class="full-background">
-            <h1 class="for-lighter-background">Industry</h1>
+            <h1 class="gears">Industry</h1>
 
             <aside class="notes">
               <ul>
@@ -81,7 +81,7 @@
           </section>
 
           <section data-background="img/server-room.jpg" class="full-background">
-            <h1>IT</h1>
+            <h1 class="it">IT</h1>
 
             <img src="img/server-room-with-mess.jpg" class="fragment" alt="Server Room with Mess" />
 
@@ -94,7 +94,7 @@
             </aside>
           </section>
 
-          <section class="important">
+          <section class="content">
             <h1>Etymology</h1>
 
             <ul>
@@ -104,10 +104,20 @@
 
               <li class="fragment">
                 <strong>2012</strong> - James Lewis, 33rd Degree, Kraków
+                <small>
+                  <a href="http://2012.33degree.org/pdf/JamesLewisMicroServices.pdf">
+                    Micro services - Java, the Unix Way
+                  </a>
+                </small>
               </li>
 
               <li class="fragment">
                 <strong>Rest of the World</strong> - Dan North, Adrian Cockroft ...
+                <small>
+                  <a href="http://martinfowler.com/articles/microservices.html#footnote-etymology">
+                    Microservices - Etymology
+                  </a>
+                </small>
               </li>
             </ul>
 
@@ -168,27 +178,67 @@
             </aside>
           </section>
 
-          <section class="important">
-            <h1>Approach</h1>
-
-            TODO: Well understood OOP is a "microservice"-like architecture.
-            TODO: Actor Model (paper), UNIX philosophy, proper DDD.
-            TODO: More samples? Erlang (25 years old language with supervision hierarchies).
-            TODO: More samples? Smalltalk (method invocation is a message passing).
-            TODO: More samples? Multiple hexagons (Hexagonal Architecture).
-            TODO: More samples? Microkernel architecture.
-
-            <aside class="notes"></aside>
-          </section>
-
-          <section class="important">
+          <section class="content">
             <h1>Evolution</h1>
 
-            TODO: eBay, Spotify, Netflix ...
-            TODO: Each company started from the monolithic approach,
-            TODO: and evolved to the more scalable, decoupled architecture.
+            <img src="img/logos/ebay.png" class="logo" alt="eBay Logo" />
+            <img src="img/logos/netflix.svg" class="logo" alt="eBay Logo" />
+            <img src="img/logos/spotify.svg" class="logo" alt="eBay Logo" />
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>The main factor that driving change, the main theme of all changes is EVOLUTION.</li>
+                <li>Have you deployed a 200 MB EAR file, which after all broken everything?</li>
+                <li>Have you deal with that "one NullPointerException that destroyed the release"?</li>
+                <li>Each of these companies started from the monolithic approach.</li>
+                <li>A single monolithic Perl + C++ (CGI anyone?) or Java applications.</li>
+                <li>BTW.: monolithic came from UNIX philosophy as a opposite technology to described one.</li>
+                <li>They have evolved to the more scalable, decoupled architectures because they have to.</li>
+                <li>Dropping single archive on production and hoping that everything will go okay is naive.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Approaches</h1>
+
+            <p>
+              <blockquote>[...] is a discrete, isolated, and named piece of logic [...]</blockquote>
+              <small>
+                <a href="http://klangism.tumblr.com/post/80087171446/microservices">
+                  <em>Actor Model, Victor Klang</em>
+                </a>
+              </small>
+            </p>
+
+            <p>
+              <blockquote>[...] inside communicating over some number of ports with things on the outside.</blockquote>
+              <small>
+                <a href="http://alistair.cockburn.us/Hexagonal+architecture">
+                  <em>Hexagonal Architecture, Alistair Cockburn</em>
+                </a>
+              </small>
+            </p>
+
+            <p>
+              <blockquote>Objects communicate by sending and receiving messages.</blockquote>
+              <small>
+                <a href="http://c2.com/cgi/wiki?AlanKaysDefinitionOfObjectOriented">
+                  <em>OOP, Dr Alan Kay</em>
+                </a>
+              </small>
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>Actor Model, UNIX philosophy, proper DDD...</li>
+                <li>Well understood and well done OOP is a <em>microservice</em>-like architecture.</li>
+                <li>More samples? Erlang (25 years old language with supervision hierarchies).</li>
+                <li>More samples? Smalltalk (method invocation is a message passing).</li>
+                <li>More samples? Multiple hexagons (Hexagonal Architecture).</li>
+                <li>More samples? Microkernel architecture.</li>
+              </ul>
+            </aside>
           </section>
 
         </section>
@@ -212,7 +262,7 @@
           </section>
 
           <section class="important">
-            <h1>Minimum Viable Architecture.</h1>
+            <h1>Minimum Viable Architecture</h1>
           </section>
 
         </section>
@@ -324,6 +374,36 @@
                   <em>Microservice</em> etymology
                 </a>
               </li>
+              <li>
+                <a href="http://klangism.tumblr.com/post/80087171446/microservices">
+                  <em>Microservice</em> definition (<em>Victor Klang</em>)
+                </a>
+              </li>
+              <li>
+                <a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">
+                  <em>Making reliable distributed systems in the presence of software errors</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://alistair.cockburn.us/Hexagonal+architecture">
+                  <em>Hexagonal Architecture</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html">
+                  <em>Microservices - Not a Free Lunch!</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://dspace.mit.edu/handle/1721.1/41962">
+                  <em>Laws for Communicating Parallel Processes</em>, Actor Model
+                </a>
+              </li>
+              <li>
+                <a href="http://c2.com/cgi/wiki?AlanKaysDefinitionOfObjectOriented">
+                  <em>Alan Kay's Definition of Object Oriented</em>
+                </a>
+              </li>
             </ul>
           </section>
 
@@ -331,10 +411,15 @@
             <h1>Images</h1>
             <h2>Credits:</h2>
             <ul class="links">
-              <li><a href="https://www.flickr.com/photos/if-by-whiskey/3349918096">Honeycomb</a></li>
-              <li><a href="https://www.flickr.com/photos/e_tavares/3499009813">Gears</a></li>
-              <li><a href="http://upload.wikimedia.org/wikipedia/commons/1/11/PDC_server_room.jpg">Server Room</a></li>
-              <li><a href="https://www.flickr.com/photos/caseorganic/4476353959/">Messy Cables</a></li>
+              <li>
+                <a href="https://www.flickr.com/photos/if-by-whiskey/3349918096">Honeycomb</a>, <a href="https://www.flickr.com/photos/e_tavares/3499009813">Gears</a>
+              </li>
+              <li>
+                <a href="http://upload.wikimedia.org/wikipedia/commons/1/11/PDC_server_room.jpg">Server Room</a>, <a href="https://www.flickr.com/photos/caseorganic/4476353959/">Messy Cables</a>
+              </li>
+              <li>
+                <a href="http://upload.wikimedia.org/wikipedia/commons/a/a0/Spotify.svg">Spotify</a>, <a href="http://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2014_logo.svg">Netflix</a>, <a href="http://upload.wikimedia.org/wikipedia/commons/4/48/EBay_logo.png">eBay</a>
+              </li>
             </ul>
           </section>
 

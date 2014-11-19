@@ -80,7 +80,38 @@
   line-height: 1.2em;
 }
 
-.reveal h1.for-lighter-background,
-.reveal h2.for-lighter-background {
-  color: #77FFEA;
+.reveal h1.wheat,
+.reveal h2.wheat {
+  color: #FFE580;
+}
+
+.reveal h1.gears,
+.reveal h2.gears {
+  color: #FFFFFF;
+}
+
+.reveal h1.it,
+.reveal h2.it {
+  color: #FF5A5A;
+}
+
+.reveal blockquote {
+  padding: 15px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.reveal blockquote:before {
+  color: #EAEAEA;
+  content: "\201C";
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+.reveal .logo {
+  width: 250px;
+  height: 120px;
+  padding: 5px 15px;
 }
