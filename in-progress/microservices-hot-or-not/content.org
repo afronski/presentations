@@ -1,13 +1,6 @@
 * Overview
 ** Preconditions
 
-*** Audience knowledge assumptions
-
-- They know how to create, deploy and manage any web applications.
-- They have architect some of them.
-- They have small knowledge regarding operations side.
-- They have good knowledge about at least one language / platform.
-
 ** Post-conditions
 *** Explained Definitions
 
