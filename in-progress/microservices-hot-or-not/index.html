@@ -237,6 +237,9 @@
                 <li>More samples? Smalltalk (method invocation is a message passing).</li>
                 <li>More samples? Multiple hexagons (Hexagonal Architecture).</li>
                 <li>More samples? Microkernel architecture.</li>
+                <li>
+                  Digression: I am always amazed how people remembered everything about encapsulation and inheritance and dropped out message passing.
+                </li>
               </ul>
             </aside>
           </section>
@@ -253,12 +256,97 @@
             TODO: UNIX tools and environment (UNIX philosophy).
           </section>
 
+          <section class="content">
+            <h1>Hype</h1>
+
+            <blockquote>
+              If you can't build a monolith, what makes you think microservices are the answer?
+            </blockquote>
+
+            <small>
+              <a href="http://www.codingthearchitecture.com/2014/07/06/distributed_big_balls_of_mud.html">
+                <em>Distributed big balls of mud</em>
+              </a>
+            </small>
+
+            <blockquote>
+              However, when considering microservice like architectures, it's really important to not be attracted to the hype on this one as the challenges and costs are as real as the benefits.
+            </blockquote>
+
+            <small>
+              <a href="http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html">
+                <em>Microservices - not a free lunch!</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
           <section class="important">
+            <h1>Benefits</h1>
+
+            <aside class="notes">
+              <ul>
+                <li></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h2 class="sketchy">Big Ball of Mud</h2>
+
+            <p class="fragment">
+              <blockquote>
+                [...] might be thought of as an anti-pattern. [...] However, its undeniable popularity leads to the inexorable conclusion that it is a pattern in its own right.
+              </blockquote>
+
+              <small>
+                <a href="http://www.laputan.org/pub/foote/mud.pdf">
+                  <em>Big Ball of Mud</em>
+                </a>
+              </small>
+
+              <blockquote class="fragment">
+                Make it work, Make it right, then make it fast.
+              </blockquote>
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>Question: Who read "Big Ball of Mud" paper?</li>
+                <li>Who did not read it - go read it. Now. After the meeting.</li>
+                <li>It is not a purely pejorative statement.</li>
+                <li>We should strive the approach "make it work - make it right".</li>
+                <li>First we tackle the essential complexity of the problem and iteratively improve our solution.</li>
+                <li>It is a big ball of mud, collected from good, thoughtful and properly designed elements.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
             <h1>Deletability</h1>
 
-            TODO: Greg Young's presentation.
-            TODO: Big ball of mud (paper &amp; question).
-            <aside class="notes"></aside>
+            <a href="https://vimeo.com/108441214">
+              <em>Greg Young - The art of destroying software</em>
+            </a>
+
+            <aside class="notes">
+              <ul>
+                <li>From all properties of your architecture it should be the most important one.</li>
+                <li>It enables and drives the flexibility.</li>
+                <li>It manages and keeps the technical debt on the sane level.</li>
+                <li>How to optimize your development speed and do not spent so much time of reFUCKtoring?</li>
+                <li>It is not a replacement for TDD, BDD or tests.</li>
+                <li>It is a tool, a metric which helps you design and organize your code properly.</li>
+                <li>
+                  "If one of your parts of the system is more than a week rewrite it is a sign, that this is a dangerous side of your code and properly something went wrong here."
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
@@ -328,7 +416,14 @@
           </section>
 
           <section class="important">
-            <h1>Testing Challenges</h1>
+            <h1>Tests</h1>
+
+            <img src="img/challenges/testing.png" alt="Testing Challenges" />
+          </section>
+
+          <section class="important">
+            <h1>Tests</h1>
+            <h2>Operations</h2>
 
             TODO: Flow control (20% of traffic through new solution).
             TODO: Test Users on production (at least some of data will go through him).
@@ -392,6 +487,16 @@
               <li>
                 <a href="http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html">
                   <em>Microservices - Not a Free Lunch!</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.codingthearchitecture.com/2014/07/06/distributed_big_balls_of_mud.html">
+                  <em>Distributed big balls of mud</em>
+                </a>
+              </li>
+              <li>
+                <a href="https://vimeo.com/108441214">
+                  <em>Greg Young - The art of destroying software</em>
                 </a>
               </li>
               <li>
