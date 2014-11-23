@@ -74,13 +74,7 @@ They can be applied on the architectural / operation level as well.
 ****** Facade Pattern
 * References
 ** http://www.slideshare.net/stonse/microservices-at-netflix
-** https://vimeo.com/108441214
-** http://martinfowler.com/articles/microservices.html
 ** http://www.infoq.com/interviews/adrian-cockcroft-microservices-devops
-** http://klangism.tumblr.com/post/80087171446/microservices
-
-It is a definition in terms of Actor Model.
-
 ** http://www.infoq.com/articles/microservices-intro
 ** http://microservices.io/patterns/microservices.html
 ** http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html

@@ -34,6 +34,8 @@
             <h1>Microservices</h1>
             <h2>Hot or Not?</h2>
 
+            <img class="main-logo" src="img/logos/white-rook.jpg" alt="White Rook logo" />
+
             <span class="license">
               Wojciech Gawroński, 2014 &copy;
               License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
@@ -48,6 +50,14 @@
                 <li>In other words: some doze of healthy and constructive critique about that topic.</li>
               </ul>
             </aside>
+          </section>
+
+          <section class="introduction">
+            <h1>Agenda</h1>
+
+            <h3 class="sketchy">Definitions</h3>
+            <h3 class="sketchy">Details</h3>
+            <h3 class="sketchy">Challenges</h3>
           </section>
 
         </section>
@@ -246,52 +256,23 @@
 
         </section>
 
-        <section id="case-studies">
+        <section id="details">
 
           <section class="content">
-            TODO: JBoss (Monolithic approach, but it depends how it is composed internally).
-            TODO: Erlang (Actor Model).
-            TODO: Node.js (Multiple processes).
-            TODO: Symfony2 (Decomposable internal architecture).
-            TODO: UNIX tools and environment (UNIX philosophy).
-          </section>
-
-          <section class="content">
-            <h1>Hype</h1>
-
-            <blockquote>
-              If you can't build a monolith, what makes you think microservices are the answer?
-            </blockquote>
-
-            <small>
-              <a href="http://www.codingthearchitecture.com/2014/07/06/distributed_big_balls_of_mud.html">
-                <em>Distributed big balls of mud</em>
-              </a>
-            </small>
-
-            <blockquote>
-              However, when considering microservice like architectures, it's really important to not be attracted to the hype on this one as the challenges and costs are as real as the benefits.
-            </blockquote>
-
-            <small>
-              <a href="http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html">
-                <em>Microservices - not a free lunch!</em>
-              </a>
-            </small>
+            <h1>Samples</h1>
+            <h3 class="fragment sketchy">JBoss</h3>
+            <h3 class="fragment sketchy">Erlang</h3>
+            <h3 class="fragment sketchy">Node.js</h3>
+            <h3 class="fragment sketchy">Symfony2</h3>
+            <h3 class="fragment sketchy">UNIX environment</h3>
 
             <aside class="notes">
               <ul>
-                <li></li>
-              </ul>
-            </aside>
-          </section>
-
-          <section class="important">
-            <h1>Benefits</h1>
-
-            <aside class="notes">
-              <ul>
-                <li></li>
+                <li>JBoss - Monolithic.</li>
+                <li>Erlang - Actor Model.</li>
+                <li>Node.js - Multiple Processes.</li>
+                <li>Symfony2 - Decomposable Internal Architecture (nice framework).</li>
+                <li>UNIX tools and environment - UNIX philosophy.</li>
               </ul>
             </aside>
           </section>
@@ -328,6 +309,41 @@
           </section>
 
           <section class="content">
+            <h1>Hype</h1>
+
+            <blockquote>
+              If you can't build a monolith, what makes you think microservices are the answer?
+            </blockquote>
+
+            <small>
+              <a href="http://www.codingthearchitecture.com/2014/07/06/distributed_big_balls_of_mud.html">
+                <em>Distributed big balls of mud</em>
+              </a>
+            </small>
+
+            <blockquote>
+              However, when considering microservice like architectures, it's really important to not be attracted to the hype on this one as the challenges and costs are as real as the benefits.
+            </blockquote>
+
+            <small>
+              <a href="http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html">
+                <em>Microservices - not a free lunch!</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>Like every new technology, there is a huge phase of hype on microservices.</li>
+                <li>Mostly non-objective, dangerous and misunderstood approach.</li>
+                <li>Also it is connected with polyglot-like movements.</li>
+                <li>Polyglot persistence, polyglot programming - everything is for people.</li>
+                <li>When misused, it is easy to make mess - too many technologies, too many options.</li>
+                <li>More in challenges chapter.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
             <h1>Deletability</h1>
 
             <a href="https://vimeo.com/108441214">
@@ -350,15 +366,28 @@
           </section>
 
           <section class="important">
-            <h1>Minimum Viable Architecture</h1>
+            <h1>Minimal Viable Architecture</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Iteratively, step by step we are coming to the concept of minimal viable architecture.</li>
+                <li>The most pragmatic approach to the software architecture, very compatible with agile.</li>
+                <li>However it is also compatible with microservices architecture.</li>
+                <li>We have talked about deletability, small units, single responsibilities.</li>
+                <li>
+                  "Perfection is Achieved Not When There Is Nothing More to Add, But When There Is Nothing Left to Take Away"
+                </li>
+              </ul>
+            </aside>
           </section>
 
         </section>
 
-        <section id="problems-and-solutions">
+        <section id="challenges">
 
           <section class="important">
             <h1>Caveats</h1>
+
             <aside class="notes"></aside>
           </section>
 
@@ -419,6 +448,8 @@
             <h1>Tests</h1>
 
             <img src="img/challenges/testing.png" alt="Testing Challenges" />
+
+            <aside class="notes"></aside>
           </section>
 
           <section class="important">
