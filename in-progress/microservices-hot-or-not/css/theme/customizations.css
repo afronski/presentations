@@ -117,10 +117,45 @@
 
 .reveal .logo {
   width: 250px;
-  height: 120px;
+  min-height: 120px;
   padding: 5px 15px;
 }
 
 .reveal .main-logo {
   width: 200px;
+}
+
+.reveal .smaller-logo {
+  width: 150px;
+  padding: 15px 15px 14px 15px;
+}
+
+.reveal .small-logo {
+  padding: 26px 25px 25px 24px;
+}
+
+.reveal .cloud {
+  list-style-type: none;
+  margin-top: 50px;
+}
+
+.reveal .cloud li {
+  float: left;
+  font-family: 'Sketch Block';
+}
+
+.reveal .cloud .size1 {
+    padding: 12px;
+}
+
+.reveal .cloud .size2 {
+    padding: 20px;
+}
+
+.reveal .cloud .size3 {
+    padding: 2px;
+}
+
+.reveal .cloud .size4 {
+    padding: 8px;
 }

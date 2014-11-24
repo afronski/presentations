@@ -258,7 +258,7 @@
 
         <section id="details">
 
-          <section class="content">
+          <section class="introduction">
             <h1>Samples</h1>
             <h3 class="fragment sketchy">JBoss</h3>
             <h3 class="fragment sketchy">Erlang</h3>
@@ -385,38 +385,107 @@
 
         <section id="challenges">
 
-          <section class="important">
-            <h1>Caveats</h1>
+          <section class="introduction">
+            <h1>Challenges</h1>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>Hype and popularity leads to the misunderstanding.</li>
+                <li>As we see, topic is definitely hot but definitely not new.</li>
+                <li>And hot topics are connected with challenges.</li>
+                <li>Benefits - small parts, natural responsibilities, discipline.</li>
+                <li>Benefits - better tools, connected with the actual problem.</li>
+                <li>Benefits - easy, simple, scalable.</li>
+                <li>But to receive all this greatness we need to focus on challenges and solve them properly.</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
             <h1>Operations</h1>
 
-            TODO: Backups - multiple storages? Migrations? Monitoring? Updates? Maintenance?
-            TODO: Deployment? Blue-Green Deployment. Feature Toggles.
-            TODO: Security? Support? Conflicts? Dependency Management?
-            TODO: DevOps Mindset.
-            TODO: Incremental approach to build an automated, reproducible infrastructure.
+            <ul class="cloud">
+              <li class="fragment size2">Backups</li>
+              <li class="fragment size1">Deployment</li>
+              <li class="fragment size3">Migrations</li>
+              <li class="fragment size2">Security</li>
+              <li class="fragment size1">Monitoring</li>
+              <li class="fragment size2">Updates</li>
+              <li class="fragment size4">Maintenance</li>
+              <li class="fragment size3">Installation</li>
+            </ul>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>Do you want multiple storages? Think about backups and migrations.</li>
+                <li>Many different technologies? Think about monitoring, deployment, updates and security.</li>
+                <li>Updating packages, especially on Linux is difficult.</li>
+                <li>DevOps Culture to the Rescue!</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Operations</h1>
+
+            <blockquote>
+              Incremental approach to build an automated, reproducible infrastructure.
+            </blockquote>
+
+            <img src="img/tools/puppet.svg" class="logo" alt="Puppet" />
+            <img src="img/tools/chef.svg" class="small-logo" alt="Chef" />
+            <img src="img/tools/event-store.svg" class="logo" alt="EventStore" />
+            <img src="img/tools/flyway.png" class="smaller-logo" alt="Flyway" />
+
+            <blockquote class="fragment">
+              Hiring a DevOps Engineer will look you would like to employee a Scrum.
+            </blockquote>
+
+            <aside class="notes">
+              <ul>
+                <li>DevOps culture is a good answer for almost all problems from the previous slide.</li>
+                <li>There are more specific techniques related with e.g. backups or migrations.</li>
+                <li>Blue-Green Deployment it is a solution to handle multiple versions of the one system.</li>
+                <li>Migrations on the fly inside the program logic.</li>
+                <li>
+                  Event Sourcing and rebuilding the state of the program from the history is a solution for the not synchronized backups procedures.
+                </li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
             <h1>Service Discovery</h1>
 
-            TODO: How to connect two unaware services together?
-            TODO: How to minimize coupling?
-            TODO: How to manage scarce resources (e.g. conflicting ports)?
+            <ul class="cloud">
+              <li class="fragment size3">Sharing Resources</li>
+              <li class="fragment size4">Clusters</li>
+              <li class="fragment size1">Configuration</li>
+              <li class="fragment size2">Orchestration</li>
+              <li class="fragment size1">URI and Paths</li>
+            </ul>
 
-            <aside class="notes"></aside>
+            <img src="img/tools/consul.png" class="small-logo fragment" alt="Consul" />
+            <img src="img/tools/serf.png" class="small-logo fragment" alt="Serf" />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  We want to scale and dynamically resize our clusters, but our configuration and connections are not scaling with it.
+                </li>
+                <li>There are tools which will help us to do it.</li>
+                <li>The whole approach is to dynamically discover and register capabilities of the clusters.</li>
+                <li>We need to manage that in order to work with scalable and dynamic environments.</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
             <h1>Storage</h1>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              TODO
+            </aside>
           </section>
 
           <section class="important">
@@ -431,17 +500,27 @@
             TODO: Difficult choice: Versions? Compression? ...
             TODO: Rich Hickey talk about 'Language of the System'.
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+
+            </aside>
           </section>
 
           <section class="important">
             <h1>Fuzzy Boundaries</h1>
-            <aside class="notes"></aside>
+
+            <aside class="notes">
+              <ul>
+                <li>This is the most dangerous part e.g. in DDD. How to split bounded contexts?</li>
+                <li>Smaller modules / components tease to put more responsibilities inside.</li>
+                <li>Putting more and more into one thing blurs the boundaries and responsibilities.</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
             <h1>Integration through Storage</h1>
-            <aside class="notes"></aside>
+
+            <aside class="notes">TODO</aside>
           </section>
 
           <section class="important">
@@ -449,7 +528,14 @@
 
             <img src="img/challenges/testing.png" alt="Testing Challenges" />
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <ul>
+                <li>Choosing a separate technology connected with the problem obviously has drawbacks.</li>
+                <li>Accidental Complexity will increase with each of added technologies.</li>
+                <li>Simple example - testing and keeping the consistency between them.</li>
+                <li>Another one - Coding Standards.</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
