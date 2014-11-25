@@ -210,7 +210,16 @@
           </section>
 
           <section class="content">
-            <h1>Approaches</h1>
+            <p>
+              <blockquote>
+                A micro-service is a small executable running on a server and responds to asynchronous messages.
+              </blockquote>
+              <small>
+                <a href="http://blog.cleancoder.com/uncle-bob/2014/10/01/CleanMicroserviceArchitecture.html">
+                  <em>Clean Micro-service Architecture, Uncle Bob</em>
+                </a>
+              </small>
+            </p>
 
             <p>
               <blockquote>[...] is a discrete, isolated, and named piece of logic [...]</blockquote>
@@ -401,8 +410,14 @@
             </aside>
           </section>
 
-          <section class="important">
+          <section class="content">
             <h1>Operations</h1>
+
+            <small>
+              <a href="http://www.infoq.com/interviews/adrian-cockcroft-microservices-devops">
+                <em>Adrian Cockcroft on Microservices and DevOps</em>
+              </a>
+            </small>
 
             <ul class="cloud">
               <li class="fragment size2">Backups</li>
@@ -482,26 +497,45 @@
 
           <section class="important">
             <h1>Storage</h1>
+            <h2>Polyglot Persistence</h2>
+
+            <img src="img/other/seven-databases-in-seven-weeks.jpg" class="cover" alt="Seven Databases in Seven Weeks" />
 
             <aside class="notes">
-              TODO
+              <ul>
+                <li>
+                  It is more than a notice, than an actual challenge - you can complicate pretty nice your architecture by putting too much storage mechanisms into your system.
+                </li>
+                <li>
+                  Small services uses smaller databases, sometimes more appropriate to the type of the work which needs to be done inside this service.
+                </li>
+                <li>
+                  Obviously using one database over is a pretty deliberate choice. But be sure that you are at least choosing proper database, suited to the requirements. And think about fall-back and back-up procedures because using more than one storage complicates backups pretty badly.
+                </li>
+                <li>
+                  It is quite nice book actually, which will help you choose the best storage suited to your needs.
+                </li>
+                <li>
+                  And one more: using more than one storage enforces on you to treat at least one as an ultimate source of truth and rest as a different view-caches. Otherwise it will be painful regarding returning to the consistent point.
+                </li>
+              </ul>
             </aside>
           </section>
 
           <section class="important">
-            <h1>Contracts</h1>
-            <h2>Transport</h2>
-
-            TODO: Deliberately 'Contracts' not an API.
-            TODO: API is a most misunderstood thing in IT.
-            TODO: Transport is a huge choice in this type of architecture.
-            TODO: Difficult choice: Schema-less vs. Strict? Schema On or Off the wire?
-            TODO: Difficult choice: Binary vs. Text? TCP oriented or not?
-            TODO: Difficult choice: Versions? Compression? ...
-            TODO: Rich Hickey talk about 'Language of the System'.
+            <h1>Integration through Storage</h1>
 
             <aside class="notes">
-
+              <ul>
+                <li>When it comes to the storage, the very tricky part is an integration between services.</li>
+                <li>Integration through the storage is the most dangerous way of integrating two parts.</li>
+                <li>
+                  You are coupling two pieces of architecture on the data structure (and sometimes even more - coupling by the internal details) level. This is the one of the most painful type of coupling to remove in future.
+                </li>
+                <li>
+                  But this is not a clear anti-pattern - remember that in some cases, which are deeply understood this is a proper way to handle stuff if you would like to overcome the performance problems. But you should have very strong arguments to do that, and all of the others ways are already failed.
+                </li>
+              </ul>
             </aside>
           </section>
 
@@ -517,14 +551,46 @@
             </aside>
           </section>
 
-          <section class="important">
-            <h1>Integration through Storage</h1>
+          <section class="content">
+            <h1>Contracts</h1>
+            <h2>Transport</h2>
 
-            <aside class="notes">TODO</aside>
+            <blockquote>
+              API's written in the conventional manner are not sufficient to understand the operation of programs.
+            </blockquote>
+
+            <small>
+              <a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">
+                <em>Making reliable distributed systems in the presence of software errors</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  When multiple components are talking between, we need to be fail proof, rigid and strict as much as it is possible.
+                </li>
+                <li>
+                  Ways how to talk between systems are crucial if someone is using your system as an API, or you have more than one service which are communicating between.
+                </li>
+                <li>
+                  Also chosen transport mechanism is one of the important aspects of the communication. For example, HTTP and REST are stateless, UDP does not guarantee the delivery or order of the packets and so on.
+                </li>
+                <li>
+                  I deliberately did not use a word API here, because the idea of Protocols is definitely more close to me. I really like the approach of defining an API calls and sequences which are allowed, especially when it comes to the operations which makes sense when they are invoked only in certain order.
+                </li>
+                <li>
+                  Simple example: you should read bytes from a file only after you have open it earlier. Similar constraint applies to the reading and closed stream.
+                </li>
+                <li>I definitely recommend whole thesis, even if you are prejudiced to the Erlang.</li>
+                <li>And definitely very short 9th chapter about this topic.</li>
+              </ul>
+            </aside>
           </section>
 
           <section class="important">
             <h1>Tests</h1>
+            <h2>Development</h2>
 
             <img src="img/challenges/testing.png" alt="Testing Challenges" />
 
@@ -534,44 +600,122 @@
                 <li>Accidental Complexity will increase with each of added technologies.</li>
                 <li>Simple example - testing and keeping the consistency between them.</li>
                 <li>Another one - Coding Standards.</li>
+                <li>
+                  Sometimes we are so amused by the cloud and abilities of PaaS that we forget that we have to develop on our local machines. Tools like <strong>docker</strong>, <strong>vagrant</strong> are helping us, but what with the other things like S3, SQS and other services provided by your favorite cloud provider.
+                </li>
               </ul>
             </aside>
           </section>
 
-          <section class="important">
+          <section class="content">
             <h1>Tests</h1>
             <h2>Operations</h2>
 
-            TODO: Flow control (20% of traffic through new solution).
-            TODO: Test Users on production (at least some of data will go through him).
-            TODO: Enabling feature toggles per user (easily testable new features in isolated group).
+            <img src="img/other/blue-green-deployments.png" alt="Blue-Green deployments" />
 
-            <aside class="notes"></aside>
+            <blockquote>
+              One of the challenges with automating deployment is the cut-over itself, taking software from the final stage of testing to live production.
+            </blockquote>
+
+            <small>
+              <a href="http://martinfowler.com/bliki/BlueGreenDeployment.html">
+                <em>Blue-Green Deployment</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>Blue-Green deployments and Testing Groups - it is like A/B testing but with features.</li>
+                <li>Flow control (20% of traffic through new solution).</li>
+                <li>Simpler: Test Users on production (at least some of data will go through him).</li>
+                <li>Simple: Enabling feature toggles per user (easily testable new features in isolated group).</li>
+              </ul>
+            </aside>
           </section>
 
-          <section class="important">
+          <section class="content">
             <h1>Robustness</h1>
 
-            TODO: Failure propagation? Circuit Breaker etc.
-            TODO: Building Distributed Systems in Presence of Software Errors (paper).
-            <aside class="notes"></aside>
+            <blockquote>
+              To guard against failure of an entire computer we need two computers.
+            </blockquote>
+
+            <small>
+              <a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">
+                <em>Making reliable distributed systems in the presence of software errors</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>This is simple and beautiful quote, again from already mentioned PhD thesis.</li>
+                <li>
+                  We need to be sure that in our architecture we took all necessary steps to provide components robustness especially in the dangerous parts of the system.
+                </li>
+                <li>
+                  Duplication of services sometimes is not enough, there are situations where whole clusters fails. And what then?
+                </li>
+              </ul>
+            </aside>
           </section>
 
-          <section class="important">
+          <section class="content">
             <h1>Scale</h1>
 
-            TODO: 'One on a million' happens every minute or so.
-            TODO: Scaling multiple things is flexible than scaling one.
-            TODO: But sometimes it is easier to introduce edge cases.
-            TODO: e.g. scaling multiple services can introduce increased.
-            TODO: traffic and problems with TCP stack settings.
-            TODO: Cloud should help you, not be a constraint or a problem.
-            <aside class="notes"></aside>
+            <blockquote>
+              For a small operation this may be true, but when you're doing a million operations a second then a one-in-a-million failure scenario will happen every second.
+            </blockquote>
+
+            <small>
+              <a href="http://db.cs.berkeley.edu/cs286/papers/errors-cacmblog2010.pdf">
+                <em>Errors in Database Systems, Eventual Consistency, and the CAP Theorem</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  We talked about the evolution and almost each of the distributed system is created in the evolution process.
+                </li>
+                <li>
+                  It is definitely easier to scale the multiple things than scaling one monolith. But sometimes it is also a valid answer.
+                </li>
+                <li>
+                  Scale introduces edge cases - e.g. different problems with TCP stack settings, cascade failures.
+                </li>
+                <li>
+                  Your cloud provider should be your advantage, it should help you, not be a constraint or a problem.
+                </li>
+              </ul>
+            </aside>
           </section>
 
         </section>
 
         <section id="closing">
+
+          <section class="introduction">
+            <h1>Summary</h1>
+
+            <ul>
+              <li class="fragment">Microservices are not a free lunch.</li>
+              <li class="fragment">Complexity management is crucial.</li>
+              <li class="fragment">Choose your tools responsibly.</li>
+              <li class="fragment">DevOps to the rescue.</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>It definitely gives you multiple benefits but not for free.</li>
+                <li>Accidental complexity can be deadly for your projects.</li>
+                <li>Death-By-Too-Many-Technologies</li>
+                <li>Choose tools for the actual reason and with solid arguments.</li>
+                <li>
+                  Incorporating DevOps culture and continuous improvement will definitely help you build this type of architectures.
+                </li>
+              </ul>
+            </aside>
+          </section>
 
           <section class="content">
             <h1>Time for Questions</h1>
@@ -626,6 +770,11 @@
                   <em>Alan Kay's Definition of Object Oriented</em>
                 </a>
               </li>
+              <li>
+                <a href="http://blog.cleancoder.com/uncle-bob/2014/10/01/CleanMicroserviceArchitecture.html">
+                  <em>Clean Micro-service Architecture, Uncle Bob</em>
+                </a>
+              </li>
             </ul>
           </section>
 
@@ -641,6 +790,14 @@
               </li>
               <li>
                 <a href="http://upload.wikimedia.org/wikipedia/commons/a/a0/Spotify.svg">Spotify</a>, <a href="http://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2014_logo.svg">Netflix</a>, <a href="http://upload.wikimedia.org/wikipedia/commons/4/48/EBay_logo.png">eBay</a>
+              </li>
+              <li>
+                <a href="https://pragprog.com/book/rwdata/seven-databases-in-seven-weeks">
+                  <em>Seven Databases in Seven Weeks</em>
+                </a>
+              </li>
+              <li>
+                Tools logos are gathered from the homepages.
               </li>
             </ul>
           </section>

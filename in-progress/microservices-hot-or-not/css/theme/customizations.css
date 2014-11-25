@@ -119,6 +119,7 @@
   width: 250px;
   min-height: 120px;
   padding: 5px 15px;
+  vertical-align: middle;
 }
 
 .reveal .main-logo {
@@ -132,6 +133,11 @@
 
 .reveal .small-logo {
   padding: 26px 25px 25px 24px;
+}
+
+.reveal .cover {
+  width: 300px;
+  padding: 15px;
 }
 
 .reveal .cloud {
