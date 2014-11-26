@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Microservices :: Hot or Not?</title>
+
+    <meta name="description" content="Talk about Microservices. Is a hot topic? Or it is not anything new?">
+    <meta name="author" content="Wojciech Gawroński">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+    <link rel="stylesheet" href="css/theme/customizations.css" />
+
+    <link rel="stylesheet" href="lib/css/railscasts.css" />
+
+    <script>
+      document.write("<link rel='stylesheet' href='css/print/" +
+                     (window.location.search.match(/print-pdf/gi) ? "pdf" : "paper") +
+                    ".css' type='text/css' media='print'>");
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section id="entrance">
+
+          <section class="introduction">
+            <h1>Microservices</h1>
+            <h2>Hot or Not?</h2>
+
+            <img class="main-logo" src="img/logos/white-rook.jpg" alt="White Rook logo" />
+
+            <span class="license">
+              Wojciech Gawroński, 2014 &copy;
+              License: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+            </span>
+
+            <aside class="notes">
+              <ul>
+                <li>Introduce Concept and Definition.</li>
+                <li>Present Sample Case Studies.</li>
+                <li>Bust some hype about the power of this approach.</li>
+                <li>Bust some negatives about the <em>problems</em> with it.</li>
+                <li>In other words: some doze of healthy and constructive critique about that topic.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="introduction">
+            <h1>Agenda</h1>
+
+            <h3 class="sketchy">Definitions</h3>
+            <h3 class="sketchy">Details</h3>
+            <h3 class="sketchy">Challenges</h3>
+          </section>
+
+        </section>
+
+        <section id="definitions">
+
+          <section data-background="img/honeycomb.jpg" class="full-background">
+            <h1 class="wheat">Nature</h1>
+            <h2 class="wheat">Science</h2>
+
+            <aside class="notes">
+              <ul>
+                <li>Honeycomb, Wheat ...</li>
+                <li>Almost everything in nature is composed from smaller parts.</li>
+                <li>Even on the physical level, not visible without very supersensitive.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-background="img/gears.jpg" class="full-background">
+            <h1 class="gears">Industry</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Gears inside machine.</li>
+                <li>Smaller parts cooperate better, can be interchanged, replaced, repaired.</li>
+                <li>'Lots of moving parts' as a disadvantage.</li>
+                <li>Friction reduces the performance.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-background="img/server-room.jpg" class="full-background">
+            <h1 class="it">IT</h1>
+
+            <img src="img/server-room-with-mess.jpg" class="fragment" alt="Server Room with Mess" />
+
+            <aside class="notes">
+              <ul>
+                <li>In IT we should learn from the best examples.</li>
+                <li>But sometimes even if we would like to be the best, we did this.</li>
+                <li><em>The road to hell is paved with good intentions.</em></li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Etymology</h1>
+
+            <ul>
+              <li class="fragment">
+                <strong>2011</strong> - Software Architects Workshop, Venice
+              </li>
+
+              <li class="fragment">
+                <strong>2012</strong> - James Lewis, 33rd Degree, Kraków
+                <small>
+                  <a href="http://2012.33degree.org/pdf/JamesLewisMicroServices.pdf">
+                    Micro services - Java, the Unix Way
+                  </a>
+                </small>
+              </li>
+
+              <li class="fragment">
+                <strong>Rest of the World</strong> - Dan North, Adrian Cockroft ...
+                <small>
+                  <a href="http://martinfowler.com/articles/microservices.html#footnote-etymology">
+                    Microservices - Etymology
+                  </a>
+                </small>
+              </li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>We know how world is constructed, we are seeing the analogies.</li>
+                <li>Now, lets focus exactly on the word <strong>Microservice</strong>.</li>
+                <li>First usage of term "microservice" is attached to the workshops near Venice in 2011.</li>
+                <li>Than James Lewis presents "The Microservices - Java, The Unix Way" at 33rd Degree in Kraków.</li>
+                <li>
+                  After that the most important and influential person oriented around this topic is Adrian Cockroft.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Definition</h1>
+            <h2>It is not that simple</h2>
+
+            <blockquote>
+              [...] an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms [...]
+            </blockquote>
+
+            <aside class="notes">
+              <ul>
+                <li>But citing exact definition is almost impossible.</li>
+                <li>Gazillion of definitions.</li>
+                <li>Each one uses different scale, metric, way of comparison.</li>
+                <li>Almost everyone is defining it in his own unique way.</li>
+                <li>Even this one is very technical and suggests actual solution.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Definition</h1>
+            <h2>Who? When? What? Where?</h2>
+
+            <blockquote>
+              Smart, isolated and self-sufficient endpoints and dumb pipes.
+            </blockquote>
+
+            <aside class="notes">
+              <ul>
+                <li>Different definition can be built around <em>Who? When? What? Where?</em></li>
+                <li>Martin Fowler is an author of that quote.</li>
+                <li>It is about the intent, responsibilities. Not about lines and size.</li>
+                <li>
+                  What is sometimes even more important (and we see it after a while), it is a definition in terms of amount of work.
+                </li>
+                <li>Who is using ESB or other <em>enterprise service bus</em>?</li>
+                <li>ESB and other 'intelligent' software are an anti-pattern here.</li>
+                <li>
+                  I'm not saying that ESB are bad (yes they are, but it is not a topic here) but it is not that type of architecture.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Evolution</h1>
+
+            <img src="img/logos/ebay.png" class="logo" alt="eBay Logo" />
+            <img src="img/logos/netflix.svg" class="logo" alt="eBay Logo" />
+            <img src="img/logos/spotify.svg" class="logo" alt="eBay Logo" />
+
+            <aside class="notes">
+              <ul>
+                <li>The main factor that driving change, the main theme of all changes is EVOLUTION.</li>
+                <li>Have you deployed a 200 MB EAR file, which after all broken everything?</li>
+                <li>Have you deal with that "one NullPointerException that destroyed the release"?</li>
+                <li>Each of these companies started from the monolithic approach.</li>
+                <li>A single monolithic Perl + C++ (CGI anyone?) or Java applications.</li>
+                <li>BTW.: monolithic came from UNIX philosophy as a opposite technology to described one.</li>
+                <li>They have evolved to the more scalable, decoupled architectures because they have to.</li>
+                <li>Dropping single archive on production and hoping that everything will go okay is naive.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <p>
+              <blockquote>
+                A micro-service is a small executable running on a server and responds to asynchronous messages.
+              </blockquote>
+              <small>
+                <a href="http://blog.cleancoder.com/uncle-bob/2014/10/01/CleanMicroserviceArchitecture.html">
+                  <em>Clean Micro-service Architecture, Uncle Bob</em>
+                </a>
+              </small>
+            </p>
+
+            <p>
+              <blockquote>[...] is a discrete, isolated, and named piece of logic [...]</blockquote>
+              <small>
+                <a href="http://klangism.tumblr.com/post/80087171446/microservices">
+                  <em>Actor Model, Victor Klang</em>
+                </a>
+              </small>
+            </p>
+
+            <p>
+              <blockquote>[...] inside communicating over some number of ports with things on the outside.</blockquote>
+              <small>
+                <a href="http://alistair.cockburn.us/Hexagonal+architecture">
+                  <em>Hexagonal Architecture, Alistair Cockburn</em>
+                </a>
+              </small>
+            </p>
+
+            <p>
+              <blockquote>Objects communicate by sending and receiving messages.</blockquote>
+              <small>
+                <a href="http://c2.com/cgi/wiki?AlanKaysDefinitionOfObjectOriented">
+                  <em>OOP, Dr Alan Kay</em>
+                </a>
+              </small>
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>Actor Model, UNIX philosophy, proper DDD...</li>
+                <li>Well understood and well done OOP is a <em>microservice</em>-like architecture.</li>
+                <li>More samples? Erlang (25 years old language with supervision hierarchies).</li>
+                <li>More samples? Smalltalk (method invocation is a message passing).</li>
+                <li>More samples? Multiple hexagons (Hexagonal Architecture).</li>
+                <li>More samples? Microkernel architecture.</li>
+                <li>
+                  Digression: I am always amazed how people remembered everything about encapsulation and inheritance and dropped out message passing.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section id="details">
+
+          <section class="introduction">
+            <h1>Samples</h1>
+            <h3 class="fragment sketchy">JBoss</h3>
+            <h3 class="fragment sketchy">Erlang</h3>
+            <h3 class="fragment sketchy">Node.js</h3>
+            <h3 class="fragment sketchy">Symfony2</h3>
+            <h3 class="fragment sketchy">UNIX environment</h3>
+
+            <aside class="notes">
+              <ul>
+                <li>JBoss - Monolithic.</li>
+                <li>Erlang - Actor Model.</li>
+                <li>Node.js - Multiple Processes.</li>
+                <li>Symfony2 - Decomposable Internal Architecture (nice framework).</li>
+                <li>UNIX tools and environment - UNIX philosophy.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h2 class="sketchy">Big Ball of Mud</h2>
+
+            <p class="fragment">
+              <blockquote>
+                [...] might be thought of as an anti-pattern. [...] However, its undeniable popularity leads to the inexorable conclusion that it is a pattern in its own right.
+              </blockquote>
+
+              <small>
+                <a href="http://www.laputan.org/pub/foote/mud.pdf">
+                  <em>Big Ball of Mud</em>
+                </a>
+              </small>
+
+              <blockquote class="fragment">
+                Make it work, Make it right, then make it fast.
+              </blockquote>
+            </p>
+
+            <aside class="notes">
+              <ul>
+                <li>Question: Who read "Big Ball of Mud" paper?</li>
+                <li>Who did not read it - go read it. Now. After the meeting.</li>
+                <li>It is not a purely pejorative statement.</li>
+                <li>We should strive the approach "make it work - make it right".</li>
+                <li>First we tackle the essential complexity of the problem and iteratively improve our solution.</li>
+                <li>It is a big ball of mud, collected from good, thoughtful and properly designed elements.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Hype</h1>
+
+            <blockquote>
+              If you can't build a monolith, what makes you think microservices are the answer?
+            </blockquote>
+
+            <small>
+              <a href="http://www.codingthearchitecture.com/2014/07/06/distributed_big_balls_of_mud.html">
+                <em>Distributed big balls of mud</em>
+              </a>
+            </small>
+
+            <blockquote>
+              However, when considering microservice like architectures, it's really important to not be attracted to the hype on this one as the challenges and costs are as real as the benefits.
+            </blockquote>
+
+            <small>
+              <a href="http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html">
+                <em>Microservices - not a free lunch!</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>Like every new technology, there is a huge phase of hype on microservices.</li>
+                <li>Mostly non-objective, dangerous and misunderstood approach.</li>
+                <li>Also it is connected with polyglot-like movements.</li>
+                <li>Polyglot persistence, polyglot programming - everything is for people.</li>
+                <li>When misused, it is easy to make mess - too many technologies, too many options.</li>
+                <li>More in challenges chapter.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Deletability</h1>
+
+            <a href="https://vimeo.com/108441214">
+              <em>Greg Young - The art of destroying software</em>
+            </a>
+
+            <aside class="notes">
+              <ul>
+                <li>From all properties of your architecture it should be the most important one.</li>
+                <li>It enables and drives the flexibility.</li>
+                <li>It manages and keeps the technical debt on the sane level.</li>
+                <li>How to optimize your development speed and do not spent so much time of reFUCKtoring?</li>
+                <li>It is not a replacement for TDD, BDD or tests.</li>
+                <li>It is a tool, a metric which helps you design and organize your code properly.</li>
+                <li>
+                  "If one of your parts of the system is more than a week rewrite it is a sign, that this is a dangerous side of your code and properly something went wrong here."
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Minimal Viable Architecture</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Iteratively, step by step we are coming to the concept of minimal viable architecture.</li>
+                <li>The most pragmatic approach to the software architecture, very compatible with agile.</li>
+                <li>However it is also compatible with microservices architecture.</li>
+                <li>We have talked about deletability, small units, single responsibilities.</li>
+                <li>
+                  "Perfection is Achieved Not When There Is Nothing More to Add, But When There Is Nothing Left to Take Away"
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section id="challenges">
+
+          <section class="introduction">
+            <h1>Challenges</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Hype and popularity leads to the misunderstanding.</li>
+                <li>As we see, topic is definitely hot but definitely not new.</li>
+                <li>And hot topics are connected with challenges.</li>
+                <li>Benefits - small parts, natural responsibilities, discipline.</li>
+                <li>Benefits - better tools, connected with the actual problem.</li>
+                <li>Benefits - easy, simple, scalable.</li>
+                <li>But to receive all this greatness we need to focus on challenges and solve them properly.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Operations</h1>
+
+            <small>
+              <a href="http://www.infoq.com/interviews/adrian-cockcroft-microservices-devops">
+                <em>Adrian Cockcroft on Microservices and DevOps</em>
+              </a>
+            </small>
+
+            <ul class="cloud">
+              <li class="fragment size2">Backups</li>
+              <li class="fragment size1">Deployment</li>
+              <li class="fragment size3">Migrations</li>
+              <li class="fragment size2">Security</li>
+              <li class="fragment size1">Monitoring</li>
+              <li class="fragment size2">Updates</li>
+              <li class="fragment size4">Maintenance</li>
+              <li class="fragment size3">Installation</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>Do you want multiple storages? Think about backups and migrations.</li>
+                <li>Many different technologies? Think about monitoring, deployment, updates and security.</li>
+                <li>Updating packages, especially on Linux is difficult.</li>
+                <li>DevOps Culture to the Rescue!</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Operations</h1>
+
+            <blockquote>
+              Incremental approach to build an automated, reproducible infrastructure.
+            </blockquote>
+
+            <img src="img/tools/puppet.svg" class="logo" alt="Puppet" />
+            <img src="img/tools/chef.svg" class="small-logo" alt="Chef" />
+            <img src="img/tools/event-store.svg" class="logo" alt="EventStore" />
+            <img src="img/tools/flyway.png" class="smaller-logo" alt="Flyway" />
+
+            <blockquote class="fragment">
+              Hiring a DevOps Engineer will look you would like to employee a Scrum.
+            </blockquote>
+
+            <aside class="notes">
+              <ul>
+                <li>DevOps culture is a good answer for almost all problems from the previous slide.</li>
+                <li>There are more specific techniques related with e.g. backups or migrations.</li>
+                <li>Blue-Green Deployment it is a solution to handle multiple versions of the one system.</li>
+                <li>Migrations on the fly inside the program logic.</li>
+                <li>
+                  Event Sourcing and rebuilding the state of the program from the history is a solution for the not synchronized backups procedures.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Service Discovery</h1>
+
+            <ul class="cloud">
+              <li class="fragment size3">Sharing Resources</li>
+              <li class="fragment size4">Clusters</li>
+              <li class="fragment size1">Configuration</li>
+              <li class="fragment size2">Orchestration</li>
+              <li class="fragment size1">URI and Paths</li>
+            </ul>
+
+            <img src="img/tools/consul.png" class="small-logo fragment" alt="Consul" />
+            <img src="img/tools/serf.png" class="small-logo fragment" alt="Serf" />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  We want to scale and dynamically resize our clusters, but our configuration and connections are not scaling with it.
+                </li>
+                <li>There are tools which will help us to do it.</li>
+                <li>The whole approach is to dynamically discover and register capabilities of the clusters.</li>
+                <li>We need to manage that in order to work with scalable and dynamic environments.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Storage</h1>
+            <h2>Polyglot Persistence</h2>
+
+            <img src="img/other/seven-databases-in-seven-weeks.jpg" class="cover" alt="Seven Databases in Seven Weeks" />
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  It is more than a notice, than an actual challenge - you can complicate pretty nice your architecture by putting too much storage mechanisms into your system.
+                </li>
+                <li>
+                  Small services uses smaller databases, sometimes more appropriate to the type of the work which needs to be done inside this service.
+                </li>
+                <li>
+                  Obviously using one database over is a pretty deliberate choice. But be sure that you are at least choosing proper database, suited to the requirements. And think about fall-back and back-up procedures because using more than one storage complicates backups pretty badly.
+                </li>
+                <li>
+                  It is quite nice book actually, which will help you choose the best storage suited to your needs.
+                </li>
+                <li>
+                  And one more: using more than one storage enforces on you to treat at least one as an ultimate source of truth and rest as a different view-caches. Otherwise it will be painful regarding returning to the consistent point.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Integration through Storage</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>When it comes to the storage, the very tricky part is an integration between services.</li>
+                <li>Integration through the storage is the most dangerous way of integrating two parts.</li>
+                <li>
+                  You are coupling two pieces of architecture on the data structure (and sometimes even more - coupling by the internal details) level. This is the one of the most painful type of coupling to remove in future.
+                </li>
+                <li>
+                  But this is not a clear anti-pattern - remember that in some cases, which are deeply understood this is a proper way to handle stuff if you would like to overcome the performance problems. But you should have very strong arguments to do that, and all of the others ways are already failed.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Fuzzy Boundaries</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>This is the most dangerous part e.g. in DDD. How to split bounded contexts?</li>
+                <li>Smaller modules / components tease to put more responsibilities inside.</li>
+                <li>Putting more and more into one thing blurs the boundaries and responsibilities.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Contracts</h1>
+            <h2>Transport</h2>
+
+            <blockquote>
+              API's written in the conventional manner are not sufficient to understand the operation of programs.
+            </blockquote>
+
+            <small>
+              <a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">
+                <em>Making reliable distributed systems in the presence of software errors</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  When multiple components are talking between, we need to be fail proof, rigid and strict as much as it is possible.
+                </li>
+                <li>
+                  Ways how to talk between systems are crucial if someone is using your system as an API, or you have more than one service which are communicating between.
+                </li>
+                <li>
+                  Also chosen transport mechanism is one of the important aspects of the communication. For example, HTTP and REST are stateless, UDP does not guarantee the delivery or order of the packets and so on.
+                </li>
+                <li>
+                  I deliberately did not use a word API here, because the idea of Protocols is definitely more close to me. I really like the approach of defining an API calls and sequences which are allowed, especially when it comes to the operations which makes sense when they are invoked only in certain order.
+                </li>
+                <li>
+                  Simple example: you should read bytes from a file only after you have open it earlier. Similar constraint applies to the reading and closed stream.
+                </li>
+                <li>I definitely recommend whole thesis, even if you are prejudiced to the Erlang.</li>
+                <li>And definitely very short 9th chapter about this topic.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="important">
+            <h1>Tests</h1>
+            <h2>Development</h2>
+
+            <img src="img/challenges/testing.png" alt="Testing Challenges" />
+
+            <aside class="notes">
+              <ul>
+                <li>Choosing a separate technology connected with the problem obviously has drawbacks.</li>
+                <li>Accidental Complexity will increase with each of added technologies.</li>
+                <li>Simple example - testing and keeping the consistency between them.</li>
+                <li>Another one - Coding Standards.</li>
+                <li>
+                  Sometimes we are so amused by the cloud and abilities of PaaS that we forget that we have to develop on our local machines. Tools like <strong>docker</strong>, <strong>vagrant</strong> are helping us, but what with the other things like S3, SQS and other services provided by your favorite cloud provider.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Tests</h1>
+            <h2>Operations</h2>
+
+            <img src="img/other/blue-green-deployments.png" alt="Blue-Green deployments" />
+
+            <blockquote>
+              One of the challenges with automating deployment is the cut-over itself, taking software from the final stage of testing to live production.
+            </blockquote>
+
+            <small>
+              <a href="http://martinfowler.com/bliki/BlueGreenDeployment.html">
+                <em>Blue-Green Deployment</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>Blue-Green deployments and Testing Groups - it is like A/B testing but with features.</li>
+                <li>Flow control (20% of traffic through new solution).</li>
+                <li>Simpler: Test Users on production (at least some of data will go through him).</li>
+                <li>Simple: Enabling feature toggles per user (easily testable new features in isolated group).</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Robustness</h1>
+
+            <blockquote>
+              To guard against failure of an entire computer we need two computers.
+            </blockquote>
+
+            <small>
+              <a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">
+                <em>Making reliable distributed systems in the presence of software errors</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>This is simple and beautiful quote, again from already mentioned PhD thesis.</li>
+                <li>
+                  We need to be sure that in our architecture we took all necessary steps to provide components robustness especially in the dangerous parts of the system.
+                </li>
+                <li>
+                  Duplication of services sometimes is not enough, there are situations where whole clusters fails. And what then?
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Scale</h1>
+
+            <blockquote>
+              For a small operation this may be true, but when you're doing a million operations a second then a one-in-a-million failure scenario will happen every second.
+            </blockquote>
+
+            <small>
+              <a href="http://db.cs.berkeley.edu/cs286/papers/errors-cacmblog2010.pdf">
+                <em>Errors in Database Systems, Eventual Consistency, and the CAP Theorem</em>
+              </a>
+            </small>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  We talked about the evolution and almost each of the distributed system is created in the evolution process.
+                </li>
+                <li>
+                  It is definitely easier to scale the multiple things than scaling one monolith. But sometimes it is also a valid answer.
+                </li>
+                <li>
+                  Scale introduces edge cases - e.g. different problems with TCP stack settings, cascade failures.
+                </li>
+                <li>
+                  Your cloud provider should be your advantage, it should help you, not be a constraint or a problem.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+        </section>
+
+        <section id="closing">
+
+          <section class="introduction">
+            <h1>Summary</h1>
+
+            <ul>
+              <li class="fragment">Microservices are not a free lunch.</li>
+              <li class="fragment">Complexity management is crucial.</li>
+              <li class="fragment">Choose your tools responsibly.</li>
+              <li class="fragment">DevOps to the rescue.</li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>It definitely gives you multiple benefits but not for free.</li>
+                <li>Accidental complexity can be deadly for your projects.</li>
+                <li>Death-By-Too-Many-Technologies</li>
+                <li>Choose tools for the actual reason and with solid arguments.</li>
+                <li>
+                  Incorporating DevOps culture and continuous improvement will definitely help you build this type of architectures.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="content">
+            <h1>Time for Questions</h1>
+          </section>
+
+          <section class="introduction">
+            <h1>Thanks</h1>
+            <h2>References:</h2>
+            <ul class="links">
+              <li>
+                <a href="http://martinfowler.com/articles/microservices.html#footnote-etymology">
+                  <em>Microservice</em> etymology
+                </a>
+              </li>
+              <li>
+                <a href="http://klangism.tumblr.com/post/80087171446/microservices">
+                  <em>Microservice</em> definition (<em>Victor Klang</em>)
+                </a>
+              </li>
+              <li>
+                <a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">
+                  <em>Making reliable distributed systems in the presence of software errors</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://alistair.cockburn.us/Hexagonal+architecture">
+                  <em>Hexagonal Architecture</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html">
+                  <em>Microservices - Not a Free Lunch!</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.codingthearchitecture.com/2014/07/06/distributed_big_balls_of_mud.html">
+                  <em>Distributed big balls of mud</em>
+                </a>
+              </li>
+              <li>
+                <a href="https://vimeo.com/108441214">
+                  <em>Greg Young - The art of destroying software</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://dspace.mit.edu/handle/1721.1/41962">
+                  <em>Laws for Communicating Parallel Processes</em>, Actor Model
+                </a>
+              </li>
+              <li>
+                <a href="http://c2.com/cgi/wiki?AlanKaysDefinitionOfObjectOriented">
+                  <em>Alan Kay's Definition of Object Oriented</em>
+                </a>
+              </li>
+              <li>
+                <a href="http://blog.cleancoder.com/uncle-bob/2014/10/01/CleanMicroserviceArchitecture.html">
+                  <em>Clean Micro-service Architecture, Uncle Bob</em>
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <section class="introduction">
+            <h1>Images</h1>
+            <h2>Credits:</h2>
+            <ul class="links">
+              <li>
+                <a href="https://www.flickr.com/photos/if-by-whiskey/3349918096">Honeycomb</a>, <a href="https://www.flickr.com/photos/e_tavares/3499009813">Gears</a>
+              </li>
+              <li>
+                <a href="http://upload.wikimedia.org/wikipedia/commons/1/11/PDC_server_room.jpg">Server Room</a>, <a href="https://www.flickr.com/photos/caseorganic/4476353959/">Messy Cables</a>
+              </li>
+              <li>
+                <a href="http://upload.wikimedia.org/wikipedia/commons/a/a0/Spotify.svg">Spotify</a>, <a href="http://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2014_logo.svg">Netflix</a>, <a href="http://upload.wikimedia.org/wikipedia/commons/4/48/EBay_logo.png">eBay</a>
+              </li>
+              <li>
+                <a href="https://pragprog.com/book/rwdata/seven-databases-in-seven-weeks">
+                  <em>Seven Databases in Seven Weeks</em>
+                </a>
+              </li>
+              <li>
+                Tools logos are gathered from the homepages.
+              </li>
+            </ul>
+          </section>
+
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      var LIGHT = "#E8DDCB",
+          MEDIUM = "#036564",
+          DARK = "#033649";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        element.setAttribute("data-background", color);
+      }
+
+      getArrayOfDomElements(".introduction").forEach(applyColor.curry(LIGHT));
+      getArrayOfDomElements(".content").forEach(applyColor.curry(MEDIUM));
+      getArrayOfDomElements(".important").forEach(applyColor.curry(DARK));
+
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: "default",
+        transition: "slide",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js", condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
