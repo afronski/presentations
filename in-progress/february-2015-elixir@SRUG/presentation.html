@@ -7,31 +7,18 @@
     <link rel="stylesheet" type="text/css" href="styles/main.css" />
   </head>
   <body>
-    <textarea id="source">
-
-class: center, middle
-
-# Elixir
-
----
-
-# Agenda
-
-1. Tooling.
-2. Unique Selling Proposition (features - Erlang VM, Elixir).
-3. Community.
-4. Legacy (Ruby, Erlang, Others).
-5. Pros, Cons, Iritations.
-6. Libraries.
-
----
-
-# Introduction
-
-    </textarea>
+    <textarea id="source"></textarea>
 
     <script src="scripts/remark.min.js"></script>
     <script>
+      var request = new XMLHttpRequest();
+      var source = document.getElementById("source");
+
+      request.open("GET", "slides.md", false);
+      request.send();
+
+      source.innerHTML += "\n" + request.responseText;
+      
       var slideshow = remark.create();
     </script>
   </body>
