@@ -7,26 +7,18 @@
     <link rel="stylesheet" type="text/css" href="styles/main.css" />
   </head>
   <body>
-    <textarea id="source">
-
-class: center, middle
-
-# ClojureScript + Om = ♥
-
----
-
-# Agenda
-
-1. TodoMVC - ClojureScript with Om.
-
----
-
-# Introduction
-
-    </textarea>
+    <textarea id="source"></textarea>
 
     <script src="scripts/remark.min.js"></script>
     <script>
+      var request = new XMLHttpRequest();
+      var source = document.getElementById("source");
+
+      request.open("GET", "slides.md", false);
+      request.send();
+
+      source.innerHTML += "\n" + request.responseText;
+      
       var slideshow = remark.create();
     </script>
   </body>
