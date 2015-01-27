@@ -15,12 +15,16 @@ Workshop at conference Quality Excites 2014 (in Gliwice, Poland):
 Presentation which were presented at conference IT Academic Days 2012 (in Sosnowiec, Poland):
 - *.NET 4.5 – new things waiting in Windows 8* (2012)
 
-Presentations for school:
+Presentations at Silesian University of Technology:
 - *Python TDD* (2013)
 - *Accounting and Authorisation* (2013)
 
 Meet.js Katowice:
 - *Error handling in Node.js* (2014)
+- *Introduction to ClojureScript and Om* (2015)
+
+SRUG (Silesian Ruby User Group):
+- *Elixir* (2015)
 
 PHPers Gliwice:
 - *Microservices - hot or not?* (2014)
