@@ -1,6 +1,6 @@
 class: center, middle
 
-![Logo](/images/nodeschool-silesia.png)
+![Logo](images/nodeschool-silesia.png)
 
 # NodeSchool Spirit
 
