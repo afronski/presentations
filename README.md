@@ -28,3 +28,6 @@ SRUG (Silesian Ruby User Group):
 
 PHPers Gliwice:
 - *Microservices - hot or not?* (2014)
+
+NodeSchool Silesia:
+- *NodeSchool Spirit* (2015)
