@@ -10,7 +10,7 @@ class: center, middle
 
 [@rspective](https://twitter.com/nodeschoolpl), [@afronski](https://twitter.com/nodeschoolpl)
 
-![rspective](/images/rspective.png)
+![rspective](images/rspective.png)
 
 ???
 
@@ -51,9 +51,9 @@ Właśnie ten ostatni czynnik ludzki, jest najważniejszy w całym przedsięwzi�
 
 # Tools and Environment
 
-.centered.logo-block[![io.js Logo](/images/iojs.png) ![Node.js Logo](/images/nodejs.png) ![JavaScript Logo](/images/javascript.png)]
+.centered.logo-block[![io.js Logo](images/iojs.png) ![Node.js Logo](images/nodejs.png) ![JavaScript Logo](images/javascript.png)]
 
-.centered[![npm Logo](/images/npm.png)]
+.centered[![npm Logo](images/npm.png)]
 
 ???
 
@@ -63,7 +63,7 @@ Jak już wspomnieliśmy nie byłoby całego przedsięwzięcia bez plaformy - w t
 
 # *Workshoppers*
 
-![Workshopper Image](/images/workshopper.png)
+![Workshopper Image](images/workshopper.png)
 
 ???
 
@@ -85,7 +85,7 @@ Gdy pojawiło się kilka różnych warsztatów, ktoś wpadł na pomysł żeby zo
 
 # Community
 
-![NodeSchool Workshop](/images/people.jpg)
+![NodeSchool Workshop](images/people.jpg)
 
 .small.centered[Photo by [Matthew Bergman](https://www.flickr.com/photos/matthewbergman)]
 
