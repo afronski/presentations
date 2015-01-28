@@ -18,8 +18,11 @@
       request.send();
 
       source.innerHTML += "\n" + request.responseText;
-      
-      var slideshow = remark.create();
+
+     var slideshow = remark.create({
+         highlightLanguage: "elixir",
+         highlightStyle: "solarized_light"
+     });
     </script>
   </body>
 </html>

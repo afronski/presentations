@@ -14,3 +14,45 @@ h1, h2, h3 {
 .remark-code, .remark-inline-code {
   font-family: 'Ubuntu Mono';
 }
+
+.footer {
+  margin-top: 120px;
+}
+
+.smaller {
+  font-size: 80%;
+}
+
+img[alt*=" Logo"] {
+  width: 200px;
+}
+
+img[alt*="Ruby Logo"] {
+  padding-right: 10px;
+}
+
+.centered {
+  margin-top: 60px;
+
+  width: 100%;
+  text-align: center;
+
+  display: inline-block;
+}
+
+.huge {
+  font-family: 'Yanone Kaffeesatz';
+
+  font-size: 500%;
+  margin-top: 200px;
+
+  display: inline-block;
+
+  width: 100%;
+  text-align: center;
+}
+
+.credits {
+  margin-top: 120px;
+  margin-left: 100px;
+}
