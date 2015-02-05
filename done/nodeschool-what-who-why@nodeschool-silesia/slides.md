@@ -22,7 +22,7 @@ Zanim zaczniemy warsztaty, chciałbym powiedzieć kilka słów dotyczących kwes
 
 Dążymy do tego aby spotkania odbywały się cyklicznie, ze względu na zainteresowanie nie wygląda na to, że to będzie nasze stałe miejsce spotkań - potrzebujemy czegoś większego. Zachęcajcie znajomych aby zapisali się na przyszłe edycje NodeSchool Silesia. Na pierwsze spotkanie bilety rozeszły się w troszkę ponad 2h, a po wyczerpaniu puli okazało się że potrzebowalibyśmy drugie tyle.
 
-Wszystkie informacje kontaktowe znajdują się na tym slajdzie jak i również na stronie śląskiego oddziału NodeSchool. Informacje o przyszłych wydarzeniach pojawią się zawsze na oficjalnej stronie i DTwitterze.
+Wszystkie informacje kontaktowe znajdują się na tym slajdzie jak i również na stronie śląskiego oddziału NodeSchool. Informacje o przyszłych wydarzeniach pojawią się zawsze na oficjalnej stronie i Twitterze.
 
 Ja nazywam się Wojtek, można mnie złapać pod Twitter handle @afronski, i wraz z chłopakami z @rspective wpadliśmy na pomysł, żeby rozruszać Śląską społeczność nowym wydarzeniem. Nie chcieliśmy tworzyć własnej formuły meet-upów, a ponieważ jesteśmy związani z Node.js postanowiliśmy zorganizować coś związanego właśnie z tą technologią.
 
@@ -107,8 +107,8 @@ Każdy może stworzyć własny warsztat, każdy może założyć własny oddzia�
 
 No to zaczynamy!
 
-Zainstalujcie Node.js z oficjalnej strony [https://nodejs.org](https://nodejs.org), następnie sprawdźcie czy po instalacji macie w linii komend dostępne polecenia `node` i `npm`. Jeśli tak, zainstalujcie moduł `learnyounode` i po instalacji uruchomcie go.
+Jeśli jeszcze nie macie, zainstalujcie Node.js z oficjalnej strony [https://nodejs.org](https://nodejs.org), następnie sprawdźcie czy po instalacji macie w linii komend dostępne polecenia `node` i `npm`. Jeśli tak, zainstalujcie moduł `learnyounode` i po instalacji uruchomcie go.
 
-Nie wahajcie się pytać w trakcie instalacjii i wykonywania zadań - opiekunowie są tu od tego, żeby pomagać, usuwać *przeciwności losu* a przede wszystkim żeby wytłumaczyć jak najlepiej jak powinno wyglądać rozwiązanie.
+Każdy z opiekunów wie jak zainstalować Node.js na MacOS, Windows i Linux. Nie wahajcie się pytać w trakcie instalacjii i wykonywania zadań - opiekunowie są tu od tego, żeby pomagać, usuwać *przeciwności losu* a przede wszystkim żeby wytłumaczyć jak najlepiej jak powinno wyglądać rozwiązanie.
 
 Jeśli są jakieś problemy z internetem, mamy pendrive z instalkami Node.js dla wszystkich systemów operacyjnych, wraz z potrzebnymi modułami i zależnościami.
