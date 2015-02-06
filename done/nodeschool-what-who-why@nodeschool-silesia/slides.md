@@ -10,7 +10,7 @@ class: center, middle
 
 [@rspective](https://twitter.com/nodeschoolpl), [@afronski](https://twitter.com/nodeschoolpl)
 
-![rspective](images/rspective.png)
+[![rspective](images/rspective.png)](http://blog.rspective.com)
 
 ???
 
