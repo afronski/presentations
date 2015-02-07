@@ -6,8 +6,6 @@ class: center, middle
 
 # Agenda
 
-1. TodoMVC - ClojureScript with Om.
-
 ---
 
 # Targets
