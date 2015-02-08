@@ -112,7 +112,7 @@ class: center, middle
 - [core.async](https://www.youtube.com/watch?v=enwIIGzhahw)
 - [Flux](https://facebook.github.io/flux)
 
-### This *om*&nbsp; and *react*&nbsp; thing are stupid...
+### This *om*&nbsp; and *react*&nbsp; are stupid...
 
 You can always use AngularJS instead ;)
 
