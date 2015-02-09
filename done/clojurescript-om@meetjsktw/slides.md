@@ -73,6 +73,7 @@ class: center, middle
 
 - No dobra, zaczynamy!
 - Będę poruszał się po tagach aż do końca, pokażę też część przykładów jako `diff`.
+- Jeśli coś będzie niejasne - pytajcie śmiało! :)
 
 ---
 
