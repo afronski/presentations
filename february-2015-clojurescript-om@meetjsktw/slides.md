@@ -109,7 +109,7 @@ class: center, middle
 
 - [Todo MVC](http://swannodette.github.io/todomvc/labs/architecture-examples/om)
 - [Goya - Digital Pixel Editor](http://jackschaedler.github.io/goya)
-- [Blog Anny Pawlickiej](http://annapawlicka.com)
+- [Anna Pawlicka - Blog](http://annapawlicka.com)
 - [core.async](https://www.youtube.com/watch?v=enwIIGzhahw)
 - [Flux](https://facebook.github.io/flux)
 
