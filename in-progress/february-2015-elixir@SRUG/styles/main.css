@@ -1,9 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+@import url(https://fonts.googleapis.com/css?family=Alegreya+Sans);
 @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
 body {
-  font-family: 'Droid Serif';
+  font-family: 'Alegreya Sans';
 }
 
 h1, h2, h3 {
