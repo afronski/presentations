@@ -269,23 +269,79 @@ class: center, middle
 
 # OTP
 
-TODO: Framework
-
-TODO: Behaviors
+- *Open Telecom Platform*
+- Framework
+- *The Common Processes*, Abstracted
+  - *Behaviors*
 
 ???
-- TODO
+- Druga ważna rzecz, bez której nie możemy rozpocząć to *OTP*.
+- Nie zrażajcie się *Telecom* w nazwie, tak naprawdę to zbiór dobrze
+  zdefiniowanych abstrakcji, które są wspólne dla całej platformy.
+- *OTP* != Biblioteka standardowa.
+- *OTP* wprowadza tzw. zachowania (ang. *behaviours*), które definiują
+  zbiór funkcji jakie nasz moduł musi zaimplementować, aby móc
+  wykonywać daną funkcjonalność.
+
+--
+  - Generic implementations:
+     - Application
+     - Server
+     - Supervisor
+     - Event emitter
+     - *FSM*
+     - Sockets
+
+???
+- *OTP* definiuje wiele wspólnych abstrakcji m.in. aplikację, serwer
+  obsługujący żądania typu *request-reply*.
+- Od strony technicznej, możemy myśleć o tym jak o klasie
+  abstrakcyjnej, z której dziedziczymy i implementujemy tylko
+  specyficzne zachowania a cała reszta (tzw. boilerplate) jest
+  zaimplementowana wewnątrz bazowej struktury - modułu, który wystawia
+  dane zachowanie.
 
 ---
+class: center, middle
 
 # Supervisor
 
-TODO: Supervisor trees
-
-TODO: Restarting strategies
+![Supervision Trees](images/trees.png)
 
 ???
-- TODO
+- Najbardziej kluczowy zachowaniem z punktu widzenia stabilnych i
+  niezawodnych systemów jest *Supervisor*.
+- Po polsku możemy to tłumaczyć jako *nadzorca*, *przełożony*.
+- To co widzimy na rysunku to tzw. *supervison tree*, złożone ze
+  standardowych procesów i właśnie *supervisorów*.
+- Każdy *supervisor* nadzoruje inne procesy, jest odpowiedzialny za
+  ich start, restart (poprawny lub niepoprawny) i shutdown.
+- Dzieki temu, możemy skupić się na tworzeniu izolowanego procesu,
+  który w przypadku błędu zakończy swoje działanie, a proces nadrzędny
+  zadecyduje czy ten typ błędu powinien spowodować restart czy
+  eskalacje błędu wyżej.
+- Zainteresowanych zachęcam do lektury i szczególnie zainteresowanie
+  się tzw. koncepcją *error kernel*.
+
+---
+class: center
+
+### Restart Strategy
+
+![One for One restart strategy](images/one-for-one.png)
+
+![One for All restart strategy](images/one-for-all.png)
+
+![Rest for One restart strategy](images/rest-for-one.png)
+
+???
+- Powiedzieliśmy o restartach, warto zapoznać się z tym jakie mamy
+  możliwości aby nimi sterować.
+- Widzimy wyraźnie, że proces nadrzędny może zrestartować tylko jeden
+  proces, wszystkie lub resztę procesów zależnych od aktualnie
+  restartowanego.
+- Dzięki kombinacjom tych strategii ułożonych w drzewo, mamy
+  nieograniczone możliwości budowy najbardziej złożonych hierarchii.
 
 ---
 
@@ -302,7 +358,11 @@ TODO: Restarting strategies
 - Restarting Strategies
 
 ???
-- TODO
+- Teraz możemy wskoczyć do kodu!
+- Nie będę skupiał się zbytnio na składni, ponieważ nie za bardzo
+  różni się od klasycznej składni dostępnej w *Rubym*.
+- Chciałbym skupić się przede wszystkim na omówieniu procesów, ich
+  mechaniki oraz na *supervisorach*.
 
 ---
 
@@ -337,6 +397,7 @@ class: middle
 Image credits:
   - [Elixir](http://elixir-lang.org)
   - [Jose Valim](http://www.erlang-factory.com/sfbay2015/jose-valim)
+  - [Learn You Some Erlang](http://learnyousomeerlang.com/)
 ]
 
 ---
