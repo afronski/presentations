@@ -31,6 +31,10 @@ img[alt*="Ruby Logo"] {
   padding-right: 10px;
 }
 
+img[alt="Erlang Error"] {
+  width: 700px;
+}
+
 .centered {
   margin-top: 60px;
 
@@ -50,6 +54,34 @@ img[alt*="Ruby Logo"] {
 
   width: 100%;
   text-align: center;
+}
+
+.remark-slides-area li,
+.remark-slides-area li p {
+  font-size: 32px;
+}
+
+.caption {
+  margin-left: 85px;
+}
+
+.left-column {
+  width: 45%;
+  float: left;
+}
+
+.right-column {
+  width: 45%;
+  float: right;
+}
+
+.right-column h2,
+.right-column h3 {
+  margin-top: 0;
+}
+
+.cleared {
+  clear: both;
 }
 
 .credits {
