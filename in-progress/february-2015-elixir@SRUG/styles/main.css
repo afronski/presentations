@@ -27,10 +27,6 @@ img[alt*=" Logo"] {
   width: 200px;
 }
 
-img[alt*="Ruby Logo"] {
-  padding-right: 10px;
-}
-
 img[alt="Erlang Error"] {
   width: 700px;
 }
@@ -48,7 +44,6 @@ img[alt="Erlang Error"] {
   font-family: 'Yanone Kaffeesatz';
 
   font-size: 500%;
-  margin-top: 200px;
 
   display: inline-block;
 
@@ -58,7 +53,7 @@ img[alt="Erlang Error"] {
 
 .remark-slides-area li,
 .remark-slides-area li p {
-  font-size: 32px;
+  font-size: 30px;
 }
 
 .caption {
@@ -82,6 +77,10 @@ img[alt="Erlang Error"] {
 
 .cleared {
   clear: both;
+}
+
+.spacing {
+  margin-top: 50px;
 }
 
 .credits {

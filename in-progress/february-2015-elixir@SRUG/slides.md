@@ -15,6 +15,8 @@ class: center, middle
   stabilności systemów rozproszonych ok. 2 lata temu, i od tamtego
   czasu interesuję się tematyką całego ekosystemu skupionego wokół
   *Erlanga*.
+- Jeśli w trakcie prezentacji pojawią się pytania, zgłoście się lub
+  przerwijcie - bardzo chętnie odpowiem na każde z nich.
 
 ---
 
@@ -56,7 +58,7 @@ class: center, middle
 
 ???
 
-- Więc dlaczego ludzie zaczynają interesować się Erlangiem?
+- Dlaczego ludzie zaczynają interesować się Erlangiem?
 
 --
 
@@ -199,33 +201,69 @@ class: center, middle
 
 ---
 
-# Process
+# Why Elixir?
 
-TODO: PID
-
-TODO: Isolation
-
-TODO: Lightweight
-
-TODO: Message Passing
-
+- *Ruby-like* syntax
+- Tooling!
+  - `mix` - `gem` + `bundler` + `rake` + `rails` + more...
+  - `hex` - *RubyGems*
+  - `iex` - `irb`
 ???
+- *Elixir* naprawia wszystkie bolączki zw. z brakiem narzędzi w Erlangu.
+- Tak naprawdę podchodzi do tego problemu równie kompleksowo jak *Go* czy *Rails*.
+
+--
+
+- Metaprogramming and Polymorphism
+- Standard Library
+  - For people
+  - Common abstractions
+- `a |> b |> c |> d`
+???
+- Elixir dokłada dużo nowych rzeczy do platformy, wystarczy wspomnieć
+  o *Lispowych* makrach czy protokołach - obie rzeczy zaczerpnięte z *Clojure*.
+- Popularne abstrakcje zostały opracowane i zebrane w bibliotece standardowej.
+- Poza tym, że sama biblioteka jest bardzo rozbudowana to w końcu
+  dokumentacja jest pisana dla *ludzi*.
+- Wreszcie najbardziej charakterystyczna część czyli *pipes*, które
+  pokażemy sobie w praktyce.
+
+--
+
+- Fully compatible with *Erlang*
+  - Both directions.
+???
+- Co najważniejsze, mimo dużej ilości dodatków, *Elixir* jest w pełni
+  kompatybilny z Erlangiem - i to w obie strony.
+- Oznacza to, że można wykorzystywać biblioteki napisane w Erlangu
+  wewnątrz Elixira bez żadnych zmiań i *vice versa*.
 
 ---
+class: center, middle
 
-# Demo
+# Process
 
-[Source Code](https://github.com/afronski/echo-protocol-in-elixir)
-
-TODO: Async task and Message passing
-
-TODO: Pattern matching
-
-TODO: Pipes
-
-TODO: Visualization
+![Processes](images/processes.png)
 
 ???
+- Zanim przejdziemy do kodu, chciałbym przybliżyć najbardziej podstawowy
+  budulec w naszym arsenale czyli *proces*.
+- Przede wszystkim nie możemy go porównywać do procesu z jakim mamy do
+  czynienia w systemie operacyjnym.
+- Jest on mały, bardzo lekki, izolowany od całego otoczenia (możemy
+  powiedzieć, że w sposób czysty enkapsuluje on nam swój stan),
+  istnieje tylko wewnątrz maszyny wirtualnej.
+- Popularny sprzęt może spokojnie uciągnąć setki tysięcy procesów.
+- Kod wewnątrz procesu wykonywany jest sekwencyjnie, natomiast procesy
+  działają równolegle względem siebie.
+- Żaden wewnętrzny element procesu lub maszyny wirtualnej nie jest
+  współdzielony pomiędzy nimi.
+- Każdy process ma przypisany adres, tzw. *PID*. Jeśli mówimy o
+  środowisku rozproszonym, gdzie mamy do czynienia z większą ilością
+  węzłów do adresu dojdzie też nazwa węzła.
+- Komunikacja z nim odbywa się wyłącznie za pomocą przesyłania
+  wiadomości do konkretnego adresu.
+- Przychodzące wiadomości umieszance są w kolejce, tzw. `mailbox`.
 
 ---
 
@@ -236,6 +274,7 @@ TODO: Framework
 TODO: Behaviors
 
 ???
+- TODO
 
 ---
 
@@ -246,58 +285,67 @@ TODO: Supervisor trees
 TODO: Restarting strategies
 
 ???
+- TODO
 
 ---
 
 # Demo
 
-TODO: Restarting mechanism
+[Source Code](https://github.com/afronski/echo-protocol-in-elixir)
 
-TODO: Visualization
-
-???
-
----
-
-# More?
-
-TODO: Sockets
-
-TODO: Agents, Tasks, Streams
-
-TODO: More behaviors
-
-TODO: Macro
-
-TODO: Deployment, Releases
-
-TODO: Hot Code Reload
-
-TODO: Phoenix, Ecto, Cowboy
+- Visualization
+- Spawning processes
+- Message passing mechanisms
+- Pattern matching
+- Pipes
+- Supervisor
+- Restarting Strategies
 
 ???
+- TODO
 
 ---
 
 # Summary
 
+- Elixir is a **concurrency** oriented programming language, focused on:
+  - Reliability
+  - Scalability
+  - Fault-tolerance
+  - Developer happiness and productivity
+
 ???
+- Podsumowując, *Elixir* idealnie nadaje się do pewnej klasy problemów, łączy w sobie wiele bardzo fajnych cech innych języków, a do tego jest zgodny z tą samą filozofią co *Ruby* - czyli sprawia przyjemność progamiście.
+- Złośliwi mówią, że w Erlangu bardzo trudne rzeczy robi się bardzo prosto, natomiast bardzo proste wymagają olbrzymiego nakładu pracy. Po części się z tym zgadzam i co więcej - wydaje mi się, że *Elixir* zmienia ten stan rzeczy, czyniąc rzeczy bardzo proste wykonalnymi i przyjemnymi.
+
+--
+
+.spacing[
+  .center[*It didn’t take long, but pretty soon my gut feeling kicked in. This is good shit.*]
+  .right[Joe Armstrong]
+]
+???
+- I na koniec rekomendacja od jednego z autorów *Erlanga* - tak podsumował swój pierwszy tydzień z *Elixirem*. ;)
 
 ---
+class: middle
 
 .huge[Thanks!]
+.center[Questions?]
 
 .credits[
 Image credits:
   - [Elixir](http://elixir-lang.org)
+  - [Jose Valim](http://www.erlang-factory.com/sfbay2015/jose-valim)
 ]
-
-???
 
 ---
 class: middle
 
 # Resources
 
+- [Elixir](http://elixir-lang.org)
 - [Dave Thomas and Jose Valim - Catalyse Change](https://www.youtube.com/watch?v=Djv4C9H9yz4)
 - [Interview with Jose Valim - GOTO Conference](http://www.infoq.com/interviews/valim-elixir)
+- [A week with Elixir](http://joearms.github.io/2013/05/31/a-week-with-elixir.html)
+- [RFC 862](https://tools.ietf.org/html/rfc862)
