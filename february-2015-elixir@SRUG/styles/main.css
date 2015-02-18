@@ -1,0 +1,89 @@
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+@import url(https://fonts.googleapis.com/css?family=Alegreya+Sans);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+body {
+  font-family: 'Alegreya Sans';
+}
+
+h1, h2, h3 {
+  font-family: 'Yanone Kaffeesatz';
+  font-weight: normal;
+}
+
+.remark-code, .remark-inline-code {
+  font-family: 'Ubuntu Mono';
+}
+
+.footer {
+  margin-top: 120px;
+}
+
+.smaller {
+  font-size: 80%;
+}
+
+img[alt*=" Logo"] {
+  width: 200px;
+}
+
+img[alt="Erlang Error"] {
+  width: 700px;
+}
+
+.centered {
+  margin-top: 60px;
+
+  width: 100%;
+  text-align: center;
+
+  display: inline-block;
+}
+
+.huge {
+  font-family: 'Yanone Kaffeesatz';
+
+  font-size: 500%;
+
+  display: inline-block;
+
+  width: 100%;
+  text-align: center;
+}
+
+.remark-slides-area li,
+.remark-slides-area li p {
+  font-size: 30px;
+}
+
+.caption {
+  margin-left: 85px;
+}
+
+.left-column {
+  width: 45%;
+  float: left;
+}
+
+.right-column {
+  width: 45%;
+  float: right;
+}
+
+.right-column h2,
+.right-column h3 {
+  margin-top: 0;
+}
+
+.cleared {
+  clear: both;
+}
+
+.spacing {
+  margin-top: 50px;
+}
+
+.credits {
+  margin-top: 120px;
+  margin-left: 100px;
+}
