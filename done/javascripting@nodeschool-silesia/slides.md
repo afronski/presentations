@@ -149,5 +149,5 @@ class: center, middle
 
 ???
 
-- No to możemy rozpocząć wykonywanie zadań.
+- Możemy teraz rozpocząć wykonywanie zadań.
 - Dziękuję za uwagę!

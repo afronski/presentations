@@ -63,3 +63,7 @@ iframe {
   width: 750px;
   height: 400px;
 }
+
+.books img {
+  width: 200px;
+}
