@@ -63,3 +63,11 @@ iframe {
   width: 750px;
   height: 400px;
 }
+
+.books img {
+  width: 200px;
+}
+
+.books img[alt="JavaScript - The Good Parts"] {
+  width: 400px;
+}
