@@ -1,0 +1,33 @@
+{
+  "name": "erlang-ecosystem@dwo2015",
+  "version": "0.1.0",
+  "description": "My presentation for DWO 2015 about ecosystem built around Erlang VM.",
+  "scripts": {
+    "test": "grunt jshint",
+    "start": "grunt serve"
+  },
+  "author": {
+    "name": "Wojciech Gawroński",
+    "email": "afronski@gmail.com"
+  },
+  "engines": {
+    "node": "~0.10.0"
+  },
+  "dependencies": {
+    "underscore": "~1.3.3",
+    "express": "~2.5.9",
+    "mustache": "~0.4.0",
+    "socket.io": "~0.9.13"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.2.0",
+    "grunt-contrib-cssmin": "~0.4.1",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-sass": "~0.2.2",
+    "grunt-contrib-connect": "~0.2.0",
+    "grunt-zip": "~0.7.0",
+    "grunt": "~0.4.0"
+  },
+  "license": "CC BY-ND 3.0 PL"
+}
