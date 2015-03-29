@@ -178,11 +178,11 @@ body {
 }
 
 .reveal .quoted em {
-  color: #8cc84b;
+  color: #EEEEEE;
 }
 
 .reveal .quoted strong {
-  color: #8cc84b;
+  color: #EEEEEE;
 }
 
 .reveal .photo-credits {
@@ -268,7 +268,7 @@ body {
 }
 
 .reveal .license {
-  font-size: 40%;
+  font-size: 60%;
 
   position: absolute;
 
@@ -344,13 +344,11 @@ body {
   transition: color .15s ease; }
 
 .reveal a:not(.image):hover {
-  color: #CDB380;
+  color: #031634;
+  opacity: 0.5;
   text-shadow: none;
   border: none; }
 
-.reveal .roll span:after {
-  color: #fff;
-  background: #0d99a5; }
 
 /*********************************************
  * IMAGES
@@ -390,16 +388,20 @@ body {
   border-top-color: #031634; }
 
 .reveal .controls div.navigate-left.enabled:hover {
-  border-right-color: #CDB380; }
+  border-right-color: #031634;
+  opacity: 0.5; }
 
 .reveal .controls div.navigate-right.enabled:hover {
-  border-left-color: #CDB380; }
+  border-left-color: #031634;
+  opacity: 0.5; }
 
 .reveal .controls div.navigate-up.enabled:hover {
-  border-bottom-color: #CDB380; }
+  border-bottom-color: #031634;
+  opactity: 0.5; }
 
 .reveal .controls div.navigate-down.enabled:hover {
-  border-top-color: #CDB380; }
+  border-top-color: #031634;
+  opacity: 0.5; }
 
 /*********************************************
  * PROGRESS BAR

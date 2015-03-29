@@ -31,6 +31,14 @@
   float: right;
 }
 
+.reveal .half-size {
+  width: 48%;
+}
+
+.reveal .half-size ul {
+  width: 100%;
+}
+
 .reveal .header h2,
 .reveal .header h3,
 .reveal .header h4,
@@ -47,6 +55,7 @@
   color: #484E5D;
   font-size: 2.7em;
   font-family: 'Kaushan Script';
+  margin-bottom: 40px;
 }
 
 .reveal .content h2,
@@ -148,17 +157,21 @@
 }
 
 .reveal .cloud .size1 {
-    padding: 12px;
+  padding: 12px;
 }
 
 .reveal .cloud .size2 {
-    padding: 20px;
+  padding: 20px;
 }
 
 .reveal .cloud .size3 {
-    padding: 2px;
+  padding: 2px;
 }
 
 .reveal .cloud .size4 {
-    padding: 8px;
+  padding: 8px;
+}
+
+.reveal .huge {
+  font-size: 3em;
 }
