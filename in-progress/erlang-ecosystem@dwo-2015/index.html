@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Ekosystem Erlanga</title>
 
     <meta name="description" content="Prezentacja o ekosystemie skupionym dookoła maszyny wirtualnej języka Erlang." />
@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link rel="stylesheet" href="css/reveal.css" />
     <link rel="stylesheet" href="css/theme/default.css" id="theme" />
@@ -27,7 +27,7 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section class="header">
+        <section class="header __for_review">
           <h1>Ekosystem Erlanga</h1>
 
           <span class="license">
@@ -42,7 +42,7 @@
           </aside>
         </section>
 
-        <section class="important">
+        <section class="important __for_review">
           <strong class="huge"><code>~ # whoami</code></strong>
 
           <aside class="notes">
@@ -52,7 +52,21 @@
           </aside>
         </section>
 
-        <section class="important">
+        <section class="important __for_review">
+          <h2>Kto słyszał i spotkał się z Erlangiem?</h2>
+
+          <aside class="notes">
+            <ul>
+              <li>Kto korzystał z internetu na smartfonie?</li>
+              <li>Kto gra/grał w Battlefield?</li>
+              <li>Kto gra/grał w LoL?</li>
+              <li>Kto korzystał z chata Facebookowego?</li>
+              <li>Kto używa WhatsApp?</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important __for_review">
           <h1>Agenda</h1>
 
           <h3 class="fragment">Dlaczego?</h3>
@@ -66,7 +80,95 @@
           </aside>
         </section>
 
-        <section class="header">
+        <section class="important __for_review">
+          <h1>Historia</h1>
+          <em>TODO: interactive timeline</em>
+          <ul>
+            <li>1982 - Ericsson Research Lab</li>
+            <li>1988 - Erlang escapes the lab! PABX prototype.</li>
+            <li>1993 - Distribution added to the Erlang</li>
+            <li>1998 - AXD301, 99.9999999%, 1 MLOC</li>
+            <li>1998 - Erlang released as an Open Source</li>
+            <li>2005 - CouchDB</li>
+            <li>2007 - RabbitMQ</li>
+            <li>2007 - Erlang SMP support</li>
+            <li>2007 - <em>Programming Erlang</em> book, 1st edition</li>
+            <li>2009 - Riak</li>
+            <li>2014 - WhatsApp bought by Facebook for 19B</li>
+          </ul>
+
+          <aside class="notes">
+            <ul>
+              <li></li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important __for_review">
+          <h1>99,9999999% = 0,0315 s per year</h1>
+
+          <p>The reliability figure wasn't supposed to measure the total time any part of AXD301 (project in question) was ever shut down for over 20 years. It represents the total time over those 20 years that the service provided by the AXD301 system was ever offline. Subtle difference.</p>
+        </section>
+
+        <section class="__for_review">
+          <h1>Longest running Erlang system - 20 years (AXD301)</h1>
+        </section>
+
+        <section class="important __for_review">
+          <blockquote>The systems we were building are world wide distributed systems. Where’s the shared memory when you’ve got one node in London and another in Paris and another in Stockholm. There is no shared memory!
+Joe Armstrong</blockquote>
+        </section>
+
+        <section class="important __for_review">
+          <a href="http://highscalability.com/blog/2014/10/13/how-league-of-legends-scaled-chat-to-70-million-players-it-t.html">
+            Scaling League of Legends chat to 70 milion players
+          </a>
+        </section>
+
+        <section class="important __for_review">
+          <em>TODO: d3 clusters with logos</em>
+          <ul>
+            <li>Yahoo!, Facebook, bet365, Klarna, Last.fm</li>
+            <li>T-Mobile, Motorola, Ericsson, Tail-F</li>
+            <li>Twitter, WhatsApp, Wooga, DemonWare, Riot Games</li>
+            <li>Rackspace, CloudBees, Amazon, Heroku, Github</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <h2>- Hello Mike!</h2>
+          <img src="img/HelloMikeHelloJoe.jpg" alt="Hello Mike! Hello Joe!" />
+          <h2>- Hello Joe!</h2>
+        </section>
+
+        <section class="important __for_review">
+          <ul>
+            <li>Share nothing</li>
+            <li>Isolation</li>
+            <li>Lightweight processes</li>
+            <li>Let it crash === different approach to error handling</li>
+            <li>Build system that deals with errors, and not catches them.</li>
+            <li>Resilience !== Reliability</li>
+            <li>Build systems, not monolihts.</li>
+            <li>Microservices with 30 years legacy (legacy in this case is a pride not pain)!</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <h1>OTP</h1>
+          <a href="http://thisotplife.tumblr.com/">This OTP life</a>
+        </section>
+
+        <section class="important __for_review">
+          <ul>
+            <li>Erlang !== (Erlang VM === BEAM)</li>
+            <li>Elixir</li>
+            <li>LFE (Lisp Flavoured Erlang)</li>
+            <li>Erlog, Luaerl, Joxa ...</li>
+          </ul>
+        </section>
+
+        <section class="header __for_review">
           <h1>Podsumowanie</h1>
 
           <aside class="notes">
@@ -76,7 +178,7 @@
           </aside>
         </section>
 
-        <section class="content">
+        <section class="content __for_review">
           <h1>Pytania?</h1>
 
           <aside class="notes">
@@ -86,7 +188,7 @@
           </aside>
         </section>
 
-        <section class="content">
+        <section class="content __for_review">
           <h1>Dziękuję!</h1>
 
           <div class="left half-size">
@@ -124,6 +226,10 @@
               <li>
                 Tła:
                 <a href="http://goo.gl/m4wsQv">Domino Effect</a>
+              </li>
+              <li>
+                Zdjęcia:
+                <a href="http://zotonic.com/themovie-makingof">Hello Mike!</a>
               </li>
             </ul>
           </div>

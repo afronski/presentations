@@ -175,3 +175,7 @@
 .reveal .huge {
   font-size: 3em;
 }
+
+.reveal .__for_review {
+  outline: 5px solid red;
+}
