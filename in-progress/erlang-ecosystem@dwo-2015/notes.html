@@ -1,0 +1,168 @@
+    <div>
+        <section class="important __for_review">
+          <h1>Historia</h1>
+          <h1>Erlang VM === BEAM</li>
+          <em>TODO: interactive timeline</em>
+          <a href="https://github.com/marmelab/EventDrops">Event Drops</a>
+          <ul>
+            <li>1982 - Ericsson Research Lab</li>
+            <li>1986 - First Erlang version</li>
+            <li>1988 - Erlang escapes the lab! PABX prototype.</li>
+            <li>1993 - Distribution added to the Erlang</li>
+            <li>1998 - AXD301, 99.9999999%, 1 MLOC</li>
+            <li>1998 - Erlang released as an Open Source</li>
+            <li>2005 - CouchDB</li>
+            <li>2007 - RabbitMQ</li>
+            <li>2007 - Erlang SMP support</li>
+            <li>2007 - <em>Programming Erlang</em> book, 1st edition</li>
+            <li>2008 - LFE</li>
+            <li>2009 - Riak</li>
+            <li>2012 - Elixir</li>
+            <li>2014 - Erlang 17.0</li>
+            <li>2014 - WhatsApp bought by Facebook for 19B</li>
+            <li>2014 - Elixir 1.0</li>
+          </ul>
+
+          <h2>30 years</h2>
+
+          <aside class="notes">
+            <ul>
+              <li></li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important __for_review">
+          <h2>Real problems, 30 years ago</h2>
+          <ul>
+            <li>Distribution</li>
+            <li>Concurrency</li>
+            <li>Redundant hardware - more hardware, lesser probability of failure</li>
+            <li>Fault tolerance</li>
+            <li>Small RAM, slow CPU - lightweight processes</li>
+          </ul>
+          <h2>TODO: Image with calls to switch (1986), requests to server (2015) - similarities in behaviour and requirements</h2>
+          <h2>Still actual</h2>
+          <h2>Soft real-time systems</h2>
+          <h2>Other use cases</h2>
+          <ul>
+            <li>IoT</li>
+            <li>Distributed Systems - Databases</li>
+            <li>Gaming, IM, Messaging</li>
+            <li>Telecom, Networking, Mobile</li>
+            <li>Trading, Banking, Gambling</li>
+            <li>Not for everything - e.g. CPU bound operations</li>
+            <li>Systems should be built from many different tool in order to leverage all benefits</li>
+            <li>Reliable >> Fast</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <h1>99,9999999% = 0,0315 s per year</h1>
+
+          <p>The reliability figure wasn't supposed to measure the total time any part of AXD301 (project in question) was ever shut down for over 20 years. It represents the total time over those 20 years that the service provided by the AXD301 system was ever offline. Subtle difference.</p>
+        </section>
+
+        <section class="important __for_review">
+          <h1>Longest running Erlang system - 20 years (AXD301)</h1>
+        </section>
+
+        <section class="important __for_review">
+          <h2>Visualizations</h2>
+          <ul>
+            <li>Wybór języka - drogowskazy i rozstaj dróg</li>
+            <li>mo.js - motion animation library</li>
+            <li>d3.js tree - supervision tree</li>
+            <li>d3.js puzzle - key concepts of Erlang VM related with scalabilty and reliability</li>
+            <li>d3.js timeline - Erlang ecosystem history</li>
+            <li>d3.js choices - different Erlang VM languages</li>
+            <li>d3.js influence - error kernel and type of errors</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <blockquote>The systems we were building are world wide distributed systems. Where’s the shared memory when you’ve got one node in London and another in Paris and another in Stockholm. There is no shared memory!
+Joe Armstrong</blockquote>
+        </section>
+
+        <section class="important __for_review">
+          <em>TODO: d3 clusters with logos/names</em>
+          <a href="https://github.com/jasondavies/d3-cloud">d3-cloud</a>
+          <ul>
+            <li>Yahoo!, Facebook, bet365, Klarna, Last.fm</li>
+            <li>T-Mobile, Motorola, Ericsson, Tail-F</li>
+            <li>Twitter, WhatsApp, Wooga, DemonWare, Riot Games</li>
+            <li>Rackspace, CloudBees, Amazon, Heroku, Github</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <ul>
+            <li>Share nothing</li>
+            <li>Isolation</li>
+            <li>Lightweight processes</li>
+            <li>Let it crash === different approach to error handling</li>
+            <li>No defensive programming, think about erroneous situations upfront.</li>
+            <li>Build system that deals with errors, and not catches them.</li>
+            <li>After dealing with error kernel, and building supervision you can ignore rest of errors.</li>
+            <li>MODERN OS DESIGN -> ISOLATION, SMALL DOMAINS, ONE THING DOES NOT AFFECT WHOLE SYSTEM</li>
+            <li>Resilience !== Reliability</li>
+            <li>Build systems, not monolihts.</li>
+            <li>Microservices with 30 years legacy (legacy in this case is a pride not pain)!</li>
+            <li>Independence and isolation eases other stuff (e.g. GC).</li>
+            <li>Built-in distribution and opaque implementation to all system.</li>
+            <li>Sending message across cluster is not different than sending it to the process on the same VM.</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <h2>Functional Programming</h2>
+          <ul>
+            <li>Immutability</li>
+            <li>Pattern Matchine</li>
+            <li>Referential Transparency</li>
+            <li>Recursion</li>
+            <li>Tail Call Optimization</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <h1>OTP</h1>
+          <a href="http://thisotplife.tumblr.com/">This OTP life</a>
+          <ul>
+            <li>Small community (around 7k active paid programmers).</li>
+            <li>Niche, expertise level required.</li>
+            <li>It was harder to grasp by beginner (docs, knowledge, tooling) but it rapidly changes</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <ul>
+            <li>Behaviours, Supervisors, Applications, gen_server</li>
+            <li>Darn cheap processes</li>
+            <li>Observability - Links (HW inspired), Monitors</li>
+            <li>INTROSPECTION - higher level of debugging, maintenance, remember 20 years not 1 year.</li>
+            <li>60% of time from a software lifecycle is spent in MAINTENANCE</li>
+            <li>Write for maintainability, optimize tools which are opaque for your design (e.g. VM - it is a real Knuth quote origin)</li>
+            <li>Supervisors - transient errors are most common (research, Joe Armstrong PhD thesis)</li>
+            <li>Standard library</li>
+            <li>Applications like components, again - <em>building systems</em></li>
+            <li><img src="img/processes.png" alt="Message passing." /></li>
+            <li>Show supervision trees - animation (d3.js) <a href="https://gist.github.com/d3noob/8326869">d3 vertical tree</a></li>
+            <li>Show <em>erlubi</em> visualization (gif, how it looks like)</li>
+          </ul>
+        </section>
+
+        <section class="important __for_review">
+          <ul>
+            <li>Erlang !== (Erlang VM === BEAM)</li>
+            <li>Elixir</li>
+            <li>LFE (Lisp Flavoured Erlang)</li>
+            <li>Erlog, Luaerl, Joxa ...</li>
+            <li>Syntax is not a real problem, huge mindset shift is a problem</li>
+            <li>Concepts are harder to explain and grasp, especially for people that did not work with highly concurrent applications before</li>
+            <li>IMPORTANT: Good platform only eases certain stuff, but still it requires significant knowledge and skills</li>
+            <li>AXD301 was written in Erlang, but also in C - whole system was designed reliable and resilient since beginning so it required at first significant knowledge and skills.</li>
+          </ul>
+        </section>
+    </div>

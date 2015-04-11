@@ -146,36 +146,26 @@
   padding: 15px;
 }
 
-.reveal .cloud {
-  list-style-type: none;
-  margin-top: 50px;
-}
-
-.reveal .cloud li {
-  float: left;
-  font-family: 'Comfortaa';
-}
-
-.reveal .cloud .size1 {
-  padding: 12px;
-}
-
-.reveal .cloud .size2 {
-  padding: 20px;
-}
-
-.reveal .cloud .size3 {
-  padding: 2px;
-}
-
-.reveal .cloud .size4 {
-  padding: 8px;
-}
-
 .reveal .huge {
   font-size: 3em;
 }
 
-.reveal .__for_review {
-  outline: 5px solid red;
+.reveal .bottom-right-corner {
+  position: absolute;
+  top: 150px;
+  left: 650px;
+}
+
+.reveal .bottom-right-corner h1 {
+    font-family: 'Black Ops One';
+}
+
+.reveal .bottom-left-corner {
+  position: absolute;
+  top: 150px;
+  left: -100px;
+}
+
+.reveal .bottom-left-corner h1 {
+    font-family: 'Black Ops One';
 }
