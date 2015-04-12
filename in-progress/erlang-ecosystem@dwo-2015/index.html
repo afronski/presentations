@@ -66,7 +66,7 @@
                 egzotycznej technologii, która nie ma zastosowania."
               </li>
               <li>
-                No to mówię: Sprawdzam!
+                Chciałbym rozwiać te wątpliwości i mówię: "Sprawdzam!".
               </li>
             </ul>
           </aside>
@@ -127,7 +127,17 @@
 
           <aside class="notes">
             <ul>
-              <li></li>
+              <li>
+                Jeśli chcemy dobrze wykorzystać jakiś element musimy
+                wiedzieć jakie jest jego przeznaczenie, do czego
+                został zaprojektowany.
+              </li>
+              <li>
+                W tym celu musimy spojrzeć na powód, dlaczego
+                powstała, oraz jej historię a następnie odpowiemy
+                sobie na pytanie w jakich obszarach ta technologia
+                sprawdza się najlepiej.
+              </li>
             </ul>
           </aside>
         </section>
@@ -135,9 +145,41 @@
         <section class="content">
           <h1>Powód</h1>
 
+          <img src="/img/CSLab.png" alt="Old website of Ericsson CSLab" />
+
           <aside class="notes">
             <ul>
-              <li></li>
+              <li>
+                Ponad 30 lat temu wewnątrz firmy Ericsson została
+                założona specjalna komórka badawcza nazwana Computer
+                Science Laboratory.
+              </li>
+              <li>
+                Jej celem było zebranie dobrych praktyk i doświadczeń
+                z procesu tworzenia oprogramowania wewnątrz firmy,
+                przeanalizowanie istniejących na rynku rozwiązań i
+                jeśli okażą się niewystarczające zaprojektowanie
+                nowego języka programowania, który umożliwi
+                efektywniejszą (w sensie zasobów - czasu, ludzi,
+                pieniędzy) budowę oraz utrzymanie obecnych produktów
+                oraz wprowadzenie nowych na rynek - taniej.
+              </li>
+              <li>
+                Ericsson już wtedy intensywnie korzystał z języka C,
+                eksperymentował z C++ posiadał własne odpowiedniki w
+                postaci języka Plex - jednak koszty utrzymania oraz
+                niezawodność poszczególnych produktów były nie
+                zadowalające. Pamiętajmy, że Ericsson poza tym, że
+                sprzedawał urządzenia, utrzymywał je i niektóre w
+                dalszym ciągu utrzymuje przez wiele wiele lat.
+              </li>
+              <li>
+                Zobaczcie, że język i platforma powstały wskutek
+                wyraźnego bodźca biznesowego. Brak dobrych alternatyw
+                pociągną za sobą inwestycje w postaci czasu i
+                pieniędzy przeznaczonych właśnie na przygotowanie
+                nowego rozwiązania.
+              </li>
             </ul>
           </aside>
         </section>
@@ -145,16 +187,99 @@
         <section class="content">
           <h1>Historia</h1>
 
+          <ul class="no-list">
+            <li>1984 - Ericsson Research Lab</li>
+            <li>1986 - First Erlang version</li>
+            <li>1988 - Erlang escapes the lab! PABX prototype.</li>
+            <li>1993 - Distribution added to the Erlang</li>
+            <li>1998 - AXD301, 99.9999999%, 1 MLOC</li>
+            <li>1998 - Erlang released as an Open Source</li>
+            <li>2005 - CouchDB</li>
+            <li>2007 - RabbitMQ</li>
+            <li>2007 - Erlang SMP support</li>
+            <li>2007 - <em>Programming Erlang</em> book, 1st edition</li>
+            <li>2008 - LFE</li>
+            <li>2009 - Riak</li>
+            <li>2012 - Elixir</li>
+            <li>2014 - Erlang 17.0</li>
+            <li>2014 - WhatsApp bought by Facebook for 19B</li>
+            <li>2014 - Elixir 1.0</li>
+          </ul>
+
           <aside class="notes">
             <ul>
-              <li></li>
+              <li>
+                Pierwsze sukcesy, które pozwoliły na dalsze
+                finansowanie projektu pojawiły się bardzo szybko, bo
+                już w 1988 - prototyp nowego produktu zbudowany w
+                oparciu o Erlang został zbudowany szybciej i miał
+                mniej błędów w początkowym okresie utrzymania.
+              </li>
+              <li>
+                TODO: Duży wzrost zainteresowania w ostatnich latach.
+              </li>
+              <li>
+                TODO: Największy sukces, który jednocześnie otworzył
+                drogę do Open Source (mimo kłótni i zamieszania).
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Historia</h1>
+          <h2 class="spaced-bottom">Sukces - 1998</h2>
+
+          <div class="left-aligned">
+            <h2 class="spaced-bottom">AXD 301</h2>
+            <h4>Niezawodność: 99.9999999%</h4>
+            <h4>Czas pracy bez przerwy: 21 lat</h4>
+            <h4>Rozmiar: ~2M LOC<h4>
+          </div>
+
+          <img src="/img/AXD301.jpg" alt="Ericsson Switch AXD301" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                TODO: Niezawodność na tym poziomie oznacza przestój
+                rzędu 32 ms w ciągu roku spowodowany błędem.
+              </li>
+              <li>
+                TODO: 2 miliony linii kodu - nie tylko Erlang (choć
+                70% to Erlang), ale też C.
+              </li>
+              <li>
+                TODO: 21 lat jako cały system, to nie oznacza, że
+                każdy komponent tyle chodzi. Ale nawet w takim
+                kontekście to imponująca liczba.
+              </li>
             </ul>
           </aside>
         </section>
 
         <section class="content">
           <h1>Zastosowanie</h1>
+          <h3>Analogia</h3>
+
+          <aside class="notes">
+            <ul>
+              <li>TODO: Obraz na wzór tego z prezentacji Jose.</li>
+            </ul>
+          </aside>
+        </section>
+
+
+        <section class="content">
+          <h1>Zastosowanie</h1>
           <h3>Kto?</h3>
+
+          <ul>
+            <li>Yahoo!, Facebook, bet365, Klarna, Last.fm</li>
+            <li>T-Mobile, Motorola, Ericsson, Tail-F</li>
+            <li>Twitter, WhatsApp, Wooga, DemonWare, Riot Games</li>
+            <li>Rackspace, CloudBees, Amazon, Heroku, Github</li>
+          </ul>
 
           <aside class="notes">
             <ul>
@@ -167,24 +292,17 @@
           <h1>Zastosowanie</h1>
           <h3>Obszary</h3>
 
+          <ul>
+            <li>IoT</li>
+            <li>Distributed Systems - Databases</li>
+            <li>Gaming, IM, Messaging</li>
+            <li>Telecom, Networking, Mobile</li>
+            <li>Trading, Banking, Gambling</li>
+          </ul>
+
           <aside class="notes">
             <ul>
               <li>TODO: Chmura tagów.</li>
-            </ul>
-          </aside>
-        </section>
-
-        <section class="content">
-          <h1>Zastosowanie</h1>
-          <h3>Dlaczego?</h3>
-
-          <aside class="notes">
-            <ul>
-              <li>
-                TODO: Najdłużej działający system, największy system
-                napisany z użyciem FP - 2 MLOC, najstabilniejszy - 9x9
-                of reliability.
-              </li>
             </ul>
           </aside>
         </section>
@@ -292,6 +410,14 @@
         <section class="content">
           <h1>Mechanika</h1>
           <h3><em>Functional Programming</em></h3>
+
+          <ul>
+            <li>Immutability</li>
+            <li>Pattern Matchine</li>
+            <li>Referential Transparency</li>
+            <li>Recursion</li>
+            <li>Tail Call Optimization</li>
+          </ul>
 
           <aside class="notes">
             <ul>
@@ -470,8 +596,8 @@
 
             <ul class="links">
               <li>
-                <a href="https://www.youtube.com/watch?v=uKfKtXYLG78">
-                  Erlang: The Movie
+                <a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">
+                  Joe Armstrong - PhD Thesis
                 </a>
               </li>
               <li>
@@ -482,6 +608,21 @@
               <li>
                 <a href="http://highscalability.com/blog/2014/10/13/how-league-of-legends-scaled-chat-to-70-million-players-it-t.html">
                   Scaling League of Legends chat
+                </a>
+              </li>
+              <li>
+                <a href="http://web.archive.org/web/19991008013305/http://www.ericsson.se/cslab/erlang/">
+                  Ericsson CSLab (Web Archive)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/watch?v=uKfKtXYLG78">
+                  Erlang: The Movie
+                </a>
+              </li>
+              <li>
+                <a href="http://thisotplife.tumblr.com/">
+                  This OTP life
                 </a>
               </li>
             </ul>
@@ -520,7 +661,10 @@
               </li>
               <li>
                 Zdjęcia:
-                <a href="http://zotonic.com/themovie-makingof">Hello Mike!</a>
+                <a href="http://zotonic.com/themovie-makingof">Hello Mike!</a>,
+                <a href="http://www.mobilecomms-technology.com/projects/latin_american/images/img1.jpg">
+                  AXD301
+                </a>
               </li>
             </ul>
           </div>

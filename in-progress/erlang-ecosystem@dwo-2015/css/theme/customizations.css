@@ -169,3 +169,29 @@
 .reveal .bottom-left-corner h1 {
     font-family: 'Black Ops One';
 }
+
+.reveal .right-top-corner {
+  position: absolute;
+  top: 150px;
+  right: 150px;
+}
+
+.reveal [alt="Ericsson Switch AXD301"] {
+  float: right;
+  width: 40%;
+}
+
+.reveal .left-aligned {
+  margin: 0;
+  float: left;
+  width: 59%;
+}
+
+.reveal .spaced-bottom {
+  margin-bottom: 50px;
+}
+
+.reveal .no-list {
+  list-style: none;
+  font-family: 'Comfortaa';
+}
