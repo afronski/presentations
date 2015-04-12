@@ -113,12 +113,17 @@
 }
 
 .reveal blockquote:before {
-  color: #FFFFFF;
   content: "\201C";
   font-size: 4em;
   line-height: 0.1em;
   margin-right: 0.25em;
   vertical-align: -0.4em;
+}
+
+.reveal .blockquote-author {
+  float: right;
+  margin-right: 150px;
+  margin-top: 20px;
 }
 
 .reveal .logo {
