@@ -616,7 +616,47 @@
 
           <aside class="notes">
             <ul>
-              <li>TODO: Izolacja, Rozproszenie, Lekkie procesy.</li>
+              <li>
+                W związku z problemami, które napotkali twórcy
+                Erlanga, wykrystalizowały się 3 fundamentalne
+                koncepcje jeśli chodzi o budowę platformy.
+              </li>
+              <li>
+                Musimy radzić sobie w rozproszonym systemie. I mam tu
+                zarówno na myśli geograficzne rozproszenie jak i
+                redundancję maszyn, w celu zapewnienia niezawodności.
+                Jeśli jeden z węzłów ulegnie awarii, system musi
+                odnaleźć się w tej sytuacji i wykorzystać w odpowiedni
+                sposób redundentną maszynę.
+              </li>
+              <li>
+                Lekkie procesy zapewniają nam obsługę wielu
+                współbieżnych żądań, które mają miejsce w Naszym
+                systemie. Dzięki ich lekkości możemy obsłużyć więcej
+                żądań na dostępnym sprzęcie, a dzięki ich
+                optymalizacji wykorzystać efektywniej dostępne zasoby
+                sprzętowe (mniejsze rzeczy łatwiej optymalizować)
+              </li>
+              <li>
+                Co nam po dużej ilości lekkich procesów, jeśli błąd w
+                jednym z nich wyłożyłby całą maszynę
+                wirtualną. Izolacja jest kluczowa w systemach, które
+                muszą spełniać wysokie standardy niezawodności. Bez
+                niej awaria jednego z procesów, oznaczałaby katastrofę
+                dla wszystkich.
+              </li>
+              <li>
+                Odnosząc te koncepcje do systemu telekomunikacyjnego
+                widzimy analogię. Mamy dużą liczbę równolegle
+                prowadzonych rozproszonych geograficznie połączeń
+                telefonicznych, awaria jednego połączenia nie wpływa
+                na żadne inne trwajace połączenie.
+              </li>
+              <li>
+                TODO: Rysunek poglądowy pokazujący system rozproszony
+                z wieloma maszynami i komunikacją pomiędzy nimi, oraz
+                w ramach maszyny wirtualnej.
+              </li>
             </ul>
           </aside>
         </section>
@@ -630,16 +670,53 @@
           <aside class="notes">
             <ul>
               <li>
-                TODO: Opis koncepcji. Błędy się obsługuje a nie
-                łapie. Nigdy więcej tzw. defensive programming.
+                Jeśli mowa już o izolacji, to dzięki temu, że jest ona
+                zagwarantowana na poziomie koncepcyjnym, daje nam to
+                jedną z kluczowych rzeczy, która odróżnia omawianą
+                technologię od innych. "Let it crash", choć brzmi to
+                przekornie, jest koncepcją, która na celu ma obsługę
+                błędów.
               </li>
               <li>
-                TODO: Resilience >> Reliability. "Transient errors are
-                most common."
+                Wiele badań przeprowadzonych zarówno na sprzęcie jak i
+                oprogramowaniu potwierdza tezę, że większość z błędów
+                tzw. operacyjnych (czyli nie spowodowanych przez błąd
+                programisty) jest przejściowa. Przykładem takiego
+                błędu może być brak pamięci lub niedostępna baza
+                danych.
               </li>
               <li>
-                TODO: Error kernel, a o resztę błędów się nie martw,
-                tylko dobrze zaprojektuj system.
+                Oznacza to, że pewne kategorie błędów będą występować
+                zawsze, niezależnie od ilości przedsięwziętych kroków
+                skupionych na przeciwdziałaniu im. Co więcej,
+                zdecydowana większość kodu w obecnych systemach skupia
+                się właśnie na obsłudze błędów, i co gorsza stworzona
+                jest w tzw. defensywnym stylu. Oznacza to, że staramy
+                się wykryć wszystkie możliwe błędne sytuacje przed, co
+                koniec końców zaciemnia oryginalną intencję autora
+                kodu i powoduje inne błędy.
+              </li>
+              <li>
+                Gdyby odwrócić sytuację i skupić się na takim
+                projekcie systemu, który byłby nie tylko odporny na
+                błędy, ale także elastyczny i umiał "automatycznie"
+                reagować na błędne sytuacje np. dzięki wystartowaniu
+                ponownie błędnego procesu, potrafił odtworzyć ostatni
+                dobry stan.
+              </li>
+              <li>
+                Innymi słowy - moglibyśmy się skupić na małym wycinku
+                funkcjonalności, tzw. rdzeniu systemu, w który włożymy
+                maksymalny wysiłek jeśli chodzi o bezawaryjność i
+                implementację. Reszta systemu, mogłaby być zbudowana
+                (przy wsparciu systemu i języka) na kształt
+                hierarchii, która potrafi radzić sobie z błędami lub
+                eskaluje problem do wyższego nadzorcy.
+              </li>
+              <li>
+                O tym jak takie cegiełki wyglądają dokładnie opowiemy
+                sobie w za chwilę, natomiast ja chciałbym przejść do
+                kluczowego elementu jeśli chodzi o mechanikę.
               </li>
             </ul>
           </aside>
@@ -647,22 +724,45 @@
 
         <section class="content">
           <h1>Mechanika</h1>
-          <h3><em>Virtual Machine</em></h3>
+          <h3><em>BEAM, czyli maszyna wirtualna Erlanga</em></h3>
 
           <aside class="notes">
             <ul>
               <li>
-                TODO: Erlang =:= Erlang VM =:= BEAM
+                Temat maszyny wirtualnej skutecznie omijaliśmy do tej
+                pory, jednak nie da się nie wspomnieć o niej w
+                kontekście "jak systemy napisane w Erlangu
+                funkcjonują".
               </li>
               <li>
-                TODO: Maszyna wirtualna, budowa jak nowoczesny
-                OS. Izolacja wiele rzeczy ułatwia - propagacja błędów,
-                GC itp.
+                Przy tym slajdzie chciałbym sprostować tytuł
+                prezentacji - ekosystem Erlanga to tak naprawdę
+                środowisko skupione wokół maszyny wirtualnej Erlang,
+                zwanej również BEAM (Bogdan/Björn's Erlang Abstract
+                Machine).
               </li>
               <li>
-                TODO: Rysunek zawierający: distributed system,
-                izolację, lekkie procesy, message passing. Screen z
-                Erlubi lub Concurix?
+                Siłą tego rozwiązania są bardzo lekkie procesy,
+                których nie należy mylić z procesami systemu
+                operacyjnego, czy nawet wątkami. Dla obrazowego
+                porównania możemy przyjąć, że proces w Erlangu jest
+                1000 krotnie lżejszy od standardowego wątku (alokacja
+                wątku pochłania 1 MB, alokacja nowego procesu 1000
+                słów pamięci).
+              </li>
+              <li>
+                Mimo, że samych procesów nie możemy porównywać do
+                procesów dostępnych na poziomie systemu operacyjnego,
+                to maszyna wirtualna zbudowana jest tak jak kernel
+                nowoczesnego systemu operacyjnego. Izolujemy od siebie
+                procesy, umożliwiamy śledzenie i obserwację tego jak
+                system działa, udostępniamy stabilny fundament. To
+                ułatwia wiele rzeczy - np. propagację i obsługę
+                błędów, odśmiecanie pamięci czy lokalne optymalizacje.
+              </li>
+              <li>
+                TODO: Rysunek zawierający: maszynę wirtualną i
+                procesy. Screen z Erlubi lub Concurix? Opis rysunku.
               </li>
             </ul>
           </aside>
@@ -697,12 +797,14 @@
           <aside class="notes">
             <ul>
               <li>
-                Kluczowym elementem całej układanki jest zestaw cech
-                języka programowania, które są charakterystyczne, dla
-                funkcyjnych języków.
+                Kolejnym ważnym elementem całej układanki jest zestaw
+                cech języka programowania. Erlang jest jednym z
+                funkcyjnych języków programowania i naturalnie czerpie
+                z tego dziedzictwa.
               </li>
               <li>
-                Dzięki zupełnie innemu podejściu do stanu
+                Najważniejszym elmentem spośród wymienionych na
+                slajdzie jest zupełnie innemu podejściu do stanu
                 poszczególnych elementów aplikacji, który opiera się
                 na braku mutowalności, możemy pewne elementy aplikacji
                 traktować jak przezroczyste skrzynki, w których
@@ -788,10 +890,35 @@
           <aside class="notes">
             <ul>
               <li>
-                TODO: Wybór: Erlang, Elixir, LFE. Składnia nigdy nie
-                była problemem, to zupełnie inny sposób myślenia jest
-                trudniejszy do nauki, krzywa wejścia jest bardziej
-                stroma, ale nauka się opłaca.
+                Bardzo często argumentem przeciwko Erlangowi, jest
+                odwołanie do jego niszowości (trudno o programistów) i
+                nietypowej składni wzorowanej na Prologu (panuje
+                pogląd, że z tego powodu programiści nie lubią tej
+                platformy).
+              </li>
+              <li>
+                Składnia tak naprawdę nigdy nie powinna być problemem,
+                ale dzięki ostatnim zmianom i ten argument stracił na
+                wadze, dlatego że pojawiły się dojrzałe i alternatywne
+                rozwiązania.
+              </li>
+              <li>
+                Oprócz Erlanga mamy do dyspozycji również LFE (Lisp
+                Flavoured Erlang) oraz Elixir, o składni zaczerpniętej
+                z języka Ruby. Oba rozwiązania wykorzystywane są
+                produkcyjnie, i korzystają w pełni z dobrodziejstw
+                maszyny wirtualnej.
+              </li>
+              <li>
+                Przy tej okazji chciałbym wspomnieć, że problemy
+                składniowe nigdy nie powinny być przeszkodą w doborze
+                narzędzia. Czym innym jest biznesowy problem
+                dot. braku wykwalifikowanej kadry a czym innym
+                subiektywne odczucie na temat przecinków i średników.
+              </li>
+              <li>
+                TODO: Wstaw logo (Erlang, Elixir, LFE) w odpowiednie
+                miejsca.
               </li>
             </ul>
           </aside>
@@ -826,8 +953,28 @@
           <aside class="notes">
             <ul>
               <li>
-                TODO: Co to jest behavior? Dostępne
-                zachowania. Możliwość wysłania własnych.
+                Inżynierowie odpowiedzialni za rozwój OTP,
+                zaobserwowali i wyodrębnili zestaw reużywalnych
+                wzorców. Udostępnili je w postaci tzw. generycznych
+                zachowań (ang. behaviors).
+              </li>
+              <li>
+                Mamy do dyspozycji generyczne implementacje serwera z
+                wywołaniami asynchronicznymi i synchronicznymi,
+                mechanizm obsługi zdarzeń, generyczną maszynę stanów,
+                nadzorców oraz wiele, wiele innych implementacji.  To
+                co najważniejsze, to wyodrębnienie części wspólnych od
+                konkretnej implementacji. Nie musimy się przejmować
+                wnętrznościami, które są wyodrębione, zamknięte i
+                współdzielone w formie zachowania, tylko skupiamy się
+                na implementacji logiki, którą dostarczamy jako zestaw
+                funkcji.
+              </li>
+              <li>
+                Jeśli w naszej aplikacji pojawią się wzorce,
+                charakterystyczne dla naszej domeny - nic nie stoi na
+                przeszkodzie aby wykorzystać taki mechanizm do
+                przygotowania własnego zestawu zachowań.
               </li>
             </ul>
           </aside>
