@@ -170,7 +170,7 @@
 
 .reveal .bottom-left-corner {
   position: absolute;
-  top: 150px;
+  top: 450px;
   left: -100px;
 }
 
@@ -215,4 +215,82 @@
 
   border-radius: 5px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reveal .logos {
+  margin-top: 60px;
+}
+
+.reveal .lang-logos {
+  margin-top: 500px;
+}
+
+.reveal .rspective {
+  margin: 0;
+  margin-right: 30px;
+  padding: 15px;
+  background-color: white;
+}
+
+.reveal .white-rook {
+  margin: 0;
+  margin-left: 30px;
+  width: 331px;
+}
+
+.reveal .lang-logo {
+  background-color: white;
+  padding: 15px;
+}
+
+.reveal .bigger-size {
+  zoom: 1.4;
+}
+
+.reveal .sharpen {
+  text-shadow: 0 0 6px rgba(0, 0, 0, 1);
+}
+
+.reveal .normal-image {
+  padding: 15px;
+  background-color: white;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reveal .scaled-down {
+  zoom: 0.75;
+  background-color: white;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reveal .second-image {
+  position: absolute;
+  left: 190px;
+}
+
+.reveal .history-list {
+  font-family: "Comfortaa";
+  font-size: 0.7em;
+  line-height: 1.5em;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.reveal .history-list time {
+  margin-right: 30px;
+}
+
+.reveal .distributed-systems {
+  position: absolute;
+  top: 250px;
+  left: 150px;
+}
+
+.reveal .distributed-systems-internal.visible + .distributed-systems {
+  display: none;
+}
+
+.reveal .summary {
+  font-family: "Comfortaa";
 }
