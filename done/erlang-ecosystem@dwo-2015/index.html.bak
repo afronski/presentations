@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ekosystem Erlanga</title>
+
+    <meta name="description" content="Prezentacja o ekosystemie skupionym dookoła maszyny wirtualnej języka Erlang." />
+    <meta name="author" content="Wojciech Gawroński" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+    <link rel="stylesheet" href="css/theme/customizations.css" />
+
+    <link rel="stylesheet" href="lib/css/railscasts.css" />
+
+    <script src="/js/d3.js"></script>
+    <script src="/js/d3.layout.cloud.js"></script>
+    <script src="/js/d3pie.min.js"></script>
+
+    <script type="text/javascript">
+      var fill = d3.scale.category10();
+      var wordScale = d3.scale.linear().domain([ 0, 1 ]).range([ 15, 65 ]);
+
+      function draw(where, words) {
+        d3.select(where)
+          .append("svg")
+            .attr("width", 600)
+            .attr("height", 400)
+          .append("g")
+            .attr("transform", "translate(300,200)")
+          .selectAll("text")
+            .data(words)
+          .enter()
+            .append("text")
+              .style("font-size", function(d) { return d.size + "px"; })
+              .style("font-family", randomizeFonts)
+              .style("fill", function(d, i) { return fill(i); })
+              .attr("text-anchor", "middle")
+              .attr("transform", function(d) {
+                return "translate(" + [ d.x, d.y ] + ")rotate(" + d.rotate + ")";
+              })
+            .text(function(d) { return d.text; });
+      }
+
+      function randomizeFonts(d) {
+        if (d.meaning <= 0.4) {
+          return "Black Ops One";
+        } else if (d.meaning > 0.4 && d.meaning <= 0.7) {
+          return "Comfortaa";
+        } else {
+          return "Kaushan Script";
+        }
+      }
+
+      function returnSize(d) {
+        return wordScale(d.meaning);
+      }
+
+      function rotatedOrNot(d) {
+        if (d.meaning < 0.5) {
+          return ~~(Math.random() * 2) * 90;
+        } else {
+          return 0;
+        }
+      }
+
+      function randomRange(min, max) {
+        return function () {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+      }
+    </script>
+
+    <script>
+      document.write("<link rel='stylesheet' href='css/print/" +
+                     (window.location.search.match(/print-pdf/gi) ? "pdf" : "paper") +
+                    ".css' type='text/css' media='print'>");
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section class="header">
+          <h1>Ekosystem Erlanga</h1>
+
+          <span class="license">
+            Wojciech Gawroński, 2015 &copy;
+            Licencja: <a href="http://creativecommons.org/licenses/by-nd/3.0/pl/">CC BY-ND 3.0 PL</a>
+          </span>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Witam Was serdecznie na prezentacji o Erlangu i
+                ekosystemie skupionym dookoła niego.
+              </li>
+              <li>
+                Zanim zaczniemy, chciałbym opowiedzieć bardzo krótko o
+                sobie.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important">
+          <strong class="huge"><code>~ # whoami</code></strong>
+
+          <div class="logos">
+            <img src="/img/WhiteRook.jpg" class="left white-rook" alt="Logo firmy White Rook" />
+            <img src="/img/rspective.png" class="right rspective" alt="Logo firmy rspective" />
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Nazywam się Wojtek Gawroński. Jestem programistą z
+                ponad 6 letnim doświadczeniem. Szeroko pojętą
+                informatyką interesuję się już ponad 10 lat. Zajmuję
+                się tworzeniem i projektowaniem aplikacji webowych,
+                przez ostatnie 2 lata również projektowaniem i
+                tworzeniem systemów rozproszonych.
+              </li>
+              <li>
+                W śląskiej społeczności jestem znany jako jeden ze
+                współorganizatorów NodeSchool Silesia i aktywny
+                członek różnej maści spotkań.
+              </li>
+              <li>
+                Tematyką prezentacji zainteresowałem się na własną
+                rękę ponad 2 lata temu, przy pracy z dużym systemem
+                rozproszonym. Trafiłem na tę technologię poszukując
+                lepszego rozwiązania od technologii, która została tam
+                zastosowana.
+              </li>
+              <li>
+                Mała prośba: jeśli macie jakieś pytania, nie czekajcie
+                do końca prezentacji, dajcie mi znak - chętnie odpowiem
+                w trakcie.
+              </li>
+              <li>
+                Jeśli ktoś przeczytał abstrakt na stronie konferencji
+                mógł pomyśleć, że ja "będę Wam tu gadał o jakiejś
+                archaicznej lub egzotycznej technologii, która nie ma
+                zastosowania".
+              </li>
+              <li>
+                Chciałbym rozwiać te wątpliwości i mówię: "Sprawdzam!".
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important">
+          <h1>Ankieta</h1>
+          <h3>Erlang?</h3>
+
+          <img src="/img/HelloMikeHelloJoe.jpg" alt="Hello Mike! Hello Joe!" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Zrobimy małą ankietę, proszę o podniesienie ręki
+                osób, która odpowiedzą twierdząco na jedno z pytań i
+                utrzymanie jej aż do końca.
+                <ol>
+                  <li>Kto gra/grał w Battlefield?</li>
+                  <li>Kto gra/grał w League of Legends?</li>
+                  <li>Kto korzystał z Facebookowego chata?</li>
+                  <li>Kto używa WhatsApp?</li>
+                  <li>Kto korzystał z internetu na smartfonie?</li>
+                </ol>
+              </li>
+              <li>
+                Rozejrzyjcie się proszę dookoła. Jak widać,
+                praktycznie większość świadomie lub nieświadomie
+                zetknęła się jednak z tą technologią.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="header no-color" data-background="/img/backgrounds/forest.jpg">
+          <h1>Agenda</h1>
+
+          <h3><strong>Korzenie</strong></h3>
+          <h3>Platforma</h3>
+          <h3>Ekosystem</h3>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Opowiemy sobie o technologii oraz, co może nawet
+                ważniejsze ekosystemie skupionym dookoła niej. I tak
+                jak w przypadku zdjęcia w tle, ekosystem składa się z
+                bardzo wielu elementów.
+              </li>
+              <li>
+                Ale wszystko zaczyna się od podłoża i korzeni.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important">
+          <h1>Korzenie</h1>
+          <h3>Powód, Historia, Zastosowanie</h3>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Jeśli chcemy dobrze wykorzystać jakiś element musimy
+                wiedzieć jakie jest jego przeznaczenie, do czego
+                został zaprojektowany.
+              </li>
+              <li>
+                W tym warto spojrzeć na powód, dlaczego technologia
+                powstała, oraz historię jej ewolucji. Następnie
+                odpowiemy sobie na pytanie w jakich obszarach ta
+                technologia sprawdza się najlepiej.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Powód</h1>
+
+          <img src="/img/CSLab.png" alt="Stara strona Ericsson CSLab" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Ponad 30 lat temu wewnątrz firmy Ericsson została
+                założona specjalna komórka badawcza nazwana Computer
+                Science Laboratory.
+              </li>
+              <li>
+                Ericsson już wtedy intensywnie korzystał z języka C,
+                eksperymentował z C++, posiadał własne odpowiedniki w
+                postaci języka Plex - jednak koszty utrzymania oraz
+                niezawodność poszczególnych produktów były nie
+                zadowalające. Pamiętajmy, że Ericsson poza tym, że
+                sprzedawał urządzenia, utrzymywał je i niektóre w
+                dalszym ciągu utrzymuje przez wiele wiele lat.
+              </li>
+              <li>
+                Celem nowo utworzonej komórki było zebranie dobrych
+                praktyk i doświadczeń z procesu tworzenia
+                oprogramowania wewnątrz firmy, przeanalizowanie
+                istniejących na rynku rozwiązań i jeśli okażą się
+                niewystarczające zaprojektowanie nowego języka
+                programowania, który umożliwi efektywniejszą (w sensie
+                zasobów - czasu, ludzi, pieniędzy) budowę oraz
+                utrzymanie obecnych produktów oraz wprowadzenie nowych
+                na rynek - taniej.
+              </li>
+              <li>
+                Widać wyraźnie, że język i platforma powstały wskutek
+                wyraźnego bodźca biznesowego. Brak dobrych alternatyw
+                pociągną za sobą inwestycje w postaci czasu i
+                pieniędzy przeznaczonych właśnie na przygotowanie
+                nowego rozwiązania.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Historia</h1>
+
+          <img class="normal-image" src="/img/Timeline.png"
+               alt="Historia platformy Erlang" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Pierwsze sukcesy, które pozwoliły na dalsze
+                finansowanie projektu pojawiły się bardzo szybko, bo
+                już w 1988 - prototyp nowego produktu zbudowany w
+                oparciu o Erlanga został stworzony w krótszym czasie i
+                miał mniej błędów w początkowym okresie utrzymania niż
+                odpowiednik stworzony z użyciem C/C++.
+              </li>
+              <li>
+                Jednym z największych sukcesów Ericssona, było
+                stworzenie i sprzedaż rozwiązań opartych o switch AXD
+                301. Paradoksalnie to on i jedna kłopotliwa decyzja
+                otworzyła drogę platformy do Open Source. To co miało
+                również wpływ na decyzję z 1998 roku to kłótnie i
+                napięcia związanych z nową taktyką firmy, która
+                paradoksalnie odsuwała się od Erlanga, kosztem języka
+                C++. Otwierając go, firma chciała się pozbyć problemu.
+              </li>
+              <li>
+                Nowa polityka firmy nie odniosła oczekiwanych
+                rezultatów, wybór okazał się błędny więc Ericsson
+                ostatecznie nie odsunął się od rozwijania platformy.
+                Z drugiej strony społeczność Open Source intensywnie
+                zaadoptowała nowe narzędzie.
+              </li>
+              <li>
+                Zaaowocowało to pojawieniem się wielu nowych narzędzi,
+                które są wam dobrze znane. Do teraz ekosystem i cała
+                platforma rozwijają się dość harmonijnie i przede
+                wszystkim stabilnie.
+              </li>
+              <li>
+                W ostatnich latach można dostrzec zwiększone
+                zainteresowanie Erlangiem za sprawą udanych wdrożeń w
+                takich firmach jak Facebook, Klarna czy
+                Heroku. Szczególnie do ludzi biznesu przemówiła
+                transakcja zakupu WhatsApp za 19 miliardów dolarów
+                właśnie przez Facebooka.
+              </li>
+              <li>
+                My jako "inżynierowie" wiemy, że największą wartością
+                tej transakcji były tak naprawdę dane
+                użytkowników. Niemniej, sukces WhatsApp nie byłby
+                możliwy, gdyby nie wykorzystana technologia.
+              </li>
+              <li>
+                Spójrzmy zatem na największy sukces związany z
+                Erlangiem.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Historia</h1>
+          <h2 class="spaced-bottom">Sukces - 1998</h2>
+
+          <div class="left-aligned">
+            <h2 class="spaced-bottom">AXD 301</h2>
+            <h4>Niezawodność: 99.9999999%</h4>
+            <h4>Czas pracy bez przerwy: 21 lat</h4>
+            <h4>Rozmiar: ~2M LOC<h4>
+          </div>
+
+          <img src="/img/AXD301.jpg" alt="Ericsson Switch AXD301" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                AXD 301 to switch telekomunikacyjny, oferujący dużą
+                przepustowość 160 Gb/s (jak na tamte czasy).
+              </li>
+              <li>
+                Zwróćcie uwagę na niezawodność - na tym poziomie
+                oznacza ona przestój rzędu 32 ms w ciągu roku, który
+                jest spowodowany błędem.
+              </li>
+              <li>
+                Na cały system składa się 2 milionów linii kodu - to
+                nie tylko kod w Erlangu, ale także C. Większość
+                (ok. 65%) to jednak kod napisany w Erlangu. Szacuje
+                się, że to był na tamte czasy największy system
+                informatyczny napisany w oparciu o język funkcyjny.
+              </li>
+              <li>
+                Cały system działał 21 lat bez przestoju. To
+                oczywiście nie oznacza, że każdy komponent działał bez
+                przerwy tyle lat, mowa tutaj o kontekście całego
+                systemu. Ale nawet w takim kontekście to bardzo
+                imponująca wartość.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Zastosowanie</h1>
+          <h3>Analogia</h3>
+
+          <img class="scaled-down" src="/img/SwitchAnalogy.png"
+               alt="System telekomunikacyjny." />
+
+          <img class="scaled-down second-image fragment"
+               src="/img/SwitchAnalogyServer.png"
+               alt="Analogia pomiędzy aplikacją webową a systemem telekomunikacyjnym." />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Jeśli spojrzymy na ten obrazek, to widać wyraźnie
+                podobieństwo systemu telekomunikacyjnego i
+                współczesnej architektury aplikacji webowych lub
+                systemów rozproszonych.
+              </li>
+              <li>
+                Te dwa przypadki są bardzo do siebie podobne, a my
+                jako "młodsza stażem branża" możemy czerpać z bogatych
+                doświadczeń prekursorów.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Zastosowanie</h1>
+          <h3>Kto?</h3>
+
+          <div id="companies-cloud" class="clouds"></div>
+
+          <script type="text/javascript">
+            var companies = [
+              { text: "Yahoo!", meaning: 0.2 },
+              { text: "Facebook", meaning: 0.9 },
+              { text: "bet365", meaning: 0.4 },
+              { text: "Klarna", meaning: 0.2 },
+              { text: "last.fm", meaning: 0.3 },
+              { text: "T-Mobile", meaning: 0.9 },
+              { text: "Motorola", meaning: 0.7 },
+              { text: "Ericsson", meaning: 0.8 },
+              { text: "Tail-F", meaning: 0.2 },
+              { text: "WhatsApp", meaning: 1.0 },
+              { text: "Wooga", meaning: 0.4 },
+              { text: "DemonWare", meaning: 0.5 },
+              { text: "Riot Games", meaning: 0.5 },
+              { text: "Rackspace", meaning: 0.5 },
+              { text: "CloudBees", meaning: 0.4 },
+              { text: "Amazon", meaning: 0.7 },
+              { text: "Heroku", meaning: 0.6 },
+              { text: "Github", meaning: 0.6 },
+              { text: "Electric Imp", meaning: 0.4 }
+            ];
+
+            d3.layout.cloud().size([600, 400]).words(companies)
+              .padding(randomRange(5, 10))
+              .rotate(rotatedOrNot)
+              .fontSize(returnSize)
+              .on("end", draw.bind(null, "#companies-cloud"))
+              .start();
+          </script>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Zwróćcie uwagę jakie firmy wybrały Erlanga.
+              </li>
+              <li>
+                Wymienię tylko kilka największych - T-Mobile,
+                Motorola, Facebook, Rackspace, Amazon, Heroku oraz
+                Github.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Zastosowanie</h1>
+          <h3>Obszary</h3>
+
+          <div id="areas-cloud" class="clouds"></div>
+
+          <script type="text/javascript">
+            var words = [
+              { text: "IoT", meaning: 0.75 },
+              { text: "Databases", meaning: 0.6 },
+              { text: "Gaming", meaning: 0.5 },
+              { text: "Messaging and IM", meaning: 0.65 },
+              { text: "Cloud Computing", meaning: 0.7 },
+              { text: "Telecom", meaning: 0.4 },
+              { text: "Networking", meaning: 0.2 },
+              { text: "Mobile", meaning: 1 },
+              { text: "Trading", meaning: 0.6 },
+              { text: "Gambling", meaning: 0.3 },
+              { text: "Banking", meaning: 0.7 }
+            ];
+
+            d3.layout.cloud().size([600, 400]).words(words)
+              .padding(randomRange(5, 10))
+              .rotate(rotatedOrNot)
+              .fontSize(returnSize)
+              .on("end", draw.bind(null, "#areas-cloud"))
+              .start();
+          </script>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Obserwując poprzedni slajd można zauważyć kilka
+                powtarzających się obszarów.
+              </li>
+              <li>
+                Najważniejsze z nich to: Telecom (T-Mobile, Ericsson,
+                Motorola), Cloud Computing (Amazon, Heroku,
+                CloudBees), Gaming (DemonWare, Riot Games, Wooga) czy
+                Messaging, IM, Mobile i Social (Facebook, WhatsApp,
+                Yahoo!).
+              </li>
+              <li>
+                Kategorie wyspecjalizowane takie jak IoT, Networking
+                oraz Databases czy mają również swoich ważnych ale
+                mniej znanych przedstawicieli.
+              </li>
+              <li>
+                Widać wyraźnie, że wszystkie dziedziny wymagają
+                niezawodności, zajmują się wymianą dużej ilości
+                komunikatów, są z natury rozproszone.
+              </li>
+              <li>
+                Ta technologia sprawdzi się również w tzw. soft
+                real-time systems. Jest idealnie przystosowany do
+                pracy z danymi binarnymi (wszelkiego rodzaju
+                implementacje protokołów sieciowych).
+              </li>
+              <li>
+                Erlang nie sprawdzi się w miejscach, gdzie potrzeba
+                mocy CPU i najwydajniejszej implementacji związanej z
+                konkretną architekturą procesora. Nie sprawdzi się
+                również w aplikacjach, które są typowo CRUDowe lub
+                operują na dużych ilościach danych tekstowych.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="header no-color" data-background="/img/backgrounds/forest.jpg">
+          <h1>Agenda</h1>
+
+          <h3>Korzenie</h3>
+          <h3><strong>Platforma</strong></h3>
+          <h3>Ekosystem</h3>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Skoro znamy już historię i najpopularniejsze
+                zastosowania, możemy skupić się na tym co uczyniło tę
+                platformę inną niż wszystkie.
+              </li>
+              <li>
+                Bo przecież ekosystem musi mieć solidny fundament.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important">
+          <h1>Platforma</h1>
+          <h3>Budowa, Koncepcje, Mechanika</h3>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Rozpoczniemy od budowy i skupimy się na problemach,
+                które platforma rozwiązuje, ponieważ została
+                zaprojektowana do rozwiązywania tego typu problemów.
+              </li>
+              <li>
+                Potem przedstawimy sobie koncepcje i mechanikę samej
+                platformy, dzięki którym pewne jej właściwości są
+                unikalne.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Budowa</h1>
+
+          <blockquote>
+            The systems we were building are world wide distributed
+            systems.
+            <br/>
+            Where’s the shared memory when you’ve got one
+            node in London and another in Paris and another in
+            Stockholm.
+            <br/>
+            There is no shared memory!
+          </blockquote>
+
+          <em class="blockquote-author">Joe Armstrong</em>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                To tak naprawdę świetne podsumowanie listy problemów,
+                z jakimi musieli się zmagać twórcy systemów wewnętrz
+                Ericssona.
+              </li>
+              <li>
+                Erlang jako język wspomaga twórców tego rodzaju
+                systemów, rozwiązując pewne problemy na poziomie
+                platformy i konstrukcji językowych.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Budowa</h1>
+          <h3>Problemy</h3>
+
+          <div id="problems-cloud" class="clouds"></div>
+
+          <script type="text/javascript">
+            var problems = [
+              { text: "Rozproszenie", meaning: 0.9 },
+              { text: "Niezawodność", meaning: 0.8 },
+              { text: "Współbieżność", meaning: 0.7 },
+              { text: "Wolne CPU", meaning: 0.5 },
+              { text: "Mało RAMu", meaning: 0.4 },
+              { text: "Koszt implementacji", meaning: 0.2 },
+              { text: "Koszt utrzymania", meaning: 0.2 }
+            ];
+
+            d3.layout.cloud().size([600, 400]).words(problems)
+              .padding(randomRange(5, 10))
+              .rotate(0)
+              .fontSize(returnSize)
+              .on("end", draw.bind(null, "#problems-cloud"))
+              .start();
+          </script>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Widzimy tu problemy, które system musiał pokonać 30
+                lat temu. Które są do dziś aktualne - praktycznie poza
+                sprzętowymi czynnikami, każde z wymagań tu zebranych
+                jest w dalszym ciągu aktualne.
+              </li>
+              <li>
+                Mamy do dyspozycji rozwiązanie, które dzięki swojej
+                bogatej historii wiele z nich ma rozwiązane i
+                przetestowane najlepiej jak się da.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Koncepcje</h1>
+          <h3>Rdzeń</h3>
+
+          <img class="normal-image"
+               src="/img/CoreConcepts.png"
+               alt="3 filary maszyny wirtualnej Erlanga" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                W związku z problemami, które napotkali twórcy
+                Erlanga, wykrystalizowały się 3 fundamentalne
+                koncepcje jeśli chodzi o budowę platformy.
+              </li>
+              <li>
+                Musimy radzić sobie w rozproszonym systemie. I mam tu
+                zarówno na myśli geograficzne rozproszenie jak i
+                redundancję maszyn, w celu zapewnienia niezawodności.
+                Jeśli jeden z węzłów ulegnie awarii, system musi
+                odnaleźć się w tej sytuacji i wykorzystać w odpowiedni
+                sposób redundentną maszynę.
+              </li>
+              <li>
+                Lekkie procesy zapewniają nam obsługę wielu
+                współbieżnych żądań, które mają miejsce w Naszym
+                systemie. Dzięki ich lekkości możemy obsłużyć więcej
+                żądań na dostępnym sprzęcie, a dzięki ich
+                optymalizacji wykorzystać efektywniej dostępne zasoby
+                sprzętowe (mniejsze rzeczy łatwiej optymalizować)
+              </li>
+              <li>
+                Co nam po dużej ilości lekkich procesów, jeśli błąd w
+                jednym z nich wyłożyłby całą maszynę
+                wirtualną. Izolacja jest kluczowa w systemach, które
+                muszą spełniać wysokie standardy niezawodności. Bez
+                niej awaria jednego z procesów, oznaczałaby katastrofę
+                dla wszystkich.
+              </li>
+              <li>
+                Odnosząc te koncepcje do systemu telekomunikacyjnego
+                widzimy analogię. Mamy dużą liczbę równolegle
+                prowadzonych rozproszonych geograficznie połączeń
+                telefonicznych, awaria jednego połączenia nie wpływa
+                na żadne inne trwajace połączenie.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important no-color" data-background="/img/backgrounds/domino-effect.jpg">
+          <div class="bottom-right-corner">
+            <h1>Koncepcje</h1>
+            <h3><em>Let it crash</em></h3>
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Jeśli mowa już o izolacji, to dzięki temu, że jest ona
+                zagwarantowana na poziomie koncepcyjnym, daje nam to
+                jedną z kluczowych rzeczy, która odróżnia omawianą
+                technologię od innych. "Let it crash", choć brzmi to
+                przekornie, jest koncepcją, która na celu ma obsługę
+                błędów.
+              </li>
+              <li>
+                Wiele badań przeprowadzonych zarówno na sprzęcie jak i
+                oprogramowaniu potwierdza tezę, że większość z błędów
+                tzw. operacyjnych (czyli nie spowodowanych przez błąd
+                programisty) jest przejściowa. Przykładem takiego
+                błędu może być brak pamięci lub niedostępna baza
+                danych.
+              </li>
+              <li>
+                Oznacza to, że pewne kategorie błędów będą występować
+                zawsze, niezależnie od ilości przedsięwziętych kroków
+                skupionych na przeciwdziałaniu im. Co więcej,
+                zdecydowana większość kodu w obecnych systemach skupia
+                się właśnie na obsłudze błędów, i co gorsza stworzona
+                jest w tzw. defensywnym stylu. Oznacza to, że staramy
+                się wykryć wszystkie możliwe błędne sytuacje przed, co
+                koniec końców zaciemnia oryginalną intencję autora
+                kodu i powoduje inne błędy.
+              </li>
+              <li>
+                Gdyby odwrócić sytuację i skupić się na takim
+                projekcie systemu, który byłby nie tylko odporny na
+                błędy, ale także elastyczny i umiał "automatycznie"
+                reagować na błędne sytuacje np. dzięki wystartowaniu
+                ponownie błędnego procesu, potrafił odtworzyć ostatni
+                dobry stan.
+              </li>
+              <li>
+                Innymi słowy - moglibyśmy się skupić na małym wycinku
+                funkcjonalności, tzw. rdzeniu systemu, w który włożymy
+                maksymalny wysiłek jeśli chodzi o bezawaryjność i
+                implementację. Reszta systemu, mogłaby być zbudowana
+                (przy wsparciu systemu i języka) na kształt
+                hierarchii, która potrafi radzić sobie z błędami lub
+                eskaluje problem do wyższego nadzorcy.
+              </li>
+              <li>
+                O tym jak takie cegiełki wyglądają dokładnie opowiemy
+                sobie w za chwilę, natomiast ja chciałbym przejść do
+                kluczowego elementu jeśli chodzi o mechanikę.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Mechanika</h1>
+          <h3><em>BEAM</em></h3>
+          <h4>czyli maszyna wirtualna Erlanga</h4>
+
+          <img class="scaled-down"
+               src="/img/erlubi.png"
+               alt="Wizualizacja procesów na maszynie wirtualnej Erlanga" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Temat maszyny wirtualnej skutecznie omijaliśmy do tej
+                pory, jednak nie da się nie wspomnieć o niej w
+                kontekście "jak systemy napisane w Erlangu
+                funkcjonują".
+              </li>
+              <li>
+                Przy tym slajdzie chciałbym sprostować tytuł
+                prezentacji - ekosystem Erlanga to tak naprawdę
+                środowisko skupione wokół maszyny wirtualnej Erlang,
+                zwanej również BEAM (Bogdan/Björn's Erlang Abstract
+                Machine).
+              </li>
+              <li>
+                Siłą tego rozwiązania są bardzo lekkie procesy,
+                których nie należy mylić z procesami systemu
+                operacyjnego, czy nawet wątkami. Dla obrazowego
+                porównania możemy przyjąć, że proces w Erlangu jest
+                1000 krotnie lżejszy od standardowego wątku (alokacja
+                wątku pochłania 1 MB, alokacja nowego procesu 1000
+                słów pamięci).
+              </li>
+              <li>
+                Mimo, że samych procesów nie możemy porównywać do
+                procesów dostępnych na poziomie systemu operacyjnego,
+                to maszyna wirtualna zbudowana jest tak jak kernel
+                nowoczesnego systemu operacyjnego. Izolujemy od siebie
+                procesy, umożliwiamy śledzenie i obserwację tego jak
+                system działa, udostępniamy stabilny fundament. To
+                ułatwia wiele rzeczy - np. propagację i obsługę
+                błędów, odśmiecanie pamięci czy lokalne optymalizacje.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Mechanika</h1>
+          <h3><em>Functional Programming</em></h3>
+
+          <div id="fp-cloud" class="clouds"></div>
+
+          <script type="text/javascript">
+            var fp = [
+              { text: "Immutability", meaning: 1.0 },
+              { text: "Side-effect Free", meaning: 0.6 },
+              { text: "Pattern Matching", meaning: 0.6 },
+              { text: "Referential Transparency", meaning: 0.5 },
+              { text: "Higer Order Functions", meaning: 0.5 },
+              { text: "Purity", meaning: 0.4 },
+              { text: "Recursion", meaning: 0.3 },
+              { text: "Tail Calls", meaning: 0.2 }
+            ];
+
+            d3.layout.cloud().size([ 600, 400 ]).words(fp)
+              .padding(randomRange(5, 10))
+              .rotate(0)
+              .fontSize(returnSize)
+              .on("end", draw.bind(null, "#fp-cloud"))
+              .start();
+          </script>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Kolejnym ważnym elementem całej układanki jest zestaw
+                cech języka programowania. Erlang jest jednym z
+                funkcyjnych języków programowania i naturalnie czerpie
+                z tego dziedzictwa.
+              </li>
+              <li>
+                Najważniejszym elmentem spośród wymienionych na
+                slajdzie jest zupełnie innemu podejściu do stanu
+                poszczególnych elementów aplikacji, który opiera się
+                na braku mutowalności, możemy pewne elementy aplikacji
+                traktować jak przezroczyste skrzynki, w których
+                dokładnie widać co się dzieje.
+              </li>
+              <li>
+                Na pierwszy rzut oka to może wyglądać jak celowe
+                ograniczenie, natomiast przy pracy z wysoce
+                współbieżnymi systemami warto mieć jak najwięcej
+                ograniczeń i "sprzymierzeńców".
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="header no-color" data-background="/img/backgrounds/forest.jpg">
+          <h1>Agenda</h1>
+
+          <h3>Korzenie</h3>
+          <h3>Platforma</h3>
+          <h3><strong>Ekosystem</strong></h3>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                O sile technologii świadczy siła i jakość ekosystemu.,
+                który ją otacza. Mnogość opcji i ich różnorodność,
+                solidne biblioteki i narzędzia, dokumentacja i
+                dostępność wzorców.
+              </li>
+              <li>
+                Zróżnicowane środowisko to dobre środowisko, bo
+                przecież jakby wyglądał las z jednym rodzajem drzew i
+                tylko nimi?
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important">
+          <h1>Ekosystem</h1>
+          <h3>Społeczność, Wybór, Cegiełki</h3>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Prawidłowo funkcjonujący ekosystem skupiony dookoła
+                technologii, składa się ze społeczności, różnych opcji
+                do wyboru oraz tzw. "building blocks", cegiełek z
+                których możemy zbudować kompletne rozwiązanie.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="header no-color" data-background="/img/backgrounds/people.jpg">
+          <h1 class="sharpen">Społeczność</h1>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Na tą chwilę język i platforma są bardzo niszowe. To
+                małe ale solidne community. Szacuje się, że jest
+                ok. 7000 aktywnych, opłacanych programistów Erlanga.
+              </li>
+              <li>
+                Niszowość brzmi ekskluzywnie i elitarnie. Na szczęście
+                społeczność jest otwarta i przyjazna
+                zewnętrznym. Niestety, to ma również swoje słabe
+                strony, ponieważ do startu wymagany jest poziom
+                niemalże ekspercki. To się jednak zmienia, dzięki
+                nowym językom i rosnącej popularności ekosystemu.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="important no-color" data-background="/img/backgrounds/crossroads.jpg">
+          <div class="bottom-left-corner">
+            <h1>Wybór</h1>
+          </div>
+
+          <div class="lang-logos fragment">
+            <img class="lang-logo erlang-logo" alt="Logo języka Erlang" src="/img/Erlang.png" />
+            <img class="lang-logo elixir-logo" alt="Logo języka Elixir" src="/img/Elixir.png" />
+            <img class="lang-logo lfe-logo" alt="Logo języka LFE" src="/img/LFE.png" />
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Bardzo często argumentem przeciwko Erlangowi, jest
+                odwołanie do jego niszowości (trudno o programistów) i
+                nietypowej składni wzorowanej na Prologu (panuje
+                pogląd, że z tego powodu programiści nie lubią tej
+                platformy).
+              </li>
+              <li>
+                Składnia tak naprawdę nigdy nie powinna być problemem,
+                ale dzięki ostatnim zmianom i ten argument stracił na
+                wadze, dlatego że pojawiły się dojrzałe i alternatywne
+                rozwiązania.
+              </li>
+              <li>
+                Oprócz Erlanga mamy do dyspozycji również LFE (Lisp
+                Flavoured Erlang) oraz Elixir, o składni zaczerpniętej
+                z języka Ruby. Oba rozwiązania wykorzystywane są
+                produkcyjnie, i korzystają w pełni z dobrodziejstw
+                maszyny wirtualnej.
+              </li>
+              <li>
+                Przy tej okazji chciałbym wspomnieć, że problemy
+                składniowe nigdy nie powinny być przeszkodą w doborze
+                narzędzia. Czym innym jest biznesowy problem
+                dot. braku wykwalifikowanej kadry a czym innym
+                subiektywne odczucie na temat przecinków i średników.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Cegiełki</h1>
+          <h3>OTP</h3>
+
+          <div id="maintenance-chart" class="clouds"></div>
+
+          <script type="text/javascript">
+            var pie = new d3pie("maintenance-chart", {
+              "header": {
+                "title": {
+                  "text": "Cykl życia oprogramowania",
+                  "fontSize": 34,
+                  "font": "Comfortaa"
+                },
+                "subtitle": {
+                  "text": "Implementacja vs. Utrzymanie",
+                  "color": "#999999",
+                  "font": "Comfortaa"
+                },
+                "titleSubtitlePadding": 10
+              },
+              "footer": {
+                "text": "Źródło: http://courses.cs.vt.edu/csonline/SE/Lessons/LifeCycle/Lesson.html",
+                "color": "#999999",
+                "fontSize": 14,
+                "font": "Comfortaa",
+                "location": "bottom-center"
+              },
+              "size": {
+                "canvasHeight": 400,
+                "canvasWidth": 600,
+                "pieInnerRadius": "61%",
+                "pieOuterRadius": "62%"
+              },
+              "data": {
+                "sortOrder": "value-asc",
+                "content": [
+                  {
+                    "label": "Utrzymanie",
+                    "value": 67,
+                    "color": "#2383c1"
+                  },
+                  {
+                    "label": "Programowanie",
+                    "value": 12,
+                    "color": "#64a61f"
+                  },
+                  {
+                    "label": "Integracja",
+                    "value": 8,
+                    "color": "#7b6788"
+                  },
+                  {
+                    "label": "Zbieranie wymagań",
+                    "value": 7,
+                    "color": "#a05c56"
+                  },
+                  {
+                    "label": "Projektowanie",
+                    "value": 6,
+                    "color": "#961919"
+                  }
+                ]
+              },
+              "labels": {
+                "outer": {
+                  "format": "label-percentage1",
+                  "pieDistance": 20
+                },
+                "inner": {
+                  "format": "none"
+                },
+                "mainLabel": {
+                  "fontSize": 17
+                },
+                "percentage": {
+                  "color": "#999999",
+                  "fontSize": 17,
+                  "decimalPlaces": 0
+                },
+                "value": {
+                  "color": "#cccc43",
+                  "fontSize": 17
+                },
+                "lines": {
+                  "enabled": true,
+                  "color": "#777777"
+                }
+              },
+              "effects": {
+                "load": {
+                  "effect": "none"
+                },
+                "pullOutSegmentOnClick": {
+                  "effect": "none",
+                  "speed": 400,
+                  "size": 8
+                },
+                "highlightSegmentOnMouseover": false
+              },
+              "misc": {
+                "colors": {
+                  "background": "#ffffff",
+                  "segmentStroke": "#000000"
+                }
+              }
+            });
+          </script>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                OTP czyli Open Telecom Platform, to biblioteka (ale
+                nie standardowa) zbierająca wspólne wzorce i
+                implementację generycznych elementów.
+              </li>
+              <li>
+                Obecna nazwa jest trochę nieprawidłowa, zważywszy na
+                to, że nie dotyczy tylko systemów telekomunikacyjnych
+                a raczej systemów, które mają podobną charakterystykę
+                jak wymienione systemy.
+              </li>
+              <li>
+                Na framework składają się generyczne komponenty, ale
+                także mechanizm obsługi wersji aplikacji, elementy
+                zapewniające przeładowywanie kodu na żywo, w systemie
+                produkcyjnym, mechanizmy wspierające "maintenance"
+                (śledzenie, obserwacja działania).
+              </li>
+              <li>
+                Ten nacisk ukierunkowany na wsparcie spowodowany jest
+                wagą, jaką Ericsson przykładał do tego elementu od
+                początku dla tworzonych systemów. Badania mówią, że
+                60% czasu jeśli chodzi o cykl życia oprogramowania to
+                okres utrzymaniowy. Twórcy OTP postawili sobie za cel,
+                ułatwienie procesu utrzymania i dostarczenie
+                efektywnych narzędzi właśnie dla tej fazy.
+              </li>
+              <li>
+                Powinniśmy tworzyć oprogramowanie od początku mając w
+                głowie utrzymanie i procedury utrzymaniowe,
+                ew. optymalizacja powinna dotyczyć elementów pod
+                spodem np. maszyny wirtualnej. Jeśli ktoś kojarzy
+                cytat Donalda Knutha, że "przedwczesna optymalizacja
+                to przyczyna wszelkiego zła", to jest dokładnie ten
+                kontekst w którym padło to stwierdzenie.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Cegiełki</h1>
+          <h3>Zachowania <em>(Behaviours)</em></h3>
+
+          <img class="bigger-size" src="/img/behaviors.png" alt="Struktura bibliotek dostępnych w Erlangu" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Inżynierowie odpowiedzialni za rozwój OTP,
+                zaobserwowali i wyodrębnili zestaw wzorców.
+                Udostępnili je w postaci tzw. generycznych
+                zachowań (ang. behaviors).
+              </li>
+              <li>
+                Mamy do dyspozycji generyczne implementacje serwera z
+                wywołaniami asynchronicznymi i synchronicznymi,
+                mechanizm obsługi zdarzeń, generyczną maszynę stanów,
+                nadzorców oraz wiele, wiele innych implementacji.  To
+                co najważniejsze, to wyodrębnienie części wspólnych od
+                konkretnej implementacji. Nie musimy się przejmować
+                wnętrznościami, które są wyodrębione, zamknięte i
+                współdzielone w formie zachowania, tylko skupiamy się
+                na implementacji logiki, którą dostarczamy jako zestaw
+                funkcji.
+              </li>
+              <li>
+                Jeśli w naszej aplikacji pojawią się wzorce,
+                charakterystyczne dla naszej domeny - nic nie stoi na
+                przeszkodzie aby wykorzystać taki mechanizm do
+                przygotowania własnego zestawu zachowań.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Cegiełki</h1>
+          <h3>Elementy Systemu</h3>
+
+          <img class="fragment normal-image distributed-systems-internal"
+               src="/img/DistributedSystemInternal.png"
+               alt="Wewnętrzna struktura aplikacji Erlangowej" />
+
+          <img class="normal-image distributed-systems"
+               src="/img/DistributedSystem.png"
+               alt="Wizualizacja wewnętrznych elementów systemu Erlangowego" />
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Korzystając z biblioteki oraz przygodowanych cegiełek,
+                możemy śmiało budować stabilne i dostępne systemy,
+                które są odporne na błędy.
+              </li>
+              <li>
+                Na system w Erlangu składają się aplikacje
+                (odpowiednikiem będą komponenty). Zamiast tworzyć
+                monolity, tworzymy prawdziwe systemy - złożone z wielu
+                aplikacji. Wdrożenie każdej aplikacji odbywa się za
+                pomocą wydań (releases), mechanizmu dostarczonego
+                przez OTP.
+              </li>
+              <li>
+                Ostatnio popularnym trendem są mikroserwisy, których
+                idea jest łudząco podobna do tego jak konstruuje się
+                systemy w Erlangu. Można pokusić się o stwierdzenie,
+                że to nowe pojęcie zostało odkryte 30 lat temu, a na
+                pewno nie jest to nic nowego.
+              </li>
+              <li>
+                Jeśli spojrzymy głębiej, na to jak zbudowana jest
+                aplikacja, mamy do czynienia z hierarchiczną strukturą
+                w której każdy element to proces. Jedne procesy
+                nadzorują inne, korzeń jest nadzorowany przez
+                mechanizmy wbudowane w maszynę wirtualną i aplikację.
+              </li>
+                O tej hierarchii wspominałem wcześniej, dzięki niej
+                możemy konstruować systemy, które w razie wystąpienia
+                błędu obsługują go na poziomie zarządcy i restartują
+                podległe mu procesy, przywracając ich stan do
+                ostatniego, dobrego momentu. Jeśli liczba błędów lub
+                typ błędów przekracza możliwości nadzorcy, problem
+                może zostać wyeskalowany wyżej, aż do korzenia i w
+                końcu do maszyny wirtualnej, która aplikację zamknie
+                lub zrestartuje, wraz z jej zależnościami.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="header">
+          <h1>Podsumowanie</h1>
+
+          <ul class="summary no-list">
+            <li>30 lat doświadczeń i dziedzictwa</li>
+            <li>Solidna i sprawdzona maszyna wirtualna</li>
+            <li>Dobre dopasowanie do różnych przypadków</li>
+            <li>Unikalne mechanizmy obsługi błędów</li>
+            <li>Zupełnie inne podejście do współbieżności</li>
+          </ul>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                Chciałbym, żebyście zapamiętali tę technologię i
+                zarazili się nią, tak jak ja ponad 2 lata temu.
+              </li>
+              <li>
+                Należy pamiętać, że narzędzia mogą tylko ułatwić
+                rozwiązywanie trudnych problemów, ale nie wyeliminują
+                ich całkowicie. Dodatkowo narzędzi można użyć źle i w
+                złym kontekście.
+              </li>
+              <li>
+                Myślę jednak, że dobre i solidne rozwiązania warto
+                naśladować, niemałym zaniedbaniem z naszej strony
+                byłoby nie sprawdzić i jeśli to możliwe, skorzystać z
+                olbrzymiego doświadczenia i dziedzictwa.
+              </li>
+              <li>
+                Mimo relatywnej niszowości technologii od której
+                wszystko się zaczęło, znajduje ona zastosowanie w
+                bardzo dużej liczbie innych przypadków.
+              </li>
+              <li>
+                Unikalne mechanizmy wbudowane w platformę służące do
+                obsługi trudnych problemów są znaczącą przewagą nad
+                innymi środowiskami.
+              </li>
+              <li>
+                Dodatkowo ekosystem skupia dużo ludzi, którzy inne
+                trudne problemy rozwiązują właśnie z użyciem tych
+                narzędzi.
+              </li>
+              <li>
+                To wszystko czyni tę technologię, bardzo atrakcyjną
+                dla pewnej klasy problemów - i jeśli chodzi o
+                wyłącznie merytoryczny wybór, jest ona praktycznie
+                najlepsza.
+              </li>
+              <li>
+                Bardzo często przegrywa ona z inną, gorzej
+                przystosowaną ale "wystarczająco dobrą"
+                technologią. Głównie przez znajomość i czynniki inne
+                niż czysto merytoryczne np. koszty znalezienia i
+                wyszkolenia programistów lub popularność.
+              </li>
+              <li>
+                Jako środowisko, społeczność IT możemy to zmienić,
+                budując systemy w oparciu o solidne
+                rozwiązania. Wydaje mi się, że warto poświęcić własny
+                czas, aby bliżej poznać bardzo dobry fundament dla
+                Naszych przyszłych rozwiązań, który co najważniejsze,
+                jest od blisko 30 lat przystosowany do dzisiejszej
+                otaczającej nas rzeczywistości.
+              </li>
+              <li>Dziękuję za uwagę!</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Pytania?</h1>
+
+          <img src="/img/HelloMikeHelloJoe.jpg" alt="Hello Mike! Hello Joe!" />
+
+          <aside class="notes">
+            <ul>
+              <li>Czy mamy czas na pytania na koniec?</li>
+              <li>Czy są jakieś pytania na koniec?</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="content">
+          <h1>Dziękuję!</h1>
+
+          <div class="left half-size">
+            <h3>Materiały:</h3>
+
+            <ul class="links">
+              <li>
+                <a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">
+                  Joe Armstrong - PhD Thesis
+                </a>
+              </li>
+              <li>
+                <a href="http://learnyousomeerlang.com/what-is-otp">
+                  Learn You Some Erlang
+                </a>
+              </li>
+              <li>
+                <a href="http://mcfunley.com/choose-boring-technology">
+                  Choose boring technology
+                </a>
+              </li>
+              <li>
+                <a href="http://highscalability.com/blog/2014/10/13/how-league-of-legends-scaled-chat-to-70-million-players-it-t.html">
+                  Scaling League of Legends chat
+                </a>
+              </li>
+              <li>
+                <a href="http://web.archive.org/web/19991008013305/http://www.ericsson.se/cslab/erlang/">
+                  Ericsson CSLab (Web Archive)
+                </a>
+              </li>
+              <li>
+                <a href="http://courses.cs.vt.edu/csonline/SE/Lessons/LifeCycle/Lesson.html">
+                  Software Lifecycle proportions
+                </a>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/watch?v=uKfKtXYLG78">
+                  Erlang: The Movie
+                </a>
+              </li>
+              <li>
+                <a href="http://thisotplife.tumblr.com/">
+                  This OTP life
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="right half-size">
+            <h3>Fonty:</h3>
+
+            <ul class="links">
+              <li><a href="http://font.ubuntu.com/">Ubuntu Mono</a></li>
+              <li>
+                <a href="http://www.google.com/fonts/specimen/Roboto">Roboto</a>,
+                <a href="http://www.google.com/fonts/specimen/Roboto+Slab">Roboto Slab</a>
+              </li>
+              <li>
+                <a href="http://www.google.com/fonts/specimen/Kaushan+Script">Kaushan Script</a>,
+                <a href="http://www.google.com/fonts/specimen/Comfortaa">Comfortaa</a>
+              </li>
+              <li><a href="http://www.google.com/fonts/specimen/Black+Ops+One">Black Ops One</a></li>
+            </ul>
+
+            <h3>Obrazy:</h3>
+
+            <ul class="links">
+              <li>
+                Logotypy:
+                <a href="https://www.erlang-solutions.com/">Erlang</a>,
+                <a href="http://lfe.io">LFE</a>,
+                <a href="http://elixir-lang.org/">Elixir</a>
+              </li>
+              <li>
+                Tła:
+                <a href="http://goo.gl/m4wsQv">Domino Effect</a>,
+                <a href="http://goo.gl/Aob6Vs">Crossroads</a>,
+                <a href="http://goo.gl/cgEkfK">Forest</a>,
+                <a href="http://goo.gl/1N2b5X">Street</a>
+              </li>
+              <li>
+                Zdjęcia:
+                <a href="http://zotonic.com/themovie-makingof">Hello Mike!</a>,
+                <a href="http://www.mobilecomms-technology.com/projects/latin_american/images/img1.jpg">
+                  AXD301
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li></li>
+            </ul>
+          </aside>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      var LIGHT = "#C7DC80",
+          MEDIUM = "#755884",
+          DARK = "#A61E2D";
+
+      Function.prototype.curry = function() {
+        var fn = this,
+            args = [].slice.call(arguments);
+
+        return function() {
+          return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+      };
+
+      function getArrayOfDomElements(selector) {
+        return [].slice.call(document.querySelectorAll(selector));
+      }
+
+      function applyColor(color, element) {
+        if (!element.classList.contains("no-color")) {
+          element.setAttribute("data-background", color);
+        }
+      }
+
+      getArrayOfDomElements(".header").forEach(applyColor.curry(DARK));
+      getArrayOfDomElements(".content").forEach(applyColor.curry(LIGHT));
+      getArrayOfDomElements(".important").forEach(applyColor.curry(MEDIUM));
+
+      Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: "default",
+        transition: "slide",
+        transitionSpeed: "fast",
+        backgroundTransition: "linear",
+
+        dependencies: [
+          {
+            src: "lib/js/classList.js", condition: function() { return !document.body.classList; }
+          },
+          {
+            src: "plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); }
+          },
+          {
+            src: "plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; }
+          },
+          {
+            src: "socket.io/socket.io.js", async: true
+          },
+          {
+            src: "plugin/notes-server/client.js", async: true
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
