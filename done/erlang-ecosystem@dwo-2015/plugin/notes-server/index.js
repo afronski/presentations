@@ -14,7 +14,7 @@ var BROWN = "\033[33m",
     staticDir = express.static,
 
     options = {
-      port : 1947,
+      port : process.env["PORT"] || 1947,
       baseDir : __dirname + "/../../"
     },
 
