@@ -1,5 +1,5 @@
 {
-  "name": "erlang-ecosystem@dwo2015",
+  "name": "erlang-ecosystem-dwo2015",
   "version": "0.1.0",
   "description": "My presentation for DWO 2015 about ecosystem built around Erlang VM.",
   "scripts": {
