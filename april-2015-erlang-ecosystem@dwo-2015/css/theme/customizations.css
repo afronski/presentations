@@ -1,0 +1,296 @@
+@font-face {
+  font-family: 'Kaushan Script';
+  src: url("fonts/KaushanScript.ttf");
+}
+
+@font-face {
+  font-family: 'Comfortaa';
+  src: url("fonts/Comfortaa.ttf");
+}
+
+@font-face {
+  font-family: 'Black Ops One';
+  src: url("fonts/BlackOpsOne.ttf");
+}
+
+.reveal .header {
+  color: #FFFFFF;
+}
+
+.reveal .header h1 {
+  color: #FFFFFF;
+  font-size: 2.7em;
+  font-family: 'Kaushan Script';
+}
+
+.reveal .left {
+  float: left;
+}
+
+.reveal .right {
+  float: right;
+}
+
+.reveal .half-size {
+  width: 48%;
+}
+
+.reveal .half-size ul {
+  width: 100%;
+}
+
+.reveal .header h2,
+.reveal .header h3,
+.reveal .header h4,
+.reveal .header h5,
+.reveal .header h6 {
+  color: #FFFFFF;
+  font-family: 'Comfortaa';
+}
+.reveal .content {
+  color: #484E5D;
+}
+
+.reveal .content h1 {
+  color: #484E5D;
+  font-size: 2.7em;
+  font-family: 'Kaushan Script';
+  margin-bottom: 40px;
+}
+
+.reveal .content h2,
+.reveal .content h3,
+.reveal .content h4,
+.reveal .content h5,
+.reveal .content h6 {
+  color: #484E5D;
+  font-family: 'Comfortaa';
+}
+
+.reveal .important {
+  color: #FFFFFF;
+}
+
+.reveal .important h1 {
+  color: #FFFFFF;
+  font-size: 2.7em;
+  font-family: 'Comfortaa';
+}
+
+.reveal .important h2,
+.reveal .important h3,
+.reveal .important h4,
+.reveal .important h5,
+.reveal .important h6 {
+  color: #FFFFFF;
+  font-family: 'Comfortaa';
+}
+
+.reveal .full-background h1 {
+  color: #FFFFFF;
+  font-size: 2.7em;
+  font-family: 'Kaushan Script';
+}
+
+.reveal .full-background h2 {
+  color: #FFFFFF;
+  font-family: 'Kaushan Script';
+}
+
+.reveal .links {
+  margin-bottom: 20px;
+}
+
+.reveal .links li {
+  font-size: 0.8em;
+  line-height: 1.2em;
+}
+
+.reveal blockquote {
+  padding: 15px;
+  padding-right: 25px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  background-color: #FFFFFF;
+}
+
+.reveal blockquote:before {
+  content: "\201C";
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  margin-left: -25px;
+  vertical-align: -0.3em;
+}
+
+.reveal .blockquote-author {
+  float: right;
+  margin-right: 150px;
+  margin-top: 20px;
+}
+
+.reveal .logo {
+  width: 250px;
+  min-height: 120px;
+  padding: 5px 15px;
+  vertical-align: middle;
+}
+
+.reveal .main-logo {
+  width: 200px;
+}
+
+.reveal .smaller-logo {
+  width: 150px;
+  padding: 15px 15px 14px 15px;
+}
+
+.reveal .small-logo {
+  padding: 26px 25px 25px 24px;
+}
+
+.reveal .cover {
+  width: 300px;
+  padding: 15px;
+}
+
+.reveal .huge {
+  font-size: 3em;
+}
+
+.reveal .bottom-right-corner {
+  position: absolute;
+  top: 150px;
+  left: 650px;
+}
+
+.reveal .bottom-right-corner h1 {
+    font-family: 'Black Ops One';
+}
+
+.reveal .bottom-left-corner {
+  position: absolute;
+  top: 450px;
+  left: -100px;
+}
+
+.reveal .bottom-left-corner h1 {
+    font-family: 'Black Ops One';
+}
+
+.reveal .right-top-corner {
+  position: absolute;
+  top: 150px;
+  right: 150px;
+}
+
+.reveal [alt="Ericsson Switch AXD301"] {
+  float: right;
+  width: 40%;
+}
+
+.reveal .left-aligned {
+  margin: 0;
+  float: left;
+  width: 59%;
+}
+
+.reveal .spaced-bottom {
+  margin-bottom: 50px;
+}
+
+.reveal .no-list {
+  list-style: none;
+  font-family: 'Comfortaa';
+}
+
+.reveal .clouds {
+  background-color: white;
+
+  width: 605px;
+  height: 405px;
+
+  padding: 5px;
+  margin: 0 auto;
+
+  border-radius: 5px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reveal .logos {
+  margin-top: 60px;
+}
+
+.reveal .lang-logos {
+  margin-top: 500px;
+}
+
+.reveal .rspective {
+  margin: 0;
+  margin-right: 30px;
+  padding: 15px;
+  background-color: white;
+}
+
+.reveal .white-rook {
+  margin: 0;
+  margin-left: 30px;
+  width: 331px;
+}
+
+.reveal .lang-logo {
+  background-color: white;
+  padding: 15px;
+}
+
+.reveal .bigger-size {
+  zoom: 1.4;
+}
+
+.reveal .sharpen {
+  text-shadow: 0 0 6px rgba(0, 0, 0, 1);
+}
+
+.reveal .normal-image {
+  padding: 15px;
+  background-color: white;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reveal .scaled-down {
+  zoom: 0.75;
+  background-color: white;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reveal .second-image {
+  position: absolute;
+  left: 190px;
+}
+
+.reveal .history-list {
+  font-family: "Comfortaa";
+  font-size: 0.7em;
+  line-height: 1.5em;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.reveal .history-list time {
+  margin-right: 30px;
+}
+
+.reveal .distributed-systems {
+  position: absolute;
+  top: 250px;
+  left: 150px;
+}
+
+.reveal .distributed-systems-internal.visible + .distributed-systems {
+  display: none;
+}
+
+.reveal .summary {
+  font-family: "Comfortaa";
+}
