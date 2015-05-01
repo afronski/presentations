@@ -23,11 +23,16 @@ Meet.js Katowice:
 - *Error handling in Node.js* (2014)
 - *Introduction to ClojureScript and Om* (2015)
 
+NodeSchool Silesia:
+- *NodeSchool Spirit* (2015)
+- *Introduction to learnyounode* (2015)
+- *Introduction to javascripting* (2015)
+
 SRUG (Silesian Ruby User Group):
 - *Elixir* (2015)
 
 PHPers Gliwice:
 - *Microservices - hot or not?* (2014)
 
-NodeSchool Silesia:
-- *NodeSchool Spirit* (2015)
+DWO 2015 (*Dni Wolnego Oprogramowania*):
+- *Ekosystem Erlanga* (2015)
