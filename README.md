@@ -36,3 +36,6 @@ PHPers Gliwice:
 
 DWO 2015 (*Dni Wolnego Oprogramowania*):
 - *Ekosystem Erlanga* (2015)
+
+Berlin.js:
+- *ZeroMQ in Node.js* (2015)
