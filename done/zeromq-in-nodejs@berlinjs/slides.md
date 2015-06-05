@@ -14,3 +14,70 @@ class: center, middle
 ???
 
 - Hello!
+
+---
+
+# `~ $ whoami`
+
+???
+
+---
+
+# What `ZeroMQ` really is?
+
+???
+
+---
+
+# What `ZeroMQ` really isn't?
+
+???
+
+---
+
+# Pattern language in `ZeroMQ`
+
+???
+
+---
+
+# Case Study - Description
+
+???
+
+---
+
+# Case Study - Transport Layer
+
+???
+
+---
+
+# Case Study - Payload
+
+???
+
+---
+
+# Case Study - Interoperability
+
+???
+
+---
+
+# Resources
+
+???
+
+---
+
+class: center middle
+
+# Thanks! `<3`
+
+[![ZeroMQ logo](images/zeromq.gif)](http://zeromq.org)
+
+## Questions?
+### Tomatoes? `;)`
+
+???
