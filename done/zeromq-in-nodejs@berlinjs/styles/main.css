@@ -24,3 +24,16 @@ img[alt="NodeSchool Silesia Logo"] {
     width: 100px;
     margin: 50px;
 }
+
+.emoji {
+    width: 0.8em;
+    vertical-align: middle;
+}
+
+img[alt*="Banner"] {
+    width: 320px;
+}
+
+.logos {
+    margin-left: 50px;
+}
