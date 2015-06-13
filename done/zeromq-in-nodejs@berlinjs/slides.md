@@ -55,8 +55,11 @@ class: center, middle
 - And after that we will see how the actual implementation looked like and with what kind of challenges we have dealt.
 
 ---
+class: center, middle
 
 # Our Use Case
+
+<img alt="Diagram of our Use Case" class="diagram" src="images/use-case-diagram.png" />
 
 ???
 
@@ -109,14 +112,23 @@ class: center, middle
 
 # Case Study - Challenges
 
-- Deployment - *IaaS* or addons for *PaaS* (like [Ruppel's Sockets](https://devcenter.heroku.com/articles/ruppells-sockets#connecting-your-app))
+- **Deployment** - *IaaS* or addons for *PaaS* (like [Ruppel's Sockets](https://devcenter.heroku.com/articles/ruppells-sockets#connecting-your-app)).
+
+
+- **Operations** - Dealing with *TCP* (*knowledge*, *harder to maintain*).
+- **Operations** - Dealing with *TCP* - Corner cases are *expensive*.
+  - *It all depends on your requirements*.
 
 ???
 
 - Major challenge that you will face with *TCP-based* services is that it is not *PaaS* friendly.
   - You can workaround this by using *VPS*, *IaaS* or providing additional addons to your favorite *PaaS*.
   - Still, it is an additional operational and implementation cost.
-  
+- You need to deal with different problems than usual infrastructure - operation cost will be higher.
+  - Especially at the beginning.
+- Corner cases related with *TCP* are much harder to track and often they are very expensive to fix.
+  - Everything depends on your requirements and *SLA*. 
+
 ---
 class: center
 

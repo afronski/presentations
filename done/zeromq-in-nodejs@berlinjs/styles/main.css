@@ -41,3 +41,7 @@ img[alt*="Banner"] {
 .book-covers img {
     width: 150px;
 }
+
+.diagram {
+    width: 420px;
+}
