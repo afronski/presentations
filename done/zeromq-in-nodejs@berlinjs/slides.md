@@ -37,7 +37,6 @@ class: center
 - Enough of this - let's go to the details!
 
 ---
-
 class: center, middle
 
 # Agenda
@@ -104,12 +103,43 @@ class: center, middle
 
 ---
 
-# Resources
+# Case Study - Challenges
+
+- Deployment - *IaaS* or addons for *PaaS* (like [Ruppel's Sockets](https://devcenter.heroku.com/articles/ruppells-sockets#connecting-your-app))
 
 ???
 
+- Major challenge that you will face with *TCP-based* services is that it is not *PaaS* friendly.
+  - You can workaround this by using *VPS*, *IaaS* or providing additional addons to your favorite *PaaS*.
+  - Still, it is an additional operational and implementation cost.
+  
 ---
+class: center
 
+# Resources
+
+.book-covers[
+  [![ZeroMQ Book - Cover](images/zeromq-book-cover.gif)](http://shop.oreilly.com/product/0636920026136.do)
+  [![Node.js: The Right Way - Cover](images/nodejs-right-way-book-cover.jpg)](https://pragprog.com/book/jwnode/node-js-the-right-way)
+  [![Code Connected - Volume 1](images/code-connected.jpg)](https://www.createspace.com/4098511)
+]
+
+[ZeroMQ Guide](http://zguide.zeromq.org/page:all)
+
+[afronski/zeromq-in-nodejs](https://github.com/afronski/zeromq-in-nodejs)
+
+[Peter Hintjens - Distribution, Scale and Flexibility with ZeroMQ](https://www.youtube.com/watch?v=yhGXJ9Jt3-A)
+
+[Matrin Sustrik - ØMQ: A way towards fully distributed architectures](https://www.youtube.com/watch?v=RcfT3b79UYM)
+
+???
+
+- At the end I have attached couple of useful resources.
+  - I especially recommend books - "ZeroMQ" from O'Reilly (Warning: C code inside) and "Node.js: the Right Way".
+  - Videos will be useful to grasp the ideas and philosophy behind ZeroMQ.
+  - Code presented here is available on my Github account.
+
+---
 class: center middle
 
 # Thanks! <img alt="Heart" src="images/heart.png" class="emoji" />

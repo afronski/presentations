@@ -37,3 +37,7 @@ img[alt*="Banner"] {
 .logos {
     margin-left: 50px;
 }
+
+.book-covers img {
+    width: 150px;
+}
