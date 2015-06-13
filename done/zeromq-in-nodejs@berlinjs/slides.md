@@ -8,16 +8,15 @@ Wojtek Gawronski - [@afronski](https://twitter.com/afronski)
 
 .logos[
 [![rspective Logo](images/rspective.png)](http://blog.rspective.com)
-[![NodeSchool Silesia Logo](images/nodeschool-silesia.png)](http://nodeschool.io/silesia)
-]
+[![NodeSchool Silesia Logo](images/nodeschool-silesia.png)](http://nodeschool.io/silesia)]
 
 [@rspective](https://twitter.com/rspective), [@nodeschoolpl](https://twitter.com/nodeschoolpl) 
 
 ???
 
 - Hello!
-- I've participated in Berlin.js several times and now it is my turn to give back to the community.
-- We should be grateful that the organizers are doing such wonderful job - round of applause for them, please!
+  - I've participated in Berlin.js several times and now it is my turn to give back to the community.
+  - We should be grateful that the organizers are doing such wonderful job - round of applause for them, please!
 - Before we start, I'd like to briefly introduce me and our company.
 
 ---
@@ -30,10 +29,14 @@ class: center
 ???
 
 - My name is Wojtek Gawroński (@afronski). I am a part of a rspective team.
-- We are a pragmatic software house based in Katowice, Poland, but we also have an office in Berlin - we are here at least once in a month.
-- We are working mostly with start-ups - couple of them are from here, couple are not.
-- But we also working with bigger companies, like e.g. SAS institute.
-- Instead only retrieving from community, we are also giving back - we are regularly organizing NodeSchool Silesia, we are bootstrapping other meet-ups in the Silesian region, and also we are cooperating with local Hackerspace community.
+  - We are a pragmatic software house based in Katowice, Poland, but we also have an office in Berlin.
+    - We are here at least once in a month.
+  - We are working mostly with start-ups - couple of them are from here, couple are not.
+  - But we also working with bigger companies, like e.g. SAS institute.
+- We are also giving back to the community:
+  - We are regularly organizing NodeSchool Silesia
+  - We are bootstrapping other meet-ups in the Silesian region
+  - And also we are cooperating with local Hackerspace community.
 - Enough of this - let's go to the details!
 
 ---
@@ -57,7 +60,8 @@ class: center, middle
 
 ???
 
-- I can't disclose too many details regarding domain or the actual algorithms, but I promise that the technical side related with ZeroMQ and Node.js is gathered 1:1 from the actual problem.
+- I can't disclose too many details regarding domain or the actual algorithms.
+- But I promise that the technical side related with ZeroMQ and Node.js is gathered 1:1 from the actual problem.
 
 ---
 
@@ -119,10 +123,9 @@ class: center
 # Resources
 
 .book-covers[
-  [![ZeroMQ Book - Cover](images/zeromq-book-cover.gif)](http://shop.oreilly.com/product/0636920026136.do)
-  [![Node.js: The Right Way - Cover](images/nodejs-right-way-book-cover.jpg)](https://pragprog.com/book/jwnode/node-js-the-right-way)
-  [![Code Connected - Volume 1](images/code-connected.jpg)](https://www.createspace.com/4098511)
-]
+[![ZeroMQ Book - Cover](images/zeromq-book-cover.gif)](http://shop.oreilly.com/product/0636920026136.do)
+[![Node.js: The Right Way - Cover](images/nodejs-right-way-book-cover.jpg)](https://pragprog.com/book/jwnode/node-js-the-right-way)
+[![Code Connected - Volume 1](images/code-connected.jpg)](https://www.createspace.com/4098511)]
 
 [ZeroMQ Guide](http://zguide.zeromq.org/page:all)
 
