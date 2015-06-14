@@ -57,7 +57,7 @@ class: center, middle
 ---
 class: center, middle
 
-# Our Use Case
+# Our Case Study
 
 <img alt="Diagram of our Use Case" class="diagram" src="images/use-case-diagram.png" />
 
@@ -68,13 +68,13 @@ class: center, middle
 
 ---
 
-# What `ZeroMQ` really is?
+# `ZeroMQ` - Characteristics
 
-???
-
----
-
-# What `ZeroMQ` really isn't?
+- *TODO*: Authors, history, motivation and origin.
+- *TODO*: Use Cases.
+- *TODO*: Multiple slides!
+- *TODO*: Focus on things which are most important for ZeroMQ philosophy.
+- *TODO*: Microservices or SOA approach, even before that.
 
 ???
 
@@ -82,11 +82,8 @@ class: center, middle
 
 # Pattern language in `ZeroMQ`
 
-???
-
----
-
-# Case Study - Description
+- *TODO*: ZGUIDE ;) and Pattern language.
+- *TODO*: What is a Lazy Pirate?
 
 ???
 
@@ -94,17 +91,23 @@ class: center, middle
 
 # Case Study - Transport Layer
 
+- *TODO*: Protocol, all internals, corner cases regarding behaviors.
+
 ???
 
 ---
 
 # Case Study - Payload
 
+- *TODO*: Payload format is up to you.
+
 ???
 
 ---
 
 # Case Study - Interoperability
+
+- *TODO*: Unified protocol implementations across languages.
 
 ???
 
@@ -118,6 +121,10 @@ class: center, middle
 - **Operations** - Dealing with *TCP* (*knowledge*, *harder to maintain*).
 - **Operations** - Dealing with *TCP* - Corner cases are *expensive*.
   - *It all depends on your requirements*.
+
+- **Designing** - *TODO*: Different approach, different thinking, different abstractions.
+
+- **Distributed Systems** - *TODO*: Different techniques, different advantages and different problems.
 
 ???
 
