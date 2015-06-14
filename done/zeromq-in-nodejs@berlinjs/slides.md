@@ -148,7 +148,7 @@ class: center
 
 [ZeroMQ Guide](http://zguide.zeromq.org/page:all)
 
-[afronski/zeromq-in-nodejs](https://github.com/afronski/bitcoin-transactions-service-zmq)
+[afronski/bitcoin-transactions-service-zmq](https://github.com/afronski/bitcoin-transactions-service-zmq)
 
 [Peter Hintjens - Distribution, Scale and Flexibility with ZeroMQ](https://www.youtube.com/watch?v=yhGXJ9Jt3-A)
 
