@@ -16,7 +16,7 @@ Wojtek Gawronski - [@afronski](https://twitter.com/afronski)
 
 - Hello!
   - I've participated in Berlin.js several times and now it is my turn to give back to the community.
-  - We should be grateful that the organizers are doing such wonderful job - round of applause for them, please!
+  - We should be grateful that the organizers are doing such wonderful job here - round of applause for them, please!
 - Before we start, I'd like to briefly introduce me and our company.
 
 ---
@@ -31,7 +31,7 @@ class: center
 - My name is Wojtek Gawroński (@afronski). I am a part of a rspective team.
   - We are a pragmatic software house based in Katowice, Poland, but we also have an office in Berlin.
     - We are here at least once in a month.
-  - We are working mostly with start-ups - couple of them are from here, couple are not.
+  - We are working mostly with start-ups - couple of them are from here, couple are from abroad.
   - But we also working with bigger companies, like e.g. SAS institute.
 - We are also giving back to the community:
   - We are regularly organizing NodeSchool Silesia
@@ -50,9 +50,9 @@ class: center, middle
 
 ???
 
-- I always want to present something real. So I will start with describing our use case.
-- Then, we will fluently talk about the capabilities and features of ZeroMQ, we will briefly talk about pattern language defined there.
-- And after that we will see how the actual implementation looked like and with what kind of challenges we have dealt.
+- When I present something, I always try to have a real example. Likewise today, I will start with description of our use case
+- Then, we will fluently move to the capabilities and features of ZeroMQ, and we will briefly talk about pattern language defined there.
+- And after that, we will see how the actual implementation looked like and with what kind of challenges we have dealt during that project.
 
 ---
 class: center, middle
@@ -63,12 +63,24 @@ class: center, middle
 
 ???
 
-- I can't disclose too many details regarding domain or the actual algorithms.
-- But I promise that the technical side related with ZeroMQ and Node.js is gathered 1:1 from the actual problem.
-
+- I can't disclose too many details regarding domain or the actual technicalities e.g. schema, protocols or algorithms.
+  - But I all technicalities related with ZeroMQ and Node.js are identical to the ones in the original problem.
+- Basically, we have to built additional visualization layer on top of existing system.
+  - It is battle-proven working piece of machinery, so there was no need to change that.
+  - Even, if there was a need to changing it - it won't be possible in the project schedule.
+- In that system, we already had an integration points built with use of ZeroMQ.
+  - So our job was to integrate, deploy and enhance existing product.
+- Before we dive into more details, quick questions:
+  - How many of you are familiar what ZeroMQ is?
+  - How many of you worked with that library?
+- For someone, which faces this topic first time, probably many terms and acronyms have no meaning.
+  - So let's talk about that library and its terminology.
+  
 ---
 
 # `ZeroMQ` - Characteristics
+
+- *Rather than being a single package or library, ZeroMQ is a community of projects focused on decentralized computing*.
 
 - *TODO*: Authors, history, motivation and origin.
 - *TODO*: Use Cases.
@@ -80,8 +92,10 @@ class: center, middle
 
 ---
 
-# Pattern language in `ZeroMQ`
+# Key things related with `ZeroMQ`
 
+- *TODO*: Distributed Systems.
+- *TODO*: Community!
 - *TODO*: ZGUIDE ;) and Pattern language.
 - *TODO*: What is a Lazy Pirate?
 
@@ -89,25 +103,53 @@ class: center, middle
 
 ---
 
-# Case Study - Transport Layer
+# ZeroMQ - Transport Layer
 
-- *TODO*: Protocol, all internals, corner cases regarding behaviors.
+- *TODO*: Protocol, all internals, corner cases regarding behaviour.
+- *TODO*: TCP, PGM, inproc, ipc.
 
 ???
 
 ---
 
-# Case Study - Payload
+# ZeroMQ - Payload and Security
 
 - *TODO*: Payload format is up to you.
+- *TODO*: Security is up to you (from NONE to TRY-TO-CRACK-THIS).
 
 ???
 
 ---
 
-# Case Study - Interoperability
+# ZeroMQ - Interoperability
 
 - *TODO*: Unified protocol implementations across languages.
+- *TODO*: Example code - Erlang <-> Node.js.
+
+???
+
+---
+
+# Case Study - Library
+
+- *TODO*: Require and library installation.
+- *TODO*: Native libraries.
+
+???
+
+---
+
+# Case Study - Sockets and Abstractions
+
+- *TODO*: REQ, REP, XREQ, XREP, PUB, SUB, XPUB, XSUB.
+
+???
+
+---
+
+# Case Study - Signals
+
+- *TODO*: Cleaning up, closing sockets, handling SIGINT.
 
 ???
 
