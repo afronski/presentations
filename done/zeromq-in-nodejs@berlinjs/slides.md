@@ -82,6 +82,7 @@ class: center, middle
 
 - *Rather than being a single package or library, ZeroMQ is a community of projects focused on decentralized computing*.
 
+- *TODO*: Brokerless, no message queue - http://zeromq.org/whitepapers:brokerless 
 - *TODO*: Authors, history, motivation and origin.
 - *TODO*: Use Cases.
 - *TODO*: Multiple slides!
@@ -98,6 +99,8 @@ class: center, middle
 - *TODO*: Community!
 - *TODO*: ZGUIDE ;) and Pattern language.
 - *TODO*: What is a Lazy Pirate?
+- *TODO*: What about overload? High Water Mark - either drop or block. There is no other way.
+- *TODO*: http://ferd.ca/queues-don-t-fix-overload.html
 
 ???
 
@@ -105,6 +108,7 @@ class: center, middle
 
 # ZeroMQ - Transport Layer
 
+- *TODO*: ZMTP and other RFCs - http://rfc.zeromq.org/spec:23
 - *TODO*: Protocol, all internals, corner cases regarding behaviour.
 - *TODO*: TCP, PGM, inproc, ipc.
 
@@ -114,8 +118,8 @@ class: center, middle
 
 # ZeroMQ - Payload and Security
 
-- *TODO*: Payload format is up to you.
-- *TODO*: Security is up to you (from NONE to TRY-TO-CRACK-THIS).
+- *TODO*: Liberal - payload format is up to you.
+- *TODO*: Liberal - security is up to you (from NONE to TRY-TO-CRACK-THIS), but there are implementation available.
 
 ???
 
@@ -142,6 +146,8 @@ class: center, middle
 # Case Study - Sockets and Abstractions
 
 - *TODO*: REQ, REP, XREQ, XREP, PUB, SUB, XPUB, XSUB.
+- *TODO: http://rfc.zeromq.org/spec:28, http://rfc.zeromq.org/spec:29
+- *TODO: http://api.zeromq.org/master:zmq-socket
 
 ???
 
