@@ -164,7 +164,7 @@ class: center, middle
   - Many patterns are prepared in a form of a *RFC* and also described inside *ZGuide* and various books.
 
 --
-- [Queues don't fix the overload](http://ferd.ca/queues-don-t-fix-overload.html)
+- [Queues (or brokers) don't fix the overload](http://ferd.ca/queues-don-t-fix-overload.html)
   - You need to either drop messages or block yourself.
     - [High-Water Marks](http://zguide.zeromq.org/page:all#High-Water-Marks)
 
