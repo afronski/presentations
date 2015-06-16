@@ -31,8 +31,9 @@ class: center
 - My name is Wojtek Gawroński (@afronski). I am a part of a rspective team.
   - We are a pragmatic software house based in Katowice, Poland, but we also have an office in Berlin.
     - We are here at least once in a month.
-  - We are working mostly with start-ups - couple of them are from here, couple are from abroad.
-  - But we also working with bigger companies, like e.g. SAS institute.
+  - We help startups automate their operations from IT perspective - full-stack (*web* and *mobile*).
+    - We are the tech team behind `BOOKATIGER`, a skyrocketing Berlin start-up founded by *ex-Delivery-Hero* co-founders.
+    - But we also working with bigger companies, like e.g. SAS institute.
 - We are also giving back to the community:
   - We are regularly organizing NodeSchool Silesia
   - We are bootstrapping other meet-ups in the Silesian region
@@ -153,7 +154,7 @@ class: center, middle
 
 --
 - What is a *Lazy Pirate*?
-  - [Pattern Language](http://zguide.zeromq.org/page:all)
+  - [Pattern Language](http://zguide.zeromq.org/page:all#Client-Side-Reliability-Lazy-Pirate-Pattern)
 
 ???
 
@@ -184,9 +185,17 @@ class: center, middle
 - [ZMTP - ZeroMQ Message Transport Protocol](http://rfc.zeromq.org/spec:23)
   - Secure, credit-based links between peers over transport layer.
      - `TCP`, `PGM`, but also `IPC` or `inproc`
+  - *Peer-to-Peer* protocol.
   - Most recent version: `3.0`
-
+     - Fully *backward compatible*.
+  - License: *GPLv3* 
 ???
+
+- This is the core of the *ZeroMQ*.
+  - This protocol defines *framing*, mechanisms for preserving backward compatibility, seams for security layer and defines behavior e.g. for reconnecting mechanisms.
+- It is defined as a separate *RFC* in the *ZeroMQ* - *RFC 23* is for third version of that protocol.
+- It is deliberately distributed with such permissive license.
+  - It is a protection that someone will create a incompatible fork of `ZMTP`.
 
 ---
 
@@ -198,6 +207,7 @@ class: center, middle
 
 - *Security* is up to you.
   - There are implementations available inside *ZeroMQ*.
+     - `NULL`, `PLAIN`, `CURVE`, `GSSAPI`
 
 ???
 
@@ -242,24 +252,108 @@ class: center, middle
 
 # Case Study - Library
 
-- *TODO*: Require and library installation.
-- *TODO*: Native libraries.
+- `npm install --save zmq`
+- `package.json`:
 
-- *TODO*: Code sample.
+```json
+"dependencies": {
+  "zmq": "~2.11.0"
+}
+```
+
+- `server.js`:
+
+```javascript
+"use strict";
+
+const zmq = require("zmq");
+
+const subscriber = zmq.socket("sub");
+const requester = zmq.socket("req");
+```
+
+- `node --harmony server.js`
 
 ???
+
+- It is a library with native code.
+  - It will compile all necessary dependencies.
+  - But it can be problematic on 
+- I encourage you to use `ES2015` (former `ES6`) and `--harmony` mode to support all goodies from the newest standard.
 
 ---
 
 # Case Study - Sockets and Abstractions
 
-- *TODO*: REQ, REP, XREQ, XREP, PUB, SUB, XPUB, XSUB.
-- *TODO*: http://rfc.zeromq.org/spec:28, http://rfc.zeromq.org/spec:29
-- *TODO*: http://api.zeromq.org/master:zmq-socket
+- [`REQ` and `REP`](http://rfc.zeromq.org/spec:28) - typical synchronous *RPC*.
+- `sender.js`
 
-- *TODO*: Code samples.
+```javascript
+// Sending message and handling response.
+requester.send(stringifiedPayload);
+requester.on("message", function (response) {
+    console.info("Received response: %s", response);
+});
+
+requester.connect("tcp://0.0.0.0:10020");
+```
+
+- `receiver.js`
+
+```javascript
+const responder = zmq.socket("rep");
+
+responder.on("message", function (data) {
+    // Do hard work and calculate response. 
+    responder.send(response);
+});
+
+responder.bind("tcp://0.0.0.0:10020");
+```
 
 ???
+
+- In our example I would like to focus on two abstractions.
+- First we will talk about classic synchronous RPC represented as a `REQ-REP` socket pair.
+  - It is synchronous on the socket level - so it means that communication is synchronous.
+  - Library itself (and in consequence event loop underneath) uses as much as it can an asynchronous approach.
+  - So no worries about synchronous code.
+
+---
+
+# Case Study - Sockets and Abstractions
+
+- [`PUB` and `SUB`](http://rfc.zeromq.org/spec:29) - typical *fan-out*.
+- `sender.js`
+
+```javascript
+const publisher = zmq.socket("pub");
+
+// Do hard work and publish events.
+publisher.send(stringifyEvent);
+
+publisher.bind("tcp://0.0.0.0:9002");
+```
+
+- `receiver.js`
+
+```javascript
+// Subscribe on all messages and handling incoming messages.
+subscriber.subscribe("");
+subscriber.on("message", function (payload) {
+    console.info("Received: %s", payload);
+});
+
+subscriber.connect("tcp://localhost:9002");
+```
+
+???
+
+- Next, we will handle simple publish and subscribe mechanism.
+- Again, API and methods are really simple and cohesive.
+  - Wrapper reuses all best practices related with `EventEmitter` and callbacks.
+  - Please note, that all messages are send and received as *strings* (and in consequence underneath as a binary buffer).
+     - Remember you need to handle payload format on your own (so `JSON`, `protobuf`).
 
 ---
 
@@ -269,6 +363,7 @@ class: center, middle
   - *Processes* should be:
      - As vulnerable as possible to internal errors.
      - As robust as possible against external attacks and errors.
+
 ???
 
 - Internal errors means in most cases either a programmer error - which should be fixed immediately.
@@ -278,6 +373,7 @@ class: center, middle
 - For protocol designers - use *Postel's Law* with caution. 
 
 --
+
 - Remember about other *OS* signals - `SIGTERM`, `SIGINT` ...
 
 ```javascript
