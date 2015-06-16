@@ -70,6 +70,7 @@ class: center, middle
   - Even, if there was a need to changing it - it won't be possible in the project schedule.
 - In that system, we already had an integration points built with use of ZeroMQ.
   - So our job was to integrate, deploy and enhance existing product.
+  - Integration via `HTTP` was impossible (e.g. limitations).
 - Before we dive into more details, quick questions:
   - How many of you are familiar what ZeroMQ is?
   - How many of you worked with that library?
@@ -78,31 +79,103 @@ class: center, middle
   
 ---
 
-# `ZeroMQ` - Characteristics
+# `ZeroMQ`
 
-- *Rather than being a single package or library, ZeroMQ is a community of projects focused on decentralized computing*.
-
-- *TODO*: Brokerless, no message queue - http://zeromq.org/whitepapers:brokerless 
-- *TODO*: Authors, history, motivation and origin.
-- *TODO*: Use Cases.
-- *TODO*: Multiple slides!
-- *TODO*: Focus on things which are most important for ZeroMQ philosophy.
-- *TODO*: Microservices or SOA approach, even before that.
+- Created by *Pieter Hintjens* and *Martin Sustrik* around 2007.
+- *It is a community of projects focused on decentralized computing*.
 
 ???
+
+- It was created around 2007 by two guys - *Pieter Hintjens* and *Martin Sustrik*.
+- It is like set of patterns built around *socket API on steroids*.
+  - It provides additional features on top of a standard *socket-like API*.
+    - Think about reconnecting, queuing, handling overload.
+  
+--
+- It is **[brokerless](http://zeromq.org/whitepapers:brokerless)**.
+
+???
+
+- Brokerless means that there is no central point of synchronization.
+  - You are not limited with your architecture of choice.
+  - But it means, that the queue needs to be somewhere.
+  - And it is - depending of used abstraction it is on sending, receiving or both sides.
+
+--
+.images[<img alt="CERN Evaluation" class="cern-evaluation" src="images/CERNEvaluation.png" />]
+
+???
+
+- *CERN* scored `ØMQ` as a most versatile solution for their middleware infrastructure.
+  - Basically whole messaging system which are responsible for steering accelerators is running on top of *ZeroMQ*.
+  - Other use cases are similar - highly distributed applications, high performance trading and financial systems, recently *IoT*.
+
+--
+- *Lean* approach to every single aspect other than *messaging*.
+- Alternatives - *AMQP*, *nanomsg*.
+
+???
+
+- Its core contains only necessary things.
+  - For you it can be a drawback or advantage - *it depends*.
+  - No service discovery mechanisms, no default payload format, no security mechanism is enforced on you. 
+- Direct alternatives are either:
+  - Overly complicated and development was stopped (*AMQP*).
+    - *FTR*: I mean here only a protocol - other tools which are using it (e.g. RabbitMQ) are focused around *broker*.
+  - Or you need to deal with smaller community, more immature product and higher bus factor (*nanomsg*).
 
 ---
 
-# Key things related with `ZeroMQ`
+# `ZeroMQ` - Philosophy
 
-- *TODO*: Distributed Systems.
-- *TODO*: Community!
-- *TODO*: ZGUIDE ;) and Pattern language.
-- *TODO*: What is a Lazy Pirate?
-- *TODO*: What about overload? High Water Mark - either drop or block. There is no other way.
-- *TODO*: http://ferd.ca/queues-don-t-fix-overload.html
+- You are building a *distributed system*.
+  - *Microservices* or *SOA* anyone?
 
 ???
+
+- This guys defined (or actually reused) good communication patterns a way before the *microservice* era.
+  - Yes, I'm smirking here - *Microservice* or *SOA* is nothing new.
+- It is all about decoupled services that have only one responsibility and they are doing it really well.
+  - In that particular context it will be nice to have a unified meaning, common patterns and well understood approach.
+
+--
+- Community *FTW*!
+  - [Collective Code Construction Contract (C4)](http://rfc.zeromq.org/spec:22)
+
+???
+
+- Its evolution is driven truly by a community.
+  - All protocols, enhancements, patterns are prepared and described as RFCs.
+  - C4 process is also prepared and maintained as a RFC.
+- Obviously, not always making decisions via community is good.
+  - But it is definitely better that doing it via committee.
+  - Less bus factors, less leadership issues, it is easier to create a compromise.
+
+--
+- What is a *Lazy Pirate*?
+  - [Pattern Language](http://zguide.zeromq.org/page:all)
+
+???
+
+- I have already spoke about that partially.
+  - Imagine, that you are designing a new distributed system and you already have a predefined, well tested and documented set of patterns and best practices.
+    - That will help you avoiding pitfalls.
+    - You will probably avoid very expensive mistakes, especially if you are at the beginning of your journey.
+  - Many patterns are prepared in a form of a *RFC* and also described inside *ZGuide* and various books.
+
+--
+- [Queues don't fix the overload](http://ferd.ca/queues-don-t-fix-overload.html)
+  - You need to either drop messages or block yourself.
+    - [High-Water Marks](http://zguide.zeromq.org/page:all#High-Water-Marks)
+
+???
+
+- When you dealt with distributed systems, you probably know that queues are not fixing overload problems.
+  - Instead of fixing the origin of the problem, you are postponing the death of your system.
+  - And often also you are masking the original issue by moving it to different place in your system.
+- It is always necessary to deal with overload via some form of *flow control*.
+  - *ZeroMQ* uses *high-water mark* mechanism for that.
+  - It means that after collecting 'N' messages in the (either in sending or receiving) queue it will start drop messages or block a socket (depending on the type).
 
 ---
 
@@ -118,7 +191,7 @@ class: center, middle
 
 # ZeroMQ - Payload and Security
 
-- *TODO*: Liberal - payload format is up to you.
+- *TODO*: Liberal - payload format is up to you (e.g. edn, Thirft, Protocol Buffers, plain-text, JSON).
 - *TODO*: Liberal - security is up to you (from NONE to TRY-TO-CRACK-THIS), but there are implementation available.
 
 ???
@@ -127,10 +200,18 @@ class: center, middle
 
 # ZeroMQ - Interoperability
 
-- *TODO*: Unified protocol implementations across languages.
-- *TODO*: Example code - Erlang <-> Node.js.
+- *TODO*: Unified pattern language.
+- *TODO*: Unified abstractions.
+- *TODO*: Similar libraries, behaviors.
+- *TODO*: Unified protocol implementation across languages.
 
 ???
+
+- Library solves one of the main problems related with interop.
+  - It provides a unified protocol implementations across programming languages.
+  - In the example code we have cooperation between *Erlang* and *Node.js*.
+    - Thanks to the common abstractions and unified view, it is easy to glue them together.
+- In other words: you can finally choose a language as a tool, without any worries that it will slow you down.
 
 ---
 
@@ -163,6 +244,10 @@ class: center, middle
 
 # Case Study - Challenges
 
+- **Distributed Systems** - Different problems and challenges.
+
+- **Designing** - Different patterns and set of abstractions.
+
 - **Deployment** - *IaaS* or addons for *PaaS* (like [Ruppel's Sockets](https://devcenter.heroku.com/articles/ruppells-sockets#connecting-your-app)).
 
 
@@ -170,17 +255,18 @@ class: center, middle
 - **Operations** - Dealing with *TCP* - Corner cases are *expensive*.
   - *It all depends on your requirements*.
 
-- **Designing** - *TODO*: Different approach, different thinking, different abstractions.
-
-- **Distributed Systems** - *TODO*: Different techniques, different advantages and different problems.
-
 ???
 
-- Major challenge that you will face with *TCP-based* services is that it is not *PaaS* friendly.
+- Distributed systems are bringing unusual problems to the table.
+  - Deal with it.
+- Dealing with *ZeroMQ* enforces you to learn new set of abstractions and use different mindset, than usual one.
+  - It may look hard at the beginning, but examples, guides and RFCs are really helpful.
+- Major challenge that you will face with *TCP-based* services is that it is not a *PaaS* friendly.
   - You can workaround this by using *VPS*, *IaaS* or providing additional addons to your favorite *PaaS*.
   - Still, it is an additional operational and implementation cost.
-- You need to deal with different problems than usual infrastructure - operation cost will be higher.
+- You need to deal with different problems than usual in terms of infrastructure - operation cost will be higher.
   - Especially at the beginning.
+  - *ZeroMQ* reduces that significantly - still, some knowledge is required and it can save you hours of debugging.
 - Corner cases related with *TCP* are much harder to track and often they are very expensive to fix.
   - Everything depends on your requirements and *SLA*. 
 
@@ -205,7 +291,7 @@ class: center
 ???
 
 - At the end I have attached couple of useful resources.
-  - I especially recommend books - "ZeroMQ" from O'Reilly (Warning: C code inside) and "Node.js: the Right Way".
+  - I especially recommend books - "ZeroMQ" from O'Reilly (Warning: there is a lot of C code inside) and "Node.js: the Right Way".
   - Videos will be useful to grasp the ideas and philosophy behind ZeroMQ.
   - Code presented here is available on my Github account.
 

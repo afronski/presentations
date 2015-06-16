@@ -45,3 +45,13 @@ img[alt*="Banner"] {
 .diagram {
     width: 420px;
 }
+
+.images {
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+.cern-evaluation {
+    width: 250px;
+}
