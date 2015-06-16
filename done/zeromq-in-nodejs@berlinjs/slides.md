@@ -181,9 +181,10 @@ class: center, middle
 
 # ZeroMQ - Transport Layer
 
-- *TODO*: ZMTP and other RFCs - http://rfc.zeromq.org/spec:23
-- *TODO*: Protocol, all internals, corner cases regarding behaviour.
-- *TODO*: TCP, PGM, inproc, ipc.
+- [ZMTP - ZeroMQ Message Transport Protocol](http://rfc.zeromq.org/spec:23)
+  - Secure, credit-based links between peers over transport layer.
+     - `TCP`, `PGM`, but also `IPC` or `inproc`
+  - Most recent version: `3.0`
 
 ???
 
@@ -191,27 +192,51 @@ class: center, middle
 
 # ZeroMQ - Payload and Security
 
-- *TODO*: Liberal - payload format is up to you (e.g. edn, Thirft, Protocol Buffers, plain-text, JSON).
-- *TODO*: Liberal - security is up to you (from NONE to TRY-TO-CRACK-THIS), but there are implementation available.
+- *Payload* format is up to you.
+  - You need to handle it on your side.
+
+
+- *Security* is up to you.
+  - There are implementations available inside *ZeroMQ*.
 
 ???
+
+- *ZeroMQ* employs *UNIX* philosophy and focuses on the *socket*, *messaging* and *protocols*.
+  - Anything besides that you need to handle on your side.
+- Good or bad?
+  - It is an advantage - because no one forces you to use something you don't want or need.
+  - It can be a drawback - because you need to handle it by yourself.
+- In most use cases, you already know what to do with this two things.
+  - In our case we need to deal with a proprietary format.
+  - And our network environment was a trusted LAN.
 
 ---
 
 # ZeroMQ - Interoperability
 
-- *TODO*: Unified pattern language.
-- *TODO*: Unified abstractions.
-- *TODO*: Similar libraries, behaviors.
-- *TODO*: Unified protocol implementation across languages.
+- It is *easy*!
+  - Unified pattern language.
+  - Unified abstractions.
+
+
+- Unified protocol implementation across programming languages.
+- *Protocols* are well defined and backward compatible.
+
+
+- Similar *API* and *behaviour* in provided client libraries.
 
 ???
 
-- Library solves one of the main problems related with interop.
+- ZeroMQ are solving multiple problems related with interoperability.
   - It provides a unified protocol implementations across programming languages.
   - In the example code we have cooperation between *Erlang* and *Node.js*.
     - Thanks to the common abstractions and unified view, it is easy to glue them together.
-- In other words: you can finally choose a language as a tool, without any worries that it will slow you down.
+    - It is also easier to think with and reason about building blocks.
+  - You have got backward compatibility handled at the protocol level.
+    - As well - corner cases and differences related with platforms, *OS* and programming languages.
+- In other words - you can finally choose a programming language as a tool, without any worries that it will slow you down.
+  - Communication patterns are handled by the library.
+  - Even when you design your services separately, you are sharing common thinking, ideas and building blocks in whole system.
 
 ---
 
@@ -220,6 +245,8 @@ class: center, middle
 - *TODO*: Require and library installation.
 - *TODO*: Native libraries.
 
+- *TODO*: Code sample.
+
 ???
 
 ---
@@ -227,8 +254,10 @@ class: center, middle
 # Case Study - Sockets and Abstractions
 
 - *TODO*: REQ, REP, XREQ, XREP, PUB, SUB, XPUB, XSUB.
-- *TODO: http://rfc.zeromq.org/spec:28, http://rfc.zeromq.org/spec:29
-- *TODO: http://api.zeromq.org/master:zmq-socket
+- *TODO*: http://rfc.zeromq.org/spec:28, http://rfc.zeromq.org/spec:29
+- *TODO*: http://api.zeromq.org/master:zmq-socket
+
+- *TODO*: Code samples.
 
 ???
 
@@ -236,9 +265,33 @@ class: center, middle
 
 # Case Study - Signals
 
-- *TODO*: Cleaning up, closing sockets, handling SIGINT.
+- ZeroMQ's error handling philosophy is a mix of *fail-fast* and *resilience*.
+  - *Processes* should be:
+     - As vulnerable as possible to internal errors.
+     - As robust as possible against external attacks and errors.
+???
+
+- Internal errors means in most cases either a programmer error - which should be fixed immediately.
+- Or operational error like *lack of memory* which probably cannot be fixed from the inside.
+  - That is why you should fail-fast in those cases.
+  - You should not prepare any error handling for that, especially for programmer errors!
+- For protocol designers - use *Postel's Law* with caution. 
+
+--
+- Remember about other *OS* signals - `SIGTERM`, `SIGINT` ...
+
+```javascript
+process.on("SIGINT", function () {
+  console.info("Shutting down...");
+  socket.close();
+});
+```
 
 ???
+
+- You should gracefully handle that signals.
+  - Be sure that *shutdown* signals will propagate correctly across components in your system.
+  - Also be sure that resource owner will release resources correctly during that process.
 
 ---
 
