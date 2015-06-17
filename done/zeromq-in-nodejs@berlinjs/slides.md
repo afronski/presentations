@@ -153,8 +153,10 @@ class: center, middle
   - Less bus factors, less leadership issues, it is easier to create a compromise.
 
 --
-- What is a *Lazy Pirate*?
+- Do you know what is a *Lazy Pirate* or *Majordomo*?
   - [Pattern Language](http://zguide.zeromq.org/page:all#Client-Side-Reliability-Lazy-Pirate-Pattern)
+
+.images[<img alt="Majordomo Pattern" src="images/Majordomo.png" />]
 
 ???
 
@@ -163,7 +165,7 @@ class: center, middle
     - That will help you avoiding pitfalls.
     - You will probably avoid very expensive mistakes, especially if you are at the beginning of your journey.
   - Many patterns are prepared in a form of a *RFC* and also described inside *ZGuide* and various books.
-
+  
 --
 - [Queues (or brokers) don't fix the overload](http://ferd.ca/queues-don-t-fix-overload.html)
   - You need to either drop messages or block yourself.
@@ -196,6 +198,8 @@ class: center, middle
 - It is defined as a separate *RFC* in the *ZeroMQ* - *RFC 23* is for third version of that protocol.
 - It is deliberately distributed with such permissive license.
   - It is a protection that someone will create a incompatible fork of `ZMTP`.
+- Talking about that - there is a specification for using ZMTP protocol on top of Web Sockets.
+  - But, it is a *raw specification* which means it is not even a draft.
 
 ---
 
@@ -354,7 +358,26 @@ subscriber.connect("tcp://localhost:9002");
   - Wrapper reuses all best practices related with `EventEmitter` and callbacks.
   - Please note, that all messages are send and received as *strings* (and in consequence underneath as a binary buffer).
      - Remember you need to handle payload format on your own (so `JSON`, `protobuf`).
+---
 
+# Case Study - Sockets and Abstractions
+
+- **But wait!**
+- There are more of them: 
+  - `XREQ`, `XREP`, `XPUB`, `XSUB`, `ROUTER`, `DEALER`, `PAIR` ...
+
+
+- And more patterns:
+
+.images[<img alt="Mad Black Box Pattern - Big" src="images/MadBlackBox.png" />]
+
+???
+
+- Basically, I focused only on four type of sockets, but there are more of them.
+  - Our abstraction toolbox is much broader.
+  - The same thing applies to the patterns - there are much more patterns defined and described in a form of a *RFC*.
+- I encourage you to dig into the resources attached at the end of presentation.
+  
 ---
 
 # Case Study - Signals

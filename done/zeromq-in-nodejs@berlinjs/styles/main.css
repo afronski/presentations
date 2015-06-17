@@ -34,6 +34,14 @@ img[alt*="Banner"] {
     width: 320px;
 }
 
+img[alt*="Pattern"] {
+    width: 200px;
+}
+
+img[alt*="Pattern - Big"] {
+    width: 300px;
+}
+
 .logos {
     margin-left: 50px;
 }
