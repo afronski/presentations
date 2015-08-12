@@ -80,7 +80,7 @@ footer {
 }
 
 .ads {
-  height: 100px;
+  max-height: 100px;
   padding: 0 50px;
 }
 
