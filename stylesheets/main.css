@@ -79,6 +79,11 @@ footer {
   text-align: center;
 }
 
+.ads {
+  height: 100px;
+  padding: 0 50px;
+}
+
 @media screen and (max-width: 50em) {
   .mobile-link {
     display: block;
