@@ -80,8 +80,10 @@ footer {
 }
 
 .ads {
-  max-height: 100px;
+  margin: 0 auto;
   padding: 0 50px;
+  max-width: 800px;
+  max-height: 100px;
 }
 
 @media screen and (max-width: 50em) {
