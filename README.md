@@ -39,3 +39,6 @@ DWO 2015 (*Dni Wolnego Oprogramowania*):
 
 Berlin.js:
 - *ZeroMQ in Node.js* (2015)
+
+Kariera IT:
+- *Elixir + Phoenix* (2015)

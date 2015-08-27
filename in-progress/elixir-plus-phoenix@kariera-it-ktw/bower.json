@@ -1,0 +1,7 @@
+{
+  "name": "elixir-plus-phoenix-kariera-it-ktw-2015",
+  "version": "0.1.0",
+  "dependencies": {
+    "prism": "gh-pages"
+  }
+}
