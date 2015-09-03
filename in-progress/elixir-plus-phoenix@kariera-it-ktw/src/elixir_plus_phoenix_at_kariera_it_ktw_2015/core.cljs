@@ -53,7 +53,7 @@
   [:div
     [:h1 "Case Studies"]
     [:ul
-     [:li "Erlang VM Demo - afronski/wolves-and-rabbits-world-simulation"]
+     [:li "Erlang VM Demo (observer) - afronski/wolves-and-rabbits-world-simulation"]
      [:li "Speed wins the marketplace - asciinema (mix new, generators)"]
      [:li "Performance also! - asciinema (htop)"]
      [:li "Free lunch is over! - Concurrency, Distribution OOTB"]
