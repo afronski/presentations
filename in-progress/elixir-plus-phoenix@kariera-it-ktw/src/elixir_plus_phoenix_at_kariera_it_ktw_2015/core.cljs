@@ -64,14 +64,14 @@
    [:h3 "Topics"]
    [:ul.micro
           [:li "What is Elixir?"]
-          [:li "Standing on the shouldres of giants"]
+          [:li "Standing on the shoulders of giants"]
           [:li "Elevator pitch for Erlang VM / Elixir"
              [:ul
                [:li "Actor Model"]
                [:li "Concurrency Oriented language (analogy to physics"]
                [:li "Baked-in Distribution"]
                [:li "30+ years of experience"]
-               [:li "Functional Language - Referential Transparency, Predictability"]
+               [:li "Functional Language - Referential Transparency, Predictability, Immutability"]
                [:li "Hygenic Macros"]]]
           [:li "What is Phoenix?"]
           [:li "Elevator pitch for Phoenix"
@@ -83,15 +83,15 @@
                [:li "You are not sacrificing performance"]]]
           [:li "Stand-back a little bit"
              [:ul
-               [:li "Web world analogy to Telecom"]]]
+               [:li "Web world analogy to Telecom world"]]]
           [:li "Project kick-off"
              [:ul
                [:li "asciinema FTW!"]]]
-          [:li "Creating a chat"]
+          [:li "Creating a chat (very easy)"]
           [:li "What besides Phoenix?"
              [:ul
                [:li "Ecto"]
-               [:li "Clients for C#, Java, ObjC and Swift"]]]
+               [:li "Client libraries for C#, Java, ObjC and Swift"]]]
           [:li "What's next?"
              [:ul
                [:li "Books (Programming Elixir, Introducing Elixir, Elixir Metaprogramming)"]
