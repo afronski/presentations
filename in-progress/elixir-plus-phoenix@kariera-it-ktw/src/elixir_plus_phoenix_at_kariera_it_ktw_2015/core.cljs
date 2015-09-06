@@ -11,11 +11,7 @@
 (defonce app-state (atom {:counter 0
                           :internal-counter 0}))
 (def slides-list [:intro
-                  :whoami
-                  :introduction-poll
-                  :erlang-poll
-                  :content
-                  :other])
+                  :whoami])
 
 (defslide intro [_]
   [:div
