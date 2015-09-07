@@ -11,67 +11,94 @@
 (defonce app-state (atom {:counter 0
                           :internal-counter 0}))
 (def slides-list [:intro
-                  :whoami])
+                  :whoami
+                  :introduction-poll
+                  :erlang-familiarity-poll
+                  :why
+                  :free-lunch-is-over
+                  :impression
+                  :foundation-and-similarities])
 
 (defslide intro [_]
   [:div
    [:h1.huge.center.top-10 "Elixir + Phoenix"]
-   [:div.center.top-5
-    [:img.logo {:src "/images/elixir.png" :alt "Elixir logo."} nil]]
-   [:div.center
-    [:img {:src "/images/phoenix.png" :alt "Phoenix logo."} nil]]
+   [:div.logos
+    [:img {:src "/images/elixir.png" :alt "Elixir logo."}]
+    [:img {:src "/images/phoenix.png" :alt "Phoenix logo."}]]
    [:h5.right.top-5 "KarieraIT 2015 - Katowice"]
-   [:h5.right.m-10 "Wojtek Gawroński"]
+   [:h5.right.mt-10 "Wojtek Gawroński"]
    [:h5.right "rspective, White Rook"]])
 
 (defslide whoami [_]
-  [:h2 "~ $ whoami"
-   [:ul.no-list
-    [:li "Companies and Logos"]
-    [:li "Quick introduction and building authority (polyglot programmer)"]
-    [:li [:h6 "Twitter: " [:em "@afronski"]]]
-    [:li [:h6 "Github: " [:em "afronski"]]]]])
-
+  [:div
+   [:h1.huge.center.top-10 [:code "~ $ whoami" ]]
+   [:div.company.logos
+    [:img {:src "/images/rspective.png" :alt "rspective logo."}]
+    [:img {:src "/images/WhiteRook.jpg" :alt "White Rook logo."}]]
+   [:ul.no-list.right
+    [:li [:h4 [:strong "Twitter: "] [:em "@afronski"]]]
+    [:li [:h4 [:strong "Github: "] [:em "afronski"]]]]])
 
 (defslide introduction-poll [_]
   [:div
-   [:h1 "Participants poll"]
-   [:ul
-    [:li "How many of you heard about Erlang?"]
-    [:li "How many of you heard about Elixir?"]
-    [:li "How many of you heard about Functional Programming?"]]])
+   [:h1.huge.center.top-10 "Who are you?"]
+   [:ul.notes
+    [:li "Developers?"]
+    [:li "Functional programming?"]
+    [:li "Erlang?"]
+    [:li "Elixir?"]]])
 
-(defslide erlang-poll [_]
+(defslide erlang-familiarity-poll [state]
   [:div
-   [:h1 "Erlang poll"]
-   [:ul
-    [:li "The same trick as on DWO 2015 with poll about Erlang VM. ;)"]]])
+   [:h1.huge.center.top-10 "Erlang anyone?"]
+   [:ul.no-list
+    (f/on 1 state [:li "Who has played Call of Duty?"])
+    (f/on 2 state [:li "Who has played League of Legends?"])
+    (f/on 3 state [:li "Who has ever used " [:em "Facebook"] " chat?"])
+    (f/on 4 state [:li "Who has ever used " [:em "WhatsApp"] "?"])
+    (f/on 5 state [:li "Who has ever used data transfer on mobile?"])]
+   [:ul.notes
+    [:li "Please rise your hand and keep it in the air till the end."]
+    [:li "Take a look around how many of you actually meet one way or another an Erlang based system."]]])
 
 (defslide why [_]
+  [:h1.huge.center.top-10 "Why should I care?"])
+
+(defslide free-lunch-is-over [_]
   [:div
-   [:ul
-    [:li "Free lunch is over!"]
-    [:li "Multi and manycore is here."]
+   [:h1.huge.center.mt-30.mb-10 "Free lunch is over!"]
+   [:a {:href "https://en.wikipedia.org/wiki/Amdahl%27s_law" :target "_blank"}
+    [:img.image {:src "/images/AmdahlsLaw.svg" :alt "Amdahl's Law"}]]
+   [:ul.notes
+    [:li "Multi and manycore is literally here."]
     [:li "How hard is to build multithreaded and concurrent systems?"]
     [:li "Leaking abstractions (Event Loop, Promises, CSP etc.)"]]])
 
-(defslide foundation [_]
+(defslide impression [_]
   [:div
-   [:ul
-    [:li "Erlang - 30+ years of engineering"]
+   [:h1.huge.center.top-10 "Functional Programming"]
+   [:h1.huge.center "Actor Model"]
+   [:h2.center "Metaprogramming"]
+   [:h2.center "Developer " [:em "Happiness"]]
+   [:ul.notes
+    [:li "Referential Transparency, Predictability, Immutability"]
+    [:li "Hygenic Macros"]
+    [:li "'I loved things which I have seen, and I hated things there weren't there'"]]])
+
+(defslide foundation-and-similarities [_]
+  [:div
+   [:h1.huge.center.mt-30 "30+ years of engineering!"]
+   [:h2.center.mb-10 "1982 - " [:a {:href "http://www.erlang.org/course/history.html" :target "_blank"} "History"]]
+   [:img.image {:src "/images/TelecomAnalogy.png" :alt "Analogy of the web to telecom industry."}]
+   [:ul.notes
     [:li "It is impossible to talk about Elixir without talking about Erlang."]
-    [:li "BEAM ecosystem - Standing on the shoulders of giants"]
+    [:li "BEAM ecosystem - Standing on the shoulders of giant."]
     [:li "Why we should care about telecom? Well, it is our use case."]
     [:li "If we have Erlang, why we need to build something else?"]]])
 
-(defslide impressions [_]
-  [:div
-   [:ul
-    [:li "Functional Language - Referential Transparency, Predictability, Immutability"]
-    [:li "Developer Happiness"]
-    [:li "'I loved things which I have seen, and I hated things there weren't there'"]
-    [:li "Metaprogramming - Hygenic Macros"]
-    [:li "Last, but not least - Syntax"]]])
+
+
+
 
 (defslide ok-but-why-not-ruby-nor-rails [_]
   [:div

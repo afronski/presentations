@@ -71,10 +71,23 @@ body {
   overflow: hidden;
 }
 
-.logo {
+.logos {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.logos img:first-child {
+  margin-right: 20px;
+}
+
+.logos img {
+  max-width: 150px;
+}
+
+.company.logos img {
+  padding: 5px;
   background-color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .no-list {
@@ -93,8 +106,12 @@ body {
   text-align: right;
 }
 
-.m-10 {
+.mt-10 {
   margin-top: 10px;
+}
+
+.mt-30 {
+  margin-top: 30px;
 }
 
 .top-5 {
@@ -111,4 +128,34 @@ body {
 
 .top-25 {
   padding-top: 25%;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.notes {
+  display: none;
+}
+
+.image {
+  display: block;
+  width: 600px;
+  margin: 0 auto;
+}
+
+a {
+  color: white;
+}
+
+a:active {
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:visited {
+  color: white;
 }
