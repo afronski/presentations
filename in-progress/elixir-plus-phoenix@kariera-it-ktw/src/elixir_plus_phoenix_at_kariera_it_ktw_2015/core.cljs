@@ -92,9 +92,11 @@
    [:h2.center "Metaprogramming"]
    [:h2.center "Developer " [:em "Happiness"]]
    [:ul.notes
+    [:li "A language that doesn't affect the way you think about programming, is not worth knowing. - Alan Perlis"]
     [:li "Referential Transparency, Predictability, Immutability"]
     [:li "Hygenic Macros"]
-    [:li "'I loved things which I have seen, and I hated things there weren't there'"]]])
+    [:li "'I loved things which I have seen, and I hated things there weren't there' - Jose Valim"]
+    [:li "Asymilating good ideas from other communities - F#, Clojure, Ruby, Erlang, Scala ... like Borg."]]])
 
 (defslide foundation-and-similarities [_]
   [:div
@@ -148,6 +150,7 @@
    [:li "Creating a chat (very easy)"]
    [:li "What besides Phoenix?"
     [:ul
+     [:li "Plug, Cowboy - Rack, Tomcat..."]
      [:li "Ecto"]
      [:li "Client libraries for C#, Java, ObjC and Swift"]]]])
 
