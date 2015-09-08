@@ -2,6 +2,24 @@
     (:require [om.core :as om :include-macros true]
               [sablono.core :as sab :include-macros true]))
 
+;; Converting NodeList to ISeqable.
+
+(extend-type js/NodeList
+  ISeqable
+  (-seq [array] (array-seq array 0)))
+
+;; Helpers and Notes.
+
+(defn color-log [message color]
+  (js/console.log (str "%c" message) (str "color:" color ";font-weight:bold;")))
+
+(defn print-notes [slide-number]
+  (let [n        (+ slide-number 1)
+        selector (str ".slide:nth-child(" n ") .notes li")]
+    (js/console.clear)
+    (doseq [li (. js/document (querySelectorAll selector))]
+      (color-log (.-innerText li) "green"))))
+
 ;; Slides multimethods.
 
 (defmulti slide (fn [a] a))
@@ -16,7 +34,7 @@
    [:section
     {:style {:transform (str "translateX(" (* 960 position) "px)")}
      :key slide-name
-     :className "bg-color"}
+     :className "slide bg-color"}
     content]))
 
 (defn translate [data]
@@ -54,37 +72,41 @@
 (defmethod dispatch :advance [_ data]
   (om/transact! data []
                 (fn [state]
-                  (let [x (:counter state)]
+                  (let [x     (:counter state)
+                        mx    (- (:max-counter state) 1)
+                        value (if (= x mx) x (inc x))]
+                    (print-notes value)
                     (assoc state
                            :internal-counter 0
-                           :counter (inc x))))))
+                           :counter value)))))
 
 (defmethod dispatch :internal-advance [_ data]
   (om/transact! data []
                 (fn [state]
-                  (let [x (:internal-counter state)]
-                    (assoc state :internal-counter (inc x))))))
+                  (let [x     (:internal-counter state)
+                        mx    (- (:max-internal-counter state) 1)
+                        value (if (= x mx) x (inc x))]
+                    (assoc state :internal-counter value)))))
 
 (defmethod dispatch :internal-back [_ data]
   (om/transact! data []
                 (fn [state]
-                  (let [x (:internal-counter state)]
-                    (assoc state :internal-counter
-                           (if (zero? x) 0 (dec x)))))))
+                  (let [x     (:internal-counter state)
+                        value (if (zero? x) 0 (dec x))]
+                    (assoc state :internal-counter value)))))
 
 (defmethod dispatch :back [_ data]
   (om/transact! data []
                 (fn [state]
-                  (let [x (:counter state)]
-                    (assoc state
-                           :counter
-                           (if (zero? x) 0 (dec x)))))))
+                  (let [x     (:counter state)
+                        value (if (zero? x) 0 (dec x))]
+                    (print-notes value)
+                    (assoc state :counter value)))))
 
 (defn dispatch! [state action]
   (dispatch action (om/root-cursor state)))
 
 (defn key-handler [state event]
-  (println state)
   (when-let [action (get dispatch-map (.-keyCode event))]
     (dispatch! state action)))
 

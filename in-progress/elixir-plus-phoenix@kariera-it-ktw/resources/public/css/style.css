@@ -42,7 +42,11 @@ body {
 }
 
 .huge {
-  font-size: 2em;|
+  font-size: 2em;
+}
+
+pre {
+  font-size: 1.4rem;
 }
 
 .slides {
@@ -132,6 +136,10 @@ body {
 
 .mb-10 {
   margin-bottom: 10px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
 }
 
 .notes {

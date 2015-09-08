@@ -2,14 +2,13 @@
     (:require [om.core :as om :include-macros true]
               [om.dom :as dom :include-macros true]
               [elixir-plus-phoenix-at-kariera-it-ktw-2015.framework :as f]
+              [elixir-plus-phoenix-at-kariera-it-ktw-2015.gist :as gist]
               [sablono.core :as sab :include-macros true])
     (:require-macros
      [elixir-plus-phoenix-at-kariera-it-ktw-2015.macros :refer [defslide]]))
 
 (enable-console-print!)
 
-(defonce app-state (atom {:counter 0
-                          :internal-counter 0}))
 (def slides-list [:intro
                   :whoami
                   :introduction-poll
@@ -17,7 +16,19 @@
                   :why
                   :free-lunch-is-over
                   :impression
-                  :foundation-and-similarities])
+                  :foundation-and-similarities
+                  :ok-but-why-not-ruby-nor-rails
+                  :scaling-and-performance
+                  :elixir-example
+                  :phoenix
+                  :case-study
+                  :next-steps
+                  :thank-you])
+
+(defonce app-state (atom {:counter 0
+                          :internal-counter 0
+                          :max-internal-counter 6
+                          :max-counter (count slides-list)}))
 
 (defslide intro [_]
   [:div
@@ -41,7 +52,7 @@
 
 (defslide introduction-poll [_]
   [:div
-   [:h1.huge.center.top-10 "Who are you?"]
+   [:h1.huge.center.top-25 "Who are you?"]
    [:ul.notes
     [:li "Developers?"]
     [:li "Functional programming?"]
@@ -62,7 +73,7 @@
     [:li "Take a look around how many of you actually meet one way or another an Erlang based system."]]])
 
 (defslide why [_]
-  [:h1.huge.center.top-10 "Why should I care?"])
+  [:h1.huge.center.top-25 "Why should I care?"])
 
 (defslide free-lunch-is-over [_]
   [:div
@@ -77,7 +88,7 @@
 (defslide impression [_]
   [:div
    [:h1.huge.center.top-10 "Functional Programming"]
-   [:h1.huge.center "Actor Model"]
+   [:h1.huge.center.mb-30 "Actor Model"]
    [:h2.center "Metaprogramming"]
    [:h2.center "Developer " [:em "Happiness"]]
    [:ul.notes
@@ -88,7 +99,7 @@
 (defslide foundation-and-similarities [_]
   [:div
    [:h1.huge.center.mt-30 "30+ years of engineering!"]
-   [:h2.center.mb-10 "1982 - " [:a {:href "http://www.erlang.org/course/history.html" :target "_blank"} "History"]]
+   [:h2.center.mb-30 "1982 - " [:a {:href "http://www.erlang.org/course/history.html" :target "_blank"} "History"]]
    [:img.image {:src "/images/TelecomAnalogy.png" :alt "Analogy of the web to telecom industry."}]
    [:ul.notes
     [:li "It is impossible to talk about Elixir without talking about Erlang."]
@@ -96,9 +107,7 @@
     [:li "Why we should care about telecom? Well, it is our use case."]
     [:li "If we have Erlang, why we need to build something else?"]]])
 
-
-
-
+;; TODO
 
 (defslide ok-but-why-not-ruby-nor-rails [_]
   [:div
@@ -108,7 +117,7 @@
     [:li "How hard is to do a real-time communication in those frameworks?"]
     [:li "How hard is to distribute them across multiple machines?"]]])
 
-(defslide microservices-are-the-answer [_]
+(defslide scaling-and-performance [_]
   [:div
    [:ul
     [:li "Microservices for the rescue!"]
@@ -117,24 +126,12 @@
     [:li "We have applications. It means that Erlang was built 30 years ago with microservices in mind."]
     [:li "Baked in Concurrency (in the langauge) and Distribution (in the platform)."]]])
 
-(defslide what-is-in-the-box [_]
+(defslide elixir-example [_]
   [:div
-   [:ul
-    [:li "Who doesn't like physics?"]
-    [:li "How important physics is for the computer science? A lot - entrophy, information equations etc."]
-    [:li "Actor Model is a physical world analogy for concurrency inside computers."]]])
+   [:h1.huge.center "Example"]
+   [:div {:id "ee4aa647fc5cc341ada9" :class "gist" :data-language "elixir"} nil]])
 
-(defslide demos [_]
-  [:div
-    [:h1 "Case Studies"]
-    [:ul
-     [:li "Erlang VM Demo (observer) - afronski/wolves-and-rabbits-world-simulation"]
-     [:li "Speed wins the marketplace - asciinema (mix new, generators)"]
-     [:li "Performance also! - asciinema (htop)"]
-     [:li "Free lunch is over! - Concurrency, Distribution OOTB"]
-     [:li "Stable foundation! - 30+ years of experience"]]])
-
-(defslide elixir-and-phoenix [_]
+(defslide phoenix [_]
   [:div
    [:h3 "Topics"]
    [:ul.micro
@@ -154,7 +151,17 @@
      [:li "Ecto"]
      [:li "Client libraries for C#, Java, ObjC and Swift"]]]])
 
-(defslide whats-next [_]
+(defslide case-study [_]
+  [:div
+    [:h1 "Case Studies"]
+    [:ul
+     [:li "Erlang VM Demo (observer) - afronski/wolves-and-rabbits-world-simulation"]
+     [:li "Speed wins the marketplace - asciinema (mix new, generators)"]
+     [:li "Performance also! - asciinema (htop)"]
+     [:li "Free lunch is over! - Concurrency, Distribution OOTB"]
+     [:li "Stable foundation! - 30+ years of experience"]]])
+
+(defslide next-steps [_]
    [:div
     [:h2 "What's next?"]
     [:ul
@@ -164,10 +171,18 @@
      [:li "Blogs"]
      [:li "Learn by doing it"]]])
 
+(defslide thank-you [_]
+  [:h1.huge.center.top-25 "Thank you!"])
+
 (defn ^:export main []
   (f/presentation-init app-state)
 
   (om/root
    (f/presentation-root slides-list)
    app-state
-   {:target (. js/document (getElementById "app"))}))
+   {:target (. js/document (getElementById "app"))})
+
+  (doseq [parent (seq (. js/document (querySelectorAll ".gist")))]
+    (let [id (.-id parent)]
+      (gist/load (str "https://api.github.com/gists/" id)
+                 (gist/highlight parent)))))
