@@ -3,6 +3,7 @@
               [om.dom :as dom :include-macros true]
               [elixir-plus-phoenix-at-kariera-it-ktw-2015.framework :as f]
               [elixir-plus-phoenix-at-kariera-it-ktw-2015.gist :as gist]
+              [elixir-plus-phoenix-at-kariera-it-ktw-2015.asciinema :as asciinema]
               [sablono.core :as sab :include-macros true])
     (:require-macros
      [elixir-plus-phoenix-at-kariera-it-ktw-2015.macros :refer [defslide]]))
@@ -14,16 +15,19 @@
                   :introduction-poll
                   :erlang-familiarity-poll
                   :why
+                  :why-not-ruby-nor-rails
                   :free-lunch-is-over
                   :impression
                   :foundation-and-similarities
-                  :ok-but-why-not-ruby-nor-rails
                   :scaling-and-performance
+                  :elixir
                   :elixir-example
                   :phoenix
+                  :phoenix-example
                   :case-study
                   :next-steps
-                  :thank-you])
+                  :thank-you
+                  :resources])
 
 (defonce app-state (atom {:counter 0
                           :internal-counter 0
@@ -75,6 +79,20 @@
 (defslide why [_]
   [:h1.huge.center.top-25 "Why should I care?"])
 
+(defslide why-not-ruby-nor-rails [state]
+  [:div
+   [:h1.huge.center.top-10 "We have " [:em "Rails"] ", " [:em "Django"] ", " [:em "Node.js"] "..."]
+   (f/on 1 state [:h2.center.mt-10 "Could your " [:em "technology"] " do one of this?"])
+   [:ul.no-list
+    (f/on 2 state [:li "Ability to fully utilize 10 cores with " [:em "hyperthreading"]])
+    (f/on 3 state [:li "Scale your application to ~70 million users"])
+    (f/on 4 state [:li "2+ million connections per server"])
+    (f/on 5 state [:li "Manageable by ~10 people " [:em "(development and operations)"]])]
+   [:ul.notes
+    [:li "How hard is to build scalable web app in aforementioned frameworks?"]
+    [:li "How hard is to do a real-time communication in those frameworks?"]
+    [:li "How hard is to distribute them across multiple machines?"]]])
+
 (defslide free-lunch-is-over [_]
   [:div
    [:h1.huge.center.mt-30.mb-10 "Free lunch is over!"]
@@ -109,16 +127,6 @@
     [:li "Why we should care about telecom? Well, it is our use case."]
     [:li "If we have Erlang, why we need to build something else?"]]])
 
-;; TODO
-
-(defslide ok-but-why-not-ruby-nor-rails [_]
-  [:div
-   [:ul
-    [:li "Meh, we have got it already (Django, Rails etc.)"]
-    [:li "No, you don't. How hard is to build scalable web app in Rails?"]
-    [:li "How hard is to do a real-time communication in those frameworks?"]
-    [:li "How hard is to distribute them across multiple machines?"]]])
-
 (defslide scaling-and-performance [_]
   [:div
    [:ul
@@ -128,6 +136,13 @@
     [:li "We have applications. It means that Erlang was built 30 years ago with microservices in mind."]
     [:li "Baked in Concurrency (in the langauge) and Distribution (in the platform)."]]])
 
+(defslide elixir [_]
+  [:div
+   [:h1.huge.center.top-10 "Elixir"]
+   [:ul
+    [:li "What is Elixir?"]
+    [:li "Influences"]]])
+
 (defslide elixir-example [_]
   [:div
    [:h1.huge.center "Example"]
@@ -135,47 +150,70 @@
 
 (defslide phoenix [_]
   [:div
-   [:h3 "Topics"]
-   [:ul.micro
-    [:li "What is Elixir?"]
-    [:li "What is Phoenix?"]
-    [:li "Elevator pitch for Phoenix"
-     [:ul]
-     [:li "Easy for developers (Speed)"]
-     [:li "Easy to deploy (Heroku Case)"]
-     [:li "You are not sacrificing performance"]]]
-   [:li "Project kick-off"
-    [:ul
-     [:li "asciinema FTW!"]]]
-   [:li "Creating a chat (very easy)"]
-   [:li "What besides Phoenix?"
-    [:ul
-     [:li "Plug, Cowboy - Rack, Tomcat..."]
-     [:li "Ecto"]
-     [:li "Client libraries for C#, Java, ObjC and Swift"]]]])
+   [:h1.huge.center "Phoenix"]
+   [:ul
+    [:li "Elevator pitch for Phoenix"]
+    [:li "Easy for developers (Speed)"]
+    [:li "Easy to deploy (Heroku Case)"]
+    [:li "You are not sacrificing performance"]
+    [:li "What besides Phoenix?"]
+    [:li "Plug, Cowboy - Rack, Tomcat..."]
+    [:li "Ecto"]
+    [:li "Client libraries for C#, Java, ObjC and Swift"]]])
+
+(defslide phoenix-example [_]
+  [:div
+   [:h1.huge.center "Phoenix Example"
+    [:div {:class "asciinema" :id "d5jr912cxviors9x3i16tg88e"} nil]]])
 
 (defslide case-study [_]
   [:div
-    [:h1 "Case Studies"]
+    [:h1.huge.center.top-10 "Case Studies"]
     [:ul
      [:li "Erlang VM Demo (observer) - afronski/wolves-and-rabbits-world-simulation"]
-     [:li "Speed wins the marketplace - asciinema (mix new, generators)"]
-     [:li "Performance also! - asciinema (htop)"]
-     [:li "Free lunch is over! - Concurrency, Distribution OOTB"]
-     [:li "Stable foundation! - 30+ years of experience"]]])
+     [:li "GIFs and processes visualization"]]])
 
 (defslide next-steps [_]
    [:div
-    [:h2 "What's next?"]
+    [:h1.huge.center "What's next?"]
     [:ul
      [:li "Books (Programming Elixir, Introducing Elixir, Elixir Metaprogramming)"]
      [:li "Books (Learn You Some Erlang!)"]
      [:li "Silesian BEAMers - we're starting!"]
-     [:li "Blogs"]
-     [:li "Learn by doing it"]]])
+     [:li "Learn by doing"]]])
 
 (defslide thank-you [_]
   [:h1.huge.center.top-25 "Thank you!"])
+
+(defslide resources [_]
+  [:div
+   [:h1.huge.center.top-10 "Resources"]
+   [:ul.center.no-list
+    [:li.mb-10
+     [:a
+      {:href "https://en.wikipedia.org/wiki/Amdahl%27s_law"
+       :target "_blank"}
+      "Amdahl's Law"]]
+
+    [:li
+     [:a
+      {:href "http://highscalability.com/blog/2014/3/31/how-whatsapp-grew-to-nearly-500-million-users-11000-cores-an.html"
+       :target "_blank"}
+      "WhatsApp Architecture #1"]]
+
+    [:li
+     [:a
+      {:href "http://highscalability.com/blog/2014/2/26/the-whatsapp-architecture-facebook-bought-for-19-billion.html"
+       :target "_blank"}
+      "WhatsApp Architecture #2"]]
+
+    [:li.mt-10
+     [:a
+      {:href "http://highscalability.com/blog/2014/10/13/how-league-of-legends-scaled-chat-to-70-million-players-it-t.html"
+       :target "_blank"}
+      "Scaling Legue of Legends chat to 70 million players"]]
+
+    ]])
 
 (defn ^:export main []
   (f/presentation-init app-state)
@@ -185,7 +223,18 @@
    app-state
    {:target (. js/document (getElementById "app"))})
 
-  (doseq [parent (seq (. js/document (querySelectorAll ".gist")))]
-    (let [id (.-id parent)]
-      (gist/load (str "https://api.github.com/gists/" id)
-                 (gist/highlight parent)))))
+  (f/for-all-nodes ".gist"
+                   #(gist/load (str "https://api.github.com/gists/" %1) (gist/highlight %2)))
+
+  (f/for-all-nodes ".asciinema"
+                   #(asciinema/load %1 %2))
+
+  (f/restore-slides-from-hash app-state slides-list)
+  (.addEventListener js/window "hashchange" #(f/go-to-hash app-state slides-list)))
+
+;; Figwheel specific handlers.
+
+(defn on-js-reload []
+  (let [old (:counter @app-state)]
+    (f/go-to-slide 0 slides-list app-state)
+    (js/setTimeout #(f/go-to-slide old slides-list app-state) 100)))

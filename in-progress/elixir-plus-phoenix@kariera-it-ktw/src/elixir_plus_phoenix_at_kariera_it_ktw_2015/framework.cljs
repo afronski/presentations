@@ -20,6 +20,37 @@
     (doseq [li (. js/document (querySelectorAll selector))]
       (color-log (.-innerText li) "green"))))
 
+(defn for-all-nodes [selector handler]
+  (doseq [parent (seq (. js/document (querySelectorAll selector)))]
+    (let [id (.-id parent)] (handler id parent))))
+
+;; Slides movement.
+
+(defn go-to-slide [n slides-list app-state]
+  (print-notes n)
+  (swap! app-state
+         assoc
+         :counter n
+         :internal-counter 0
+         :max-counter (count slides-list)))
+
+(defn go-to-hash [app-state slides-list]
+  (let [slide (int (subs js/document.location.hash 1))]
+    (go-to-slide slide slides-list app-state)))
+
+(defn set-hash [n]
+  (set! js/document.location.hash n))
+
+(defn refresh-current-slide [app-state slides-list]
+  (let [n (:counter @app-state)]
+    (go-to-slide n slides-list app-state)
+    (set-hash n)))
+
+(defn restore-slides-from-hash [app-state slides-list]
+  (if (not (empty? js/document.location.hash))
+    (go-to-hash app-state slides-list)
+    (refresh-current-slide app-state slides-list)))
+
 ;; Slides multimethods.
 
 (defmulti slide (fn [a] a))
@@ -76,6 +107,7 @@
                         mx    (- (:max-counter state) 1)
                         value (if (= x mx) x (inc x))]
                     (print-notes value)
+                    (set-hash value)
                     (assoc state
                            :internal-counter 0
                            :counter value)))))
@@ -101,6 +133,7 @@
                   (let [x     (:counter state)
                         value (if (zero? x) 0 (dec x))]
                     (print-notes value)
+                    (set-hash value)
                     (assoc state :counter value)))))
 
 (defn dispatch! [state action]

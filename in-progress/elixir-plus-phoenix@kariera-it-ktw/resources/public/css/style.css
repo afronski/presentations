@@ -62,7 +62,6 @@ pre {
   height: 100%;
   transform-style: preserve-3d;
   transform: translateX(-0px);
-  transition: transform 1s;
 }
 
 .slides section {
