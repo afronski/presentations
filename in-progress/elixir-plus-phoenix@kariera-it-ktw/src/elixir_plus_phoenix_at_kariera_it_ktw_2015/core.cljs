@@ -18,8 +18,8 @@
                   :why-not-ruby-nor-rails
                   :free-lunch-is-over
                   :how-to-tame-concurrency
-                  :foundation-and-similarities
                   :scaling-and-performance
+                  :foundation-and-similarities
                   :elixir
                   :elixir-example
                   :phoenix
@@ -130,6 +130,18 @@
     [:li "'I loved things which I have seen, and I hated things there weren't there' - Jose Valim"]
     [:li "Asymilating good ideas from other communities."]]])
 
+(defslide scaling-and-performance [state]
+  [:div.center
+   [:h1.huge.top-10.mb-30 "Microservices to the rescue?"]
+   [:h2.mb-30 "Well, not " [:em "always"] "..."]
+   (f/on 1 state [:img {:src "/images/DistributedSystem.png" :alt "Microservices done right."}])
+   [:ul.notes
+    [:li "Yes, but ... what about operational costs?"]
+    [:li "Do you have DevOps culture?"]
+    [:li "Instead, please look at the highest level of Erlang/Elixir systems."]
+    [:li "We have applications. It means that Erlang was built 30 years ago with microservices in mind."]
+    [:li "So we have concurrency baked in the langauge and distribution in the platform."]]])
+
 (defslide foundation-and-similarities [_]
   [:div
    [:h1.huge.center.mt-30 "30+ years of engineering!"]
@@ -141,39 +153,41 @@
     [:li "Why we should care about telecom? Well, it is our use case."]
     [:li "If we have Erlang, why we need to build something else?"]]])
 
-(defslide scaling-and-performance [_]
-  [:div
-   [:ul
-    [:li "Microservices for the rescue!"]
-    [:li "Yes, but ... what about operational costs? Do you have DevOps culture?"]
-    [:li "Instead look at the highest level of Erlang/Elixir systems."]
-    [:li "We have applications. It means that Erlang was built 30 years ago with microservices in mind."]
-    [:li "Baked in Concurrency (in the langauge) and Distribution (in the platform)."]]])
-
 (defslide elixir [_]
   [:div
    [:h1.huge.center.top-10 "Elixir"]
-   [:ul
-    [:li "What is Elixir?"]
-    [:li "Influences - F#, Clojure, Ruby, Erlang, Scala ... like Borg."]]])
+   [:p [:em "Elixir"] " is a dynamic, functional language designed for building scalable and maintainable applications."]
+   [:p "It leverages the Erlang VM, known for running low-latency, distributed and fault-tolerant systems, while also being successfully used in web development and the embedded software domain."]
+   [:ul.notes
+    [:li "Functional programming - Immutability, Recursion, Referential Transparency."]
+    [:li "It gathers many interesting and influencing features from other languages"]
+    [:li "... like Borg. Asymilating good ideas - let's look at this."]]])
 
 (defslide elixir-example [_]
   [:div
-   [:h1.huge.center "Example"]
-   [:div {:id "ee4aa647fc5cc341ada9" :class "gist" :data-language "elixir"} nil]])
+   [:h1.huge.center.mb-10 "Example"]
+   [:div {:id "ee4aa647fc5cc341ada9" :class "gist" :data-language "elixir"} nil]
+   [:ul.notes
+    [:li "Influences - F# (Pipe operator)"]
+    [:li "Influences - Clojure (Protocols, Homoiconic language, Macros)"]
+    [:li "Influences - Ruby (Syntax)"]
+    [:li "Influences - Erlang (Platform and Foundation)"]
+    [:li "Pattern matching, Pipe operator, Enumerables."]
+    [:li "Syntax similar to Ruby."]]])
 
 (defslide phoenix [_]
-  [:div
-   [:h1.huge.center "Phoenix"]
-   [:ul
-    [:li "Elevator pitch for Phoenix"]
-    [:li "Easy for developers (Speed)"]
-    [:li "Easy to deploy (Heroku Case)"]
-    [:li "You are not sacrificing performance"]
-    [:li "What besides Phoenix?"]
-    [:li "Plug, Cowboy - Rack, Tomcat..."]
-    [:li "Ecto"]
-    [:li "Client libraries for C#, Java, ObjC and Swift"]]])
+  [:div.center
+   [:h1.huge.top-10.mb-30 "Phoenix"]
+   [:img {:src "/images/PhoenixServer.png" :alt "Phoenix server and clients."}]
+   [:ul.notes
+    [:li "Elevator pitch for Phoenix."]
+    [:li "Easy for developers (Speed)."]
+    [:li "Easy to deploy (Heroku Case)."]
+    [:li "You are not sacrificing performance!"]
+    [:li "Solid abstractions - Plug."]
+    [:li "Solid web server - Cowboy."]
+    [:li "Dealing with databases - Ecto."]
+    [:li "Dealing with rest of the world - client libraries for C#, Java, ObjC and Swift."]]])
 
 (defslide phoenix-example [_]
   [:div
@@ -182,19 +196,24 @@
 
 (defslide demo [_]
   [:div
-    [:h1.huge.center.top-10 "Demo"]
-    [:ul
-     [:li "Erlang VM Demo (observer) - afronski/wolves-and-rabbits-world-simulation"]
-     [:li "GIFs and processes visualization"]]])
+   [:h1.huge.center.mb-10 "Demo"]
+   [:img.max-width {:src "/images/simulation.gif" :alt "Simulation and 3D visualization."}]
+   [:ul.notes
+    [:li "afronski/wolves-and-rabbits-world-simulation-ui"]
+    [:li "iex -S mix phoenix.server"]
+    [:li "http://localhost:4000"]]])
 
 (defslide next-steps [_]
    [:div
-    [:h1.huge.center "What's next?"]
+    [:h1.huge.center.top-10 "What's next?"]
     [:ul
-     [:li "Books (Programming Elixir, Introducing Elixir, Elixir Metaprogramming)"]
-     [:li "Books (Learn You Some Erlang!)"]
-     [:li "Silesian BEAMers - we're starting!"]
-     [:li "Learn by doing"]]])
+     [:li [:a {:href "https://pragprog.com/book/elixir/programming-elixir"} "Programming Elixir (by Dave Thomas)" ]]
+     [:li [:a {:href "http://shop.oreilly.com/product/0636920030584.do"} "Introducing Elixir" ]]
+     [:li [:a {:href "https://pragprog.com/book/cmelixir/metaprogramming-elixir"} "Elixir Metaprogramming"]]
+     [:li.mt-30 [:a {:href "http://learnyousomeerlang.com/content"} "Learn You Some Erlang!"]]
+     [:li [:a {:href "https://pragprog.com/book/jaerlang2/programming-erlang "} "Programming Erlang, 2nd Edition"]]
+     [:li.mt-30 [:a {:href "http://www.meetup.com/Silesian-BEAMers/"} "Silesian BEAMers - we're starting!"]]
+     [:li.mt-30 "Learn by doing!"]]])
 
 (defslide thank-you [_]
   [:div
@@ -236,7 +255,6 @@
       {:href "http://highscalability.com/blog/2014/10/13/how-league-of-legends-scaled-chat-to-70-million-players-it-t.html"
        :target "_blank"}
       "Scaling Legue of Legends chat to 70 million players"]]
-
     ]])
 
 (defn ^:export main []

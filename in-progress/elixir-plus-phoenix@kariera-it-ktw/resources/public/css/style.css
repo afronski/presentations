@@ -151,6 +151,10 @@ pre {
   margin: 0 auto;
 }
 
+.max-width {
+  width: 100%;
+}
+
 .auto-margin {
   margin: 0 auto;
 }
