@@ -6,6 +6,5 @@
     (.setAttribute script "async" true)
     (.setAttribute script "id" (str "asciicast-" id))
     (.setAttribute script "src"  (str "https://asciinema.org/a/" id ".js"))
-    (.setAttribute script "data-loop" true)
     (.setAttribute script "data-theme" "solarized-light")
     (.appendChild parent script)))

@@ -17,14 +17,14 @@
                   :why
                   :why-not-ruby-nor-rails
                   :free-lunch-is-over
-                  :impression
+                  :how-to-tame-concurrency
                   :foundation-and-similarities
                   :scaling-and-performance
                   :elixir
                   :elixir-example
                   :phoenix
                   :phoenix-example
-                  :case-study
+                  :demo
                   :next-steps
                   :thank-you
                   :resources])
@@ -77,7 +77,12 @@
     [:li "Take a look around how many of you actually meet one way or another an Erlang based system."]]])
 
 (defslide why [_]
-  [:h1.huge.center.top-25 "Why should I care?"])
+  [:div
+   [:h1.huge.center.top-25 "Why should I care?"]
+   [:ul.notes
+    [:li "Short on time, so two main things can be taken from that presentation"]
+    [:li "Why?"]
+    [:li "How I can start and learn more?"]]])
 
 (defslide why-not-ruby-nor-rails [state]
   [:div
@@ -91,7 +96,10 @@
    [:ul.notes
     [:li "How hard is to build scalable web app in aforementioned frameworks?"]
     [:li "How hard is to do a real-time communication in those frameworks?"]
-    [:li "How hard is to distribute them across multiple machines?"]]])
+    [:li "How hard is to distribute them across multiple machines?"]
+    [:li "Creator of Elixir - Jose Valim - worked on that problem as a Rails core team member."]
+    [:li "If one of mentioned is not your problem - keep going, there is nothing wrong with that."]
+    [:li "However, I would like to show you that there is a slight issue here."]]])
 
 (defslide free-lunch-is-over [_]
   [:div
@@ -101,20 +109,26 @@
    [:ul.notes
     [:li "Multi and manycore is literally here."]
     [:li "How hard is to build multithreaded and concurrent systems?"]
-    [:li "Leaking abstractions (Event Loop, Promises, CSP etc.)"]]])
+    [:li "Leaking abstractions (Event Loop, Promises, CSP etc.)"]
+    [:li "If you do not want remain a legacy system maintainer, you need to be ready for that."]
+    [:li "What if I'll show you technology which is built around that concept?"]
+    [:li "What if I'll tell you that technology has support for multi-core since 2005 (since the beginning)?"]]])
 
-(defslide impression [_]
-  [:div
-   [:h1.huge.center.top-10 "Functional Programming"]
-   [:h1.huge.center.mb-30 "Actor Model"]
-   [:h2.center "Metaprogramming"]
-   [:h2.center "Developer " [:em "Happiness"]]
+(defslide how-to-tame-concurrency [state]
+  [:div.center
+   [:a {:href "https://mitpress.mit.edu/sicp/full-text/book/book.html"}
+    [:img {:src "/images/SICPCover.jpg" :alt "Structure and Interpretation of Computer Programs - Cover"}]]
+   [:h1.huge "Functional Programming"]
+   (f/on 1 state [:h1.huge.mb-30 "Actor Model"])
+   (f/on 2 state [:h2 "Metaprogramming"])
+   (f/on 3 state [:h2 "Developer " [:em "Happiness"]])
    [:ul.notes
+    [:li "Concurrency and distribution is hard because of certain style of thinking which is dominating right now."]
     [:li "A language that doesn't affect the way you think about programming, is not worth knowing. - Alan Perlis"]
     [:li "Referential Transparency, Predictability, Immutability"]
     [:li "Hygenic Macros"]
     [:li "'I loved things which I have seen, and I hated things there weren't there' - Jose Valim"]
-    [:li "Asymilating good ideas from other communities - F#, Clojure, Ruby, Erlang, Scala ... like Borg."]]])
+    [:li "Asymilating good ideas from other communities."]]])
 
 (defslide foundation-and-similarities [_]
   [:div
@@ -141,7 +155,7 @@
    [:h1.huge.center.top-10 "Elixir"]
    [:ul
     [:li "What is Elixir?"]
-    [:li "Influences"]]])
+    [:li "Influences - F#, Clojure, Ruby, Erlang, Scala ... like Borg."]]])
 
 (defslide elixir-example [_]
   [:div
@@ -163,12 +177,12 @@
 
 (defslide phoenix-example [_]
   [:div
-   [:h1.huge.center "Phoenix Example"
-    [:div {:class "asciinema" :id "d5jr912cxviors9x3i16tg88e"} nil]]])
+   [:h3.center "Phoenix - Kick-off and Generators example"
+    [:div {:class "asciinema" :id "cpmm55qwltxcpx7kvmj05jvcl"} nil]]])
 
-(defslide case-study [_]
+(defslide demo [_]
   [:div
-    [:h1.huge.center.top-10 "Case Studies"]
+    [:h1.huge.center.top-10 "Demo"]
     [:ul
      [:li "Erlang VM Demo (observer) - afronski/wolves-and-rabbits-world-simulation"]
      [:li "GIFs and processes visualization"]]])
@@ -183,12 +197,22 @@
      [:li "Learn by doing"]]])
 
 (defslide thank-you [_]
-  [:h1.huge.center.top-25 "Thank you!"])
+  [:div
+   [:h1.huge.center.top-10 "Thank you!"]
+   [:div.logos
+    [:img {:src "/images/elixir.png" :alt "Elixir logo."}]
+    [:img {:src "/images/phoenix.png" :alt "Phoenix logo."}]]])
 
 (defslide resources [_]
   [:div
    [:h1.huge.center.top-10 "Resources"]
    [:ul.center.no-list
+    [:li.mb-10
+     [:a
+      {:href "https://mitpress.mit.edu/sicp/full-text/book/book.html"
+       :target "_blank"}
+      "Structure and Interpretation of Computer Programs"]]
+
     [:li.mb-10
      [:a
       {:href "https://en.wikipedia.org/wiki/Amdahl%27s_law"
