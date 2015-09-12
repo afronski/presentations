@@ -1,4 +1,4 @@
-(ns ^:figwheel-always elixir-plus-phoenix-at-kariera-it-ktw-2015.core
+(ns elixir-plus-phoenix-at-kariera-it-ktw-2015.core
     (:require [om.core :as om :include-macros true]
               [om.dom :as dom :include-macros true]
               [elixir-plus-phoenix-at-kariera-it-ktw-2015.framework :as f]
