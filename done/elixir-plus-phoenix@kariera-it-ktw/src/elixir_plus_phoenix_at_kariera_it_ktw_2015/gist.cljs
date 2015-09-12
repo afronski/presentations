@@ -1,4 +1,4 @@
-(ns elixir-plus-phoenix-at-kariera-it-ktw-2015.gist
+(ns ^:figwheel-always elixir-plus-phoenix-at-kariera-it-ktw-2015.gist
   (:import [goog.net Jsonp]
            [goog Uri]))
 

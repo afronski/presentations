@@ -1,4 +1,4 @@
-(ns elixir-plus-phoenix-at-kariera-it-ktw-2015.asciinema)
+(ns ^:figwheel-always elixir-plus-phoenix-at-kariera-it-ktw-2015.asciinema)
 
 (defn load [id parent]
   (let [script (. js/document (createElement "script"))]

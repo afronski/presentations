@@ -38,8 +38,8 @@
   [:div
    [:h1.huge.center.top-10 "Elixir + Phoenix"]
    [:div.logos
-    [:img {:src "/images/elixir.png" :alt "Elixir logo."}]
-    [:img {:src "/images/phoenix.png" :alt "Phoenix logo."}]]
+    [:img {:src "images/elixir.png" :alt "Elixir logo."}]
+    [:img {:src "images/phoenix.png" :alt "Phoenix logo."}]]
    [:h5.right.top-5 "KarieraIT 2015 - Katowice"]
    [:h5.right.mt-10 "Wojtek Gawroński"]
    [:h5.right "rspective, White Rook"]])
@@ -48,8 +48,8 @@
   [:div
    [:h1.huge.center.top-10 [:code "~ $ whoami" ]]
    [:div.company.logos
-    [:img {:src "/images/rspective.png" :alt "rspective logo."}]
-    [:img {:src "/images/WhiteRook.jpg" :alt "White Rook logo."}]]
+    [:img {:src "images/rspective.png" :alt "rspective logo."}]
+    [:img {:src "images/WhiteRook.jpg" :alt "White Rook logo."}]]
    [:ul.no-list.right
     [:li [:h4 [:strong "Twitter: "] [:em "@afronski"]]]
     [:li [:h4 [:strong "Github: "] [:em "afronski"]]]]])
@@ -105,7 +105,7 @@
   [:div
    [:h1.huge.center.mt-30.mb-10 "Free lunch is over!"]
    [:a {:href "https://en.wikipedia.org/wiki/Amdahl%27s_law" :target "_blank"}
-    [:img.image {:src "/images/AmdahlsLaw.svg" :alt "Amdahl's Law"}]]
+    [:img.image {:src "images/AmdahlsLaw.svg" :alt "Amdahl's Law"}]]
    [:ul.notes
     [:li "Multi and manycore is literally here."]
     [:li "How hard is to build multithreaded and concurrent systems?"]
@@ -117,7 +117,7 @@
 (defslide how-to-tame-concurrency [state]
   [:div.center
    [:a {:href "https://mitpress.mit.edu/sicp/full-text/book/book.html"}
-    [:img {:src "/images/SICPCover.jpg" :alt "Structure and Interpretation of Computer Programs - Cover"}]]
+    [:img {:src "images/SICPCover.jpg" :alt "Structure and Interpretation of Computer Programs - Cover"}]]
    [:h1.huge "Functional Programming"]
    (f/on 1 state [:h1.huge.mb-30 "Actor Model"])
    (f/on 2 state [:h2 "Metaprogramming"])
@@ -134,7 +134,7 @@
   [:div.center
    [:h1.huge.top-10.mb-30 "Microservices to the rescue?"]
    [:h2.mb-30 "Well, not " [:em "always"] "..."]
-   (f/on 1 state [:img {:src "/images/DistributedSystem.png" :alt "Microservices done right."}])
+   (f/on 1 state [:img {:src "images/DistributedSystem.png" :alt "Microservices done right."}])
    [:ul.notes
     [:li "Yes, but ... what about operational costs?"]
     [:li "Do you have DevOps culture?"]
@@ -146,7 +146,7 @@
   [:div
    [:h1.huge.center.mt-30 "30+ years of engineering!"]
    [:h2.center.mb-30 "1982 - " [:a {:href "http://www.erlang.org/course/history.html" :target "_blank"} "History"]]
-   [:img.image {:src "/images/TelecomAnalogy.png" :alt "Analogy of the web to telecom industry."}]
+   [:img.image {:src "images/TelecomAnalogy.png" :alt "Analogy of the web to telecom industry."}]
    [:ul.notes
     [:li "It is impossible to talk about Elixir without talking about Erlang."]
     [:li "BEAM ecosystem - Standing on the shoulders of giant."]
@@ -178,7 +178,7 @@
 (defslide phoenix [_]
   [:div.center
    [:h1.huge.top-10.mb-30 "Phoenix"]
-   [:img {:src "/images/PhoenixServer.png" :alt "Phoenix server and clients."}]
+   [:img {:src "images/PhoenixServer.png" :alt "Phoenix server and clients."}]
    [:ul.notes
     [:li "Elevator pitch for Phoenix."]
     [:li "Easy for developers (Speed)."]
@@ -197,7 +197,7 @@
 (defslide demo [_]
   [:div
    [:h1.huge.center.mb-10 "Demo"]
-   [:img.max-width {:src "/images/simulation.gif" :alt "Simulation and 3D visualization."}]
+   [:img.max-width {:src "images/simulation.gif" :alt "Simulation and 3D visualization."}]
    [:ul.notes
     [:li "afronski/wolves-and-rabbits-world-simulation-ui"]
     [:li "iex -S mix phoenix.server"]
@@ -219,8 +219,8 @@
   [:div
    [:h1.huge.center.top-10 "Thank you!"]
    [:div.logos
-    [:img {:src "/images/elixir.png" :alt "Elixir logo."}]
-    [:img {:src "/images/phoenix.png" :alt "Phoenix logo."}]]])
+    [:img {:src "images/elixir.png" :alt "Elixir logo."}]
+    [:img {:src "images/phoenix.png" :alt "Phoenix logo."}]]])
 
 (defslide resources [_]
   [:div
@@ -276,9 +276,8 @@
   (f/restore-slides-from-hash app-state slides-list)
   (.addEventListener js/window "hashchange" #(f/go-to-hash app-state slides-list)))
 
-;; Figwheel specific handlers.
-
-(defn on-js-reload []
-  (let [old (:counter @app-state)]
-    (f/go-to-slide 0 slides-list app-state)
+(defn reload-on-changes []
+  (let [old (:counter @app-state)
+        max (:max-counter @app-state)]
+    (f/go-to-slide (inc max) slides-list app-state)
     (js/setTimeout #(f/go-to-slide old slides-list app-state) 100)))
