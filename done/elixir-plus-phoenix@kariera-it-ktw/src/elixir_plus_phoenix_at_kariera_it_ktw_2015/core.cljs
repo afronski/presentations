@@ -197,7 +197,7 @@
 (defslide demo [_]
   [:div
    [:h1.huge.center.mb-10 "Demo"]
-   [:img.max-width.inverted {:src "images/simulation.gif" :alt "Simulation and 3D visualization."}]
+   [:img.max-width {:src "images/simulation.gif" :alt "Simulation and 3D visualization."}]
    [:ul.notes
     [:li "afronski/wolves-and-rabbits-world-simulation-ui"]
     [:li "iex -S mix phoenix.server"]
