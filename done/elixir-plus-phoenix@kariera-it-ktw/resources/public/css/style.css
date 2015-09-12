@@ -174,3 +174,8 @@ a:hover {
 a:visited {
   color: #181818;
 }
+
+.inverted {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
