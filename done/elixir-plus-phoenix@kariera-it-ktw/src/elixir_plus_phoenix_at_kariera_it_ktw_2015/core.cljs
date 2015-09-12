@@ -255,6 +255,19 @@
       {:href "http://highscalability.com/blog/2014/10/13/how-league-of-legends-scaled-chat-to-70-million-players-it-t.html"
        :target "_blank"}
       "Scaling Legue of Legends chat to 70 million players"]]
+
+    [:li.mt-10
+     [:a
+      {:href "https://github.com/afronski/wolves-and-rabbits-world-simulation-ui"
+       :target "_blank"}
+      "afronski/wolves-and-rabbits-world-simulation-ui"]]
+
+    [:li
+     [:a
+      {:href "https://github.com/afronski/wolves-and-rabbits-world-simulation"
+       :target "_blank"}
+      "afronski/wolves-and-rabbits-world-simulation"]]
+
     ]])
 
 (defn ^:export main []

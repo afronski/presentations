@@ -20,7 +20,7 @@ body {
   height: inherit;
 
   font-size: 2em;
-  color: rgb(234, 234, 234);
+  color: #181818;
 
   margin: 0;
   padding: 0;
@@ -34,7 +34,7 @@ body {
 }
 
 .bg-color {
-  background-color: rgb(23, 24, 35);
+  background-color: #F7CA88;
 }
 
 .micro {
@@ -160,11 +160,11 @@ pre {
 }
 
 a {
-  color: white;
+  color: #181818;
 }
 
 a:active {
-  color: white;
+  color: #181818;
 }
 
 a:hover {
@@ -172,5 +172,5 @@ a:hover {
 }
 
 a:visited {
-  color: white;
+  color: #181818;
 }
