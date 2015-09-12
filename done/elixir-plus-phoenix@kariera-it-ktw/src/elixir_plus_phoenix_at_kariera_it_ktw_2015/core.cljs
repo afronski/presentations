@@ -271,6 +271,8 @@
   (f/for-all-nodes ".asciinema"
                    #(asciinema/load %1 %2))
 
+  (f/start-timer 30)
+
   (f/restore-slides-from-hash app-state slides-list)
   (.addEventListener js/window "hashchange" #(f/go-to-hash app-state slides-list)))
 

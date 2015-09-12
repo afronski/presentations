@@ -24,6 +24,18 @@
   (doseq [parent (seq (. js/document (querySelectorAll selector)))]
     (let [id (.-id parent)] (handler id parent))))
 
+;; Timer.
+
+(defn tick [minute max]
+  (fn []
+    (if (> minute max)
+      (color-log (str "Overdue: " minute "/" max) "red")
+      (color-log (str "Time: " minute "/" max) "blue"))
+    (js/setTimeout (tick (inc minute) max) 60000)))
+
+(defn start-timer [time-in-minutes]
+  (js/setTimeout (tick 0 time-in-minutes) 5000))
+
 ;; Slides movement.
 
 (defn go-to-slide [n slides-list app-state]
