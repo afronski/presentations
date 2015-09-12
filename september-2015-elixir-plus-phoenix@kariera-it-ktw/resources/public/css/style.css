@@ -1,0 +1,181 @@
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, h7 {
+  margin: 0;
+  font-weight: normal;
+  font-family: 'Lato', sans;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: inherit;
+  height: inherit;
+
+  font-size: 2em;
+  color: #181818;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: 'Droid Serif', sans-serif;
+}
+
+#app, main {
+  width: inherit;
+  height: inherit;
+}
+
+.bg-color {
+  background-color: #F7CA88;
+}
+
+.micro {
+  font-size: 0.5em;
+}
+
+.huge {
+  font-size: 2em;
+}
+
+pre {
+  font-size: 1.4rem;
+}
+
+.slides {
+  width: 960px;
+  height: 640px;
+  margin: auto;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.slide-world {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: translateX(-0px);
+}
+
+.slides section {
+  display: block;
+  width: 960px;
+  height: 640px;
+  transform-style: preserve-3d;
+  position: absolute;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.logos {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.logos img:first-child {
+  margin-right: 20px;
+}
+
+.logos img {
+  max-width: 150px;
+}
+
+.company.logos img {
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.no-list {
+  list-style: none;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.top-5 {
+  padding-top: 5%;
+}
+
+.top-10 {
+  padding-top: 10%;
+}
+
+.top-15 {
+  padding-top: 15%;
+}
+
+.top-25 {
+  padding-top: 25%;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.notes {
+  display: none;
+}
+
+.image {
+  display: block;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.max-width {
+  width: 100%;
+}
+
+.auto-margin {
+  margin: 0 auto;
+}
+
+a {
+  color: #181818;
+}
+
+a:active {
+  color: #181818;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:visited {
+  color: #181818;
+}
+
+.inverted {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}

@@ -1,0 +1,24 @@
+# Build assets:
+/resources/public/js/compiled/**
+
+# Logs:
+figwheel_server.log
+
+# Dependencies and JARs:
+pom.xml
+*jar
+
+# Build output:
+/lib/
+/classes/
+/out/
+/target/
+
+# Leiningen stuff:
+.lein-deps-sum
+.lein-repl-history
+.lein-plugins/
+
+# REPL stuff:
+.repl
+.nrepl-port
