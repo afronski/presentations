@@ -42,3 +42,6 @@ Berlin.js:
 
 Kariera IT:
 - *Elixir + Phoenix* (2015)
+
+Spread IT:
+- *Front-End + Functional Programming* (2015)
