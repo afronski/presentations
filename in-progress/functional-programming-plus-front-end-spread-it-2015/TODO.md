@@ -9,6 +9,10 @@
     - ImmutableJS, rxJS - immutable data structures, functional flow, declarativeness
     - Om/Redux - single source of truth, state management (e.g. undo for free, generative tests which are generating state)
     - Elm - FRP, elm-architecture, init -> update -> view, effects management
+- Part of a bigger project.
+  - The same application written with different frameworks and libraries, each one more and more functional.
+  - Comparison, differences, drawbacks and advantages.
+  - Feedback and insights are appreciated.
 
 Temat: Ewolucja > Rewolucja: jak w JS możemy czerpać z języków funkcyjnych już dziś.
 
