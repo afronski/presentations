@@ -44,4 +44,4 @@ Kariera IT:
 - *Elixir + Phoenix* (2015)
 
 Spread IT:
-- *Front-End + Functional Programming* (2015)
+- *Evolution > Revolution - how microservices architecture should evolve* (2015)
