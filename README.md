@@ -44,4 +44,4 @@ Kariera IT:
 - *Elixir + Phoenix* (2015)
 
 Spread IT:
-- *Evolution > Revolution - how microservices architecture should evolve* (2015)
+- *Ewolucja > Rewolucja - czyli o tym jak powinny powstawać mikroserwisy* (2015)
