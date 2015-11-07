@@ -52,3 +52,8 @@
       discovery, structuring applications in consistent manner, easy
       bootstrapping, monitoring, automated deployment, complexity related with
       communication layers.
+- Quotes:
+  - Carlos Bueno, "People are bad at predicting the performance of complex
+    systems [...], our ability to create large and complex systems fools us into
+    believing that we're entitled to understand them." (Mature Optimization
+    Handbook)
