@@ -1,0 +1,29 @@
+.logos img {
+  width: 250px;
+
+  padding: 10px;
+
+  border-radius: 5px;
+  background-color: white;
+}
+
+.logos p {
+  text-align: center;
+  width: 100%;
+}
+
+.mfowler-sketch p {
+  text-align: center;
+}
+
+.mfowler-sketch img {
+  width: 900px;
+}
+
+.monolith p {
+  text-align: center;
+}
+
+.monolith img {
+  width: 900px;
+}
