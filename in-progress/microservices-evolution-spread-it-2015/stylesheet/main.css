@@ -20,10 +20,16 @@
   width: 900px;
 }
 
-.monolith p {
+.images img {
+  display: block;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.full-page p {
   text-align: center;
 }
 
-.monolith img {
+.full-page img {
   width: 900px;
 }
