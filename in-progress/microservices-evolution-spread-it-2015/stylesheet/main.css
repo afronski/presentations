@@ -17,13 +17,21 @@
 }
 
 .mfowler-sketch img {
-  width: 900px;
+  width: 600px;
 }
 
-.images img {
-  display: block;
-  width: 500px;
-  margin: 0 auto;
+.images {
+  width: 50%;
+  float: right;
+  position: relative;
+}
+
+.images .left {
+  float: left;
+}
+
+.images .right {
+  float: right;
 }
 
 .full-page p {
@@ -32,4 +40,15 @@
 
 .full-page img {
   width: 900px;
+}
+
+.lean p {
+  text-align: center;
+}
+
+.lean img {
+  width: 600px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
 }
