@@ -1,4 +1,4 @@
-title: Evolution > Revolution – how microservices should evolve
+title: Evolution > Revolution – how should microservices be built?
 author:
   name: Wojtek Gawroński
   email: contact@white-rook.pl
@@ -14,7 +14,7 @@ theme: sjaakvandenberg/cleaver-dark
 
 # Evolution > Revolution
 
-## How microservices should be built?
+## How should microservices be built?
 
 --
 
@@ -61,7 +61,7 @@ theme: sjaakvandenberg/cleaver-dark
 #### Other examples:
 
 - *SOA*, *CORBA*
-- Hardware, *UNIX*
+- Hardware, *UNIX*, *Linux*
 - **Erlang**
 - *Akka*, *Orleans*
 - Virtualization, *Unikernels*
@@ -95,6 +95,8 @@ Carlos Bueno, *Mature Optimization Handbook*
 --
 
 # There is no *silver bullet*
+
+## Let's finally admit that and be **mature**
 
 ## Thank you!
 

@@ -1,0 +1,833 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Evolution &gt; Revolution – how should microservices be built?</title>
+  <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+    /* Color Palette Based on Monokai
+
+          body : #191919, #fafafa
+    blockquote : #272822, #eeeeee
+         links : #66d9ef
+           pre : #272822, #75715e, #dddddd, #f92672,
+                 #a6e22e, #66d9ef, #bf79db
+*/
+
+/* Theme styles */
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #fafafa;
+  background-color: #191919;
+  font-size: 100%;
+}
+
+/* custom slide styles */
+
+/* fade.jpg, wireballblack.png, space.png, snow2.jpg, pinstripe_rain.png, orion.jpg, nodes.jpg */
+
+#slide-1 {
+  background: #222 url(wireball.png) center center no-repeat;
+  background-size: cover;
+}
+
+#slide-1 h1 {
+  text-shadow: 1px 2px 4px #191919;
+}
+
+#slide-1 p {
+  text-shadow: 1px 1px 1px #191919;
+}
+
+.center {
+  text-align: center;
+}
+
+img.badge {
+  height: 128px;
+  width: 128px !important;
+  border-radius: 50% !important;
+}
+
+/* presentation styles */
+
+.slide {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  padding: 100px;
+}
+
+.slide-content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 0;
+
+  font-weight: 200;
+  font-size: 200%;
+  line-height: 1.375;
+}
+
+.slide-content img {
+  border-radius: 3px;
+  width: 100%;
+}
+
+.controls {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.arrow {
+  width: 0; height: 0;
+  border: 15px solid #272822;
+  float: left;
+  margin-right: 15px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+
+  border-left-width: 0;
+  border-right-width: 25px;
+}
+
+.next {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+
+  border-left-width: 25px;
+  border-right-width: 0;
+}
+
+.prev:hover {
+  border-right-color: #eee;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #eee;
+  cursor: pointer;
+}
+
+h1, h2, h3 {
+  font-family: 'Merriweather', serif;
+}
+
+h1 {
+  font-size: 300%;
+  line-height: 1.2;
+  text-align: center;
+  margin: 170px 0 0;
+}
+
+h2 {
+  font-size: 100%;
+  line-height: 1.2;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h3 {
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 2px ridge #fafafa;
+  margin: 0;
+  padding-bottom: 15px;
+}
+
+ul {
+  padding: 20px 0 0 60px;
+  font-weight: 200;
+  line-height: 1.375;
+}
+
+blockquote {
+  background: #272822;
+  margin-left: 0;
+  padding-left: 20px;
+  border-left: 5px solid #eee;
+  border-radius: 0 3px 3px 0;
+}
+
+blockquote p {
+  color: #eee;
+  padding: 0.5em;
+}
+
+.left {
+  float: left;
+  width: 48%;
+}
+
+.right {
+  float: right;
+  width: 48%;
+}
+
+.author h1 {
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.author h3 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 95%;
+  border: none;
+}
+
+.author h3.twitter::before {
+  content: 'Twitter: '
+}
+
+.author h3.github::before {
+  content: 'Github: '
+}
+
+.author h3.email::before {
+  content: 'Email: '
+}
+
+.author h3.url::before {
+  content: 'Web: '
+}
+
+a {
+  text-decoration: none;
+  color: #66D9EF;
+}
+
+a:hover {
+  color: #66D9EF;
+  border-bottom: 1px solid #66D9EF;
+}
+
+pre {
+  font-size: 75%;
+  line-height: 1.3;
+}
+
+table td, table th {
+  padding-right: 3em;
+  text-align: left;
+}
+
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: #A6E22E;
+
+  -webkit-transition: width 0.15s ease-out;
+  -moz-transition: width 0.15s ease-out;
+  -o-transition: width 0.15s ease-out;
+  transition: width 0.15s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+/* code highlighting */
+
+code {
+  background-color: #272822;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+
+pre code {
+  display: block;
+  font-family: 'Source Code Pro';
+  font-weight: 400;
+  padding: 0.5em;
+  background: #272822;
+  overflow-y: hidden;
+}
+
+pre .tag,
+pre .tag .title,
+pre .keyword,
+pre .literal,
+pre .change,
+pre .winutils,
+pre .flow,
+pre .lisp .title,
+pre .clojure .built_in,
+pre .nginx .title,
+pre .tex .special {
+  color: #F92672;
+}
+
+pre code {
+  color: #DDD;
+}
+
+pre code .constant {
+  color: #66D9EF;
+}
+
+pre .class .title {
+  color: white;
+}
+
+pre .attribute,
+pre .symbol,
+pre .symbol .string,
+pre .value,
+pre .regexp {
+  color: #BF79DB;
+}
+
+pre .tag .value,
+pre .string,
+pre .subst,
+pre .title,
+pre .haskell .type,
+pre .preprocessor,
+pre .ruby .class .parent,
+pre .built_in,
+pre .sql .aggregate,
+pre .django .template_tag,
+pre .django .variable,
+pre .smalltalk .class,
+pre .javadoc,
+pre .django .filter .argument,
+pre .smalltalk .localvars,
+pre .smalltalk .array,
+pre .attr_selector,
+pre .pseudo,
+pre .addition,
+pre .stream,
+pre .envvar,
+pre .apache .tag,
+pre .apache .cbracket,
+pre .tex .command,
+pre .prompt {
+  color: #A6E22E;
+}
+
+pre .comment,
+pre .java .annotation,
+pre .python .decorator,
+pre .template_comment,
+pre .pi,
+pre .doctype,
+pre .deletion,
+pre .shebang,
+pre .apache .sqbracket,
+pre .tex .formula {
+  color: #75715E;
+}
+
+pre .keyword,
+pre .literal,
+pre .css .id,
+pre .phpdoc,
+pre .title,
+pre .haskell .type,
+pre .vbscript .built_in,
+pre .sql .aggregate,
+pre .rsl .built_in,
+pre .smalltalk .class,
+pre .diff .header,
+pre .chunk,
+pre .winutils,
+pre .bash .variable,
+pre .apache .tag,
+pre .tex .special,
+pre .request,
+pre .status {
+  font-weight: 600;
+}
+
+pre .coffeescript .javascript,
+pre .javascript .xml,
+pre .tex .formula,
+pre .xml .javascript,
+pre .xml .vbscript,
+pre .xml .css,
+pre .xml .cdata {
+  opacity: 0.5;
+}
+
+/* responsiveness */
+
+@media (max-width: 850px) {
+
+  body {
+    font-size: 70%;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    border-radius: 3px;
+    width: 100%;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev, .prev:hover {
+    border-right-color: rgba(135, 135, 135, 0.5);
+  }
+
+  .next, .next:hover {
+    border-left-color: rgba(135, 135, 135, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 50%;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 10px;
+    margin-top: 10px;
+    height: 340px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+    background: none !important;
+    font-size: 52%;
+  }
+
+  .progress, .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    border: 1px solid #222;
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+.logos img {
+  width: 250px;
+
+  padding: 10px;
+
+  border-radius: 5px;
+  background-color: white;
+}
+
+.logos p {
+  text-align: center;
+  width: 100%;
+}
+
+.mfowler-sketch p {
+  text-align: center;
+}
+
+.mfowler-sketch img {
+  width: 600px;
+}
+
+.images {
+  width: 50%;
+  float: right;
+  position: relative;
+}
+
+.images .left {
+  float: left;
+}
+
+.images .right {
+  float: right;
+}
+
+.full-page p {
+  text-align: center;
+}
+
+.full-page img {
+  width: 900px;
+}
+
+.lean p {
+  text-align: center;
+}
+
+.lean img {
+  width: 600px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+}
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <section class="slide-content"><h1 id="evolution-revolution">Evolution &gt; Revolution</h1>
+<h2 id="how-should-microservices-be-built-">How should microservices be built?</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-2">
+    <section class="slide-content"><h1 id="-it-is-about-maturity-in-systems-design-"><em>It is about maturity in systems design</em></h1>
+<h2 id="-disclaimer-this-is-not-a-tech-talk-"><strong>Disclaimer</strong>: this is not a <em>tech talk</em></h2>
+</section>
+  </div>
+  <div class="slide hidden  center" id="slide-3">
+    <section class="slide-content"><h1 id="4-stories">4 stories</h1>
+<h2 id="microservices-ain-t-something-new-">Microservices ain&#39;t something <em>new</em></h2>
+<h2 id="know-your-domain-">Know your <em>domain</em></h2>
+<h2 id="-evolution-is-the-key"><em>Evolution</em> is the key</h2>
+<h2 id="tale-about-complexity-">Tale about <em>complexity</em></h2>
+</section>
+  </div>
+  <div class="slide hidden  logos" id="slide-4">
+    <section class="slide-content"><h3 id="-whoami-"><code>~ # whoami</code></h3>
+<blockquote>
+<p>pragmatic <em>system builder</em>, sometimes <em>software writer</em></p>
+</blockquote>
+<p><a href="http://white-rook.pl"><img src="images/WhiteRook.jpg" alt="White Rook logo"></a>
+<a href="http://rspective.com"><img src="images/rspective.png" alt="rspective logo"></a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-5">
+    <section class="slide-content"><h3 id="microservices-ain-t-something-new-">Microservices ain&#39;t something <em>new</em></h3>
+<blockquote>
+<p>Any sufficiently complicated concurrent program in another language contains an ad hoc informally-specified bug-ridden slow implementation of half of Erlang and OTP.</p>
+</blockquote>
+<p><em>Virding&#39;s First Rule of Programming</em></p>
+<div class="images">
+  <div class="left">
+    <img alt="Hive is an example of microservice architecture" src="images/hive.jpg" />
+    <img alt="Flock is an example of microservice architecture" src="images/flock.jpg" />
+  </div>
+  <div class="right">
+    <img alt="Nervous system is an example of microservice architecture." src="images/nervous-system.jpg" />
+  </div>
+</div>
+
+<h4 id="other-examples-">Other examples:</h4>
+<ul>
+<li><em>SOA</em>, <em>CORBA</em></li>
+<li>Hardware, <em>UNIX</em>, <em>Linux</em></li>
+<li><strong>Erlang</strong></li>
+<li><em>Akka</em>, <em>Orleans</em></li>
+<li>Virtualization, <em>Unikernels</em></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden  full-page" id="slide-6">
+    <section class="slide-content"><h3 id="know-your-domain-">Know your <em>domain</em></h3>
+<p><img src="images/microservices-envy.png" alt="Microservices envy"></p>
+<blockquote>
+<p>Avoid microservice envy and start with one or two services before rushing headlong into developing more, to allow your teams time to adjust and understand the right level of granularity.</p>
+</blockquote>
+<p>Źródło: <a href="https://www.thoughtworks.com/radar/techniques/microservice-envy">https://www.thoughtworks.com/radar/techniques/microservice-envy</a></p>
+</section>
+  </div>
+  <div class="slide hidden  lean" id="slide-7">
+    <section class="slide-content"><h3 id="-evolution-is-the-key"><em>Evolution</em> is the key</h3>
+<p><img src="images/lean.png" alt="Lean cycle"></p>
+</section>
+  </div>
+  <div class="slide hidden  mfowler-sketch" id="slide-8">
+    <section class="slide-content"><h3 id="tale-about-complexity-">Tale about <em>complexity</em></h3>
+<p><a href="http://martinfowler.com/bliki/MicroservicePrerequisites.html"><img src="images/sketch.png" alt="You have to be this tall to do microservices"></a></p>
+<blockquote>
+<p>People are bad at predicting the performance of complex systems [...], our ability to create large and complex systems fools us into believing that we&#39;re entitled to understand them.</p>
+</blockquote>
+<p>Carlos Bueno, <em>Mature Optimization Handbook</em></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-9">
+    <section class="slide-content"><h1 id="there-is-no-silver-bullet-">There is no <em>silver bullet</em></h1>
+<h2 id="let-s-finally-admit-that-and-be-mature-">Let&#39;s finally admit that and be <strong>mature</strong></h2>
+<h2 id="thank-you-">Thank you!</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-10">
+    <section class="slide-content"><h3 id="resources">Resources</h3>
+<h4 id="microservices-ain-t-something-new-">Microservices ain&#39;t something <em>new</em></h4>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=IorTNHv37XI">Garrett Smith - Software As Biology</a></li>
+<li><a href="http://rvirding.blogspot.com/2008/01/virdings-first-rule-of-programming.html">Virding&#39;s First Rule of Programming</a></li>
+<li><a href="http://rvirding.blogspot.com/2008/01/virdings-first-rule-of-programming.html?showComment=1400761539472#c5295780053912797163">Actor Model and Erlang relationship</a></li>
+<li><a href="http://arxiv.org/pdf/1008.1459v38.pdf">Actor Model of Computation: Scalable Robust Information Systems</a></li>
+</ol>
+<h4 id="know-your-domain-">Know your <em>domain</em></h4>
+<ol>
+<li><a href="https://www.thoughtworks.com/radar/techniques/microservice-envy">Microservices envy</a></li>
+<li><a href="http://martinfowler.com/bliki/MonolithFirst.html">Monolith first</a></li>
+<li><a href="http://martinfowler.com/microservices/">Microservices Guide</a></li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-11">
+    <section class="slide-content"><h3 id="resources">Resources</h3>
+<h4 id="-evolution-is-the-key"><em>Evolution</em> is the key</h4>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=v17DMiFHnB8">Chad Fowler - From Homogeneous Monolith to Radically Heterogeneous Microservices</a></li>
+<li><a href="https://www.youtube.com/watch?v=1wiMLkXz26M">Migrating to Microservices by Adrian Cockroft (Part 1)</a></li>
+<li><a href="https://www.youtube.com/watch?v=ebCtNmTVIJY">Migrating to Microservices by Adrian Cockroft (Part 2)</a></li>
+</ol>
+<h4 id="tale-about-complexity-">Tale about <em>complexity</em></h4>
+<ol>
+<li><a href="http://martinfowler.com/bliki/MicroservicePrerequisites.html">Microservices prerequisites</a></li>
+<li><a href="https://www.facebook.com/notes/facebook-engineering/the-mature-optimization-handbook/10151784131623920">The Mature Optimization Handbook</a></li>
+<li><a href="http://worrydream.com/refs/Brooks-NoSilverBullet.pdf">No Silver Bullet</a></li>
+<li><a href="http://book.mixu.net/distsys/">Distributed systems - for fun and profit</a></li>
+</ol>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-12">
+    <section class="slide-content"><div class="author">
+  <h1 class="name">Wojtek Gawroński</h1>
+    <h3 class="twitter">
+      <a href="http://twitter.com/@afronski">@afronski</a>
+    </h3>
+    <h3 class="github">
+      <a href="https://github.com/afronski">afronski</a>
+    </h3>
+    <h3 class="url">
+      <a href="http://white-rook.pl">http://white-rook.pl</a>
+    </h3>
+    <h3 class="email">
+      <a href="mailto:contact@white-rook.pl">contact@white-rook.pl</a>
+    </h3>
+</div>
+</section>
+  </div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  /* Positions are 1-indexed, so we need to add and subtract 1 */
+  var nextPosition = (position - 1 + n) % numSlides + 1;
+
+  /* Normalize nextPosition in-case of a negative modulo result */
+  nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+  document.getElementById('slide-' + position).classList.add('hidden');
+  document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+  updateProgress();
+  updateURL();
+  updateTabIndex();
+}
+
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  window.history.replaceState({} , null, '#' + currentPosition());
+}
+
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+         document.mozFullScreenElement ||
+         document.webkitFullscreenElement ||
+         document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+      docElem.requestFullscreen ||
+      docElem.msRequestFullscreen ||
+      docElem.mozRequestFullScreen ||
+      docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+      doc.exitFullscreen ||
+      doc.msExitFullscreen ||
+      doc.mozCancelFullScreen ||
+      doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function (e) {
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function (e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function (e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+});
+
+  </script>
+</body>
+</html>
