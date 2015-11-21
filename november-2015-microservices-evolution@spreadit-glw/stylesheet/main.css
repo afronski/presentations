@@ -1,0 +1,54 @@
+.logos img {
+  width: 250px;
+
+  padding: 10px;
+
+  border-radius: 5px;
+  background-color: white;
+}
+
+.logos p {
+  text-align: center;
+  width: 100%;
+}
+
+.mfowler-sketch p {
+  text-align: center;
+}
+
+.mfowler-sketch img {
+  width: 600px;
+}
+
+.images {
+  width: 50%;
+  float: right;
+  position: relative;
+}
+
+.images .left {
+  float: left;
+}
+
+.images .right {
+  float: right;
+}
+
+.full-page p {
+  text-align: center;
+}
+
+.full-page img {
+  width: 900px;
+}
+
+.lean p {
+  text-align: center;
+}
+
+.lean img {
+  width: 600px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+}
