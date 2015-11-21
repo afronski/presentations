@@ -32,7 +32,8 @@
 ## NIC NOWEGO
 
 - Zaczniemy od najbardziej oczywistej rzeczy. Nie powinien przejmować się ktoś,
-dla kogo pojęcie mikroserwisu jest rozmyte lub niejasne - w tej części postaram się sprowadzić całość do wspólnego mianownika.
+dla kogo pojęcie mikroserwisu jest rozmyte lub niejasne - w tej części postaram
+się sprowadzić całość do wspólnego mianownika.
 - Te bardziej doświadczone osoby w IT, przeżyły już coś podobnego kilka razy w
   swojej karierze. Wiele koncepcji zatacza koła, powraca do Nas, tak jak
   rozbujane wahadło. Nie inaczej jest w tym przypadku.
