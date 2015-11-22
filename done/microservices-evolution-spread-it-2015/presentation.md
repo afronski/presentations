@@ -74,7 +74,7 @@ theme: sjaakvandenberg/cleaver-dark
 
 > Avoid microservice envy and start with one or two services before rushing headlong into developing more, to allow your teams time to adjust and understand the right level of granularity.
 
-Źródło: https://www.thoughtworks.com/radar/techniques/microservice-envy
+Source: https://www.thoughtworks.com/radar/techniques/microservice-envy
 
 -- lean
 
