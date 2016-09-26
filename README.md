@@ -47,4 +47,4 @@ Spread IT:
 - *Ewolucja > Rewolucja - czyli o tym jak powinny powstawać mikroserwisy* (2015)
 
 Functional Miners:
-- *Czym jest *property-based testing?* (2016)
+- *Czym jest property-based testing?* (2016)
