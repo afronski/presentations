@@ -30,7 +30,7 @@ Disclaimer: *Mam na drugie Janusz*.
 \* Nadgodzin
 \* Swojego menadżera
 \* ... tu wstaw dowolną rzecz, której Ty również nie lubisz ...
-\* Pisać testów jednostkowych
+\* *Pisać testów jednostkowych*
 
 -------------------------------------------------
 
@@ -94,9 +94,9 @@ Disclaimer: *Mam na drugie Janusz*.
 
 \* 1999 - powstaje pierwsza wersja *QuickCheck* napisana w ... *Haskellu*.
 \* 2000 - oficjalna [publikacja](http://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf) na ten temat.
-\* 2006 - powstaje firma *QuviQ*, która dostarcza licencje dla oryginalnej wersji *QuickCheck* (*C*, *Erlang*, *Automotive*, *Haskell*).
+\* 2006 - powstaje firma *QuviQ*, która dostarcza komercyjne rozwiązania wraz z licencją dla *QuickCheck* (*C*, *Erlang*, *Haskell*, *Automotive*).
 \* 2012 - ta sama firma, uruchamia stronę [*QuickCheck CI*](http://quickcheck-ci.com/).
-\* 2016 - każdy popularny język posiada przynajmniej jedną własną implementację *QC*.
+\* 2016 - stan obecny - *każdy popularny* język posiada przynajmniej jedną własną implementację *QC*.
 
 -------------------------------------------------
 
@@ -106,7 +106,8 @@ Disclaimer: *Mam na drugie Janusz*.
 -> Zachowanie, które wiemy, że powinno zostać utrzymane dla testowanego kodu,
 -> niezależnie od parametrów wejściowych i stanu zewnętrznego.
 
--> Inaczej powiemy, że to *niezmiennik* lub *zawsze spełnione zachowanie*.
+-> Inaczej powiemy, że to *niezmiennik* lub *zawsze spełnione zachowanie*,
+   niezależnie od danych wejściowych.
 
 -------------------------------------------------
 
@@ -306,10 +307,12 @@ określonych przypadków.
 \* Na pierwszy rzut oka widać, że nie do każdego typu testów ten sposób się nadaje:
   \* Dalej będziemy pisać testy jednostkowe. :(
   \* Ale nie musimy generować z pamięci przypadków testowych. :)
+
 \* Pewne klasy problemów automatycznie pasują do tego typu testów:
   \* Funkcje odwracalne np. enkoder - dekoder.
   \* Funkcje o własnościach matematycznych.
   \* Wyjście przewidywalne na podstawie wejścia - *pure functions*, *no side-effects*.
+
 \* Są domeny, które wymagają bardzo dużej niezawodności:
   \* Jednym z koronnych przykładów, jest *automotive* i współpraca firmy *QuviQ* z
     firmą *Volvo*, podczas którego cała magistrala CAN, protokół sterowania i
@@ -325,6 +328,7 @@ określonych przypadków.
   \* Wymyślenie zupełnie innego mechanizmu weryfikacji
      jest nierzadko dużo bardziej złożoną zagadką logiczną,
      niż znalezienie / wymyślenie własności.
+
 \* Co z efektami ubocznymi?
   \* *Long story short*: Mockujemy :(
     \* Przykład znajdziecie w bibliotece [jlouis/fuse](https://github.com/jlouis/fuse/blob/master/test/fuse_time_mock.erl) gdzie autor musiał _zamockować_ czas.
@@ -336,7 +340,7 @@ określonych przypadków.
 
 \* [John Hughes - Testing the Hard Stuff and Staying Sane](https://www.youtube.com/watch?v=zi0rHwfiX1Q)
 \* ["QuickCheck: A Lightweight Tool for Random Testing of Haskell Programs"](http://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf)
-\* [Erlang (PropER)](https://github.com/manopapad/proper), [Clojure (test.check)](https://github.com/clojure/test.check), [Elixir (excheck)](https://github.com/parroty/excheck)
+\* [Erlang (PropER)](https://github.com/manopapad/proper), [Clojure (test.check)](https://github.com/clojure/test.check), [Elixir (excheck)](https://github.com/parroty/excheck), [Haskell (QuickCheck)](https://hackage.haskell.org/package/QuickCheck)
 \* ["Why functional programming matters?"](http://www.cse.chalmers.se/~rjmh/Papers/whyfp.pdf)
 
 -------------------------------------------------
