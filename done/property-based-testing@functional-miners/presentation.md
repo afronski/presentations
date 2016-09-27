@@ -110,7 +110,14 @@ Disclaimer: *Mam na drugie Janusz*.
 
 -------------------------------------------------
 
--> Przykład - najprostszy
+-> Przykład - Sortowanie
+
+    ghci> qsort([ 16, 2, 9, 1, 0, -2, 5, 0, 32, 17 ])
+    [-2,0,0,1,2,5,9,16,17,32]
+
+-------------------------------------------------
+
+-> Przykład - najprostsza własność
 
 -> *Haskell* - plik `qsort.hs`:
 
@@ -144,8 +151,24 @@ Disclaimer: *Mam na drugie Janusz*.
 
     -- Kolejna własność - po sortowaniu pierwszy
     -- element jest jednocześnie najmniejszym:
-    prop_first_element_is_the_minimum_after_sorting xs =
+    prop_minimum xs =
         head (qsort xs) == minimum xs
+
+    -- Kolejna własność - po sortowaniu ostatni
+    -- element jest jednocześnie największym:
+    prop_maximum xs =
+        last (qsort xs) == maximum xs
+
+Przy okazji zaprezentujemy pierwszy błąd, ponieważ
+dwie ostatnie własności nie są prawdziwe dla pewnych
+określonych przypadków.
+
+-------------------------------------------------
+
+-> Przykład - Geohash
+
+    {0, 0}                 == "s000"
+    {50.263850, 18.995779} == "u2vtbq221sz2"
 
 -------------------------------------------------
 
@@ -161,6 +184,32 @@ Disclaimer: *Mam na drugie Janusz*.
     end
 
 -> [Przykład](https://github.com/afronski/cartographer/blob/master/test/cartographer_encode_decode_properties_test.exs)
+
+-------------------------------------------------
+
+-> Przykład - Brainfuck
+
+    ++++++++++[>+++++++>++++++++++>+++>+<<<<-]
+    >++.>+.+++++++..+++.>++.<<+++++++++++++++.
+    >.+++.------.--------.>+.>.
+
+\    Pamięć indeksowana od 0 do 30000 słów.
+\    Słowo to liczba z zakresu 0 .. 255.
+\    Każda instrukcja, poza skokami zwiększa wskaźnik instrukcji o 1.
+
+\    +   Inkrementacja wartości w komórce pamięci
+\    -   Dekrementacja wartości w komórce pamięci
+
+\    >   Inkrementacja wskaźnika pamięci
+\    <   Dekrementacja wskaźnika pamięci
+
+\    \[   Jeśli wartość w komórce pamięci jest równa 0,
+\        skocz do najbliższego ] zamiast przesunięcia o 1
+\    ]   Jeśli wartość w komórce pamięci nie jest równa 0,
+\        skocz do poprzedzającego [, zamiast przesunięcia o 1
+
+\    .   Wypisz na STDOUT wartość z aktualnej komórki pamięci jako kod ASCII
+\    ,   Pobierz z STDIN znak i wpisz do aktualnej komórki pamięci wartość kodu ASCII
 
 -------------------------------------------------
 
@@ -196,22 +245,6 @@ Disclaimer: *Mam na drugie Janusz*.
 
 -------------------------------------------------
 
--> Przykład - stan (*circular buffer*)
-
--> *Erlang*:
-
-    get_pre(S) ->
-        S#state.ptr /= undefined andalso
-            S#state.contents /= [].
-
-    get_next(S, _V, _A) ->
-        S#state{contents = tl(S#state.contents) }.
-
-    get_post(S, _A, Result) ->
-        eq(Result, hd(S#state.contents)).
-
--------------------------------------------------
-
 -> Przykład - błąd i *shrinking*
 
 -> *Haskell*:
@@ -239,6 +272,35 @@ Disclaimer: *Mam na drugie Janusz*.
 
 -------------------------------------------------
 
+-> Przykład - *circular buffer*
+
+\         [   ]
+\ ------> [ 2 ]
+\         [ 1 ] ------>
+
+    int size(Queue* q)
+    {
+        return (q->inp - q->outp) % q->size;
+    }
+
+-------------------------------------------------
+
+-> Przykład - stan
+
+-> *Erlang*:
+
+    get_pre(S) ->
+        S#state.ptr /= undefined andalso
+            S#state.contents /= [].
+
+    get_next(S, _V, _A) ->
+        S#state{contents = tl(S#state.contents)}.
+
+    get_post(S, _A, Result) ->
+        eq(Result, hd(S#state.contents)).
+
+-------------------------------------------------
+
 -> Zastosowania
 
 \* Na pierwszy rzut oka widać, że nie do każdego typu testów ten sposób się nadaje:
@@ -247,12 +309,12 @@ Disclaimer: *Mam na drugie Janusz*.
 \* Pewne klasy problemów automatycznie pasują do tego typu testów:
   \* Funkcje odwracalne np. enkoder - dekoder.
   \* Funkcje o własnościach matematycznych.
-  \* Wyjście przewidywalne na podstawie wejścia (*pure functions*, *no side-effects*).
+  \* Wyjście przewidywalne na podstawie wejścia - *pure functions*, *no side-effects*.
 \* Są domeny, które wymagają bardzo dużej niezawodności:
   \* Jednym z koronnych przykładów, jest *automotive* i współpraca firmy *QuviQ* z
-     firmą *Volvo*, podczas którego cała magistrala CAN, protokół sterowania i
-     wymiany danych pomiędzy komponentami oraz inne podzespoły zostały
-     przetestowane.
+    firmą *Volvo*, podczas którego cała magistrala CAN, protokół sterowania i
+    wymiany danych pomiędzy komponentami oraz inne podzespoły zostały
+    przetestowane.
 
 -------------------------------------------------
 
@@ -264,7 +326,7 @@ Disclaimer: *Mam na drugie Janusz*.
      jest nierzadko dużo bardziej złożoną zagadką logiczną,
      niż znalezienie / wymyślenie własności.
 \* Co z efektami ubocznymi?
-  \* Mockujemy :(
+  \* *Long story short*: Mockujemy :(
     \* Przykład znajdziecie w bibliotece [jlouis/fuse](https://github.com/jlouis/fuse/blob/master/test/fuse_time_mock.erl) gdzie autor musiał _zamockować_ czas.
   \* Abstrachujemy "czystą" implementację gdzieś obok, tak aby ją obłożyć testami.
 
@@ -273,8 +335,9 @@ Disclaimer: *Mam na drugie Janusz*.
 -> Linki
 
 \* [John Hughes - Testing the Hard Stuff and Staying Sane](https://www.youtube.com/watch?v=zi0rHwfiX1Q)
-\* ["Why functional programming matters?"](http://www.cse.chalmers.se/~rjmh/Papers/whyfp.pdf)
 \* ["QuickCheck: A Lightweight Tool for Random Testing of Haskell Programs"](http://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf)
+\* [Erlang (PropER)](https://github.com/manopapad/proper), [Clojure (test.check)](https://github.com/clojure/test.check), [Elixir (excheck)](https://github.com/parroty/excheck)
+\* ["Why functional programming matters?"](http://www.cse.chalmers.se/~rjmh/Papers/whyfp.pdf)
 
 -------------------------------------------------
 
