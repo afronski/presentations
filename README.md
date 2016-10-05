@@ -40,7 +40,7 @@ DWO 2015 (*Dni Wolnego Oprogramowania*):
 Berlin.js:
 - *ZeroMQ in Node.js* (2015)
 
-Kariera IT:
+Kariera IT (*Katowice*):
 - *Elixir + Phoenix* (2015)
 
 Spread IT:
@@ -48,3 +48,6 @@ Spread IT:
 
 Functional Miners:
 - *Czym jest property-based testing?* (2016)
+
+infoMEET (*Katowice*):
+- *Erlang Ecosystem* (2016)
