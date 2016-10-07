@@ -53,8 +53,8 @@ img[alt$="logo"] {
   width: 200px;
 }
 
-img[alt$="Meme"] {
-  width: 200px;
+.image-50 img {
+  width: 50%;
 }
 
 .left {
