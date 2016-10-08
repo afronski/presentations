@@ -1,6 +1,3 @@
-# Build assets:
-/resources/public/js/compiled/**
-
 # Logs:
 figwheel_server.log
 
