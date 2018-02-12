@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .container {
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 footer {
@@ -82,7 +82,7 @@ footer {
 .ads {
   margin: 0 auto;
   padding: 0 50px;
-  max-width: 800px;
+  max-width: 1000px;
   max-height: 100px;
 }
 
