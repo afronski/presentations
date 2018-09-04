@@ -13,20 +13,22 @@
     <meta name="viewport" content="width=device-width" />
 
     <link rel="stylesheet" href="stylesheets/main.css" />
+
+    <script type="text/javascript" src="scripts/gdpr.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/gdpr.css" />
   </head>
 
   <body>
     <section class="ads">
       <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
       <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9524821705718873" data-ad-slot="3234654745" data-ad-format="auto"></ins>
-      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
     </section>
 
     <nav class="container">
       <h1>My Talks</h1>
       <h3><a href="http://afronski.pl">Technical blog</a></h3>
       <ul class="talk-list">
-	<li>
+        <li>
           <time datetime>Apr 2018</time> <a href="https://docs.google.com/presentation/d/1Mo9ADkq7oGi0SXNs57zocE1weczXqQroQBRplXUY41U">
             Learn Elixir The Hard Way (devwarsztaty.pl 07.04.2018)
           </a>
@@ -250,7 +252,7 @@
     </nav>
 
     <footer class="container">
-      <section>© Copyright 2014, 2015 - Wojciech Gawroński</section>
+      <section>© Copyright 2013, 2014, 2015, 2016, 2017, 2018 - Wojciech Gawroński</section>
       <section>
         Except where otherwise noted, content on this site<br/>
         is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/pl/legalcode">
@@ -258,6 +260,8 @@
       </section>
     </footer>
 
-    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-44633104-1','afronski.pl');ga('require', 'displayfeatures');ga('send','pageview');</script>
+    <script>gdprCookieNotice({locale:"en",timeout:500,expiration:30,domain:".afronski.pl",implicit:true,statement:"http://www.afronski.pl/cookies.html",performance:[],analytics:["Google Analytics","Flattr","Facebook","LinkedIn"],marketing:["Google Ads"]});</script>
+    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-44633104-1','afronski.pl');ga('require','displayfeatures');ga('send','pageview');</script>
+    <script>document.addEventListener("gdprCookiesEnabled", function (event) {if(!event.detail.analytics){window['ga-disable-UA-44633104-1'] = true;};if(event.detail.marketing){(adsbygoogle=window.adsbygoogle||[]).push({});}});</script>
   </body>
 </html>
